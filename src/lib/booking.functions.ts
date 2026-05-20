@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { createClient } from "@supabase/supabase-js";
+import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 const BookingInput = z.object({
   service_type: z.enum(["gebraucht", "neu"]),
@@ -16,9 +16,7 @@ const BookingInput = z.object({
 export const createBooking = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => BookingInput.parse(data))
   .handler(async ({ data }) => {
-    const url = process.env.SUPABASE_URL!;
-    const key = process.env.SUPABASE_PUBLISHABLE_KEY!;
-    const supabase = createClient(url, key);
+    const supabase = supabaseAdmin;
 
     const serviceLabel =
       data.service_type === "gebraucht"
