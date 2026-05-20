@@ -224,7 +224,7 @@ export function BookingForm({ preselected }: Props) {
                     selected={field.value}
                     onSelect={(dates) => field.onChange(dates ?? [])}
                     disabled={(date) => date < minDate}
-                    fromDate={minDate}
+                    startMonth={today}
                     className="pointer-events-auto mx-auto"
                   />
                   <p className="mt-2 px-2 text-xs text-muted-foreground">
