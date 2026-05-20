@@ -1,26 +1,58 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { Header } from "@/components/landing/Header";
+import { Hero } from "@/components/landing/Hero";
+import { Steps } from "@/components/landing/Steps";
+import { Pricing } from "@/components/landing/Pricing";
+import { BookingForm } from "@/components/landing/BookingForm";
+import { Faq } from "@/components/landing/Faq";
+import { Footer } from "@/components/landing/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "KFZ-Termin Köln – Schneller Termin bei der Zulassungsstelle" },
+      {
+        name: "description",
+        content:
+          "Automatische Terminsuche bei der Kölner Zulassungsstelle – ohne wochenlange Wartezeit. Geld-zurück-Garantie. Ab 19 €.",
+      },
+      { property: "og:title", content: "KFZ-Termin Köln" },
+      {
+        property: "og:description",
+        content:
+          "Wir finden automatisch einen freien Termin bei der Kölner Zulassungsstelle – schnell, zuverlässig und ohne Stress.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Index() {
+  const [preselected, setPreselected] = useState<"gebraucht" | "neu" | null>(
+    null,
+  );
+
+  const handleSelect = (service: "gebraucht" | "neu") => {
+    setPreselected(service);
+    requestAnimationFrame(() => {
+      document.getElementById("buchung")?.scrollIntoView({ behavior: "smooth" });
+    });
+  };
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        <Hero />
+        <Steps />
+        <Pricing onSelect={handleSelect} />
+        <BookingForm preselected={preselected} />
+        <Faq />
+      </main>
+      <Footer />
+      <Toaster />
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
