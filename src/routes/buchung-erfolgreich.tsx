@@ -1,16 +1,71 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CheckCircle2, AlertTriangle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { CheckCircle2, AlertTriangle, Loader2, XCircle } from "lucide-react";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
+import { useServerFn } from "@tanstack/react-start";
+import { confirmCheckoutSession } from "@/lib/stripe.functions";
 
 export const Route = createFileRoute("/buchung-erfolgreich")({
   head: () => ({
     meta: [{ title: "Buchung erfolgreich – KFZ-Termin Köln" }],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    session_id: typeof search.session_id === "string" ? search.session_id : undefined,
+  }),
   component: SuccessPage,
 });
 
 function SuccessPage() {
+  const { session_id } = Route.useSearch();
+  const confirm = useServerFn(confirmCheckoutSession);
+  const [state, setState] = useState<"loading" | "paid" | "unpaid" | "error">(
+    session_id ? "loading" : "paid",
+  );
+
+  useEffect(() => {
+    if (!session_id) return;
+    confirm({ data: { sessionId: session_id } })
+      .then((r) => setState(r.paid ? "paid" : "unpaid"))
+      .catch(() => setState("error"));
+  }, [session_id, confirm]);
+
+  if (state === "loading") {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="mx-auto max-w-2xl px-4 py-20 text-center">
+          <Loader2 className="mx-auto h-12 w-12 animate-spin text-muted-foreground" />
+          <p className="mt-4 text-muted-foreground">Zahlung wird bestätigt…</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (state !== "paid") {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="mx-auto max-w-2xl px-4 py-20 text-center">
+          <XCircle className="mx-auto h-16 w-16 text-destructive" />
+          <h1 className="mt-6 text-3xl font-bold">Zahlung nicht bestätigt</h1>
+          <p className="mt-4 text-muted-foreground">
+            Wir konnten Ihre Zahlung noch nicht bestätigen. Bitte versuchen Sie
+            es erneut oder kontaktieren Sie uns.
+          </p>
+          <Link
+            to="/"
+            className="mt-8 inline-block rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+          >
+            Zurück zur Startseite
+          </Link>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -20,7 +75,7 @@ function SuccessPage() {
           Vielen Dank für Ihre Buchung!
         </h1>
         <p className="mt-4 text-muted-foreground">
-          Wir haben Ihre Anfrage erhalten und beginnen sofort mit der Suche
+          Wir haben Ihre Zahlung erhalten und beginnen sofort mit der Suche
           nach einem freien Termin bei der Kölner Zulassungsstelle. Sie
           erhalten in Kürze eine Bestätigungsmail.
         </p>
@@ -35,10 +90,7 @@ function SuccessPage() {
           </p>
         </div>
 
-        <Link
-          to="/"
-          className="mt-8 inline-block text-sm text-accent underline"
-        >
+        <Link to="/" className="mt-8 inline-block text-sm text-accent underline">
           ← Zurück zur Startseite
         </Link>
       </main>
