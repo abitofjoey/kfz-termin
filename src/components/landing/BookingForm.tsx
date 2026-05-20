@@ -233,7 +233,7 @@ export function BookingForm({ preselected }: Props) {
                     weekStartsOn={1}
                     selected={field.value}
                     onSelect={(dates) => field.onChange(dates ?? [])}
-                    disabled={(date) => date < minDate}
+                    disabled={(date) => date < minDate || date.getDay() === 0 || date.getDay() === 6}
                     startMonth={today}
                     className="pointer-events-auto mx-auto"
                   />
