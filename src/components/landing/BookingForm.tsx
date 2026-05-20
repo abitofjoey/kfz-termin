@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createBooking } from "@/lib/booking.functions";
+import { createCheckoutSession } from "@/lib/stripe.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
@@ -58,6 +59,7 @@ type Props = {
 export function BookingForm({ preselected }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const submitBooking = useServerFn(createBooking);
+  const startCheckout = useServerFn(createCheckoutSession);
 
   const {
     control,
@@ -105,9 +107,17 @@ export function BookingForm({ preselected }: Props) {
         toast.error(result.error);
         return;
       }
-      // TODO: Stripe Checkout aufrufen, sobald Payments aktiviert ist.
-      // Vorläufig: zur Erfolgsseite weiterleiten.
-      window.location.href = `/buchung-erfolgreich?id=${result.bookingId}`;
+      const checkout = await startCheckout({
+        data: { bookingId: result.bookingId },
+      });
+      if (!checkout.ok || !checkout.url) {
+        toast.error(
+          ("error" in checkout && checkout.error) ||
+            "Bezahlung konnte nicht gestartet werden.",
+        );
+        return;
+      }
+      window.location.href = checkout.url;
     } catch (err) {
       console.error(err);
       toast.error("Etwas ist schiefgelaufen. Bitte erneut versuchen.");
