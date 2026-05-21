@@ -1,28 +1,44 @@
-## Was passiert gerade
+## Setup
 
-- Das Backend ist korrekt eingerichtet (Lovable Cloud – deshalb siehst du in deinem eigenen Supabase-Konto nichts).
-- Die Tabelle `bookings` hat eine `INSERT`-Regel für jedermann, aber **keine `SELECT`-Regel** (gewollt, damit niemand fremde Buchungen lesen kann).
-- Unsere Server-Funktion fügt ein und liest die neue Zeile sofort wieder zurück (`.select("id").single()`). Das Zurücklesen scheitert an der fehlenden `SELECT`-Regel → die ganze Buchung wird abgewiesen.
+- **Interne Benachrichtigung an:** `j.eikehoffmann@gmail.com`
+- **Absender (From):** `KFZ-Termin Köln <buchung@kfz-termin.online>` falls "Display from root" für deine Domain aktiviert ist – sonst Fallback `buchung@notify.kfz-termin.online`. Versand läuft technisch immer über die verifizierte Subdomain `notify.kfz-termin.online`, das ist im Posteingang aber nicht sichtbar.
+- **Reply-To:** `buchung@kfz-termin.online` – damit Antworten direkt bei dir landen (du brauchst dafür ein funktionierendes Postfach für diese Adresse bei deinem Mail-Provider; die Lovable-Mail-Infrastruktur sendet nur, sie empfängt nichts).
+- **Stripe-Zahlungsquittung:** ja, `receipt_email` wird in der Checkout-Session gesetzt. Damit Stripe die Mail im Test-Modus tatsächlich verschickt, muss in deinem Stripe-Dashboard unter **Settings → Emails → "Successful payments"** der Schalter **einmal aktiviert** werden (im Live-Modus ist das standardmäßig an).
 
-## Fix
+## Umsetzung
 
-Den Insert in `src/lib/booking.functions.ts` über den vertrauenswürdigen Server-Client (`supabaseAdmin`, Service-Role) ausführen. Dieser umgeht RLS – das ist genau der vorgesehene Weg für serverseitige Schreibvorgänge, die der Nutzer nie direkt machen darf.
+### 1. App-E-Mail-Infrastruktur scaffolden
+- `send-transactional-email` Server-Route, Unsubscribe-Handler, Suppression-Liste, Template-Registry.
 
-### Änderungen
+### 2. Zwei React-Email-Templates (im Stil deiner Landingpage – weiß, klares Schwarz, Akzentfarbe `accent` aus `styles.css`)
 
-1. `**src/lib/booking.functions.ts**`
-  - `createClient(url, publishableKey)` entfernen.
-  - Stattdessen `supabaseAdmin` aus `@/integrations/supabase/client.server` importieren und verwenden.
-  - Insert + `.select("id").single()` bleibt unverändert und funktioniert dann.
-2. **Sicherheit bleibt erhalten**
-  - Validierung läuft weiterhin per Zod **vor** dem Insert (Pflichtfelder, FIN-Format, mind. 5 Datumswerte, gültige E-Mail).
-  - RLS-Regeln auf der Tabelle bleiben unverändert – Browser-Clients können weiterhin keine Buchungen lesen.
-3. **Keine DB-Migration nötig.**
+**a) `booking-confirmation`** – an den Kunden
+- Betreff: „Ihre Buchung bei KFZ-Termin Köln ist bestätigt"
+- Inhalt: Anrede mit Name, Service (Gebraucht/Neu), FIN-Endung, Liste der gewünschten Termine, Hinweis auf die 1-Stunden-Bestätigungsmail der Zulassungsstelle, Footer: *„Sie haben noch Fragen? Antworten Sie einfach auf diese E-Mail."*
 
-## Erwartetes Ergebnis
+**b) `booking-internal-notification`** – an dich
+- Betreff: `Neue Buchung: {Vorname} {Nachname} – {Service}`
+- Inhalt: Buchungs-ID, Service, Anrede + Name, E-Mail, Telefon, FIN-Endung, alle gewählten Termine, Zahlungsstatus (paid via Stripe), Stripe-Session-ID.
 
-Nach dem Fix:
+### 3. Versand-Trigger nach erfolgreicher Zahlung
+- In `confirmCheckoutSession` (`src/lib/stripe.functions.ts`): sobald die Buchung auf `paid = true` gesetzt wurde, beide Mails über `sendTransactionalEmail` verschicken.
+- Idempotenzschlüssel `booking-confirm-{id}` / `booking-internal-{id}` → bei Reload der Erfolgsseite keine Doppelversendung.
+- Optionales Flag in der `bookings`-Tabelle (`confirmation_sent_at`) als zusätzliche Absicherung. *Mini-Migration nötig.*
 
-- Formular abschicken → Buchung wird gespeichert.
-- Direkt danach Stripe-Checkout im Test-Modus (Karte `4242 4242 4242 4242`).
-- Nach erfolgreicher Zahlung Weiterleitung auf `/buchung-erfolgreich`, dort wird die Buchung als bezahlt markiert.
+### 4. Stripe Checkout-Session anpassen
+- `receipt_email: data.email` in `createCheckoutSession` ergänzen → Stripe schickt automatisch die Zahlungsquittung.
+
+### 5. Helper + Page
+- `src/lib/email/send.ts` (Client-Helper für die Server-Route).
+- `src/routes/unsubscribe.tsx` (Abmelde-Seite, Pflicht wg. Unsubscribe-Footer).
+
+## Was du noch tun musst (außerhalb des Codes)
+
+1. **Stripe Dashboard** (Test-Modus) → Settings → Emails → „Successful payments" aktivieren.
+2. **Postfach `buchung@kfz-termin.online`** bei deinem Mail-Provider einrichten (oder eine Weiterleitung auf `j.eikehoffmann@gmail.com`), damit Antworten der Kunden wirklich ankommen.
+3. Nach dem Implementieren eine Testbuchung machen → du solltest 3 Mails sehen:
+   - Stripe-Quittung (an Kunde)
+   - Buchungsbestätigung (an Kunde, mit Reply-to auf dich)
+   - Interne Benachrichtigung (an dich)
+
+Soll ich so loslegen?
