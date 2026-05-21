@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /buchung-erfolgreich
+Disallow: /buchung-abgebrochen
+Disallow: /unsubscribe
+Disallow: /lovable/
+Disallow: /email/
+
+Sitemap: https://kfz-termin.online/sitemap.xml
