@@ -8,7 +8,7 @@ export function Footer() {
         <div>
           <Brand city="Köln" size="sm" asLink={false} />
           <p className="mt-2 text-sm text-white/70">
-            © 2025 KFZ-Termin Köln
+            © 2026 KFZ-Termin
           </p>
         </div>
 
