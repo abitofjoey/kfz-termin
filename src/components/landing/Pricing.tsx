@@ -8,7 +8,7 @@ const features = [
   "Tägliche Suche 7–18 Uhr",
   "Bis zu 14 Tage Suchzeitraum",
   "Geld-zurück-Garantie",
-  "Bestätigungsmail inklusive",
+  "Persönlicher Support",
 ];
 
 export function Pricing({ onSelect }: Props) {
