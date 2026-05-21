@@ -141,4 +141,5 @@ const label = { fontSize: '12px', fontWeight: 600 as const, color: '#6b7280', te
 const value = { fontSize: '15px', color: '#1a2540', margin: '0 0 12px', fontWeight: 500 as const }
 const hr = { borderColor: '#e5e7eb', margin: '12px 0' }
 const footerHint = { fontSize: '14px', color: '#374151', backgroundColor: '#eef2ff', padding: '12px 16px', borderRadius: '6px', margin: '24px 0 16px' }
+const warnHint = { fontSize: '14px', color: '#78350f', backgroundColor: '#fef3c7', padding: '12px 16px', borderRadius: '6px', margin: '20px 0 16px', lineHeight: '1.6' }
 const footer = { fontSize: '14px', color: '#6b7280', margin: '24px 0 0' }
