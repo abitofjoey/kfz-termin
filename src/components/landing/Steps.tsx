@@ -29,7 +29,7 @@ const steps = [
     n: 5,
     icon: CheckCircle2,
     title: "Termin bestätigen",
-    text: "Innerhalb 3 Stunden per Klick in der Mail bestätigen – sonst verfällt der Slot.",
+    text: "Innerhalb 3 Stunden per Klick in der Mail bestätigen – sonst verfällt der Termin.",
   },
 ];
 
