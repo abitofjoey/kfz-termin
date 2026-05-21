@@ -8,11 +8,27 @@ import {
 const items = [
   {
     q: "Wie schnell bekomme ich einen Termin?",
-    a: "Das hängt von Ihrer Auswahl ab. Termine sind bei der Kölner Zulassungsstelle immer 14 Tage im Voraus buchbar und werden täglich neu freigegeben. Wir prüfen das automatisch und buchen den ersten passenden Slot an einem Ihrer Wunschtage. Je mehr Tage Sie auswählen, desto schneller geht es.",
+    a: "Termine bei der Kölner Zulassungsstelle sind immer 14 Tage im Voraus buchbar – täglich kommen neue Slots dazu, manchmal sogar für denselben Tag. Wir prüfen das automatisch für Sie und buchen den ersten freien Termin an einem Ihrer Wunschtage. Je mehr Tage Sie auswählen, desto höher die Erfolgswahrscheinlichkeit.",
   },
   {
     q: "Lohnt sich der Service für mich?",
     a: "Ja – besonders wenn Sie einen konkreten Wunschtermin haben, einen früheren Termin als aktuell verfügbar suchen, oder einfach keine Zeit haben täglich selbst nachzuschauen. Übrigens: Manchmal sind auf der Seite der Zulassungsstelle spontan freie Termine sichtbar – schauen Sie gerne selbst nach, bevor Sie buchen.",
+  },
+  {
+    q: "Kann ich meinen Termin auch selbst online buchen?",
+    a: "Ja – die Kölner Zulassungsstelle bietet eine direkte Online-Terminbuchung an. Den Link finden Sie oben im Info-Block. Unser Service lohnt sich besonders wenn Sie einen konkreten Wunschtermin sichern möchten oder keine Zeit haben täglich selbst nachzuschauen – wir übernehmen das dauerhaft für Sie.",
+  },
+  {
+    q: "Kann ich meinen Termin auch telefonisch buchen?",
+    a: "Ja – Sie können einen Termin auch über das Bürgertelefon der Stadt Köln vereinbaren: 0221 / 221-26635. Mo–Fr zu den Öffnungszeiten der Zulassungsstelle.",
+  },
+  {
+    q: "Gibt es Anliegen die ich ohne Termin erledigen kann?",
+    a: "Ja – sogenannte Kurzanliegen wie Abmeldung, Adressänderung, Ersatzkennzeichen oder Feinstaubplakette können Sie ohne Termin erledigen. Servicezeiten für Kurzanliegen: Mo 8–12h | Di 10–15h | Mi 8–12h | Do 9–14h | Fr 8–12h. Bitte melden Sie sich beim Wachpersonal am Eingang.",
+  },
+  {
+    q: "Was muss ich zum Termin mitbringen?",
+    a: "Das hängt von Ihrem Anliegen ab. Bitte prüfen Sie vorab auf der Seite der Stadt Köln welche Unterlagen erforderlich sind. Wichtig: Bitte erscheinen Sie pünktlich – bei Verspätungen von mehr als 30 Minuten verfällt der Termin.",
   },
   {
     q: "Was passiert wenn kein Termin gefunden wird?",
