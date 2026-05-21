@@ -326,7 +326,7 @@ export function BookingForm({ preselected }: Props) {
 
           <Button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || tooFewDates}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
             size="lg"
           >
