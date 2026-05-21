@@ -72,6 +72,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "google-site-verification", content: "D2oJlQb2gzO0djNk9cBghulyxZUkfGL9ih8tH8agZZA" },
       { title: "KFZ-Termin Köln" },
       { name: "description", content: "Automatische Terminsuche bei der Kölner Zulassungsstelle." },
       { property: "og:type", content: "website" },
