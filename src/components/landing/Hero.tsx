@@ -11,19 +11,20 @@ export function Hero() {
             Zulassungsstelle Köln
           </div>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Ihr KFZ-Termin in Köln –{" "}
-            <span className="text-accent">ohne wochenlange Wartezeit.</span>
+            Ihr Wunschtermin bei der Kölner Zulassungsstelle –{" "}
+            <span className="text-accent">automatisch gebucht.</span>
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
-            Wir finden automatisch einen freien Termin bei der Kölner
-            Zulassungsstelle – schnell, zuverlässig und ohne Stress.
+            Wählen Sie die Tage an denen Sie können. Wir prüfen täglich ob ein
+            Slot frei wird und buchen sofort – ohne dass Sie selbst nachschauen
+            müssen.
           </p>
           <p className="mt-4 text-base text-white/70">
-            KFZ-Termin Köln ist ein automatischer Terminbuchungsservice für die
-            Kölner Kfz-Zulassungsstelle. Wählen Sie einfach die Tage an denen
-            Sie können – wir prüfen täglich ob ein Termin verfügbar wird und
-            buchen automatisch den ersten freien Slot für Sie. Für nur 19€,
-            ohne Wartezeit und ohne täglich selbst nachschauen zu müssen.
+            KFZ-Termin Köln bucht automatisch Ihren Wunschtermin bei der Kölner
+            Kfz-Zulassungsstelle. Tragen Sie einfach ein an welchen Tagen Sie
+            können – wir überwachen täglich die Verfügbarkeit und buchen den
+            ersten passenden Slot für Sie. Für nur 19€, ohne Stress und ohne
+            täglich selbst nachschauen zu müssen.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
