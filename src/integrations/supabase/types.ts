@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       bookings: {
         Row: {
+          confirmation_sent_at: string | null
           created_at: string
           email: string
           fin_1: string
@@ -32,6 +33,7 @@ export type Database = {
           stripe_session_id: string | null
         }
         Insert: {
+          confirmation_sent_at?: string | null
           created_at?: string
           email: string
           fin_1: string
@@ -48,6 +50,7 @@ export type Database = {
           stripe_session_id?: string | null
         }
         Update: {
+          confirmation_sent_at?: string | null
           created_at?: string
           email?: string
           fin_1?: string
