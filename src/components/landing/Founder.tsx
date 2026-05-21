@@ -24,16 +24,6 @@ export function Founder() {
               innerhalb weniger Tage einen Termin für die kommende Woche verschafft hat. Genau das
               steckt hinter KFZ-Termin Köln.
             </p>
-            <p className="mt-4 text-sm">
-              <a
-                href="https://jeh-digital.de/kfz-termin-automatisch-buchen-mit-ki/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                Mehr über das Projekt lesen →
-              </a>
-            </p>
             <p className="mt-3 text-xs text-muted-foreground">
               Eike Hoffmann · Freelancer ·{" "}
               <a
