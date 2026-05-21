@@ -23,7 +23,7 @@ export function Hero() {
             KFZ-Termin Köln bucht automatisch Ihren Wunschtermin bei der Kölner
             Kfz-Zulassungsstelle. Tragen Sie einfach ein an welchen Tagen Sie
             können – wir überwachen täglich die Verfügbarkeit und buchen den
-            ersten passenden Slot für Sie. Für nur 19€, ohne Stress und ohne
+            ersten passenden Termin für Sie. Für nur 19€, ohne Stress und ohne
             täglich selbst nachschauen zu müssen.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
