@@ -3,6 +3,7 @@ import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
 import Stripe from "stripe";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { sendTransactionalEmailServer } from "@/lib/email/send.server";
 
 function getStripe() {
   const key = process.env.STRIPE_SECRET_KEY;
@@ -41,6 +42,9 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       mode: "payment",
       payment_method_types: ["card"],
       customer_email: booking.email,
+      // Stripe sendet automatisch eine Zahlungsquittung an diese Adresse
+      // (sofern in den Stripe Email-Settings "Successful payments" aktiviert).
+      receipt_email: booking.email,
       line_items: [
         {
           quantity: 1,
@@ -79,10 +83,57 @@ export const confirmCheckoutSession = createServerFn({ method: "POST" })
     const isPaid = session.payment_status === "paid";
 
     if (isPaid && bookingId) {
+      // Mark as paid
       await supabaseAdmin
         .from("bookings")
         .update({ paid: true, status: "paid" })
         .eq("id", bookingId);
+
+      // Load full booking to send confirmation emails (idempotent)
+      const { data: booking } = await supabaseAdmin
+        .from("bookings")
+        .select("*")
+        .eq("id", bookingId)
+        .single();
+
+      if (booking && !booking.confirmation_sent_at) {
+        const templateData = {
+          bookingId: booking.id,
+          salutation: booking.salutation,
+          firstName: booking.first_name,
+          lastName: booking.last_name,
+          email: booking.email,
+          phone: booking.phone,
+          serviceType: booking.service_type,
+          finEnding: booking.fin_1,
+          notes: booking.notes ?? undefined,
+          selectedDates: booking.selected_dates ?? [],
+          stripeSessionId: booking.stripe_session_id ?? undefined,
+        };
+
+        try {
+          await Promise.all([
+            sendTransactionalEmailServer({
+              templateName: "booking-confirmation",
+              recipientEmail: booking.email,
+              idempotencyKey: `booking-confirm-${booking.id}`,
+              templateData,
+            }),
+            sendTransactionalEmailServer({
+              templateName: "booking-internal-notification",
+              idempotencyKey: `booking-internal-${booking.id}`,
+              templateData,
+            }),
+          ]);
+
+          await supabaseAdmin
+            .from("bookings")
+            .update({ confirmation_sent_at: new Date().toISOString() })
+            .eq("id", booking.id);
+        } catch (e) {
+          console.error("Failed to send booking confirmation emails", e);
+        }
+      }
     }
 
     return { ok: true as const, paid: isPaid };
