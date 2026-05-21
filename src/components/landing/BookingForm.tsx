@@ -60,7 +60,7 @@ export function BookingForm({ preselected }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const submitBooking = useServerFn(createBooking);
   const startCheckout = useServerFn(createCheckoutSession);
-  const lateNoticeShown = useRef(false);
+  
 
   const {
     control,
