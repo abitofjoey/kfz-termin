@@ -71,7 +71,7 @@ export function Steps() {
           <p className="text-sm">
             <strong>Wichtig:</strong> Bitte behalten Sie Ihr E-Mail-Postfach im
             Blick sobald Sie gebucht haben. Der Termin muss innerhalb von
-            1 Stunde per E-Mail bestätigt werden – sonst verfällt er
+            3 Stunden per E-Mail bestätigt werden – sonst verfällt er
             unwiderruflich.
           </p>
         </div>
