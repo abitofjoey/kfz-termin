@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -60,6 +60,7 @@ export function BookingForm({ preselected }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const submitBooking = useServerFn(createBooking);
   const startCheckout = useServerFn(createCheckoutSession);
+  const lateNoticeShown = useRef(false);
 
   const {
     control,
@@ -79,11 +80,15 @@ export function BookingForm({ preselected }: Props) {
 
   const today = useMemo(() => startOfDay(new Date()), []);
   const minDate = useMemo(() => addDays(today, 1), [today]);
+  const maxDate = useMemo(() => addDays(today, 21), [today]);
   const threeDayThreshold = useMemo(() => addDays(today, 3), [today]);
+  const fourteenDayThreshold = useMemo(() => addDays(today, 14), [today]);
 
   const hasShortNotice = selectedDates.some(
     (d) => d.getTime() < threeDayThreshold.getTime(),
   );
+
+  const tooFewDates = selectedDates.length < 5;
 
   const onSubmit = async (values: FormValues) => {
     setSubmitting(true);
