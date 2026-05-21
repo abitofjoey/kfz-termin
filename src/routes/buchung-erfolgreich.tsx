@@ -85,7 +85,7 @@ function SuccessPage() {
           <p>
             <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben,
             erhalten Sie eine E-Mail der Zulassungsstelle Köln mit einem
-            Bestätigungslink. Diesen müssen Sie <strong>innerhalb von 1 Stunde </strong>
+            Bestätigungslink. Diesen müssen Sie <strong>innerhalb von 3 Stunden </strong>
             anklicken – sonst verfällt der Termin unwiderruflich.
           </p>
         </div>
