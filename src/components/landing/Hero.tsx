@@ -15,16 +15,10 @@ export function Hero() {
             <span className="text-accent">automatisch gebucht.</span>
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
-            Wählen Sie die Tage an denen Sie können. Wir prüfen täglich ob ein
-            Slot frei wird und buchen sofort – ohne dass Sie selbst nachschauen
-            müssen.
-          </p>
-          <p className="mt-4 text-base text-white/70">
-            KFZ-Termin Köln bucht automatisch Ihren Wunschtermin bei der Kölner
-            Kfz-Zulassungsstelle. Tragen Sie einfach ein an welchen Tagen Sie
-            können – wir überwachen täglich die Verfügbarkeit und buchen den
-            ersten passenden Termin für Sie. Für nur 19€, ohne Stress und ohne
-            täglich selbst nachschauen zu müssen.
+            Wählen Sie die Tage an denen Sie können – wir prüfen täglich die
+            Verfügbarkeit und buchen automatisch den ersten passenden Termin
+            für Sie. Für nur 19€, ohne Stress und ohne täglich selbst
+            nachschauen zu müssen.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
