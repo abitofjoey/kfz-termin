@@ -5,6 +5,7 @@ import { Hero } from "@/components/landing/Hero";
 import { Steps } from "@/components/landing/Steps";
 import { Pricing } from "@/components/landing/Pricing";
 import { BookingForm } from "@/components/landing/BookingForm";
+import { InfoBlock } from "@/components/landing/InfoBlock";
 import { Faq } from "@/components/landing/Faq";
 import { Footer } from "@/components/landing/Footer";
 import { Toaster } from "@/components/ui/sonner";
