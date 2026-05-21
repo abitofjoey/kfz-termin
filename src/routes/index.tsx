@@ -6,6 +6,7 @@ import { Steps } from "@/components/landing/Steps";
 import { Pricing } from "@/components/landing/Pricing";
 import { BookingForm } from "@/components/landing/BookingForm";
 import { InfoBlock } from "@/components/landing/InfoBlock";
+import { Founder } from "@/components/landing/Founder";
 import { Faq } from "@/components/landing/Faq";
 import { Footer } from "@/components/landing/Footer";
 import { Toaster } from "@/components/ui/sonner";
@@ -50,6 +51,7 @@ function Index() {
         <Steps />
         <Pricing onSelect={handleSelect} />
         <InfoBlock />
+        <Founder />
         <BookingForm preselected={preselected} />
         <Faq />
       </main>
