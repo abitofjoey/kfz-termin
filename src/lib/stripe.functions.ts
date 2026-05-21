@@ -42,9 +42,6 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       mode: "payment",
       payment_method_types: ["card"],
       customer_email: booking.email,
-      // Stripe sendet automatisch eine Zahlungsquittung an diese Adresse
-      // (sofern in den Stripe Email-Settings "Successful payments" aktiviert).
-      receipt_email: booking.email,
       line_items: [
         {
           quantity: 1,
@@ -59,6 +56,9 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         },
       ],
       metadata: { booking_id: booking.id },
+      // Stripe sendet automatisch eine Zahlungsquittung (sofern in den
+      // Stripe Email-Settings "Successful payments" aktiviert).
+      payment_intent_data: { receipt_email: booking.email } as any,
       success_url: `${origin}/buchung-erfolgreich?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/buchung-abgebrochen`,
     });
