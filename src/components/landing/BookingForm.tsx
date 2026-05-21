@@ -237,25 +237,7 @@ export function BookingForm({ preselected }: Props) {
                     weekStartsOn={1}
                     selected={field.value}
                     onSelect={(dates) => {
-                      const next = dates ?? [];
-                      const prev: Date[] = field.value ?? [];
-                      if (!lateNoticeShown.current) {
-                        const prevTimes = new Set(prev.map((d) => d.getTime()));
-                        const added = next.find(
-                          (d) =>
-                            !prevTimes.has(d.getTime()) &&
-                            d.getTime() > fourteenDayThreshold.getTime(),
-                        );
-                        if (added) {
-                          lateNoticeShown.current = true;
-                          toast("📅 Hinweis zu späten Terminen", {
-                            description:
-                              "Termine bei der Kölner Zulassungsstelle werden immer 14 Tage im Voraus freigegeben. Sobald an diesem Tag ein Termin verfügbar wird, buchen wir automatisch den ersten freien Slot für Sie. Möchten Sie einen kurzfristigen Termin? Wählen Sie zusätzlich Tage innerhalb der nächsten 14 Tage.",
-                            duration: 10000,
-                          });
-                        }
-                      }
-                      field.onChange(next);
+                      field.onChange(dates ?? []);
                     }}
                     disabled={(date) =>
                       date < minDate ||
