@@ -1,83 +1,19 @@
-## Markenverständnis (neu)
+## Änderungen
 
-- **Wortmarke = „KFZ-Termin"** (Hauptmarke, stadtunabhängig)
-- **Stadt** = austauschbarer Zusatz dahinter („KFZ-Termin **Köln**", später „KFZ-Termin Hamburg" etc.)
-- **Bildmarke darf kein einzelnes „K"** sein, sondern muss neutral funktionieren – egal welche Stadt dahintersteht.
+### 1. `src/components/landing/BookingForm.tsx` (Kalender-Bereich)
+- `maxDate = today + 21 Tage` einführen; Calendar `disabled` erweitern: `date < minDate || date > maxDate || Wochenende`. `endMonth={maxDate}` setzen, damit nicht weitergeblättert werden kann.
+- Permanenter Hinweistext unter dem Kalender (immer sichtbar): „Für den frühestmöglichen Termin einfach alle Tage auswählen. Je mehr Tage Sie wählen, desto höher die Erfolgswahrscheinlichkeit."
+- Roter Hinweis solange `<5` Tage gewählt: „Bitte wählen Sie mindestens 5 Wunschtage." (ersetzt/ergänzt die bisherige Zod-Fehleranzeige, immer sichtbar bis Bedingung erfüllt).
+- Submit-Button: `disabled = submitting || selectedDates.length < 5`.
+- Einmaliges Toast-Popup (sonner) wenn erstmals ein Tag mit `> heute + 14 Tage` ausgewählt wird: ein `useRef`-Flag pro Session verhindert Wiederholung. Im `onSelect` der Calendar-Controller-Komponente prüfen. Text: „📅 Termine bei der Kölner Zulassungsstelle werden immer 14 Tage im Voraus freigegeben. Sobald an diesem Tag ein Termin verfügbar wird, buchen wir automatisch den ersten freien Slot für Sie. Möchten Sie einen kurzfristigen Termin? Wählen Sie zusätzlich Tage innerhalb der nächsten 14 Tage."
+- Bestehender `hasShortNotice`-Hinweis (3 Tage) bleibt unverändert.
 
-## Bildmarken-Konzept (schlicht, CD-konform)
+### 2. `src/components/landing/Steps.tsx` (Schritt 3)
+- Text von Schritt 3 ergänzen: „Täglich 7–18 Uhr. Termine sind immer 14 Tage im Voraus buchbar – täglich kommen neue dazu. Wir prüfen das automatisch für Sie."
 
-Ein kleines, ruhiges Icon-Mark in **Anthrazit-Dunkelblau** mit dezentem blauen Akzent. Ich gehe ohne Rückfrage in diese Richtung, weil sie am besten zum bestehenden Look passt – falls du eine andere Variante willst, sag Bescheid:
+### 3. `src/components/landing/Faq.tsx`
+- Antwort auf „Wie schnell bekomme ich einen Termin?" ersetzen durch: „Das hängt von Ihrer Auswahl ab. Termine sind bei der Kölner Zulassungsstelle immer 14 Tage im Voraus buchbar und werden täglich neu freigegeben. Wir prüfen das automatisch und buchen den ersten passenden Slot an einem Ihrer Wunschtage. Je mehr Tage Sie auswählen, desto schneller geht es."
+- Neue FAQ direkt danach einfügen: „Lohnt sich der Service für mich?" — „Ja – besonders wenn Sie einen konkreten Wunschtermin haben, einen früheren Termin als aktuell verfügbar suchen, oder einfach keine Zeit haben täglich selbst nachzuschauen. Übrigens: Manchmal sind auf der Seite der Zulassungsstelle spontan freie Termine sichtbar – schauen Sie gerne selbst nach, bevor Sie buchen."
 
-**Vorschlag:** Ein abgerundetes Quadrat (gleicher Radius wie die Buttons) mit einem stilisierten **Häkchen / Kalender-Tick** – signalisiert „Termin gesichert" und ist gleichzeitig generisch genug für jede Stadt. Keine Auto-Silhouette (wirkt schnell kitschig und einengt thematisch), kein Buchstabe.
-
-In der Bildmarke selbst steht **kein Text**. Die Wortmarke daneben ist textbasiert (siehe unten) und damit für jede Stadt wiederverwendbar – nur die Stadt wird ausgetauscht.
-
-## Wortmarke
-
-Reine Typo, kein extra Schriftzug-Asset, damit die Stadt flexibel bleibt:
-
-```
-[icon]  KFZ-Termin <Stadt>
-```
-
-- „KFZ-Termin" – Inter Bold, Anthrazit
-- „Köln" / „Hamburg" / … – Inter Bold, Akzentblau
-
-→ Stadt wird perspektivisch als Prop an die Header-/Footer-Komponente übergeben (z. B. `<Brand city="Köln" />`), sodass für ein zweites Standort-Projekt nur ein einziger String getauscht werden muss.
-
-## Assets, die generiert werden
-
-Nur das Icon (Mark) ist eine Grafik – die Wortmarke bleibt Text/HTML.
-
-| Datei | Größe | Zweck |
-|---|---|---|
-| `src/assets/brand/mark.png` | 512×512, transparent | Header-/Footer-Icon |
-| `public/favicon.svg` | vektoriell | moderner Tab-Icon |
-| `public/favicon.ico` | 32+16 | Fallback Tab-Icon |
-| `public/apple-touch-icon.png` | 180×180, anthrazit-Hintergrund | iOS Homescreen |
-| `public/icon-192.png` | 192×192, anthrazit-Hintergrund | Android/PWA |
-| `public/icon-512.png` | 512×512, anthrazit-Hintergrund | Android/PWA |
-| `public/og-image.jpg` | 1200×630 | Social-Preview (WhatsApp/LinkedIn/Facebook/Twitter) – „KFZ-Termin Köln" prominent, mit Subline und Mark |
-| `public/site.webmanifest` | – | PWA-Metadaten |
-
-Favicon-/App-Icon-Varianten: Mark **gefüllt auf Anthrazit-Hintergrund** (volles Quadrat statt transparent), damit es im Tab und auf dem Homescreen Kontrast hat.
-
-## Einbindung im Code
-
-1. **Neue Komponente `src/components/brand/Brand.tsx`** mit Props `{ city?: string; size?: "sm"|"md" }` – rendert Mark + „KFZ-Termin <city>". Eine zentrale Stelle für die ganze Marke.
-2. **`src/components/landing/Header.tsx`** – aktuelle „K"-Box + Spans ersetzen durch `<Brand city="Köln" />`.
-3. **`src/components/landing/Footer.tsx`** – kleines `<Brand city="Köln" size="sm" />` einsetzen, falls dort aktuell nichts steht / sonst prüfen.
-4. **`src/routes/__root.tsx` – `head().links` ergänzen:**
-   - `rel="icon" type="image/svg+xml" href="/favicon.svg"`
-   - `rel="icon" type="image/x-icon" href="/favicon.ico"`
-   - `rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"`
-   - `rel="manifest" href="/site.webmanifest"`
-5. **`head().meta` im `__root.tsx` ergänzen (sitewide):**
-   - `og:site_name` = „KFZ-Termin"
-   - `og:image` = `https://kfz-termin.online/og-image.jpg` (+ width 1200, height 630)
-   - `twitter:card` = `summary_large_image`, `twitter:image` = gleiches Bild
-   - `theme-color` = Anthrazit-Hex (passend zu `--primary`)
-
-## Was nicht geändert wird
-
-- `styles.css`, Farben, Layout, Routing
-- Bestehende Texte, Stripe-/E-Mail-/Booking-Logik
-- Keine neuen Routen
-
-## Technische Details
-
-- Mark wird per Bildgenerator in Premium-Qualität als transparentes PNG erzeugt (SVG-Generierung ist nicht zuverlässig).
-- `favicon.svg` schreibe ich kompakt von Hand (einfache geometrische Form → sauberes SVG), `favicon.ico` per `imagemagick` aus dem PNG.
-- App-Icons: PNG-Pipeline (`imagemagick`) generiert 180/192/512 aus dem Mark auf Anthrazit-Hintergrund.
-- OG-Image als JPG (kleiner, ausreichend für Foto/Verlauf).
-- QA: jedes Icon wird in der Zielgröße angeschaut, bevor es verlinkt wird (Lesbarkeit 16 px, Kontrast, keine Beschneidung).
-
-## Wichtig nach dem Build
-
-Damit Social-Vorschauen die neuen Bilder zeigen, muss **erst gepublished werden** – Facebook/LinkedIn-Cache ggf. einmal per Debugger aktualisieren.
-
-## Skalierbarkeit auf andere Städte (perspektivisch)
-
-- Wortmarke: nur die `city`-Prop ändern.
-- Mark, Favicon, App-Icons: stadtneutral, **bleiben identisch** für alle Städte.
-- OG-Image müsste pro Stadt einmal neu generiert werden (anderer Text) – würde später dann als `og-image-koeln.jpg`, `og-image-hamburg.jpg` etc. abgelegt und per Route ausgewählt.
+### Nicht angefasst
+Backend-Validierung (`selected_dates` min 5 bleibt), restliches Formular, Styling, Routing.
