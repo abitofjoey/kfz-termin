@@ -80,9 +80,8 @@ export function BookingForm({ preselected }: Props) {
 
   const today = useMemo(() => startOfDay(new Date()), []);
   const minDate = useMemo(() => addDays(today, 1), [today]);
-  const maxDate = useMemo(() => addDays(today, 21), [today]);
+  const maxDate = useMemo(() => addDays(today, 14), [today]);
   const threeDayThreshold = useMemo(() => addDays(today, 3), [today]);
-  const fourteenDayThreshold = useMemo(() => addDays(today, 14), [today]);
 
   const hasShortNotice = selectedDates.some(
     (d) => d.getTime() < threeDayThreshold.getTime(),
