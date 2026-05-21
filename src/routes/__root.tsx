@@ -81,8 +81,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "KFZ-Termin Köln" },
       { property: "og:description", content: "Automatische Terminsuche bei der Kölner Zulassungsstelle." },
       { name: "twitter:description", content: "Automatische Terminsuche bei der Kölner Zulassungsstelle." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6e01461d-7ef4-4a46-bed1-847b11a57dcd/id-preview-4c41df50--dcc60318-c673-407f-8bbf-fffb5cdded81.lovable.app-1779352898280.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6e01461d-7ef4-4a46-bed1-847b11a57dcd/id-preview-4c41df50--dcc60318-c673-407f-8bbf-fffb5cdded81.lovable.app-1779352898280.png" },
+      { property: "og:image", content: "https://kfz-termin.online/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "KFZ-Termin Köln – Automatische Terminbuchung bei der Kölner Zulassungsstelle" },
+      { name: "twitter:image", content: "https://kfz-termin.online/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
