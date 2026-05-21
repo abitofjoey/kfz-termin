@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -60,6 +60,7 @@ export function BookingForm({ preselected }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const submitBooking = useServerFn(createBooking);
   const startCheckout = useServerFn(createCheckoutSession);
+  const lateNoticeShown = useRef(false);
 
   const {
     control,
@@ -79,11 +80,15 @@ export function BookingForm({ preselected }: Props) {
 
   const today = useMemo(() => startOfDay(new Date()), []);
   const minDate = useMemo(() => addDays(today, 1), [today]);
+  const maxDate = useMemo(() => addDays(today, 21), [today]);
   const threeDayThreshold = useMemo(() => addDays(today, 3), [today]);
+  const fourteenDayThreshold = useMemo(() => addDays(today, 14), [today]);
 
   const hasShortNotice = selectedDates.some(
     (d) => d.getTime() < threeDayThreshold.getTime(),
   );
+
+  const tooFewDates = selectedDates.length < 5;
 
   const onSubmit = async (values: FormValues) => {
     setSubmitting(true);
@@ -232,17 +237,54 @@ export function BookingForm({ preselected }: Props) {
                     locale={de}
                     weekStartsOn={1}
                     selected={field.value}
-                    onSelect={(dates) => field.onChange(dates ?? [])}
-                    disabled={(date) => date < minDate || date.getDay() === 0 || date.getDay() === 6}
+                    onSelect={(dates) => {
+                      const next = dates ?? [];
+                      const prev: Date[] = field.value ?? [];
+                      if (!lateNoticeShown.current) {
+                        const prevTimes = new Set(prev.map((d) => d.getTime()));
+                        const added = next.find(
+                          (d) =>
+                            !prevTimes.has(d.getTime()) &&
+                            d.getTime() > fourteenDayThreshold.getTime(),
+                        );
+                        if (added) {
+                          lateNoticeShown.current = true;
+                          toast("📅 Hinweis zu späten Terminen", {
+                            description:
+                              "Termine bei der Kölner Zulassungsstelle werden immer 14 Tage im Voraus freigegeben. Sobald an diesem Tag ein Termin verfügbar wird, buchen wir automatisch den ersten freien Slot für Sie. Möchten Sie einen kurzfristigen Termin? Wählen Sie zusätzlich Tage innerhalb der nächsten 14 Tage.",
+                            duration: 10000,
+                          });
+                        }
+                      }
+                      field.onChange(next);
+                    }}
+                    disabled={(date) =>
+                      date < minDate ||
+                      date > maxDate ||
+                      date.getDay() === 0 ||
+                      date.getDay() === 6
+                    }
                     startMonth={today}
+                    endMonth={maxDate}
                     className="pointer-events-auto mx-auto"
                   />
                   <p className="mt-2 px-2 text-xs text-muted-foreground">
                     Ausgewählt: <strong>{selectedDates.length}</strong> Tage
                   </p>
+                  <p className="mt-2 px-2 text-xs text-muted-foreground">
+                    Für den frühestmöglichen Termin einfach alle Tage auswählen.
+                    Je mehr Tage Sie wählen, desto höher die
+                    Erfolgswahrscheinlichkeit.
+                  </p>
+                  {tooFewDates && (
+                    <p className="mt-2 px-2 text-xs font-medium text-destructive">
+                      Bitte wählen Sie mindestens 5 Wunschtage.
+                    </p>
+                  )}
                 </div>
               )}
             />
+
           </Field>
 
           {hasShortNotice && (
@@ -284,7 +326,7 @@ export function BookingForm({ preselected }: Props) {
 
           <Button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || tooFewDates}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
             size="lg"
           >

@@ -8,7 +8,11 @@ import {
 const items = [
   {
     q: "Wie schnell bekomme ich einen Termin?",
-    a: "Das hängt von Ihrer Flexibilität ab. Mit mindestens 5 Wunschtagen gelingt die Buchung häufig innerhalb von 24 bis 48 Stunden. Wir suchen täglich von 7 bis 18 Uhr.",
+    a: "Das hängt von Ihrer Auswahl ab. Termine sind bei der Kölner Zulassungsstelle immer 14 Tage im Voraus buchbar und werden täglich neu freigegeben. Wir prüfen das automatisch und buchen den ersten passenden Slot an einem Ihrer Wunschtage. Je mehr Tage Sie auswählen, desto schneller geht es.",
+  },
+  {
+    q: "Lohnt sich der Service für mich?",
+    a: "Ja – besonders wenn Sie einen konkreten Wunschtermin haben, einen früheren Termin als aktuell verfügbar suchen, oder einfach keine Zeit haben täglich selbst nachzuschauen. Übrigens: Manchmal sind auf der Seite der Zulassungsstelle spontan freie Termine sichtbar – schauen Sie gerne selbst nach, bevor Sie buchen.",
   },
   {
     q: "Was passiert wenn kein Termin gefunden wird?",
