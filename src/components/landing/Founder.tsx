@@ -17,11 +17,12 @@ export function Founder() {
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Hallo, ich bin Eike – Freelancer aus Köln im Bereich Online-Marketing und Digitales.
               Als wir kurzfristig ein Wohnmobil gekauft hatten und zwei Wochen später in den Urlaub
-              fahren wollten, brauchte ich dringend einen Zulassungstermin. Kein passender Slot war
-              frei. Ich wusste, dass morgens manchmal neue Termine reinkommen – aber jeden Morgen
-              manuell F5 zu drücken war keine echte Lösung. Also habe ich mir ein Tool gebaut, das
-              das automatisch für mich übernimmt. Ein paar Tage später hatte ich einen Termin für
-              die nächste Woche. Genau dieses Tool steckt hinter KFZ-Termin Köln.
+              fahren wollten, brauchte ich dringend einen Zulassungstermin. Allerdings gab es keinen
+              passenden Termin. Neue Termine werden morgens freigeschaltet oder kommen tagsüber durch
+              Absagen rein – und sind oft innerhalb von Minuten wieder weg. Ständig selbst
+              nachzuschauen war keine Option. Also habe ich selbst eine Lösung gebaut, die mir
+              innerhalb weniger Tage einen Termin für die kommende Woche verschafft hat. Genau das
+              steckt hinter KFZ-Termin Köln.
             </p>
             <p className="mt-4 text-sm">
               <a
