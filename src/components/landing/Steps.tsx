@@ -23,7 +23,7 @@ const steps = [
     n: 4,
     icon: Mail,
     title: "Bestätigungsmail erhalten",
-    text: "Automatische Mail der Zulassungsstelle Köln sobald Termin gebucht.",
+    text: "Automatische Mail der Zulassungsstelle Köln sobald Termin reserviert.",
   },
   {
     n: 5,
