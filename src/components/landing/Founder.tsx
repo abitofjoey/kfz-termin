@@ -13,7 +13,7 @@ export function Founder() {
             style={{ height: 120, width: 120 }}
           />
           <div className="text-center sm:text-left">
-            <h2 className="text-xl font-bold">Warum ich diesen Service gebaut habe</h2>
+            <h2 className="text-xl font-bold">Wer steckt hinter KFZ-Termin.</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Hallo, ich bin Eike – Freelancer aus Köln im Bereich Online-Marketing und Digitales.
               Als wir kurzfristig ein Wohnmobil gekauft hatten und zwei Wochen später in den Urlaub
