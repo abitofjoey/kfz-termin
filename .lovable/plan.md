@@ -1,16 +1,22 @@
-## Änderungen in `src/components/landing/Faq.tsx`
+## Ziel
+Beim Teilen des Links (WhatsApp, iMessage, etc.) soll statt eines Seiten-Screenshots ein eigenes, markenkonformes Vorschaubild erscheinen – passend zu Favicon und Logo (dunkles Navy `#1c2233`, weißer Haken, Akzentfarbe).
 
-### Bestehende Antwort aktualisieren
-„Wie schnell bekomme ich einen Termin?" → neue Antwort:
-„Termine bei der Kölner Zulassungsstelle sind immer 14 Tage im Voraus buchbar – täglich kommen neue Slots dazu, manchmal sogar für denselben Tag. Wir prüfen das automatisch für Sie und buchen den ersten freien Termin an einem Ihrer Wunschtage. Je mehr Tage Sie auswählen, desto höher die Erfolgswahrscheinlichkeit."
+## Was geändert wird
 
-### Vier neue FAQ-Einträge hinzufügen
-Eingefügt im bestehenden `items`-Array (sinnvolle Reihenfolge: nach „Lohnt sich der Service für mich?"):
+1. **Neues OG-Bild generieren** (1200×630, JPG)
+   - Hintergrund: dunkles Navy mit dezentem Gradient (wie Hero)
+   - Logo-Mark (gerundetes Quadrat mit weißem Häkchen) links
+   - Wordmark: „KFZ-Termin **Köln**" (Köln in Akzentfarbe)
+   - Tagline darunter: „Automatische Terminbuchung bei der Kölner Zulassungsstelle"
+   - Kleiner URL-Hinweis unten: `kfz-termin.online`
+   - Speichern als `public/og-image.jpg` (überschreibt vorhandenes)
 
-1. **„Kann ich meinen Termin auch selbst online buchen?"** — Antwort wie vom Nutzer angegeben.
-2. **„Kann ich meinen Termin auch telefonisch buchen?"** — Antwort wie angegeben (0221 / 221-26635).
-3. **„Gibt es Anliegen die ich ohne Termin erledigen kann?"** — Antwort mit Servicezeiten der Kurzanliegen.
-4. **„Was muss ich zum Termin mitbringen?"** — Antwort inkl. 30-Minuten-Verspätungshinweis.
+2. **`src/routes/__root.tsx` anpassen**
+   - `og:image` und `twitter:image` auf absolute URL umstellen:  
+     `https://kfz-termin.online/og-image.jpg`
+   - (ersetzt den aktuellen R2-Screenshot-Link)
 
-### Nicht angefasst
-Alle anderen Komponenten, Styling, Routing, Backend.
+## Was unverändert bleibt
+- Favicon, Apple-Touch-Icon, Manifest, alle Komponenten, Texte, Routing.
+
+Nach dem Deploy kann es 1–2 Tage dauern, bis WhatsApp seinen Cache aktualisiert (Link-Vorschau-Cache ist URL-gebunden).
