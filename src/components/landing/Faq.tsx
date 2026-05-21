@@ -24,7 +24,7 @@ const items = [
   },
   {
     q: "Was ist die Bestätigungsmail der Zulassungsstelle?",
-    a: "Nach unserer Buchung schickt die Kölner Zulassungsstelle automatisch eine E-Mail an Sie mit einem Bestätigungslink. Diesen müssen Sie innerhalb von 1 Stunde anklicken – sonst verfällt der Termin.",
+    a: "Nach unserer Buchung schickt die Kölner Zulassungsstelle automatisch eine E-Mail an Sie mit einem Bestätigungslink. Diesen müssen Sie innerhalb von 3 Stunden anklicken – sonst verfällt der Termin.",
   },
   {
     q: "Was passiert wenn ich die Bestätigungsmail verpasse?",

@@ -29,7 +29,7 @@ const steps = [
     n: 5,
     icon: CheckCircle2,
     title: "Termin bestätigen",
-    text: "Innerhalb 1 Stunde per Klick in der Mail bestätigen – sonst verfällt der Slot.",
+    text: "Innerhalb 3 Stunden per Klick in der Mail bestätigen – sonst verfällt der Slot.",
   },
 ];
 
@@ -71,7 +71,7 @@ export function Steps() {
           <p className="text-sm">
             <strong>Wichtig:</strong> Bitte behalten Sie Ihr E-Mail-Postfach im
             Blick sobald Sie gebucht haben. Der Termin muss innerhalb von
-            1 Stunde per E-Mail bestätigt werden – sonst verfällt er
+            3 Stunden per E-Mail bestätigt werden – sonst verfällt er
             unwiderruflich.
           </p>
         </div>
