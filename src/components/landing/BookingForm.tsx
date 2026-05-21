@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -60,7 +60,7 @@ export function BookingForm({ preselected }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const submitBooking = useServerFn(createBooking);
   const startCheckout = useServerFn(createCheckoutSession);
-  const lateNoticeShown = useRef(false);
+  
 
   const {
     control,
@@ -80,9 +80,8 @@ export function BookingForm({ preselected }: Props) {
 
   const today = useMemo(() => startOfDay(new Date()), []);
   const minDate = useMemo(() => addDays(today, 1), [today]);
-  const maxDate = useMemo(() => addDays(today, 21), [today]);
+  const maxDate = useMemo(() => addDays(today, 14), [today]);
   const threeDayThreshold = useMemo(() => addDays(today, 3), [today]);
-  const fourteenDayThreshold = useMemo(() => addDays(today, 14), [today]);
 
   const hasShortNotice = selectedDates.some(
     (d) => d.getTime() < threeDayThreshold.getTime(),
@@ -238,25 +237,7 @@ export function BookingForm({ preselected }: Props) {
                     weekStartsOn={1}
                     selected={field.value}
                     onSelect={(dates) => {
-                      const next = dates ?? [];
-                      const prev: Date[] = field.value ?? [];
-                      if (!lateNoticeShown.current) {
-                        const prevTimes = new Set(prev.map((d) => d.getTime()));
-                        const added = next.find(
-                          (d) =>
-                            !prevTimes.has(d.getTime()) &&
-                            d.getTime() > fourteenDayThreshold.getTime(),
-                        );
-                        if (added) {
-                          lateNoticeShown.current = true;
-                          toast("📅 Hinweis zu späten Terminen", {
-                            description:
-                              "Termine bei der Kölner Zulassungsstelle werden immer 14 Tage im Voraus freigegeben. Sobald an diesem Tag ein Termin verfügbar wird, buchen wir automatisch den ersten freien Slot für Sie. Möchten Sie einen kurzfristigen Termin? Wählen Sie zusätzlich Tage innerhalb der nächsten 14 Tage.",
-                            duration: 10000,
-                          });
-                        }
-                      }
-                      field.onChange(next);
+                      field.onChange(dates ?? []);
                     }}
                     disabled={(date) =>
                       date < minDate ||
