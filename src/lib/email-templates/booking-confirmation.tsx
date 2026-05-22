@@ -98,6 +98,9 @@ const BookingConfirmationEmail = ({
             <Text style={{ ...footer, margin: '8px 0 0' }}>
               Die Zahlungsquittung erhalten Sie separat per E-Mail von Stripe.
             </Text>
+          </Section>
+
+
 
           <Text style={warnHint}>
             <strong>Bitte prüfen Sie Ihre Angaben.</strong> Sollten Name,
