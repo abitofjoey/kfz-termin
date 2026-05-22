@@ -91,9 +91,7 @@ function SuccessPage() {
         </div>
 
         <p className="mt-6 text-xs text-muted-foreground">
-          Gezahlt: 19,00 € – umsatzsteuerfrei gem. § 19 UStG
-          (Kleinunternehmer). Die Zahlungsquittung erhalten Sie separat per
-          E-Mail von Stripe.
+          Zahlungsquittung erhalten Sie separat per E-Mail von Stripe.
         </p>
 
         <Link to="/" className="mt-8 inline-block text-sm text-accent underline">
