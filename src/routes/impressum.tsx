@@ -14,8 +14,8 @@ export const Route = createFileRoute("/impressum")({
         <h2 className="text-lg font-semibold">Angaben gemäß § 5 DDG</h2>
         <p className="mt-2">
           Eike Hoffmann<br />
-          [Straße und Hausnummer]<br />
-          [PLZ Ort]<br />
+          Longericher Str. 31<br />
+          50739 Köln<br />
           Deutschland
         </p>
       </section>
