@@ -88,6 +88,17 @@ const BookingConfirmationEmail = ({
             )}
           </Section>
 
+          <Section style={card}>
+            <Text style={label}>Betrag</Text>
+            <Text style={value}>19,00 €</Text>
+            <Text style={{ ...label, marginTop: '8px' }}>Umsatzsteuer</Text>
+            <Text style={value}>
+              Keine USt. ausgewiesen gem. § 19 UStG (Kleinunternehmer)
+            </Text>
+            <Text style={{ ...footer, margin: '8px 0 0' }}>
+              Die Zahlungsquittung erhalten Sie separat per E-Mail von Stripe.
+            </Text>
+
           <Text style={warnHint}>
             <strong>Bitte prüfen Sie Ihre Angaben.</strong> Sollten Name,
             E-Mail oder FIN nicht korrekt sein, kann die Bestätigung der
