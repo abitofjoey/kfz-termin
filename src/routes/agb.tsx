@@ -63,12 +63,13 @@ export const Route = createFileRoute("/agb")({
       <section>
         <h2 className="text-lg font-semibold">§ 6 Leistungsumfang, keine Erfolgsgarantie</h2>
         <p className="mt-2">
-          Der Anbieter schuldet die sorgfältige Bemühung, einen Termin im gewünschten Zeitraum zu
-          finden, nicht jedoch einen bestimmten Erfolg. Eine Garantie für die Verfügbarkeit eines
-          Termins oder einen Termin innerhalb eines bestimmten Zeitraums wird nicht übernommen,
-          da die Verfügbarkeit allein von der Stadt Köln abhängt. Sollte innerhalb von 30 Tagen
-          kein Termin gefunden werden können, erhält der Kunde den gezahlten Betrag auf Wunsch
-          vollständig zurückerstattet.
+          Der Anbieter schuldet die sorgfältige Bemühung, einen Termin im vom
+          Kunden angegebenen Zeitraum zu finden, nicht jedoch einen bestimmten
+          Erfolg. Eine Garantie für die Verfügbarkeit eines Termins wird nicht
+          übernommen, da die Verfügbarkeit allein von der Stadt Köln abhängt.
+          Sollte innerhalb des vom Kunden gewählten Zeitraums kein Termin
+          gefunden werden können, erhält der Kunde den gezahlten Betrag
+          vollständig zurückerstattet (Geld-zurück-Garantie).
         </p>
       </section>
 
