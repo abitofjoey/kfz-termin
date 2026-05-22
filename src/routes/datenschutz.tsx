@@ -15,8 +15,8 @@ export const Route = createFileRoute("/datenschutz")({
         <p className="mt-2">
           Verantwortlich im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:<br />
           Eike Hoffmann<br />
-          [Straße und Hausnummer]<br />
-          [PLZ Ort]<br />
+          Longericher Str. 31<br />
+          50739 Köln<br />
           E-Mail:{" "}
           <a className="text-accent underline" href="mailto:eike@jeh-digital.de">
             eike@jeh-digital.de
