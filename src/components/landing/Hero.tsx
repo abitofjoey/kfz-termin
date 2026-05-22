@@ -17,8 +17,8 @@ export function Hero() {
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
             Wählen Sie die Tage an denen Sie können – wir prüfen täglich die
             Verfügbarkeit und buchen automatisch den ersten passenden Termin
-            für Sie. Für nur 19€, ohne Stress und ohne täglich selbst
-            nachschauen zu müssen.
+            für Sie. Für nur 19€ (umsatzsteuerfrei gem. § 19 UStG), ohne
+            Stress und ohne täglich selbst nachschauen zu müssen.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a

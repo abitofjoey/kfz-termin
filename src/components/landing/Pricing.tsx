@@ -60,6 +60,9 @@ function PriceCard({
         <span className="text-5xl font-bold text-primary">19€</span>
         <span className="text-sm text-muted-foreground">einmalig</span>
       </div>
+      <p className="mt-1 text-xs text-muted-foreground">
+        Gesamtpreis, keine USt. gem. § 19 UStG (Kleinunternehmer)
+      </p>
       <p className="mt-2 text-xs text-muted-foreground">{note}</p>
 
       <ul className="mt-6 space-y-2">
