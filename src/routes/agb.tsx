@@ -83,20 +83,29 @@ export const Route = createFileRoute("/agb")({
           per E-Mail) über Ihren Entschluss informieren.
         </p>
         <p className="mt-2">
-          <strong>Vorzeitiges Erlöschen des Widerrufsrechts.</strong> Das Widerrufsrecht erlischt
-          bei einem Vertrag über die Erbringung von Dienstleistungen, wenn der Anbieter die
-          Dienstleistung vollständig erbracht hat und mit der Ausführung erst begonnen hat,
-          nachdem der Kunde dazu seine ausdrückliche Zustimmung gegeben und gleichzeitig seine
-          Kenntnis davon bestätigt hat, dass er sein Widerrufsrecht bei vollständiger
-          Vertragserfüllung verliert. Der Kunde stimmt im Rahmen der Bestellung ausdrücklich zu,
-          dass der Anbieter mit der Ausführung der Dienstleistung vor Ablauf der Widerrufsfrist
-          beginnt.
+          <strong>Vorzeitiger Beginn der Dienstleistung und Erlöschen des Widerrufsrechts
+          (§ 356 Abs. 4 BGB).</strong> Da die automatisierte Terminsuche zeitkritisch ist und der
+          Kunde regelmäßig einen möglichst schnellen Termin wünscht, beginnt der Anbieter mit der
+          Ausführung der Dienstleistung bereits vor Ablauf der Widerrufsfrist. Hierzu muss der
+          Kunde im Buchungsformular vor Vertragsschluss durch Setzen eines Häkchens ausdrücklich
+          die folgende Erklärung abgeben:
+        </p>
+        <p className="mt-2 pl-4 border-l-2 border-accent italic">
+          „Ich verlange ausdrücklich, dass der Anbieter mit der Terminsuche bereits vor Ablauf der
+          Widerrufsfrist beginnt. Mir ist bekannt, dass ich mein Widerrufsrecht verliere, sobald
+          der Anbieter die Dienstleistung vollständig erbracht hat."
+        </p>
+        <p className="mt-2">
+          Mit dieser Zustimmung und der vollständigen Erbringung der Dienstleistung durch den
+          Anbieter erlischt das Widerrufsrecht des Kunden gemäß § 356 Abs. 4 BGB. Solange die
+          Dienstleistung noch nicht vollständig erbracht ist, bleibt das Widerrufsrecht bestehen.
         </p>
         <p className="mt-2">
           <strong>Folgen des Widerrufs.</strong> Im Falle eines wirksamen Widerrufs werden die
           gezahlten Beträge unverzüglich, spätestens binnen vierzehn Tagen, zurückerstattet. Hat
-          der Kunde verlangt, dass die Dienstleistung während der Widerrufsfrist beginnt, schuldet
-          er einen angemessenen Betrag für die bereits erbrachte Leistung.
+          der Kunde den vorzeitigen Beginn der Dienstleistung verlangt und widerruft vor
+          vollständiger Erbringung, schuldet er einen angemessenen Betrag für die bis zum Widerruf
+          bereits erbrachte Leistung.
         </p>
       </section>
 
