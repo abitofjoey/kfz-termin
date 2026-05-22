@@ -16,11 +16,11 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="WhatsApp Kontakt"
-      className={`group fixed bottom-4 left-4 md:bottom-6 md:left-6 z-50 transition-opacity duration-500 ${
+      className={`group fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 transition-opacity duration-500 ${
         visible ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
-      <span className="hidden md:block absolute left-full ml-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-md bg-neutral-800 px-3 py-1.5 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-md">
+      <span className="hidden md:block absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-md bg-neutral-800 px-3 py-1.5 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-md">
         Fragen? Schreib uns!
       </span>
       <span
