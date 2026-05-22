@@ -56,6 +56,7 @@ function PriceCard({
     <div className="flex flex-col rounded-2xl border border-border bg-card p-8 shadow-sm transition hover:shadow-md">
       <h3 className="text-xl font-bold">{title}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
+      <p className="mt-1 text-xs text-muted-foreground">{note}</p>
       <div className="mt-6 flex items-baseline gap-1">
         <span className="text-5xl font-bold text-primary">19€</span>
         <span className="text-sm text-muted-foreground">einmalig</span>
@@ -63,7 +64,7 @@ function PriceCard({
       <p className="mt-1 text-xs text-muted-foreground">
         Gesamtpreis, keine USt. gem. § 19 UStG (Kleinunternehmer)
       </p>
-      <p className="mt-2 text-xs text-muted-foreground">{note}</p>
+
 
       <ul className="mt-6 space-y-2">
         {features.map((f) => (
