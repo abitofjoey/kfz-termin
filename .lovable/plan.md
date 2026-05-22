@@ -1,15 +1,23 @@
-## Diagnose
+## Ziel
 
-Die Buchungen wurden korrekt als bezahlt markiert und die Bestätigungs-E-Mails wurden in die Queue eingereiht — alle 4 Einträge im `email_send_log` hängen aber im Status **`pending`** fest. Das heißt: die Mails werden erzeugt, aber nicht versendet, weil der Queue-Dispatcher (Cron-Job `process-email-queue`) entweder nicht läuft oder seinen Vault-Secret-Key verloren hat (z. B. nach einem Service-Role-Key-Wechsel).
+Den bestehenden runden WhatsApp-Button unten rechts ersetzen durch eine **grüne Auto-Silhouette** (Seitenansicht) in WhatsApp-Grün (#25D366), mit dem **weißen WhatsApp-Logo mittig** auf der Karosserie.
 
-Die Domain `notify.kfz-termin.online` ist verifiziert — daran liegt es nicht.
+## Umsetzung
 
-Zur Stripe-Quittung: diese wird nur gesendet, wenn in den Stripe-E-Mail-Settings **„Successful payments"** aktiv ist **und** der Checkout mit `receipt_email` läuft. Das ist im Code gesetzt. In Stripe Test Mode kommen Quittungs-Mails nur, wenn unter *Settings → Emails* explizit „Email customers about… successful payments" aktiviert ist (separat von Live-Mode). Bitte dort prüfen.
+**Datei:** `src/components/WhatsAppButton.tsx` (anpassen)
 
-## Plan
+- Statt rundem `<span>` mit Kreis-Hintergrund: ein Inline-SVG mit zwei Ebenen:
+  1. **Auto-Silhouette** als Pfad in `fill="#25D366"` — schlichte, moderne Seitenansicht (Karosserie + Dach + zwei Räder als dunklere Kreise für Kontrast).
+  2. **WhatsApp-Logo** (vereinfachte Sprechblase mit Hörer) zentriert auf der Karosserie in Weiß.
+- Größe: ca. 72×44px auf Desktop, 60×36px auf Mobile (Auto ist breiter als hoch — Container-Box entsprechend anpassen).
+- Position bleibt: `fixed bottom-6 right-6` (Desktop) / `bottom-4 right-4` (Mobile).
+- Schatten, Fade-in nach 300px Scroll, Puls-Animation (3s) und Hover-Tooltip „Fragen? Schreib uns!" bleiben unverändert.
+- Klick-Link bleibt unverändert (`https://wa.me/4917643477088?text=...`).
 
-1. **E-Mail-Infrastruktur neu provisionieren** via `email_domain--setup_email_infra` (idempotent). Das legt den fehlenden bzw. defekten `process-email-queue` Cron-Job neu an und aktualisiert das Vault-Secret mit dem aktuellen Service-Role-Key.
-2. **Warten & prüfen**: nach ~10 Sekunden den `email_send_log` erneut abfragen — die 4 pending Einträge sollten dann auf `sent` wechseln. Falls Fehler auftreten, `error_message` auswerten.
-3. **Stripe-Quittung**: Nutzer bitten, in Stripe → Settings → Emails (Test-Mode getrennt von Live) „Successful payment" zu aktivieren — der Code übergibt `receipt_email` bereits korrekt, daran muss in der App nichts geändert werden.
+## Hinweis zum Stil
 
-Keine Code-Änderungen nötig — nur Infrastruktur-Refresh.
+Eine Auto-Silhouette mit Logo darin ist visuell ungewöhnlich — der Button wird etwas verspielter und weniger sofort als „WhatsApp" erkennbar als ein klassischer runder Button. Falls nach dem Sehen das Logo zu klein/unklar wirkt, können wir das Auto vergrößern oder das Logo prominenter platzieren.
+
+## Geänderte Dateien
+
+- `src/components/WhatsAppButton.tsx`
