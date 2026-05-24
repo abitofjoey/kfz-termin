@@ -262,11 +262,6 @@ export function BookingForm({ preselected }: Props) {
                   <p className="mt-2 px-2 text-xs text-muted-foreground">
                     Ausgewählt: <strong>{selectedDates.length}</strong> Tage
                   </p>
-                  {tooFewDates && (
-                    <p className="mt-2 px-2 text-xs font-medium text-destructive">
-                      Bitte wählen Sie mindestens 5 Wunschtage.
-                    </p>
-                  )}
                 </div>
               )}
             />
