@@ -95,7 +95,7 @@ export function BookingForm({ preselected }: Props) {
     (d) => d.getTime() < threeDayThreshold.getTime(),
   );
 
-  const tooFewDates = selectedDates.length < 5;
+  
 
   const onSubmit = async (values: FormValues) => {
     setSubmitting(true);
