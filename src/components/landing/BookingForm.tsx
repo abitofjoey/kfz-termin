@@ -54,7 +54,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 type Props = {
-  preselected?: "gebraucht" | "neu" | null;
+  preselected?: ServiceId | null;
 };
 
 export function BookingForm({ preselected }: Props) {
