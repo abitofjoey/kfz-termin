@@ -204,6 +204,13 @@ export function BookingForm({ preselected }: Props) {
             <Input type="email" {...register("email")} autoComplete="email" />
           </Field>
 
+          <div className="flex items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground -mt-3">
+            <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
+            <p>
+              <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben, erhalten Sie eine E-Mail mit einem Bestätigungslink. Diesen müssen Sie <strong>innerhalb von 3 Stunden</strong> anklicken – sonst verfällt der Termin unwiderruflich.
+            </p>
+          </div>
+
           <Field label="Telefonnummer" error={errors.phone?.message}>
             <Input type="tel" {...register("phone")} autoComplete="tel" />
           </Field>
