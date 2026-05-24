@@ -332,14 +332,7 @@ export function BookingForm({ preselected }: Props) {
           </Button>
 
           <p className="text-center text-xs text-muted-foreground">
-            Gesamtpreis 19,00 €. Keine Umsatzsteuer gem. § 19 UStG
-            (Kleinunternehmer).
-          </p>
-
-          <p className="flex items-start gap-2 text-xs text-muted-foreground">
-            <AlertTriangle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
-            Bezahlung erfolgt sicher über Stripe. Sie erhalten direkt nach
-            der Zahlung eine Bestätigungsmail.
+            19,00 € inkl. aller Gebühren, keine USt. · Sichere Zahlung via Stripe · Bestätigungsmail direkt nach Buchung
           </p>
         </form>
       </div>
