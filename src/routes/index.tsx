@@ -10,6 +10,7 @@ import { Founder } from "@/components/landing/Founder";
 import { Faq } from "@/components/landing/Faq";
 import { Footer } from "@/components/landing/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import type { ServiceId } from "@/lib/services";
 
 export const Route = createFileRoute("/")({
   head: () => ({
