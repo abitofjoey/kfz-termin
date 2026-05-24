@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format, addDays, startOfDay } from "date-fns";
 import { de } from "date-fns/locale";
-import { AlertTriangle, Info, Loader2 } from "lucide-react";
+import { Info, Loader2 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
