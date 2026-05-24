@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -69,6 +69,7 @@ export function BookingForm({ preselected }: Props) {
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -78,6 +79,12 @@ export function BookingForm({ preselected }: Props) {
   });
 
   const selectedDates = watch("selected_dates") ?? [];
+
+  useEffect(() => {
+    if (preselected) {
+      setValue("service_type", preselected, { shouldValidate: true });
+    }
+  }, [preselected, setValue]);
 
   const today = useMemo(() => startOfDay(new Date()), []);
   const minDate = useMemo(() => addDays(today, 1), [today]);
