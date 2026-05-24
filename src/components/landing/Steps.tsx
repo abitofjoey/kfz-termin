@@ -17,7 +17,7 @@ const steps = [
     n: 3,
     icon: Search,
     title: "Wir suchen für Sie",
-    text: "Täglich 7–18 Uhr. Termine sind immer 14 Tage im Voraus buchbar – täglich kommen neue dazu. Wir prüfen das automatisch für Sie.",
+    text: "Neue Termine sind oft in Minuten weg – unser System prüft automatisch, rund um die Uhr.",
   },
   {
     n: 4,
