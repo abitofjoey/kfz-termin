@@ -1,45 +1,88 @@
 ## Ziel
 
-Da du Kleinunternehmer nach § 19 UStG bist, soll an allen Stellen, an denen ein Preis sichtbar ist, klargestellt werden, dass **keine Umsatzsteuer** anfällt. So vermeidest du den falschen Eindruck „inkl. MwSt." und bist konform mit der Pflicht zur Kennzeichnung.
+Den Pricing-Bereich von 2 fixen Karten auf **9 Services** erweitern, ohne die Seite zu überladen. Pattern: **Tab-/Kachel-Auswahl oben + eine dynamische Karte unten**, die je nach Auswahl die passenden Details zeigt. Alle Services kosten 19€.
 
-In den **AGB (§ 4)** und im **Impressum** steht der Hinweis bereits — dort ist nichts zu tun. Ergänzt wird er an den UI- und Mail-Stellen.
+## Empfohlene UX (Kacheln statt Dropdown)
+
+Kacheln sind besser als Dropdown, weil:
+- Alle Optionen sofort sichtbar → schneller Überblick, besser für SEO
+- Mobil als 2-spaltiges Grid responsiv darstellbar (Dropdown verbirgt Optionen, schlechter für Discovery)
+- Aktive Auswahl visuell hervorhebbar
+- Keine zusätzliche Interaktion nötig
+
+Layout:
+```
+[ Kachel1 ] [ Kachel2 ] [ Kachel3 ]
+[ Kachel4 ] [ Kachel5 ] [ Kachel6 ]   ← mobil 2 Spalten, desktop 3
+[ Kachel7 ] [ Kachel8 ] [ Kachel9 ]
+
+┌─────────────────────────────────┐
+│   Karte des gewählten Service   │
+│   Titel + Beschreibung          │
+│   19€ einmalig                  │
+│   Features                      │
+│   [ℹ Mehr Infos Stadt Köln]    │
+│   [ Jetzt buchen ]              │
+└─────────────────────────────────┘
+```
+
+Bei Klick auf „Jetzt buchen" → Scroll zum Formular, Service ist vorausgewählt.
+
+## Die 9 Services
+
+1. Anmeldung Gebrauchtfahrzeug
+2. Anmeldung Neufahrzeug
+3. Kennzeichenwechsel (Umkennzeichnung)
+4. Technische Änderung
+5. Wiederzulassung
+6. H-Kennzeichen (historische Fahrzeuge)
+7. Saisonkennzeichen
+8. Kurzzeitkennzeichen
+9. Ausfuhrkennzeichen
 
 ## Änderungen
 
-### 1. `src/components/landing/Pricing.tsx`
-Unter dem Preis (`19€ einmalig`) eine kleine Zeile ergänzen:
-> „Gesamtpreis, keine USt. gem. § 19 UStG"
+### 1. Neue zentrale Service-Definition: `src/lib/services.ts`
+Eine `SERVICES`-Liste mit `id`, `label`, `shortLabel` (für Kachel), `subtitle`, `note`, `infoUrl` (zunächst leer, trägst du selbst ein). Wird sowohl von `Pricing` als auch vom `BookingForm`-Select genutzt → keine Duplikate.
 
-Als unauffälliger `text-xs text-muted-foreground` direkt unter „einmalig".
+### 2. `src/components/landing/Pricing.tsx`
+- 9 Kacheln (Grid: 2 Spalten mobil, 3 Spalten ab `sm`)
+- `useState` für aktive Auswahl (Default: erster Service)
+- Eine dynamische `PriceCard` unter den Kacheln
+- Pro Karte: kleines Info-Icon-Link (`ExternalLink` von lucide) → öffnet `infoUrl` in neuem Tab. Nur sichtbar wenn URL gesetzt ist.
+- Beim Klick auf „Jetzt buchen" wird die Service-ID an `onSelect` übergeben
 
-### 2. `src/components/landing/Hero.tsx`
-Den Satz „Für nur 19€…" ergänzen um „(umsatzsteuerfrei)" oder einen kleinen Zusatz darunter — dezent, damit der Flow nicht bricht.
+### 3. `src/routes/index.tsx`
+- State `preselected` von `"gebraucht" | "neu"` auf `ServiceId` (alle 9) erweitern
 
-### 3. `src/components/landing/BookingForm.tsx`
-- Direkt unter dem Buchungs-Button („Jetzt für 19€ buchen") eine kleine Zeile:
-  > „Gesamtpreis, keine Umsatzsteuer gem. § 19 UStG (Kleinunternehmer)."
+### 4. `src/components/landing/BookingForm.tsx`
+- `service_type`-Enum auf alle 9 IDs erweitern
+- `SelectItem`s aus `SERVICES` rendern (statt hardcoded)
+- Zod-Schema und Props-Typ entsprechend anpassen
 
-### 4. `src/lib/email-templates/booking-confirmation.tsx`
-In der Bestätigungsmail einen Abschnitt „Zahlung" ergänzen mit:
-- Betrag: 19,00 €
-- Hinweis: „Kein Ausweis von Umsatzsteuer gem. § 19 UStG (Kleinunternehmerregelung)."
-- Hinweis auf die separate Stripe-Zahlungsquittung.
+### 5. `src/lib/booking.functions.ts`
+- `BookingInput.service_type` auf alle 9 IDs erweitern
+- `serviceLabel`-Mapping über `SERVICES`-Liste statt if/else
 
-### 5. `src/routes/buchung-erfolgreich.tsx`
-Im Erfolgs-Screen einen kleinen Hinweis ergänzen: „Gezahlt: 19,00 € (umsatzsteuerfrei gem. § 19 UStG). Die Zahlungsquittung erhältst du separat per E-Mail von Stripe."
+### 6. Datenbank
+**Keine Schema-Änderung nötig.** Spalte `service_type` ist bereits `text` ohne Enum-Constraint — speichert problemlos alle 9 Labels. Bestehende Einträge bleiben unberührt.
 
-### 6. AGB (`src/routes/agb.tsx`)
-Bereits in § 4 vorhanden — **keine Änderung nötig**. Optional könnte ich in § 6 (Geld-zurück-Garantie) noch klarstellen, dass die Erstattung den vollen Bruttobetrag umfasst (da ohnehin keine USt anfällt) — sage Bescheid, wenn das gewünscht ist.
+### 7. E-Mail-Templates (`booking-confirmation`, `booking-internal-notification`)
+Kurz prüfen, ob `service_type` als beliebiger Text dargestellt wird (sollte schon der Fall sein). Falls dort ein hardcoded if/else existiert → entfernen.
 
-## Nicht Teil dieses Plans
+## Was du noch bedenken solltest
 
-- **Eigene Rechnungs-PDF** mit fortlaufender Rechnungsnummer (das wäre Option b aus der vorherigen Antwort).
-- **Stripe-Dashboard-Einstellungen** (Tax deaktivieren, Receipt-Footer) — das musst du selbst im Stripe-Dashboard erledigen, kann ich nicht aus dem Code heraus konfigurieren.
+1. **SEO-Wirkung**: Mit 9 Services lohnt es sich später, pro Service eine eigene Landingpage zu bauen (`/anmeldung-gebrauchtfahrzeug-koeln` etc.). Erst mal aber nur die Kachel-Lösung — Routen können wir später ergänzen.
+2. **Ausschluss-Hinweise**: „Ausgenommen ausländische Fahrzeuge" / „Ausgenommen § 13 EG-FGV" — gibt's solche Einschränkungen auch für die neuen 7 Services? Falls ja, sag mir Bescheid, dann packe ich sie ins `note`-Feld.
+3. **Voreinstellung beim Direkt-Aufruf**: Wenn jemand mit `?service=h-kennzeichen` in der URL landet, könnten wir später automatisch vorauswählen. Erstmal nicht im Scope.
+4. **Default-Auswahl**: Welcher Service soll initial aktiv sein? Vorschlag: **Gebrauchtfahrzeug** (häufigster Fall).
+5. **Info-Link**: Wirklich nur ein kleines Icon, oder soll daneben „Details bei der Stadt Köln" stehen? Vorschlag: Icon + kurzer Text für Klarheit/Vertrauen.
 
-## Geänderte Dateien
+## Geänderte/Neue Dateien
 
+- **NEU** `src/lib/services.ts`
 - `src/components/landing/Pricing.tsx`
-- `src/components/landing/Hero.tsx`
 - `src/components/landing/BookingForm.tsx`
-- `src/lib/email-templates/booking-confirmation.tsx`
-- `src/routes/buchung-erfolgreich.tsx`
+- `src/lib/booking.functions.ts`
+- `src/routes/index.tsx`
+- ggf. `src/lib/email-templates/booking-confirmation.tsx` und `booking-internal-notification.tsx` (nur wenn nötig)
