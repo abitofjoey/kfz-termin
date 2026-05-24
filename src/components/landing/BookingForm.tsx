@@ -203,11 +203,7 @@ export function BookingForm({ preselected }: Props) {
             </Field>
           </div>
 
-          <Field
-            label="E-Mail"
-            error={errors.email?.message}
-            hint="An diese Adresse erhalten Sie die Bestätigungsmail der Zulassungsstelle. Bitte sicherstellen dass Sie Zugriff haben."
-          >
+          <Field label="E-Mail" error={errors.email?.message}>
             <Input type="email" {...register("email")} autoComplete="email" />
           </Field>
 
