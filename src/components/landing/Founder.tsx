@@ -20,9 +20,8 @@ export function Founder() {
               fahren wollten, brauchte ich dringend einen Zulassungstermin. Allerdings gab es keinen
               passenden Termin. Neue Termine werden morgens freigeschaltet oder kommen tagsüber durch
               Absagen rein – und sind oft innerhalb von Minuten wieder weg. Ständig selbst
-              nachzuschauen war keine Option. Also habe ich selbst eine Lösung gebaut, die mir
-              innerhalb weniger Tage einen Termin für die kommende Woche verschafft hat. Genau das
-              steckt hinter KFZ-Termin Köln.
+              nachzuschauen war keine Option. Also habe ich eine Lösung gebaut, die mir innerhalb
+              weniger Tage einen Termin verschafft hat. Genau das steckt hinter KFZ-Termin Köln.
             </p>
             <p className="mt-3 text-xs text-muted-foreground">
               Eike Hoffmann · Freelancer ·{" "}
