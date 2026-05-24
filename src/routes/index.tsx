@@ -10,6 +10,7 @@ import { Founder } from "@/components/landing/Founder";
 import { Faq } from "@/components/landing/Faq";
 import { Footer } from "@/components/landing/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import type { ServiceId } from "@/lib/services";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,11 +33,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [preselected, setPreselected] = useState<"gebraucht" | "neu" | null>(
-    null,
-  );
+  const [preselected, setPreselected] = useState<ServiceId | null>(null);
 
-  const handleSelect = (service: "gebraucht" | "neu") => {
+  const handleSelect = (service: ServiceId) => {
     setPreselected(service);
     requestAnimationFrame(() => {
       document.getElementById("buchung")?.scrollIntoView({ behavior: "smooth" });

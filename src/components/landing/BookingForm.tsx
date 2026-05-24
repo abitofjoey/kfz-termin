@@ -23,9 +23,10 @@ import { createCheckoutSession } from "@/lib/stripe.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { SERVICES, SERVICE_IDS, type ServiceId } from "@/lib/services";
 
 const schema = z.object({
-  service_type: z.enum(["gebraucht", "neu"], {
+  service_type: z.enum(SERVICE_IDS, {
     errorMap: () => ({ message: "Bitte Dienstleistung wählen" }),
   }),
   salutation: z.enum(["Herr", "Frau", "Divers"], {
@@ -53,7 +54,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 type Props = {
-  preselected?: "gebraucht" | "neu" | null;
+  preselected?: ServiceId | null;
 };
 
 export function BookingForm({ preselected }: Props) {
@@ -156,12 +157,11 @@ export function BookingForm({ preselected }: Props) {
                     <SelectValue placeholder="Bitte auswählen" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="gebraucht">
-                      Anmeldung Gebrauchtfahrzeug – 19€
-                    </SelectItem>
-                    <SelectItem value="neu">
-                      Anmeldung Neufahrzeug – 19€
-                    </SelectItem>
+                    {SERVICES.map((s) => (
+                      <SelectItem key={s.id} value={s.id}>
+                        {s.label} – 19€
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               )}
