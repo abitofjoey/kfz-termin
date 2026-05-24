@@ -7,7 +7,7 @@ type Props = {
 };
 
 const features = [
-  "Tägliche Suche 7–18 Uhr",
+  "Suche rund um die Uhr",
   "Bis zu 14 Tage Suchzeitraum",
   "Geld-zurück-Garantie",
   "Persönlicher Support",
