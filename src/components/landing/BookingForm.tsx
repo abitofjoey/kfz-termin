@@ -157,12 +157,11 @@ export function BookingForm({ preselected }: Props) {
                     <SelectValue placeholder="Bitte auswählen" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="gebraucht">
-                      Anmeldung Gebrauchtfahrzeug – 19€
-                    </SelectItem>
-                    <SelectItem value="neu">
-                      Anmeldung Neufahrzeug – 19€
-                    </SelectItem>
+                    {SERVICES.map((s) => (
+                      <SelectItem key={s.id} value={s.id}>
+                        {s.label} – 19€
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               )}
