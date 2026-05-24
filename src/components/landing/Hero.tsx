@@ -36,7 +36,7 @@ export function Hero() {
           <div className="mt-10 grid grid-cols-1 gap-4 text-sm text-white/80 sm:grid-cols-3">
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-accent" />
-              Suche täglich 7–18 Uhr
+              Suche rund um die Uhr
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-accent" />
