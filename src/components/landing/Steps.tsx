@@ -1,4 +1,4 @@
-import { FileText, CreditCard, Search, Mail, CheckCircle2, AlertTriangle } from "lucide-react";
+import { FileText, CreditCard, Search, Mail, CheckCircle2 } from "lucide-react";
 
 const steps = [
   {
@@ -63,18 +63,6 @@ export function Steps() {
           ))}
         </ol>
 
-        <div
-          role="alert"
-          className="mt-10 flex items-start gap-3 rounded-lg border border-warning-border bg-warning p-4 text-warning-foreground"
-        >
-          <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0" />
-          <p className="text-sm">
-            <strong>Wichtig:</strong> Bitte behalten Sie Ihr E-Mail-Postfach im
-            Blick sobald Sie gebucht haben. Der Termin muss innerhalb von
-            3 Stunden per E-Mail bestätigt werden – sonst verfällt er
-            unwiderruflich.
-          </p>
-        </div>
       </div>
     </section>
   );
