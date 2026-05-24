@@ -50,9 +50,9 @@ function Index() {
         <Hero />
         <Steps />
         <Pricing onSelect={handleSelect} />
-        <InfoBlock />
         <Founder />
         <BookingForm preselected={preselected} />
+        <InfoBlock />
         <Faq />
       </main>
       <Footer />
