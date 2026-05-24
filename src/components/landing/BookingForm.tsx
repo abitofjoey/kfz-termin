@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format, addDays, startOfDay } from "date-fns";
 import { de } from "date-fns/locale";
-import { AlertTriangle, Info, Loader2 } from "lucide-react";
+import { Info, Loader2 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -332,14 +332,7 @@ export function BookingForm({ preselected }: Props) {
           </Button>
 
           <p className="text-center text-xs text-muted-foreground">
-            Gesamtpreis 19,00 €. Keine Umsatzsteuer gem. § 19 UStG
-            (Kleinunternehmer).
-          </p>
-
-          <p className="flex items-start gap-2 text-xs text-muted-foreground">
-            <AlertTriangle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
-            Bezahlung erfolgt sicher über Stripe. Sie erhalten direkt nach
-            der Zahlung eine Bestätigungsmail.
+            19,00 € inkl. aller Gebühren, keine USt. · Sichere Zahlung via Stripe · Bestätigungsmail direkt nach Buchung
           </p>
         </form>
       </div>
