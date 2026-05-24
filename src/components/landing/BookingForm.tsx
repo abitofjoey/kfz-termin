@@ -26,7 +26,8 @@ import { toast } from "sonner";
 import { SERVICES, SERVICE_IDS, type ServiceId } from "@/lib/services";
 
 const schema = z.object({
-  service_type: z.enum(["gebraucht", "neu"], {
+const schema = z.object({
+  service_type: z.enum(SERVICE_IDS, {
     errorMap: () => ({ message: "Bitte Dienstleistung wählen" }),
   }),
   salutation: z.enum(["Herr", "Frau", "Divers"], {
