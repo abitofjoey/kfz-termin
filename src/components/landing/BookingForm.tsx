@@ -23,6 +23,7 @@ import { createCheckoutSession } from "@/lib/stripe.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { SERVICES, SERVICE_IDS, type ServiceId } from "@/lib/services";
 
 const schema = z.object({
   service_type: z.enum(["gebraucht", "neu"], {
