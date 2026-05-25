@@ -5,31 +5,31 @@ const steps = [
     n: 1,
     icon: FileText,
     title: "Daten eingeben",
-    text: "Formular in 2 Minuten ausfüllen und Wunschtage wählen.",
+    text: "Formular in rund 2 Minuten ausfüllen und Wunschtage auswählen.",
   },
   {
     n: 2,
     icon: CreditCard,
     title: "Sicher bezahlen",
-    text: "Kreditkarte oder PayPal via Stripe.",
+    text: "Sichere Zahlung per Kreditkarte oder PayPal über Stripe.",
   },
   {
     n: 3,
     icon: Search,
     title: "Wir suchen für Sie",
-    text: "Neue Termine sind oft in Minuten weg – unser System prüft automatisch, rund um die Uhr.",
+    text: "Neue Termine sind oft innerhalb von Minuten vergeben – unser System prüft die Verfügbarkeit automatisch, rund um die Uhr.",
   },
   {
     n: 4,
     icon: Mail,
-    title: "Bestätigungsmail erhalten",
-    text: "Automatische Mail der Zulassungsstelle Köln sobald Termin reserviert.",
+    title: "Bestätigungs-E-Mail erhalten",
+    text: "Sobald ein Termin reserviert ist, erhalten Sie eine automatische E-Mail der Zulassungsstelle Köln.",
   },
   {
     n: 5,
     icon: CheckCircle2,
     title: "Termin bestätigen",
-    text: "Innerhalb 3 Stunden per Klick in der Mail bestätigen – sonst verfällt der Termin.",
+    text: "Bitte bestätigen Sie den Termin innerhalb von 3 Stunden per Klick in der E-Mail – andernfalls verfällt die Reservierung.",
   },
 ];
 
