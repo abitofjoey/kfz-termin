@@ -42,7 +42,7 @@ const schema = z.object({
     .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen (Buchstaben oder Zahlen)"),
   selected_dates: z
     .array(z.date())
-    .min(5, "Bitte wählen Sie mindestens 5 Wunschtage für eine realistische Erfolgschance."),
+    .min(5, "Bitte wählen Sie mindestens 5 Wunschtage aus, um die Erfolgschance zu erhöhen."),
   agree_terms: z.literal(true, {
     errorMap: () => ({ message: "Bitte zustimmen" }),
   }),
@@ -218,7 +218,7 @@ export function BookingForm({ preselected }: Props) {
           <div className="flex items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground -mt-3">
             <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
             <p>
-              <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben, erhalten Sie eine E-Mail mit einem Bestätigungslink. Diesen müssen Sie <strong>innerhalb von 3 Stunden</strong> anklicken – sonst verfällt der Termin unwiderruflich.
+              <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben, erhalten Sie eine E-Mail mit einem Bestätigungslink. Bitte klicken Sie diesen <strong>innerhalb von 3 Stunden</strong> an – andernfalls verfällt der Termin unwiderruflich.
             </p>
           </div>
 
@@ -227,9 +227,9 @@ export function BookingForm({ preselected }: Props) {
           </Field>
 
           <Field
-            label="FIN – letzte 4 Ziffern"
+            label="FIN – letzte 4 Zeichen"
             error={errors.fin_1?.message}
-            hint="Die letzten 4 Ziffern finden Sie in Ihren Fahrzeugdokumenten (Fahrzeugschein / Fahrzeugbrief)."
+            hint="Die letzten 4 Zeichen finden Sie in Ihren Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
           >
             <Input
               {...register("fin_1")}
@@ -285,8 +285,8 @@ export function BookingForm({ preselected }: Props) {
             <div className="flex items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground">
               <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
               <p>
-                Termine in den nächsten 3 Tagen sind sehr selten verfügbar. Wir
-                empfehlen zusätzlich Tage weiter in der Zukunft auszuwählen.
+                Termine in den nächsten 3 Tagen sind nur selten verfügbar. Wir
+                empfehlen, zusätzlich weitere Tage in der Zukunft auszuwählen.
               </p>
             </div>
           )}
@@ -330,12 +330,12 @@ export function BookingForm({ preselected }: Props) {
                 Wird verarbeitet...
               </>
             ) : (
-              "Jetzt für 19€ buchen"
+              "Jetzt für 19 € buchen"
             )}
           </Button>
 
           <p className="text-center text-xs text-muted-foreground">
-            19,00 € inkl. aller Gebühren, keine USt. · Sichere Zahlung via Stripe · Bestätigungsmail direkt nach Buchung
+            19,00 € inkl. aller Gebühren (keine USt.) · Sichere Zahlung über Stripe · Bestätigungs-E-Mail direkt nach der Buchung
           </p>
         </form>
       </div>

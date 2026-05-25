@@ -15,9 +15,9 @@ export function Hero() {
             <span className="text-accent">automatisch gebucht.</span>
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
-            Neue Termine sind oft in Minuten weg – unser System prüft
-            automatisch, rund um die Uhr. Für nur 19€, ohne Stress und ohne
-            täglich selbst nachschauen zu müssen.
+            Neue Termine sind oft innerhalb von Minuten vergeben – unser System
+            prüft die Verfügbarkeit automatisch, rund um die Uhr. Für nur 19 €,
+            ohne Stress und ohne tägliches Nachschauen.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
