@@ -249,30 +249,35 @@ export function BookingForm({ preselected }: Props) {
               name="selected_dates"
               render={({ field }) => (
                 <div className="rounded-md border border-border bg-background p-2">
-                  <Calendar
-                    mode="multiple"
-                    locale={de}
-                    weekStartsOn={1}
-                    selected={field.value}
-                    onSelect={(dates) => {
-                      field.onChange(dates ?? []);
-                    }}
-                    disabled={(date) =>
-                      date < minDate ||
-                      date > maxDate ||
-                      date.getDay() === 0 ||
-                      date.getDay() === 6
-                    }
-                    startMonth={today}
-                    endMonth={maxDate}
-                    className="pointer-events-auto mx-auto"
-                  />
+                  {today && minDate && maxDate ? (
+                    <Calendar
+                      mode="multiple"
+                      locale={de}
+                      weekStartsOn={1}
+                      selected={field.value}
+                      onSelect={(dates) => {
+                        field.onChange(dates ?? []);
+                      }}
+                      disabled={(date) =>
+                        date < minDate ||
+                        date > maxDate ||
+                        date.getDay() === 0 ||
+                        date.getDay() === 6
+                      }
+                      startMonth={today}
+                      endMonth={maxDate}
+                      className="pointer-events-auto mx-auto"
+                    />
+                  ) : (
+                    <div className="h-[320px]" aria-hidden="true" />
+                  )}
                   <p className="mt-2 px-2 text-xs text-muted-foreground">
                     Ausgewählt: <strong>{selectedDates.length}</strong> Tage
                   </p>
                 </div>
               )}
             />
+
 
           </Field>
 
