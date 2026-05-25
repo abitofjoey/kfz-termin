@@ -86,14 +86,22 @@ export function BookingForm({ preselected }: Props) {
     }
   }, [preselected, setValue]);
 
-  const today = useMemo(() => startOfDay(new Date()), []);
-  const minDate = useMemo(() => addDays(today, 1), [today]);
-  const maxDate = useMemo(() => addDays(today, 14), [today]);
-  const threeDayThreshold = useMemo(() => addDays(today, 3), [today]);
-
-  const hasShortNotice = selectedDates.some(
-    (d) => d.getTime() < threeDayThreshold.getTime(),
+  // Compute date boundaries on the client only to avoid SSR hydration mismatches
+  // (server and client `new Date()` differ → React error #418 / blank page).
+  const [today, setToday] = useState<Date | null>(null);
+  useEffect(() => {
+    setToday(startOfDay(new Date()));
+  }, []);
+  const minDate = useMemo(() => (today ? addDays(today, 1) : null), [today]);
+  const maxDate = useMemo(() => (today ? addDays(today, 14) : null), [today]);
+  const threeDayThreshold = useMemo(
+    () => (today ? addDays(today, 3) : null),
+    [today],
   );
+
+  const hasShortNotice = threeDayThreshold
+    ? selectedDates.some((d) => d.getTime() < threeDayThreshold.getTime())
+    : false;
 
   
 
