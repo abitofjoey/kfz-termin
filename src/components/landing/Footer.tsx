@@ -16,8 +16,8 @@ export function Footer() {
           <Link to="/impressum" className="hover:text-white">Impressum</Link>
           <Link to="/datenschutz" className="hover:text-white">Datenschutz</Link>
           <Link to="/agb" className="hover:text-white">AGB</Link>
-          <a href="mailto:eike@jeh-digital.de" className="hover:text-white">
-            Kontakt: eike@jeh-digital.de
+          <a href="mailto:info@kfz-termin.online" className="hover:text-white">
+            Kontakt: info@kfz-termin.online
           </a>
         </nav>
       </div>
