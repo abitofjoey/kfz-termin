@@ -90,9 +90,10 @@ export const Route = createFileRoute("/datenschutz")({
       <section>
         <h2 className="text-lg font-semibold">7. E-Mail-Versand</h2>
         <p className="mt-2">
-          Zur Versendung von Buchungsbestätigungen und transaktionalen E-Mails (z. B. von der
-          Adresse buchung@notify.kfz-termin.online) verarbeiten wir deine E-Mail-Adresse sowie die
-          zur Buchung gehörenden Daten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.
+          Zur Versendung von Buchungsbestätigungen und transaktionalen E-Mails (Absender:
+          buchung@kfz-termin.online) verarbeiten wir deine E-Mail-Adresse sowie die zur Buchung
+          gehörenden Daten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Für allgemeine
+          Anfragen erreichst du uns unter info@kfz-termin.online.
         </p>
       </section>
 
