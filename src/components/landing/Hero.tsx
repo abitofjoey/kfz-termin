@@ -11,7 +11,7 @@ export function Hero() {
             Zulassungsstelle Köln
           </div>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Ihr Wunschtermin bei der Kölner Zulassungsstelle –{" "}
+            Dein Wunschtermin bei der Kölner Zulassungsstelle –{" "}
             <span className="text-accent">automatisch gebucht.</span>
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">

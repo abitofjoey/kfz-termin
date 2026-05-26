@@ -16,20 +16,20 @@ const steps = [
   {
     n: 3,
     icon: Search,
-    title: "Wir suchen für Sie",
+    title: "Wir suchen für dich",
     text: "Neue Termine sind oft innerhalb von Minuten vergeben – unser System prüft die Verfügbarkeit automatisch, rund um die Uhr.",
   },
   {
     n: 4,
     icon: Mail,
     title: "Bestätigungs-E-Mail erhalten",
-    text: "Sobald ein Termin reserviert ist, erhalten Sie eine automatische E-Mail der Zulassungsstelle Köln.",
+    text: "Sobald ein Termin reserviert ist, erhältst du eine automatische E-Mail der Zulassungsstelle Köln.",
   },
   {
     n: 5,
     icon: CheckCircle2,
     title: "Termin bestätigen",
-    text: "Bitte bestätigen Sie den Termin innerhalb von 3 Stunden per Klick in der E-Mail – andernfalls verfällt die Reservierung.",
+    text: "Bitte bestätige den Termin innerhalb von 3 Stunden per Klick in der E-Mail – andernfalls verfällt die Reservierung.",
   },
 ];
 
@@ -40,7 +40,7 @@ export function Steps() {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">So funktioniert's</h2>
           <p className="mt-4 text-muted-foreground">
-            In fünf einfachen Schritten zu Ihrem Termin bei der Kölner
+            In fünf einfachen Schritten zu deinem Termin bei der Kölner
             Zulassungsstelle.
           </p>
         </div>

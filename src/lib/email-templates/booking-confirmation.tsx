@@ -32,7 +32,7 @@ const BookingConfirmationEmail = ({
   return (
     <Html lang="de" dir="ltr">
       <Head />
-      <Preview>Ihre Buchung bei {SITE_NAME} ist bestätigt</Preview>
+      <Preview>Deine Buchung bei {SITE_NAME} ist bestätigt</Preview>
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>Buchungsbestätigung</Heading>
@@ -40,8 +40,8 @@ const BookingConfirmationEmail = ({
             {fullName ? `Hallo ${fullName},` : 'Hallo,'}
           </Text>
           <Text style={text}>
-            vielen Dank für Ihre Buchung bei {SITE_NAME}. Wir haben Ihre Anfrage
-            erhalten und Ihre Zahlung wurde erfolgreich verarbeitet.
+            vielen Dank für deine Buchung bei {SITE_NAME}. Wir haben deine Anfrage
+            erhalten und deine Zahlung wurde erfolgreich verarbeitet.
           </Text>
 
           <Section style={card}>
@@ -96,33 +96,33 @@ const BookingConfirmationEmail = ({
               Keine USt. ausgewiesen gem. § 19 UStG (Kleinunternehmer)
             </Text>
             <Text style={{ ...footer, margin: '8px 0 0' }}>
-              Die Zahlungsquittung erhalten Sie separat per E-Mail von Stripe.
+              Die Zahlungsquittung erhältst du separat per E-Mail von Stripe.
             </Text>
           </Section>
 
 
 
           <Text style={warnHint}>
-            <strong>Bitte prüfen Sie Ihre Angaben.</strong> Sollten Name,
+            <strong>Bitte prüfe deine Angaben.</strong> Sollten Name,
             E-Mail oder FIN nicht korrekt sein, kann die Bestätigung der
-            Zulassungsstelle Sie nicht erreichen oder Ihre Zulassung vor Ort
-            abgewiesen werden. Antworten Sie in diesem Fall einfach auf diese
+            Zulassungsstelle dich nicht erreichen oder deine Zulassung vor Ort
+            abgewiesen werden. Antworte in diesem Fall einfach auf diese
             E-Mail.
           </Text>
 
           <Text style={text}>
-            Wir suchen jetzt für Sie nach einem passenden Termin bei der Kölner
+            Wir suchen jetzt für dich nach einem passenden Termin bei der Kölner
             Zulassungsstelle. Sobald wir einen Termin reserviert haben,
-            erhalten Sie innerhalb einer Stunde eine separate
+            erhältst du innerhalb einer Stunde eine separate
             Bestätigungs-E-Mail der Zulassungsstelle.
           </Text>
 
           <Text style={footerHint}>
-            Sie haben noch Fragen? Antworten Sie einfach auf diese E-Mail –
-            wir helfen Ihnen gerne weiter.
+            Du hast noch Fragen? Antworte einfach auf diese E-Mail –
+            wir helfen dir gerne weiter.
           </Text>
 
-          <Text style={footer}>Herzliche Grüße<br />Ihr Team von {SITE_NAME}</Text>
+          <Text style={footer}>Herzliche Grüße<br />Dein Team von {SITE_NAME}</Text>
         </Container>
       </Body>
     </Html>
@@ -131,7 +131,7 @@ const BookingConfirmationEmail = ({
 
 export const template = {
   component: BookingConfirmationEmail,
-  subject: 'Ihre Buchung bei KFZ-Termin Köln ist bestätigt',
+  subject: 'Deine Buchung bei KFZ-Termin Köln ist bestätigt',
   displayName: 'Buchungsbestätigung (Kunde)',
   previewData: {
     salutation: 'Herr',

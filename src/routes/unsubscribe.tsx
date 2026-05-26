@@ -46,11 +46,11 @@ function UnsubscribePage() {
         </h1>
         {status === 'loading' && <p className="mt-4 text-sm text-muted-foreground">Wird geprüft…</p>}
         {status === 'invalid' && <p className="mt-4 text-sm text-destructive">Dieser Abmelde-Link ist ungültig oder abgelaufen.</p>}
-        {status === 'already' && <p className="mt-4 text-sm text-muted-foreground">Sie sind bereits abgemeldet.</p>}
+        {status === 'already' && <p className="mt-4 text-sm text-muted-foreground">Du bist bereits abgemeldet.</p>}
         {status === 'ready' && (
           <>
             <p className="mt-4 text-sm text-muted-foreground">
-              Möchten Sie sich von zukünftigen E-Mails von KFZ-Termin Köln abmelden?
+              Möchtest du dich von zukünftigen E-Mails von KFZ-Termin Köln abmelden?
             </p>
             <button onClick={confirm} className="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
               Abmeldung bestätigen
@@ -58,7 +58,7 @@ function UnsubscribePage() {
           </>
         )}
         {status === 'submitting' && <p className="mt-4 text-sm text-muted-foreground">Wird verarbeitet…</p>}
-        {status === 'success' && <p className="mt-4 text-sm text-foreground">Sie wurden erfolgreich abgemeldet.</p>}
+        {status === 'success' && <p className="mt-4 text-sm text-foreground">Du wurdest erfolgreich abgemeldet.</p>}
         {status === 'error' && <p className="mt-4 text-sm text-destructive">Etwas ist schiefgegangen. Bitte später erneut versuchen.</p>}
       </div>
     </main>

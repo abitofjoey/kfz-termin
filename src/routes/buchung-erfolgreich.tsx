@@ -51,8 +51,8 @@ function SuccessPage() {
           <XCircle className="mx-auto h-16 w-16 text-destructive" />
           <h1 className="mt-6 text-3xl font-bold">Zahlung nicht bestätigt</h1>
           <p className="mt-4 text-muted-foreground">
-            Wir konnten Ihre Zahlung noch nicht bestätigen. Bitte versuchen Sie
-            es erneut oder kontaktieren Sie uns.
+            Wir konnten deine Zahlung noch nicht bestätigen. Bitte versuche
+            es erneut oder kontaktiere uns.
           </p>
           <Link
             to="/"
@@ -72,26 +72,26 @@ function SuccessPage() {
       <main className="mx-auto max-w-2xl px-4 py-20 text-center">
         <CheckCircle2 className="mx-auto h-16 w-16 text-accent" />
         <h1 className="mt-6 text-3xl font-bold sm:text-4xl">
-          Vielen Dank für Ihre Buchung!
+          Vielen Dank für deine Buchung!
         </h1>
         <p className="mt-4 text-muted-foreground">
-          Wir haben Ihre Zahlung erhalten und beginnen sofort mit der Suche
-          nach einem freien Termin bei der Kölner Zulassungsstelle. Sie
-          erhalten in Kürze eine Bestätigungsmail.
+          Wir haben deine Zahlung erhalten und beginnen sofort mit der Suche
+          nach einem freien Termin bei der Kölner Zulassungsstelle. Du
+          erhältst in Kürze eine Bestätigungsmail.
         </p>
 
         <div className="mt-8 flex items-start gap-3 rounded-md border border-warning-border bg-warning p-4 text-left text-sm text-warning-foreground">
           <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0" />
           <p>
             <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben,
-            erhalten Sie eine E-Mail der Zulassungsstelle Köln mit einem
-            Bestätigungslink. Diesen müssen Sie <strong>innerhalb von 3 Stunden </strong>
+            erhältst du eine E-Mail der Zulassungsstelle Köln mit einem
+            Bestätigungslink. Diesen musst du <strong>innerhalb von 3 Stunden </strong>
             anklicken – sonst verfällt der Termin unwiderruflich.
           </p>
         </div>
 
         <p className="mt-6 text-xs text-muted-foreground">
-          Zahlungsquittung erhalten Sie separat per E-Mail von Stripe.
+          Zahlungsquittung erhältst du separat per E-Mail von Stripe.
         </p>
 
         <Link to="/" className="mt-8 inline-block text-sm text-accent underline">

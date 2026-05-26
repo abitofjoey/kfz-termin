@@ -91,7 +91,7 @@ export const Route = createFileRoute("/datenschutz")({
         <h2 className="text-lg font-semibold">7. E-Mail-Versand</h2>
         <p className="mt-2">
           Zur Versendung von Buchungsbestätigungen und transaktionalen E-Mails (z. B. von der
-          Adresse buchung@notify.kfz-termin.online) verarbeiten wir Ihre E-Mail-Adresse sowie die
+          Adresse buchung@notify.kfz-termin.online) verarbeiten wir deine E-Mail-Adresse sowie die
           zur Buchung gehörenden Daten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.
         </p>
       </section>
@@ -99,12 +99,12 @@ export const Route = createFileRoute("/datenschutz")({
       <section>
         <h2 className="text-lg font-semibold">8. Kontaktaufnahme via WhatsApp</h2>
         <p className="mt-2">
-          Auf unserer Website finden Sie einen Button, der einen Chat über WhatsApp mit uns
-          startet. Sofern Sie diese Funktion nutzen, werden Sie auf den Dienst WhatsApp Ireland
+          Auf unserer Website findest du einen Button, der einen Chat über WhatsApp mit uns
+          startet. Sofern du diese Funktion nutzt, wirst du auf den Dienst WhatsApp Ireland
           Limited, 4 Grand Canal Square, Grand Canal Harbour, Dublin 2, Irland, weitergeleitet.
           Die Datenverarbeitung im WhatsApp-Chat erfolgt durch WhatsApp/Meta nach deren
-          Datenschutzbestimmungen. Wir verarbeiten Ihre über WhatsApp übermittelten Nachrichten
-          und Kontaktdaten ausschließlich zur Beantwortung Ihrer Anfrage (Art. 6 Abs. 1 lit. b
+          Datenschutzbestimmungen. Wir verarbeiten deine über WhatsApp übermittelten Nachrichten
+          und Kontaktdaten ausschließlich zur Beantwortung deiner Anfrage (Art. 6 Abs. 1 lit. b
           bzw. lit. f DSGVO). Weitere Informationen:{" "}
           <a
             className="text-accent underline"
@@ -114,7 +114,7 @@ export const Route = createFileRoute("/datenschutz")({
           >
             whatsapp.com/legal/privacy-policy-eea
           </a>
-          . Bitte beachten Sie, dass WhatsApp-Nachrichten ggf. in Drittländer übertragen werden
+          . Bitte beachte, dass WhatsApp-Nachrichten ggf. in Drittländer übertragen werden
           können.
         </p>
       </section>
@@ -130,12 +130,12 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">10. Ihre Rechte</h2>
+        <h2 className="text-lg font-semibold">10. Deine Rechte</h2>
         <p className="mt-2">
-          Ihnen stehen folgende Rechte zu: Recht auf Auskunft (Art. 15 DSGVO), Berichtigung
+          Dir stehen folgende Rechte zu: Recht auf Auskunft (Art. 15 DSGVO), Berichtigung
           (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertrag-
           barkeit (Art. 20), Widerspruch (Art. 21) sowie das Recht zum Widerruf erteilter
-          Einwilligungen (Art. 7 Abs. 3). Zudem haben Sie das Recht, sich bei einer
+          Einwilligungen (Art. 7 Abs. 3). Zudem hast du das Recht, sich bei einer
           Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO).
         </p>
       </section>

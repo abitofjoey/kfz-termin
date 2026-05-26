@@ -42,7 +42,7 @@ const schema = z.object({
     .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen (Buchstaben oder Zahlen)"),
   selected_dates: z
     .array(z.date())
-    .min(5, "Bitte wählen Sie mindestens 5 Wunschtage aus, um die Erfolgschance zu erhöhen."),
+    .min(5, "Bitte wähle mindestens 5 Wunschtage aus, um die Erfolgschance zu erhöhen."),
   agree_terms: z.literal(true, {
     errorMap: () => ({ message: "Bitte zustimmen" }),
   }),
@@ -152,7 +152,7 @@ export function BookingForm({ preselected }: Props) {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Jetzt Termin buchen</h2>
           <p className="mt-4 text-muted-foreground">
-            Füllen Sie das Formular aus – wir kümmern uns um den Rest.
+            Fülle das Formular aus – wir kümmern uns um den Rest.
           </p>
         </div>
 
@@ -218,7 +218,7 @@ export function BookingForm({ preselected }: Props) {
           <div className="flex items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground -mt-3">
             <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
             <p>
-              <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben, erhalten Sie eine E-Mail mit einem Bestätigungslink. Bitte klicken Sie diesen <strong>innerhalb von 3 Stunden</strong> an – andernfalls verfällt der Termin unwiderruflich.
+              <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben, erhältst du eine E-Mail mit einem Bestätigungslink. Bitte klicke diesen <strong>innerhalb von 3 Stunden</strong> an – andernfalls verfällt der Termin unwiderruflich.
             </p>
           </div>
 
@@ -229,7 +229,7 @@ export function BookingForm({ preselected }: Props) {
           <Field
             label="FIN – letzte 4 Zeichen"
             error={errors.fin_1?.message}
-            hint="Die letzten 4 Zeichen finden Sie in Ihren Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
+            hint="Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
           >
             <Input
               {...register("fin_1")}

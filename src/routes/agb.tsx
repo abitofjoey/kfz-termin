@@ -76,11 +76,11 @@ export const Route = createFileRoute("/agb")({
       <section>
         <h2 className="text-lg font-semibold">§ 7 Widerrufsrecht für Verbraucher</h2>
         <p className="mt-2">
-          <strong>Widerrufsbelehrung.</strong> Sie haben das Recht, binnen vierzehn Tagen ohne
+          <strong>Widerrufsbelehrung.</strong> Du hast das Recht, binnen vierzehn Tagen ohne
           Angabe von Gründen diesen Vertrag zu widerrufen. Die Widerrufsfrist beträgt vierzehn
-          Tage ab dem Tag des Vertragsschlusses. Um Ihr Widerrufsrecht auszuüben, müssen Sie uns
+          Tage ab dem Tag des Vertragsschlusses. Um dein Widerrufsrecht auszuüben, musst du uns
           (Eike Hoffmann, E-Mail: eike@jeh-digital.de) mittels einer eindeutigen Erklärung (z. B.
-          per E-Mail) über Ihren Entschluss informieren.
+          per E-Mail) über deinen Entschluss informieren.
         </p>
         <p className="mt-2">
           <strong>Vorzeitiger Beginn der Dienstleistung und Erlöschen des Widerrufsrechts

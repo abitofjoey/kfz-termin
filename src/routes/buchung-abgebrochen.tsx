@@ -20,8 +20,8 @@ function CancelPage() {
           Bezahlung abgebrochen
         </h1>
         <p className="mt-4 text-muted-foreground">
-          Sie haben den Bezahlvorgang abgebrochen. Es wurde nichts berechnet.
-          Sie können den Vorgang jederzeit erneut starten.
+          Du hast den Bezahlvorgang abgebrochen. Es wurde nichts berechnet.
+          Du kannst den Vorgang jederzeit erneut starten.
         </p>
         <Link
           to="/"
