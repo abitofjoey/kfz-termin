@@ -281,17 +281,6 @@ export function BookingForm({ preselected }: Props) {
 
           </Field>
 
-          {hasShortNotice && (
-            <div className="flex items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground">
-              <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
-              <p>
-                Termine in den nächsten 3 Tagen sind nur selten verfügbar. Wir
-                empfehlen, zusätzlich weitere Tage in der Zukunft auszuwählen.
-              </p>
-            </div>
-          )}
-
-          {/* Checkboxes */}
           <div className="space-y-3">
             <CheckboxRow
               control={control}
