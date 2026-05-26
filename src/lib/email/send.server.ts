@@ -5,9 +5,10 @@ import { TEMPLATES } from '@/lib/email-templates/registry'
 
 const SITE_NAME = 'KFZ-Termin Köln'
 const SENDER_DOMAIN = 'notify.kfz-termin.online'
-// Absender: nutzt die verifizierte Subdomain für garantierte Zustellung.
-// Antworten landen ebenfalls hier (bzw. an die Reply-To-Adresse).
-const FROM_ADDRESS = `${SITE_NAME} <buchung@${SENDER_DOMAIN}>`
+// Absender wird als buchung@kfz-termin.online angezeigt (Display-From auf Root-Domain),
+// technisch gesendet wird weiter über die verifizierte Subdomain. Antworten gehen direkt
+// in das Zoho-Postfach buchung@kfz-termin.online.
+const FROM_ADDRESS = `${SITE_NAME} <buchung@kfz-termin.online>`
 
 function generateToken(): string {
   const bytes = new Uint8Array(32)
