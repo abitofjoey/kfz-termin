@@ -1,25 +1,56 @@
 ## Ziel
-Die drei Security-Warnungen zu `SECURITY DEFINER`-Funktionen beheben, ohne die App-Funktionalität zu verändern.
 
-## Hintergrund
-Die vier `pgmq`-Wrapper-Funktionen in der Datenbank (`read_email_batch`, `enqueue_email`, `delete_email`, `move_to_dlq`) sind als `SECURITY DEFINER` definiert. Dadurch führen sie sich mit den Rechten ihres Erstellers aus und umgehen RLS. Der Security-Scanner meldet, dass diese Funktionen aktuell von `PUBLIC`, `anon` und `authenticated` ausführbar sind – obwohl sie nur von serverseitigen Prozessen über den Service-Role-Key genutzt werden.
+- **info@kfz-termin.online** überall auf der Seite als sichtbare Kontaktadresse (Impressum, Footer, Datenschutz).
+- **buchung@kfz-termin.online** als Absender + Antwortadresse bei allen Buchungs-Mails.
 
-## Schritte
+Beide Postfächer liegen bei Zoho und sind voll funktional für **Empfang** (Eingang in deinem Zoho-Postfach). Für das **Versenden** der automatischen Buchungs-Mails nutzt die App weiterhin Lovable Email über die verifizierte Subdomain `notify.kfz-termin.online` — im Posteingang des Empfängers steht aber `buchung@kfz-termin.online` als Absender und Antworten gehen direkt in dein Zoho-Postfach.
 
-### 1. Datenbank-Migration
-Eine Migration führt für alle vier Funktionen folgende Änderungen durch:
-- **Zugriffsrechte einschränken:** `EXECUTE` wird `PUBLIC`, `anon` und `authenticated` entzogen.
-- **Service-Role explizit erlauben:** `EXECUTE` wird explizit an `service_role` vergeben.
-- **Suchpfad fixieren:** Der `search_path` wird auf `public, pgmq` gesetzt, um den "Function Search Path Mutable"-Befund zu beheben.
+---
 
-### 2. Security-Findings als behoben markieren
-Nach erfolgreicher Migration werden folgende Findings auf `mark_as_fixed` gesetzt:
-- `SUPA_anon_security_definer_function_executable`
-- `SUPA_authenticated_security_definer_function_executable`
-- `SUPA_function_search_path_mutable`
+## Änderungen auf der Website (Anzeige)
 
-### 3. Security-Memory aktualisieren
-Das Security-Memory wird ergänzt um die Dokumentation, dass die `pgmq`-Wrapper-Funktionen absichtlich `SECURITY DEFINER` sind, aber ausschließlich über `service_role` erreichbar – alle Aufrufe erfolgen serverseitig.
+**1. `src/routes/impressum.tsx`**
+- Kontakt-Sektion: `eike@jeh-digital.de` → `info@kfz-termin.online` (Mailto-Link + Anzeigetext).
 
-## Warum die Funktionalität erhalten bleibt
-Die App ruft diese Funktionen nirgendwo clientseitig auf. Sie werden ausschließlich von TanStack-Serverfunktionen über `supabaseAdmin` (Service-Role-Key) verwendet. Da `service_role` nach der Migration weiterhin `EXECUTE`-Rechte besitzt, ändert sich für die App-Logik absolut nichts.
+**2. `src/routes/datenschutz.tsx`**
+- Zeile 94: „Adresse buchung@notify.kfz-termin.online" → korrekt darstellen als `buchung@kfz-termin.online` (Buchungsvorgang) und `info@kfz-termin.online` als allgemeine Kontaktadresse ergänzen.
+
+**3. `src/components/landing/Footer.tsx`**
+- Kontaktblock prüfen und `info@kfz-termin.online` als Mailto-Link hinzufügen (falls noch keine E-Mail im Footer steht).
+
+**4. `src/routes/agb.tsx`**
+- Falls Kontaktangaben vorhanden, ebenfalls auf `info@kfz-termin.online` setzen.
+
+---
+
+## Änderungen am Mailversand
+
+**5. `src/lib/email/send.server.ts`** (wird für Buchungsbestätigungen genutzt)
+- `FROM_ADDRESS` umstellen auf: `KFZ-Termin Köln <buchung@kfz-termin.online>` (Anzeige im Posteingang des Kunden).
+- `reply_to` bleibt: `buchung@kfz-termin.online` (Kundenantworten landen in deinem Zoho-Postfach).
+- `SENDER_DOMAIN` bleibt **technisch zwingend** `notify.kfz-termin.online` (nur diese Subdomain ist bei Lovable Email verifiziert).
+
+**6. `src/routes/lovable/email/transactional/send.ts`** (generischer Sender, falls genutzt)
+- Analog: `from`-Header von `noreply@kfz-termin.online` auf `buchung@kfz-termin.online` umstellen, damit beide Sender konsistent sind.
+
+---
+
+## Hinweis: Display-From auf Root-Domain
+
+Damit der From-Header `buchung@kfz-termin.online` (Root-Domain) sauber zugestellt wird, muss in den Lovable Email Settings die Option **„Display From Root Domain"** aktiv sein. Diese ist beim Setup standardmäßig aktiviert. Sollte nach dem Deploy eine Mail abgelehnt werden, prüfe ich das nach.
+
+---
+
+## Was NICHT geändert wird
+
+- Zoho-DNS-Records (MX, SPF, DKIM, DMARC) — bleiben wie eingetragen.
+- Die `notify.kfz-termin.online`-Subdomain — wird weiter für den technischen Versand gebraucht.
+- Templates selbst (Inhalt/Design der Bestätigungsmails).
+
+---
+
+## Ergebnis
+
+- Kunden sehen im Posteingang: **Absender „KFZ-Termin Köln <buchung@kfz-termin.online>"** → Antworten gehen automatisch an dein Zoho-Postfach `buchung@`.
+- Auf der Webseite, im Impressum und Datenschutz steht **info@kfz-termin.online** als allgemeine Kontaktadresse.
+- Beide Postfächer werden aktiv genutzt und sauber getrennt.

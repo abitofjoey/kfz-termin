@@ -24,8 +24,8 @@ export const Route = createFileRoute("/impressum")({
         <h2 className="text-lg font-semibold">Kontakt</h2>
         <p className="mt-2">
           E-Mail:{" "}
-          <a className="text-accent underline" href="mailto:eike@jeh-digital.de">
-            eike@jeh-digital.de
+          <a className="text-accent underline" href="mailto:info@kfz-termin.online">
+            info@kfz-termin.online
           </a>
         </p>
       </section>
