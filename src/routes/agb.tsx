@@ -79,7 +79,7 @@ export const Route = createFileRoute("/agb")({
           <strong>Widerrufsbelehrung.</strong> Du hast das Recht, binnen vierzehn Tagen ohne
           Angabe von Gründen diesen Vertrag zu widerrufen. Die Widerrufsfrist beträgt vierzehn
           Tage ab dem Tag des Vertragsschlusses. Um dein Widerrufsrecht auszuüben, musst du uns
-          (Eike Hoffmann, E-Mail: eike@jeh-digital.de) mittels einer eindeutigen Erklärung (z. B.
+          (Eike Hoffmann, E-Mail: info@kfz-termin.online) mittels einer eindeutigen Erklärung (z. B.
           per E-Mail) über deinen Entschluss informieren.
         </p>
         <p className="mt-2">
