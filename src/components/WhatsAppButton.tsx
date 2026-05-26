@@ -66,7 +66,7 @@ export function WhatsAppButton() {
           </button>
           <p className="text-sm font-semibold text-foreground">Fragen?</p>
           <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-            Schreib uns direkt bei WhatsApp – wir antworten meist innerhalb weniger Minuten.
+            Schreib uns direkt bei WhatsApp – wir melden uns schnellstmöglich bei dir.
           </p>
           <a
             href={WA_HREF}
