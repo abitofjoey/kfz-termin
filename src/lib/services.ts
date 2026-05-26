@@ -36,7 +36,7 @@ export const SERVICES: Service[] = [
     id: "neu",
     label: "Anmeldung Neufahrzeug",
     shortLabel: "Neufahrzeug",
-    subtitle: "Erstzulassung Ihres neuen Fahrzeugs",
+    subtitle: "Erstzulassung deines neuen Fahrzeugs",
     note: "Ausgenommen technisch veränderte Neufahrzeuge gem. § 13 EG-FGV",
     infoUrl: "",
   },

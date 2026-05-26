@@ -8,15 +8,15 @@ import {
 const items = [
   {
     q: "Lohnt sich der Service für mich?",
-    a: "Ja – besonders wenn Sie einen konkreten Wunschtermin haben, einen früheren Termin als aktuell verfügbar suchen, oder keine Zeit haben täglich selbst nachzuschauen. Die Zulassungsstelle bietet auch eine direkte Online-Buchung an – manchmal sind dort spontan freie Termine verfügbar. Unser Service übernimmt die tägliche Suche automatisch für Sie.",
+    a: "Ja – besonders wenn du einen konkreten Wunschtermin hast, einen früheren Termin als aktuell verfügbar suchst, oder keine Zeit hast, täglich selbst nachzuschauen. Die Zulassungsstelle bietet auch eine direkte Online-Buchung an – manchmal sind dort spontan freie Termine verfügbar. Unser Service übernimmt die tägliche Suche automatisch für dich.",
   },
   {
     q: "Wie schnell bekomme ich einen Termin?",
-    a: "Termine bei der Kölner Zulassungsstelle sind immer 14 Tage im Voraus buchbar – täglich kommen neue Slots dazu, manchmal sogar für denselben Tag. Wir prüfen das automatisch für Sie und buchen den ersten freien Termin an einem Ihrer Wunschtage. Je mehr Tage Sie auswählen, desto höher die Erfolgswahrscheinlichkeit.",
+    a: "Termine bei der Kölner Zulassungsstelle sind immer 14 Tage im Voraus buchbar – täglich kommen neue Slots dazu, manchmal sogar für denselben Tag. Wir prüfen das automatisch für dich und buchen den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Erfolgswahrscheinlichkeit.",
   },
   {
     q: "Was passiert wenn kein Termin gefunden wird?",
-    a: "Wir suchen täglich innerhalb Ihres gewählten Zeitraums – maximal 14 Tage. Wird in diesem Zeitraum kein passender Termin gefunden, erstatten wir Ihnen den vollen Betrag ohne Wenn und Aber.",
+    a: "Wir suchen täglich innerhalb deines gewählten Zeitraums – maximal 14 Tage. Wird in diesem Zeitraum kein passender Termin gefunden, erstatten wir dir den vollen Betrag ohne Wenn und Aber.",
   },
   {
     q: "Für welche Fahrzeuge gilt der Service?",
@@ -24,27 +24,27 @@ const items = [
   },
   {
     q: "Was muss ich zum Termin mitbringen?",
-    a: "Das hängt von Ihrem Anliegen ab. Bitte prüfen Sie vorab auf der Seite der Stadt Köln welche Unterlagen erforderlich sind. Wichtig: Bitte erscheinen Sie pünktlich – bei Verspätungen von mehr als 30 Minuten verfällt der Termin automatisch.",
+    a: "Das hängt von deinem Anliegen ab. Bitte prüfe vorab auf der Seite der Stadt Köln, welche Unterlagen erforderlich sind. Wichtig: Bitte erscheine pünktlich – bei Verspätungen von mehr als 30 Minuten verfällt der Termin automatisch.",
   },
   {
     q: "Was ist die Bestätigungsmail der Zulassungsstelle?",
-    a: "Nach unserer Buchung schickt die Kölner Zulassungsstelle automatisch eine E-Mail an Sie mit einem Bestätigungslink. Diesen müssen Sie innerhalb von 3 Stunden anklicken – sonst verfällt der Termin unwiderruflich.",
+    a: "Nach unserer Buchung schickt die Kölner Zulassungsstelle automatisch eine E-Mail an dich mit einem Bestätigungslink. Diesen musst du innerhalb von 3 Stunden anklicken – sonst verfällt der Termin unwiderruflich.",
   },
   {
     q: "Was passiert wenn ich die Bestätigungsmail verpasse?",
-    a: "Leider können wir keinen Ersatz garantieren wenn der Termin durch eine verpasste Bestätigung verfällt. Bitte halten Sie Ihr E-Mail-Postfach bereit sobald Sie bei uns gebucht haben.",
+    a: "Leider können wir keinen Ersatz garantieren, wenn der Termin durch eine verpasste Bestätigung verfällt. Bitte halte dein E-Mail-Postfach bereit, sobald du bei uns gebucht hast.",
   },
   {
     q: "Kann ich eine Uhrzeit wählen?",
-    a: "Nein. Wir buchen den erstmöglichen freien Slot an einem Ihrer Wunschtage. Eine Uhrzeitauswahl ist nicht möglich.",
+    a: "Nein. Wir buchen den erstmöglichen freien Slot an einem deiner Wunschtage. Eine Uhrzeitauswahl ist nicht möglich.",
   },
   {
     q: "Muss ich einen Account anlegen?",
-    a: "Nein. Kein Login, kein Passwort. Alles läuft über Ihre E-Mail-Adresse.",
+    a: "Nein. Kein Login, kein Passwort. Alles läuft über deine E-Mail-Adresse.",
   },
   {
     q: "Gibt es Anliegen die ich ohne Termin erledigen kann?",
-    a: "Ja – sogenannte Kurzanliegen wie Abmeldung, Adressänderung, Ersatzkennzeichen oder Feinstaubplakette können Sie ohne Termin direkt bei der Zulassungsstelle erledigen. Servicezeiten: Mo 8–12h | Di 10–15h | Mi 8–12h | Do 9–14h | Fr 8–12h. Bitte melden Sie sich beim Wachpersonal am Eingang.",
+    a: "Ja – sogenannte Kurzanliegen wie Abmeldung, Adressänderung, Ersatzkennzeichen oder Feinstaubplakette kannst du ohne Termin direkt bei der Zulassungsstelle erledigen. Servicezeiten: Mo 8–12h | Di 10–15h | Mi 8–12h | Do 9–14h | Fr 8–12h. Bitte melde dich beim Wachpersonal am Eingang.",
   },
 ];
 

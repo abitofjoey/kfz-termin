@@ -23,7 +23,7 @@ export function Pricing({ onSelect }: Props) {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Unsere Services</h2>
           <p className="mt-4 text-muted-foreground">
-            Wählen Sie Ihre Dienstleistung – einheitlicher Preis, keine versteckten Kosten.
+            Wähle deine Dienstleistung – einheitlicher Preis, keine versteckten Kosten.
           </p>
         </div>
 

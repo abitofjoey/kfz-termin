@@ -55,9 +55,9 @@ export function InfoBlock() {
             </a>
           </div>
           <p className="mt-5 text-xs text-muted-foreground">
-            Manche Anliegen können Sie komplett online ohne Termin erledigen.
-            Unser Service lohnt sich wenn Sie einen konkreten Wunschtermin
-            benötigen oder keine Zeit haben täglich selbst nachzuschauen.
+            Manche Anliegen kannst du komplett online ohne Termin erledigen.
+            Unser Service lohnt sich, wenn du einen konkreten Wunschtermin
+            brauchst oder keine Zeit hast, täglich selbst nachzuschauen.
           </p>
         </div>
       </div>
