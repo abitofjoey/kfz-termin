@@ -32,7 +32,7 @@ const items = [
   },
   {
     q: "Was passiert wenn ich die Bestätigungsmail verpasse?",
-    a: "Leider können wir keinen Ersatz garantieren, wenn der Termin durch eine verpasste Bestätigung verfällt. Bitte halte dein E-Mail-Postfach bereit, sobald du bei uns gebucht hast.",
+    a: "Leider können wir keinen Ersatz garantieren, wenn der Termin durch eine verpasste Bestätigung verfällt. Bitte prüfe regelmäßig dein E-Mail-Postfach, sobald du bei uns gebucht hast.",
   },
   {
     q: "Kann ich eine Uhrzeit wählen?",
