@@ -16,13 +16,12 @@ export function CookieBanner() {
       <h2 className="text-base font-semibold text-foreground">Cookies & Analyse</h2>
       <p className="mt-2 text-sm text-muted-foreground">
         Wir verwenden technisch notwendige Cookies, damit die Website funktioniert. Mit deiner
-        Einwilligung nutzen wir zusätzlich Google Analytics und Hotjar, um die Seite zu verbessern,
-        sowie Google Ads zur Erfolgsmessung unserer Anzeigen. Du kannst deine Auswahl jederzeit
-        widerrufen.{" "}
+        Einwilligung nutzen wir zusätzlich Analyse-Cookies, um die Seite zu verbessern, sowie
+        Marketing-Cookies zur Erfolgsmessung unserer Anzeigen. Du kannst deine Auswahl jederzeit
+        widerrufen oder in den Einstellungen anpassen.{" "}
         <Link to="/datenschutz" className="text-accent underline">
           Mehr Infos
         </Link>
-        .
       </p>
       <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
         <button
