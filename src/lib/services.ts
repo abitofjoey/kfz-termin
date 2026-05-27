@@ -73,7 +73,7 @@ export const SERVICES: Service[] = [
     label: "Saisonkennzeichen",
     shortLabel: "Saisonkennzeichen",
     subtitle: "Saisonzeiträume festlegen, ändern oder löschen",
-    infoUrl: "",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00732/index.html",
   },
   {
     id: "kurzzeitkennzeichen",
