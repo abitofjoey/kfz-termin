@@ -45,7 +45,7 @@ export const SERVICES: Service[] = [
     label: "Kennzeichenwechsel",
     shortLabel: "Kennzeichenwechsel",
     subtitle: "Umkennzeichnung auf Wunsch",
-    infoUrl: "",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00746/index.html",
   },
   {
     id: "technische-aenderung",
