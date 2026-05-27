@@ -121,17 +121,92 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">9. Cookies</h2>
+        <h2 className="text-lg font-semibold">9. Cookies & Einwilligung</h2>
         <p className="mt-2">
-          Wir setzen ausschließlich technisch notwendige Cookies bzw. lokalen Speicher ein, die
-          für den Betrieb der Website und der Buchungsfunktion erforderlich sind (Art. 6 Abs. 1
-          lit. f DSGVO bzw. § 25 Abs. 2 Nr. 2 TDDDG). Wir verwenden derzeit keine
-          Analyse-, Tracking- oder Marketing-Cookies.
+          Wir setzen technisch notwendige Cookies bzw. lokalen Speicher ein, die für den Betrieb
+          der Website und der Buchungsfunktion erforderlich sind (Rechtsgrundlage § 25 Abs. 2 Nr. 2
+          TDDDG i. V. m. Art. 6 Abs. 1 lit. f DSGVO). Darüber hinaus verwenden wir Analyse- und
+          Marketing-Dienste ausschließlich auf Grundlage deiner Einwilligung gemäß § 25 Abs. 1
+          TDDDG i. V. m. Art. 6 Abs. 1 lit. a DSGVO. Beim ersten Besuch der Website fragen wir dich
+          über ein Consent-Banner nach deiner Einwilligung. Du kannst deine Auswahl jederzeit über
+          den Link „Cookie-Einstellungen" im Footer ändern oder widerrufen. Die Rechtmäßigkeit der
+          bis zum Widerruf erfolgten Verarbeitung bleibt unberührt.
         </p>
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">10. Deine Rechte</h2>
+        <h2 className="text-lg font-semibold">10. Google Analytics 4</h2>
+        <p className="mt-2">
+          Bei erteilter Einwilligung nutzen wir Google Analytics 4, einen Webanalysedienst der
+          Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Mess-ID:
+          G-NQXH96FZW3. Google Analytics verwendet Cookies (z. B. <code>_ga</code>, <code>_ga_*</code>),
+          die eine Analyse der Benutzung der Website ermöglichen. Wir nutzen die IP-Anonymisierung,
+          sodass deine IP-Adresse vor jeder weiteren Verarbeitung gekürzt wird.
+          Die Daten werden u. a. an Server von Google in den USA übertragen; Google LLC ist nach dem
+          EU-US Data Privacy Framework zertifiziert. Ergänzend bestehen Standardvertragsklauseln
+          gemäß Art. 46 DSGVO. Speicherdauer der Analyse-Cookies max. 14 Monate. Rechtsgrundlage:
+          Art. 6 Abs. 1 lit. a DSGVO. Widerruf jederzeit über die Cookie-Einstellungen oder per
+          Browser-Add-on:{" "}
+          <a
+            className="text-accent underline"
+            href="https://tools.google.com/dlpage/gaoptout"
+            target="_blank"
+            rel="noreferrer"
+          >
+            tools.google.com/dlpage/gaoptout
+          </a>
+          .
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-semibold">11. Hotjar</h2>
+        <p className="mt-2">
+          Bei erteilter Einwilligung nutzen wir Hotjar, einen Analyse-Dienst der Hotjar Ltd., Level
+          2, St Julians Business Centre, 3, Elia Zammit Street, St Julians STJ 1000, Malta
+          (Site-ID 6719467). Hotjar erfasst Nutzungsverhalten (Mausbewegungen, Klicks, Scrolltiefe)
+          und erstellt daraus Heatmaps und pseudonymisierte Session-Aufzeichnungen, um die
+          Benutzerfreundlichkeit zu verbessern. Es werden Cookies mit dem Präfix <code>_hj*</code>
+          gesetzt. Tastatureingaben in Eingabefelder werden standardmäßig unterdrückt. Die
+          Verarbeitung erfolgt innerhalb der EU. Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO.
+          Widerruf jederzeit über die Cookie-Einstellungen oder hier:{" "}
+          <a
+            className="text-accent underline"
+            href="https://www.hotjar.com/legal/compliance/opt-out"
+            target="_blank"
+            rel="noreferrer"
+          >
+            hotjar.com/legal/compliance/opt-out
+          </a>
+          . Weitere Informationen:{" "}
+          <a
+            className="text-accent underline"
+            href="https://www.hotjar.com/legal/policies/privacy"
+            target="_blank"
+            rel="noreferrer"
+          >
+            hotjar.com/legal/policies/privacy
+          </a>
+          .
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-semibold">12. Google Ads & Conversion-Tracking</h2>
+        <p className="mt-2">
+          Bei erteilter Einwilligung in die Kategorie „Marketing" setzen wir Google Ads
+          Conversion-Tracking und ggf. Remarketing der Google Ireland Limited, Gordon House, Barrow
+          Street, Dublin 4, Irland, ein. Dabei werden Cookies (insb. <code>_gcl_*</code>) gesetzt,
+          um zu messen, ob du nach einem Klick auf eine unserer Anzeigen eine Buchung abgeschlossen
+          hast. Eine direkte Identifikation deiner Person durch uns erfolgt nicht. Daten können an
+          Server von Google in den USA übertragen werden (EU-US Data Privacy Framework,
+          Standardvertragsklauseln gemäß Art. 46 DSGVO). Rechtsgrundlage: Art. 6 Abs. 1 lit. a
+          DSGVO. Widerruf jederzeit über die Cookie-Einstellungen.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-semibold">13. Deine Rechte</h2>
         <p className="mt-2">
           Dir stehen folgende Rechte zu: Recht auf Auskunft (Art. 15 DSGVO), Berichtigung
           (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertrag-
@@ -142,7 +217,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">11. Speicherdauer</h2>
+        <h2 className="text-lg font-semibold">14. Speicherdauer</h2>
         <p className="mt-2">
           Personenbezogene Daten werden gelöscht, sobald der Zweck der Verarbeitung entfällt und
           keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Abrechnungsrelevante Daten
