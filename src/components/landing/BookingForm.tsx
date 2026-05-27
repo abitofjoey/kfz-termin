@@ -218,20 +218,16 @@ export function BookingForm({ preselected }: Props) {
             <Input type="email" {...register("email")} autoComplete="email" />
           </Field>
 
+          <Field label="Telefonnummer" error={errors.phone?.message}>
+            <Input type="tel" {...register("phone")} autoComplete="tel" />
+          </Field>
+
           <div className="flex items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground -mt-3">
             <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
             <p>
-              <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben, erhältst du eine E-Mail mit einem Bestätigungslink. Bitte klicke diesen <strong>innerhalb von 3 Stunden</strong> an – andernfalls verfällt der Termin unwiderruflich.
+              📱 Die Kölner Zulassungsstelle sendet dir nach der Buchung eine Bestätigungsmail – bitte klicke den Link darin <strong>innerhalb von 3 Stunden</strong> an. Damit du nichts verpasst, schicken wir dir zusätzlich eine SMS und E-Mail als Erinnerung.
             </p>
           </div>
-
-          <Field
-            label="Telefonnummer"
-            error={errors.phone?.message}
-            hint="Wir senden Ihnen eine SMS und E-Mail sobald ein Termin für Sie gefunden wurde – damit Sie die Bestätigungsmail rechtzeitig anklicken können."
-          >
-            <Input type="tel" {...register("phone")} autoComplete="tel" />
-          </Field>
 
           <Field
             label="FIN – letzte 4 Zeichen"
