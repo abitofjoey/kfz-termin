@@ -309,6 +309,14 @@ export function BookingForm({ preselected }: Props) {
               Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger
               Erbringung der Leistung erlischt (§ 356 Abs. 4 BGB).
             </CheckboxRow>
+            <CheckboxRow
+              control={control}
+              name="agree_authorization"
+              error={errors.agree_authorization?.message}
+            >
+              Ich beauftrage kfz-termin.online, in meinem Namen einen Termin bei der
+              Kfz-Zulassungsstelle zu buchen und meine Daten dafür zu übermitteln.
+            </CheckboxRow>
           </div>
 
           <Button
