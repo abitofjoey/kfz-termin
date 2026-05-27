@@ -192,16 +192,15 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">12. Google Ads & Conversion-Tracking</h2>
+        <h2 className="text-lg font-semibold">12. Google Ads – Conversion-Import aus Google Analytics 4</h2>
         <p className="mt-2">
-          Bei erteilter Einwilligung in die Kategorie „Marketing" setzen wir Google Ads
-          Conversion-Tracking und ggf. Remarketing der Google Ireland Limited, Gordon House, Barrow
-          Street, Dublin 4, Irland, ein. Dabei werden Cookies (insb. <code>_gcl_*</code>) gesetzt,
-          um zu messen, ob du nach einem Klick auf eine unserer Anzeigen eine Buchung abgeschlossen
-          hast. Eine direkte Identifikation deiner Person durch uns erfolgt nicht. Daten können an
-          Server von Google in den USA übertragen werden (EU-US Data Privacy Framework,
-          Standardvertragsklauseln gemäß Art. 46 DSGVO). Rechtsgrundlage: Art. 6 Abs. 1 lit. a
-          DSGVO. Widerruf jederzeit über die Cookie-Einstellungen.
+          Für die Messung unserer Werbeanzeigen bei Google Ads importieren wir Conversions
+          direkt aus Google Analytics 4 (Mess-ID G-NQXH96FZW3). Auf unserer Website wird dafür
+          kein eigenes Google Ads Conversion-Tag eingesetzt. Die erforderlichen Daten zur
+          Erfolgsmessung stammen aus den unter § 10 genannten Google Analytics 4-Cookies und
+          werden ausschließlich auf Grundlage deiner Einwilligung in die Kategorie
+          „Marketing" verarbeitet (Art. 6 Abs. 1 lit. a DSGVO). Widerruf jederzeit über die
+          Cookie-Einstellungen.
         </p>
       </section>
 

@@ -4,7 +4,6 @@ import { useConsent } from "@/lib/consent";
 const GA_ID = "G-NQXH96FZW3";
 const HOTJAR_ID = 6719467;
 const HOTJAR_SV = 6;
-// const GOOGLE_ADS_ID = "AW-XXXXXXXXX"; // wird aktiviert, sobald die ID vorliegt
 
 declare global {
   interface Window {
@@ -87,9 +86,6 @@ export function TrackingScripts() {
       loadGA();
       loadHotjar();
     }
-
-    // Google Ads-Script wird hier geladen, sobald die AW-ID nachgereicht ist.
-    // if (state.categories.marketing) loadScript("gads-script", `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`);
   }, [hydrated, state.categories.analytics, state.categories.marketing]);
 
   return null;
