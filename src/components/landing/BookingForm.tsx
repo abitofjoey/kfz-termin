@@ -49,6 +49,9 @@ const schema = z.object({
   agree_waiver: z.literal(true, {
     errorMap: () => ({ message: "Bitte zustimmen" }),
   }),
+  agree_authorization: z.literal(true, {
+    errorMap: () => ({ message: "Bitte zustimmen" }),
+  }),
 });
 
 type FormValues = z.infer<typeof schema>;
