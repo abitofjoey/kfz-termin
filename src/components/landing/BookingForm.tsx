@@ -225,7 +225,7 @@ export function BookingForm({ preselected }: Props) {
           <div className="flex items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground -mt-3">
             <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
             <p>
-              📱 Die Kölner Zulassungsstelle sendet dir nach der Buchung eine Bestätigungsmail – bitte klicke den Link darin <strong>innerhalb von 3 Stunden</strong> an. Damit du nichts verpasst, schicken wir dir zusätzlich eine SMS und E-Mail als Erinnerung.
+              Die Kölner Zulassungsstelle sendet dir nach der Buchung eine Bestätigungsmail – bitte klicke den Link darin <strong>innerhalb von 3 Stunden</strong> an. Damit du nichts verpasst, schicken wir dir zusätzlich eine SMS und E-Mail als Erinnerung.
             </p>
           </div>
 
