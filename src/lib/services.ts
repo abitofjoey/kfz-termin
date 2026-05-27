@@ -52,7 +52,7 @@ export const SERVICES: Service[] = [
     label: "Technische Änderung",
     shortLabel: "Technische Änderung",
     subtitle: "Änderung der Fahrzeugklasse, Eintragung von Zubehörteilen",
-    infoUrl: "",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00735/index.html",
   },
   {
     id: "wiederzulassung",
