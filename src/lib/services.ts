@@ -38,7 +38,7 @@ export const SERVICES: Service[] = [
     shortLabel: "Neufahrzeug",
     subtitle: "Erstzulassung deines neuen Fahrzeugs",
     note: "Ausgenommen technisch veränderte Neufahrzeuge gem. § 13 EG-FGV",
-    infoUrl: "",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00729/index.html",
   },
   {
     id: "kennzeichenwechsel",
