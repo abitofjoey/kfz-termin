@@ -91,9 +91,9 @@ export const Route = createFileRoute("/agb")({
           die folgende Erklärung abgeben:
         </p>
         <p className="mt-2 pl-4 border-l-2 border-accent italic">
-          „Ich verlange ausdrücklich, dass der Anbieter mit der Terminsuche bereits vor Ablauf der
-          Widerrufsfrist beginnt. Mir ist bekannt, dass ich mein Widerrufsrecht verliere, sobald
-          der Anbieter die Dienstleistung vollständig erbracht hat."
+          „Ich verlange ausdrücklich den sofortigen Beginn der Terminsuche vor Ablauf der
+          Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger Erbringung
+          der Leistung erlischt (§ 356 Abs. 4 BGB)."
         </p>
         <p className="mt-2">
           Mit dieser Zustimmung und der vollständigen Erbringung der Dienstleistung durch den

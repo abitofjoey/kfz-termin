@@ -302,8 +302,9 @@ export function BookingForm({ preselected }: Props) {
               name="agree_waiver"
               error={errors.agree_waiver?.message}
             >
-              Ich stimme zu, dass der Service sofort beginnt und verzichte
-              damit auf mein Widerrufsrecht gemäß § 356 Abs. 5 BGB.
+              Ich verlange ausdrücklich den sofortigen Beginn der Terminsuche vor Ablauf der
+              Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger
+              Erbringung der Leistung erlischt (§ 356 Abs. 4 BGB).
             </CheckboxRow>
           </div>
 
