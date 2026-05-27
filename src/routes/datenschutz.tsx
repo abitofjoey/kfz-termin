@@ -65,6 +65,12 @@ export const Route = createFileRoute("/datenschutz")({
           mehr erforderlich sind, vorbehaltlich gesetzlicher Aufbewahrungspflichten (insb. § 147
           AO, § 257 HGB).
         </p>
+        <p className="mt-2">
+          Die Telefonnummer wird ausschließlich genutzt, um den Kunden per SMS über einen
+          gefundenen Termin zu informieren und rechtzeitig an die erforderliche Bestätigung des
+          Termins zu erinnern. Eine Weitergabe der Telefonnummer an Dritte erfolgt nicht.
+          Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragsdurchführung).
+        </p>
       </section>
 
       <section>
