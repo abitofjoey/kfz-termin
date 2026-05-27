@@ -1,48 +1,51 @@
 ## Ziel
 
-Die Kunden-Buchungsbestätigung (`src/lib/email-templates/booking-confirmation.tsx`) inhaltlich und visuell an die Vorlage aus den Screenshots angleichen.
+Tracking (Hotjar, Google Analytics 4, Google Ads) DSGVO-konform integrieren: nichts lädt vor Einwilligung. Eigenes schlankes Cookie-Banner im Seiten-Stil, Datenschutzerklärung aktualisiert.
 
-## Änderungen an `src/lib/email-templates/booking-confirmation.tsx`
+## 1. Consent-System
 
-### Struktur (neue Reihenfolge)
+Neue Datei `src/lib/consent.tsx`:
+- Kategorien: `necessary` (immer an), `analytics` (GA4 + Hotjar), `marketing` (Google Ads).
+- React Context + Hook `useConsent()` mit `consent`, `setConsent(partial)`, `acceptAll()`, `rejectAll()`, `open()` (Settings öffnen).
+- Persistenz in `localStorage` unter `kfz-consent-v1` inkl. Timestamp und Version.
+- Custom Event `consent-changed` für Tracking-Loader.
 
-1. **Kopf**: Kleiner Brand-Eyebrow "KFZ-Termin Köln" über H1 "Buchungsbestätigung", danach feine Trennlinie.
-2. **Anrede + Intro**: „Hallo {Anrede Vorname Nachname}," + „vielen Dank für deine Buchung. Deine Zahlung ist eingegangen und wir haben deinen Auftrag erhalten. Wir beginnen ab sofort mit der Terminsuche bei der Kölner Zulassungsstelle."
-3. **Info-Box „So läuft es ab"** (blau hinterlegt, mit Uhr-Icon-Optik): Sobald Termin gefunden → Bestätigungs-E-Mail der Zulassungsstelle → 3 Stunden Bestätigungsfrist, sonst verfällt unwiderruflich.
-4. **Card „Deine Angaben"**: Name, E-Mail, Telefon, Service, FIN (letzte 4 Ziffern), Anmerkungen (nur wenn vorhanden).
-5. **Card „Gewünschte Termine"**: Liste mit Kalender-Glyph (📅 oder Unicode) pro Termin.
-6. **Card „Zahlung"**: Betrag 19,00 €, Umsatzsteuer-Hinweis (§ 19 UStG), darunter Fußnote „Die Zahlungsquittung erhältst du separat per E-Mail von Stripe."
-7. **Warn-Box „Bitte prüfe deine Angaben"** (warm/amber, Dreieck-Optik): Hinweis auf falsche Daten + „Antworte in diesem Fall einfach auf diese E-Mail."
-8. **Card „Widerrufsbelehrung"**: Text gemäß Vorlage inkl. „info@kfz-termin.online · Eike Hoffmann".
-9. **Footer**: „Bei Fragen antworte einfach auf diese E-Mail." + „info@kfz-termin.online" + „Herzliche Grüße / Dein Team von KFZ-Termin Köln".
+In `src/routes/__root.tsx` `<ConsentProvider>` um `<Outlet />` legen und `<CookieBanner />` + `<CookieSettingsDialog />` einbinden.
 
-### Inhaltliche Korrekturen vs. aktuelle Version
+## 2. Cookie-Banner
 
-- Intro-Text neu formulieren (aktuell: zwei Absätze, neu: ein Absatz wie oben).
-- Die „So läuft es ab"-Box ist **neu** im Mail-Body (war bisher nur auf der Success-Page).
-- FIN-Label ändern auf „FIN (letzte 4 Ziffern)".
-- „Bitte prüfe deine Angaben"-Hinweis (aktuell als `warnHint` vorhanden) wird zu einer eigenen Card mit Titel & Icon-Optik umgebaut, der Satz „oder deine Zulassung vor Ort abgewiesen werden" entfällt gemäß Vorlage.
-- Abschlusstext „Wir suchen jetzt für dich…" wird entfernt (durch die neue Info-Box oben ersetzt).
-- Neue Card **„Widerrufsbelehrung"** ergänzen (war bisher nicht in der E-Mail).
-- Footer: „info@kfz-termin.online" zusätzlich als eigene Zeile vor „Herzliche Grüße".
+Neue Komponenten:
+- `src/components/consent/CookieBanner.tsx`: Erscheint unten rechts/Mitte, wenn noch keine Entscheidung. Buttons: „Alle akzeptieren", „Nur notwendige", „Einstellungen". Stil mit bestehenden Tokens (`bg-background`, `border-border`, `text-foreground`, `bg-primary`). Link zu `/datenschutz`.
+- `src/components/consent/CookieSettingsDialog.tsx`: Modal mit Switches je Kategorie + Beschreibung (Anbieter, Zweck, Speicherdauer). „Auswahl speichern" + „Alle akzeptieren".
+- Footer-Link „Cookie-Einstellungen" (öffnet Dialog erneut) in `src/components/landing/Footer.tsx`.
 
-### Design / Styling
+## 3. Tracking-Loader
 
-- Body weiß (`#ffffff`), Container max. 560 px.
-- Typo: serifenlose Stack (Inter/Arial), H1 ~28 px bold, Eyebrow ~12 px uppercase grau.
-- Cards: heller Grauton (`#f7f8fa`), Border-Radius 10 px, Padding 20–22 px, Section-Title als kleines uppercase Label.
-- Info-Box „So läuft es ab": hellblauer Hintergrund (`#eaf2ff`), blauer Akzenttext (`#1a4fa3`), 1 px linker Akzentrand oder Border-Left.
-- Warn-Box „Bitte prüfe deine Angaben": warmes Amber (`#fef3c7` Hintergrund, `#78350f` Text).
-- Label/Value-Paare als zweispaltige Optik via `Row`/`Column` aus `@react-email/components` für saubere Tabellenoptik (Label links, Wert rechts), mit `Hr` als Trennern – statt aktueller gestapelter Variante.
-- Icons als Unicode-Glyphen (🕐, ⚠️, 📅) bzw. einfacher CSS-Punkt – keine externen Bilder.
+Neue Datei `src/lib/tracking.tsx` als Komponente `<TrackingScripts />` in `__root.tsx` eingebunden. Liest `useConsent()` und lädt/entlädt:
 
-### Keine Änderungen an
+- **Google Consent Mode v2**: Initial im `<head>` (immer) wird ein Default-Consent gesetzt mit allem `denied` (Script ohne Network-Call). Bei Zustimmung `gtag('consent','update', …)`.
+- **Google Analytics 4** (`G-NQXH96FZW3`): Script `https://www.googletagmanager.com/gtag/js?id=G-NQXH96FZW3` wird erst injiziert, wenn `analytics === true`. `anonymize_ip: true`.
+- **Hotjar** (`hjid: 6719467`): Loader-Snippet wird erst ausgeführt, wenn `analytics === true`.
+- **Google Ads**: Vorbereitet, aber nur aktiv wenn Ads-ID gesetzt ist (siehe offene Frage). Solange leer: kein Script, kein Banner-Text dazu.
 
-- Props-Interface / `templateData` (Felder bleiben gleich).
-- `previewData` (bleibt, ggf. Termine erweitern für besseres Vorschaubild).
-- Sende-Logik in `stripe.functions.ts`.
-- Interne Notification-Mail an den Betreiber.
+Bei Widerruf: entsprechende Skripte werden nicht erneut ausgeführt; die zugehörigen Cookies (`_ga*`, `_hj*`, `_gcl*`) werden aktiv via `document.cookie` (mit Domain `.kfz-termin.online` und `path=/`) gelöscht und ein Hinweis-Toast zeigt, dass ein Reload empfohlen ist.
+
+## 4. Datenschutz-Update `src/routes/datenschutz.tsx`
+
+Neue/aktualisierte Abschnitte:
+- **§ 9 Cookies & Einwilligung**: Erklärung Consent-Banner, Kategorien, Rechtsgrundlage § 25 Abs. 1 TDDDG + Art. 6 Abs. 1 lit. a DSGVO, Widerruf jederzeit über „Cookie-Einstellungen" im Footer.
+- **Neuer § 10 Google Analytics 4**: Anbieter Google Ireland Ltd., Mess-ID, Zwecke (Reichweitenmessung), IP-Anonymisierung, Speicherdauer, Datenübermittlung USA + Standardvertragsklauseln, Opt-out.
+- **Neuer § 11 Hotjar**: Anbieter Hotjar Ltd. (Malta), Site-ID 6719467, Zweck (Heatmaps, Session-Recordings), Speicherdauer, keine Übertragung in Drittländer ohne SCC, Opt-out-Link.
+- **Neuer § 12 Google Ads / Conversion-Tracking**: nur wenn AdsID kommt – Platzhalter-Abschnitt vorbereiten, Anbieter, Conversion-Cookies (`_gcl_*`), Remarketing-Hinweis.
+- Folgenummerierung anpassen, Stand auf Mai 2026 lassen / aktualisieren.
+
+Impressum unverändert.
+
+## 5. SSR-Sicherheit
+
+- Alle `window`/`document`-Zugriffe in `useEffect` oder Event-Handlern – keine Top-Level-Calls (TanStack Start SSR).
+- Banner rendert in einem `ClientOnly`-Pattern (Mount-Flag), um Hydration-Mismatch zu vermeiden.
 
 ## Offene Frage
 
-Keine – Inhalt & Designvorlage sind durch die beiden Screenshots eindeutig.
+- **Google Ads ID + Conversion-Label** fehlen noch. Ohne werden Code & Datenschutz-Abschnitt nur als deaktivierter Platzhalter vorbereitet; sobald du die ID nachreichst, aktiviere ich Ads + Conversion-Tracking (z. B. nach Stripe-Erfolg auf `/buchung-erfolgreich`).
