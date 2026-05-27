@@ -225,7 +225,11 @@ export function BookingForm({ preselected }: Props) {
             </p>
           </div>
 
-          <Field label="Telefonnummer" error={errors.phone?.message}>
+          <Field
+            label="Telefonnummer"
+            error={errors.phone?.message}
+            hint="Wir senden Ihnen eine SMS und E-Mail sobald ein Termin für Sie gefunden wurde – damit Sie die Bestätigungsmail rechtzeitig anklicken können."
+          >
             <Input type="tel" {...register("phone")} autoComplete="tel" />
           </Field>
 

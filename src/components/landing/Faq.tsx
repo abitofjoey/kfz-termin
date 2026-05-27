@@ -8,11 +8,11 @@ import {
 const items = [
   {
     q: "Lohnt sich der Service für mich?",
-    a: "Ja – besonders wenn du einen konkreten Wunschtermin hast, einen früheren Termin als aktuell verfügbar suchst, oder keine Zeit hast, täglich selbst nachzuschauen. Die Zulassungsstelle bietet auch eine direkte Online-Buchung an – manchmal sind dort spontan freie Termine verfügbar. Unser Service übernimmt die tägliche Suche automatisch für dich.",
+    a: "Ja – besonders wenn du einen konkreten Wunschtermin hast, einen früheren Termin als aktuell verfügbar suchst, oder keine Zeit hast, täglich selbst nachzuschauen. Die Zulassungsstelle bietet auch eine direkte Online-Buchung an – manchmal sind dort spontan freie Termine verfügbar. Unser Service übernimmt die Suche täglich von 7 bis 18 Uhr für dich.",
   },
   {
     q: "Wie schnell bekomme ich einen Termin?",
-    a: "Termine bei der Kölner Zulassungsstelle sind immer 14 Tage im Voraus buchbar – täglich kommen neue Slots dazu, manchmal sogar für denselben Tag. Wir prüfen das automatisch für dich und buchen den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Erfolgswahrscheinlichkeit.",
+    a: "Termine bei der Kölner Zulassungsstelle sind immer 14 Tage im Voraus buchbar – täglich kommen neue Slots dazu, manchmal sogar für denselben Tag. Wir prüfen das täglich von 7 bis 18 Uhr für dich und buchen den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Erfolgswahrscheinlichkeit.",
   },
   {
     q: "Was passiert wenn kein Termin gefunden wird?",

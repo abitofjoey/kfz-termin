@@ -16,7 +16,7 @@ export function Hero() {
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
             Neue Termine sind oft innerhalb von Minuten vergeben – unser System
-            prüft die Verfügbarkeit automatisch, rund um die Uhr. Für nur 19 €,
+            prüft die Verfügbarkeit täglich von 7 bis 18 Uhr. Für nur 19 €,
             ohne Stress und ohne tägliches Nachschauen.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -36,7 +36,7 @@ export function Hero() {
           <div className="mt-10 grid grid-cols-1 gap-4 text-sm text-white/80 sm:grid-cols-3">
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-accent" />
-              Suche rund um die Uhr
+              Suche täglich von 7 bis 18 Uhr
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-accent" />
