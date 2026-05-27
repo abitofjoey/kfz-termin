@@ -110,11 +110,27 @@ export const Route = createFileRoute("/agb")({
         </p>
         <p className="mt-2">
           <strong>Folgen des Widerrufs.</strong> Im Falle eines wirksamen Widerrufs werden die
-          gezahlten Beträge unverzüglich, spätestens binnen vierzehn Tagen, zurückerstattet. Hat
-          der Kunde den vorzeitigen Beginn der Dienstleistung verlangt und widerruft vor
-          vollständiger Erbringung, schuldet er einen angemessenen Betrag für die bis zum Widerruf
-          bereits erbrachte Leistung.
+          gezahlten Beträge unverzüglich, spätestens binnen vierzehn Tagen, zurückerstattet.
+          Im Einzelnen gilt:
         </p>
+        <ul className="mt-2 list-disc pl-6 space-y-1">
+          <li>
+            <strong>Widerruf vor Beginn der Terminsuche:</strong> vollständige Rückerstattung
+            des gezahlten Betrags.
+          </li>
+          <li>
+            <strong>Widerruf während laufender Suche (noch kein Termin gebucht):</strong>{" "}
+            Rückerstattung abzüglich eines angemessenen Betrags für die bis zum Widerruf
+            bereits erbrachte Sucharbeit (§ 357a Abs. 2 BGB). Dieser Betrag wird zeitanteilig
+            im Verhältnis zum vereinbarten Gesamtpreis und zum bis dahin betriebenen Aufwand
+            bemessen.
+          </li>
+          <li>
+            <strong>Widerruf nach vollständiger Erbringung</strong> (Termin gebucht und
+            Bestätigungs-E-Mail der Zulassungsstelle vorhanden, vgl. § 6): Das Widerrufsrecht
+            ist gemäß § 356 Abs. 4 BGB erloschen; eine Rückerstattung erfolgt nicht.
+          </li>
+        </ul>
       </section>
 
       <section>
