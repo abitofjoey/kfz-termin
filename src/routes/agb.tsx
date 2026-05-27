@@ -71,6 +71,14 @@ export const Route = createFileRoute("/agb")({
           gefunden werden können, erhält der Kunde den gezahlten Betrag
           vollständig zurückerstattet (Geld-zurück-Garantie).
         </p>
+        <p className="mt-2">
+          <strong>Vollständige Leistungserbringung.</strong> Die Dienstleistung gilt als
+          vollständig erbracht, sobald der Anbieter im Namen des Kunden einen Termin bei der
+          Kfz-Zulassungsstelle gebucht und eine Buchungs- bzw. Bestätigungs-E-Mail der
+          Zulassungsstelle erhalten hat. Ob der Kunde den gebuchten Termin anschließend
+          wahrnimmt oder eine zusätzliche Bestätigung innerhalb der Wahrnehmungsfrist abgibt,
+          ist für die Leistungserbringung unerheblich.
+        </p>
       </section>
 
       <section>
