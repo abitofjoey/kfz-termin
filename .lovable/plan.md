@@ -1,34 +1,48 @@
-# AGB-Anpassung Widerrufsrecht (§ 6 und § 7)
+## Ziel
 
-Ziel: Rechtssicher klarstellen, **wann** die Leistung als vollständig erbracht gilt (damit das Widerrufsrecht erlischt) und **was** passiert, wenn der Kunde während laufender Suche widerruft. Anlass: das Drei-Szenarien-Modell aus dem Chat (Suche läuft / Termin gebucht / Termin verfallen).
+Die Kunden-Buchungsbestätigung (`src/lib/email-templates/booking-confirmation.tsx`) inhaltlich und visuell an die Vorlage aus den Screenshots angleichen.
 
-## Änderungen
+## Änderungen an `src/lib/email-templates/booking-confirmation.tsx`
 
-### 1. `src/routes/agb.tsx` — § 6 ergänzen: Definition der Leistungserbringung
+### Struktur (neue Reihenfolge)
 
-Am Ende von § 6 einen neuen Absatz einfügen:
+1. **Kopf**: Kleiner Brand-Eyebrow "KFZ-Termin Köln" über H1 "Buchungsbestätigung", danach feine Trennlinie.
+2. **Anrede + Intro**: „Hallo {Anrede Vorname Nachname}," + „vielen Dank für deine Buchung. Deine Zahlung ist eingegangen und wir haben deinen Auftrag erhalten. Wir beginnen ab sofort mit der Terminsuche bei der Kölner Zulassungsstelle."
+3. **Info-Box „So läuft es ab"** (blau hinterlegt, mit Uhr-Icon-Optik): Sobald Termin gefunden → Bestätigungs-E-Mail der Zulassungsstelle → 3 Stunden Bestätigungsfrist, sonst verfällt unwiderruflich.
+4. **Card „Deine Angaben"**: Name, E-Mail, Telefon, Service, FIN (letzte 4 Ziffern), Anmerkungen (nur wenn vorhanden).
+5. **Card „Gewünschte Termine"**: Liste mit Kalender-Glyph (📅 oder Unicode) pro Termin.
+6. **Card „Zahlung"**: Betrag 19,00 €, Umsatzsteuer-Hinweis (§ 19 UStG), darunter Fußnote „Die Zahlungsquittung erhältst du separat per E-Mail von Stripe."
+7. **Warn-Box „Bitte prüfe deine Angaben"** (warm/amber, Dreieck-Optik): Hinweis auf falsche Daten + „Antworte in diesem Fall einfach auf diese E-Mail."
+8. **Card „Widerrufsbelehrung"**: Text gemäß Vorlage inkl. „info@kfz-termin.online · Eike Hoffmann".
+9. **Footer**: „Bei Fragen antworte einfach auf diese E-Mail." + „info@kfz-termin.online" + „Herzliche Grüße / Dein Team von KFZ-Termin Köln".
 
-> **Vollständige Leistungserbringung.** Die Dienstleistung gilt als vollständig erbracht, sobald der Anbieter im Namen des Kunden einen Termin bei der Kfz-Zulassungsstelle gebucht und eine Buchungs- bzw. Bestätigungs-E-Mail der Zulassungsstelle erhalten hat. Ob der Kunde den gebuchten Termin anschließend wahrnimmt oder eine zusätzliche Bestätigung innerhalb der Wahrnehmungsfrist abgibt, ist für die Leistungserbringung unerheblich.
+### Inhaltliche Korrekturen vs. aktuelle Version
 
-Damit ist Szenario 3 (Termin gebucht, Kunde bestätigt nicht innerhalb von 3h → Termin verfällt) abgedeckt: Leistung gilt als erbracht, kein Erstattungsanspruch.
+- Intro-Text neu formulieren (aktuell: zwei Absätze, neu: ein Absatz wie oben).
+- Die „So läuft es ab"-Box ist **neu** im Mail-Body (war bisher nur auf der Success-Page).
+- FIN-Label ändern auf „FIN (letzte 4 Ziffern)".
+- „Bitte prüfe deine Angaben"-Hinweis (aktuell als `warnHint` vorhanden) wird zu einer eigenen Card mit Titel & Icon-Optik umgebaut, der Satz „oder deine Zulassung vor Ort abgewiesen werden" entfällt gemäß Vorlage.
+- Abschlusstext „Wir suchen jetzt für dich…" wird entfernt (durch die neue Info-Box oben ersetzt).
+- Neue Card **„Widerrufsbelehrung"** ergänzen (war bisher nicht in der E-Mail).
+- Footer: „info@kfz-termin.online" zusätzlich als eigene Zeile vor „Herzliche Grüße".
 
-### 2. `src/routes/agb.tsx` — § 7 "Folgen des Widerrufs" präzisieren
+### Design / Styling
 
-Den bestehenden Absatz "Folgen des Widerrufs" (Zeilen 103–109) ergänzen, sodass die drei Szenarien klar geregelt sind:
+- Body weiß (`#ffffff`), Container max. 560 px.
+- Typo: serifenlose Stack (Inter/Arial), H1 ~28 px bold, Eyebrow ~12 px uppercase grau.
+- Cards: heller Grauton (`#f7f8fa`), Border-Radius 10 px, Padding 20–22 px, Section-Title als kleines uppercase Label.
+- Info-Box „So läuft es ab": hellblauer Hintergrund (`#eaf2ff`), blauer Akzenttext (`#1a4fa3`), 1 px linker Akzentrand oder Border-Left.
+- Warn-Box „Bitte prüfe deine Angaben": warmes Amber (`#fef3c7` Hintergrund, `#78350f` Text).
+- Label/Value-Paare als zweispaltige Optik via `Row`/`Column` aus `@react-email/components` für saubere Tabellenoptik (Label links, Wert rechts), mit `Hr` als Trennern – statt aktueller gestapelter Variante.
+- Icons als Unicode-Glyphen (🕐, ⚠️, 📅) bzw. einfacher CSS-Punkt – keine externen Bilder.
 
-- **Widerruf vor Beginn der Suche:** volle Rückerstattung.
-- **Widerruf während laufender Suche (noch kein Termin gebucht):** Rückerstattung abzüglich eines angemessenen Betrags für die bis zum Widerruf bereits erbrachte Sucharbeit (§ 357a Abs. 2 BGB). Dieser Betrag wird zeitanteilig im Verhältnis zum vereinbarten Gesamtpreis bemessen.
-- **Widerruf nach vollständiger Erbringung** (Termin gebucht + Bestätigungs-E-Mail vorhanden): Widerrufsrecht erloschen, keine Rückerstattung.
+### Keine Änderungen an
 
-### 3. Keine Änderungen am Formular oder an der Checkbox
-
-Die Checkbox-Erklärung (§ 356 Abs. 4 BGB) passt weiterhin 1:1 und referenziert das Erlöschen "mit vollständiger Erbringung der Leistung" — diese ist nun in § 6 sauber definiert.
-
-## Was NICHT geändert wird
-
-- Geld-zurück-Garantie in § 6 (kein Termin im gewählten Zeitraum gefunden → 100 % zurück) bleibt unverändert.
-- Preise / Datenschutz / Auftrags-Checkbox bleiben unberührt.
+- Props-Interface / `templateData` (Felder bleiben gleich).
+- `previewData` (bleibt, ggf. Termine erweitern für besseres Vorschaubild).
+- Sende-Logik in `stripe.functions.ts`.
+- Interne Notification-Mail an den Betreiber.
 
 ## Offene Frage
 
-Soll der "angemessene Betrag" bei Widerruf während laufender Suche **konkret beziffert** werden (z. B. pauschal 30 % des Gesamtpreises) oder bewusst offen als "zeitanteilig nach Aufwand" formuliert bleiben? Die pauschale Variante ist transparenter für den Kunden, die offene Variante flexibler für dich.
+Keine – Inhalt & Designvorlage sind durch die beiden Screenshots eindeutig.
