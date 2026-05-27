@@ -10,6 +10,10 @@ import {
 
 import appCss from "../styles.css?url";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { ConsentProvider } from "@/lib/consent";
+import { CookieBanner } from "@/components/consent/CookieBanner";
+import { CookieSettingsDialog } from "@/components/consent/CookieSettingsDialog";
+import { TrackingScripts } from "@/lib/tracking";
 
 function NotFoundComponent() {
   return (
@@ -121,8 +125,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <WhatsAppButton />
+      <ConsentProvider>
+        <Outlet />
+        <WhatsAppButton />
+        <TrackingScripts />
+        <CookieBanner />
+        <CookieSettingsDialog />
+      </ConsentProvider>
     </QueryClientProvider>
   );
 }
