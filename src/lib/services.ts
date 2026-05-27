@@ -59,7 +59,7 @@ export const SERVICES: Service[] = [
     label: "Wiederzulassung",
     shortLabel: "Wiederzulassung",
     subtitle: "Wiederzulassung eines Fahrzeugs auf dieselbe Person",
-    infoUrl: "",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00740/index.html",
   },
   {
     id: "h-kennzeichen",
