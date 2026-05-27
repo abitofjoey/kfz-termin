@@ -20,11 +20,11 @@ const items = [
   },
   {
     q: "Für welche Fahrzeuge gilt der Service?",
-    a: "Für die Anmeldung von Gebrauchtfahrzeugen (ausgenommen ausländische Fahrzeuge) und Neufahrzeugen (ausgenommen technisch veränderte Neufahrzeuge gem. § 13 EG-FGV) bei der Kölner Kfz-Zulassungsstelle.",
+    a: "Wir unterstützen alle auf dieser Seite aufgeführten Anliegen – von der Fahrzeuganmeldung über Kennzeichenwechsel und technische Änderungen bis hin zu H-Kennzeichen, Saisonkennzeichen und mehr. Über die \"Infos Stadt Köln\"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln.",
   },
   {
     q: "Was muss ich zum Termin mitbringen?",
-    a: "Das hängt von deinem Anliegen ab. Bitte prüfe vorab auf der Seite der Stadt Köln, welche Unterlagen erforderlich sind. Wichtig: Bitte erscheine pünktlich – bei Verspätungen von mehr als 30 Minuten verfällt der Termin automatisch.",
+    a: "Das hängt von deinem Anliegen ab. Über die \"Infos Stadt Köln\"-Links bei jedem Service oben auf dieser Seite findest du die offiziellen Informationen mit den genauen Unterlagen, die du benötigst. Wichtig: Bitte erscheine pünktlich – bei Verspätungen von mehr als 30 Minuten verfällt der Termin automatisch.",
   },
   {
     q: "Was ist die Bestätigungsmail der Zulassungsstelle?",
