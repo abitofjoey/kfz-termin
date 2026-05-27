@@ -66,7 +66,7 @@ export const SERVICES: Service[] = [
     label: "H-Kennzeichen",
     shortLabel: "H-Kennzeichen",
     subtitle: "Für historische Fahrzeuge – nur für Kölnerinnen und Kölner",
-    infoUrl: "",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00726/index.html",
   },
   {
     id: "saisonkennzeichen",
