@@ -30,7 +30,7 @@ export const SERVICES: Service[] = [
     shortLabel: "Gebrauchtfahrzeug",
     subtitle: "Umschreibung nach Zuzug oder bei Verkauf / Halterwechsel",
     note: "Ausgenommen ausländische Fahrzeuge",
-    infoUrl: "",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00737/index.html",
   },
   {
     id: "neu",
