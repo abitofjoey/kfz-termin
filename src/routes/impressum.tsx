@@ -6,7 +6,12 @@ export const Route = createFileRoute("/impressum")({
     meta: [
       { title: "Impressum – KFZ-Termin Köln" },
       { name: "description", content: "Impressum von KFZ-Termin Köln." },
+      { property: "og:title", content: "Impressum – KFZ-Termin Köln" },
+      { property: "og:description", content: "Impressum von KFZ-Termin Köln." },
+      { property: "og:url", content: "https://kfz-termin.online/impressum" },
+      { name: "robots", content: "noindex, follow" },
     ],
+    links: [{ rel: "canonical", href: "https://kfz-termin.online/impressum" }],
   }),
   component: () => (
     <LegalPage title="Impressum">

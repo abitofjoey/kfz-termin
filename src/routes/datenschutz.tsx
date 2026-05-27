@@ -6,7 +6,12 @@ export const Route = createFileRoute("/datenschutz")({
     meta: [
       { title: "Datenschutz – KFZ-Termin Köln" },
       { name: "description", content: "Datenschutzerklärung von KFZ-Termin Köln." },
+      { property: "og:title", content: "Datenschutz – KFZ-Termin Köln" },
+      { property: "og:description", content: "Datenschutzerklärung von KFZ-Termin Köln." },
+      { property: "og:url", content: "https://kfz-termin.online/datenschutz" },
+      { name: "robots", content: "noindex, follow" },
     ],
+    links: [{ rel: "canonical", href: "https://kfz-termin.online/datenschutz" }],
   }),
   component: () => (
     <LegalPage title="Datenschutzerklärung">
