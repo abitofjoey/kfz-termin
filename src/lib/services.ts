@@ -80,7 +80,7 @@ export const SERVICES: Service[] = [
     label: "Kurzzeitkennzeichen",
     shortLabel: "Kurzzeitkennzeichen",
     subtitle: "Für Probe- und Überführungsfahrten",
-    infoUrl: "",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00728/index.html",
   },
   {
     id: "ausfuhrkennzeichen",
