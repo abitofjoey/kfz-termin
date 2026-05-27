@@ -374,7 +374,7 @@ function CheckboxRow({
   children,
 }: {
   control: any;
-  name: "agree_terms" | "agree_waiver";
+  name: "agree_terms" | "agree_waiver" | "agree_authorization";
   error?: string;
   children: React.ReactNode;
 }) {
