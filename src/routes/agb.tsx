@@ -6,7 +6,12 @@ export const Route = createFileRoute("/agb")({
     meta: [
       { title: "AGB – KFZ-Termin Köln" },
       { name: "description", content: "Allgemeine Geschäftsbedingungen von KFZ-Termin Köln." },
+      { property: "og:title", content: "AGB – KFZ-Termin Köln" },
+      { property: "og:description", content: "Allgemeine Geschäftsbedingungen von KFZ-Termin Köln." },
+      { property: "og:url", content: "https://kfz-termin.online/agb" },
+      { name: "robots", content: "noindex, follow" },
     ],
+    links: [{ rel: "canonical", href: "https://kfz-termin.online/agb" }],
   }),
   component: () => (
     <LegalPage title="Allgemeine Geschäftsbedingungen">
