@@ -87,7 +87,7 @@ export const SERVICES: Service[] = [
     label: "Ausfuhrkennzeichen",
     shortLabel: "Ausfuhrkennzeichen",
     subtitle: "Für die Ausfuhr eines Fahrzeugs ins Ausland",
-    infoUrl: "",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00720/index.html",
   },
 ];
 
