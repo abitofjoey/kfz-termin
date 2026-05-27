@@ -29,6 +29,12 @@ export const Route = createFileRoute("/agb")({
           vom Kunden bereitgestellten Daten in dessen Namen wahr. Der Anbieter ist weder mit der
           Stadt Köln noch mit der dortigen Zulassungsstelle geschäftlich oder rechtlich verbunden.
         </p>
+        <p className="mt-2">
+          (4) Nach erfolgreicher Terminbuchung sendet der Anbieter dem Kunden eine Erinnerung
+          per E-Mail und SMS an die im Formular angegebenen Kontaktdaten. Dies dient
+          ausschließlich dazu, den Kunden rechtzeitig auf die erforderliche Bestätigung des
+          Termins bei der Kfz-Zulassungsstelle hinzuweisen.
+        </p>
       </section>
 
       <section>
