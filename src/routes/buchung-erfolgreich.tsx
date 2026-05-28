@@ -11,6 +11,10 @@ export const Route = createFileRoute("/buchung-erfolgreich")({
     meta: [
       { title: "Buchung erfolgreich – KFZ-Termin Köln" },
       { name: "description", content: "Deine Buchung bei KFZ-Termin Köln war erfolgreich. Wir beginnen sofort mit der automatischen Terminsuche." },
+      { property: "og:title", content: "Buchung erfolgreich – KFZ-Termin Köln" },
+      { property: "og:description", content: "Vielen Dank! Deine Zahlung wurde bestätigt und unsere automatische Terminsuche bei der Kölner Zulassungsstelle läuft bereits." },
+      { property: "og:url", content: "https://kfz-termin.online/buchung-erfolgreich" },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   validateSearch: (search: Record<string, unknown>) => ({
