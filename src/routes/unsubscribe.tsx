@@ -3,6 +3,12 @@ import { useEffect, useState } from 'react'
 import { z } from 'zod'
 
 export const Route = createFileRoute('/unsubscribe')({
+  head: () => ({
+    meta: [
+      { title: "E-Mails abmelden – KFZ-Termin Köln" },
+      { name: "description", content: "Melde dich von E-Mail-Benachrichtigungen ab. Der Abmelde-Link ist personalisiert und sicher." },
+    ],
+  }),
   validateSearch: z.object({ token: z.string().optional() }),
   component: UnsubscribePage,
 })
