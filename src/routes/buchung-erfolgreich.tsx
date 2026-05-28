@@ -8,7 +8,10 @@ import { confirmCheckoutSession } from "@/lib/stripe.functions";
 
 export const Route = createFileRoute("/buchung-erfolgreich")({
   head: () => ({
-    meta: [{ title: "Buchung erfolgreich – KFZ-Termin Köln" }],
+    meta: [
+      { title: "Buchung erfolgreich – KFZ-Termin Köln" },
+      { name: "description", content: "Deine Buchung bei KFZ-Termin Köln war erfolgreich. Wir beginnen sofort mit der automatischen Terminsuche." },
+    ],
   }),
   validateSearch: (search: Record<string, unknown>) => ({
     session_id: typeof search.session_id === "string" ? search.session_id : undefined,

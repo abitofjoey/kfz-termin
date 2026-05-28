@@ -5,7 +5,10 @@ import { Footer } from "@/components/landing/Footer";
 
 export const Route = createFileRoute("/buchung-abgebrochen")({
   head: () => ({
-    meta: [{ title: "Buchung abgebrochen – KFZ-Termin Köln" }],
+    meta: [
+      { title: "Buchung abgebrochen – KFZ-Termin Köln" },
+      { name: "description", content: "Du hast den Bezahlvorgang abgebrochen. Keine Sorge, es wurde nichts berechnet." },
+    ],
   }),
   component: CancelPage,
 });
