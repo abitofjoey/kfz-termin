@@ -7,6 +7,10 @@ export const Route = createFileRoute('/unsubscribe')({
     meta: [
       { title: "E-Mails abmelden – KFZ-Termin Köln" },
       { name: "description", content: "Melde dich von E-Mail-Benachrichtigungen ab. Der Abmelde-Link ist personalisiert und sicher." },
+      { property: "og:title", content: "E-Mails abmelden – KFZ-Termin Köln" },
+      { property: "og:description", content: "Bestätige die Abmeldung von E-Mail-Benachrichtigungen von KFZ-Termin Köln über deinen persönlichen Link." },
+      { property: "og:url", content: "https://kfz-termin.online/unsubscribe" },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   validateSearch: z.object({ token: z.string().optional() }),

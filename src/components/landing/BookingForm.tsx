@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useId } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -166,60 +166,64 @@ export function BookingForm({ preselected }: Props) {
         >
           {/* Service */}
           <Field label="Dienstleistung" error={errors.service_type?.message}>
-            <Controller
-              control={control}
-              name="service_type"
-              render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Bitte auswählen" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {SERVICES.map((s) => (
-                      <SelectItem key={s.id} value={s.id}>
-                        {s.label} – 19€
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-            />
-          </Field>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Anrede" error={errors.salutation?.message}>
+            {(id) => (
               <Controller
                 control={control}
-                name="salutation"
+                name="service_type"
                 render={({ field }) => (
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger>
+                    <SelectTrigger id={id}>
                       <SelectValue placeholder="Bitte auswählen" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Herr">Herr</SelectItem>
-                      <SelectItem value="Frau">Frau</SelectItem>
-                      <SelectItem value="Divers">Divers</SelectItem>
+                      {SERVICES.map((s) => (
+                        <SelectItem key={s.id} value={s.id}>
+                          {s.label} – 19€
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 )}
               />
+            )}
+          </Field>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Anrede" error={errors.salutation?.message}>
+              {(id) => (
+                <Controller
+                  control={control}
+                  name="salutation"
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger id={id}>
+                        <SelectValue placeholder="Bitte auswählen" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Herr">Herr</SelectItem>
+                        <SelectItem value="Frau">Frau</SelectItem>
+                        <SelectItem value="Divers">Divers</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              )}
             </Field>
             <div /> {/* spacer */}
             <Field label="Vorname" error={errors.first_name?.message}>
-              <Input {...register("first_name")} autoComplete="given-name" />
+              {(id) => <Input id={id} {...register("first_name")} autoComplete="given-name" />}
             </Field>
             <Field label="Nachname" error={errors.last_name?.message}>
-              <Input {...register("last_name")} autoComplete="family-name" />
+              {(id) => <Input id={id} {...register("last_name")} autoComplete="family-name" />}
             </Field>
           </div>
 
           <Field label="E-Mail" error={errors.email?.message}>
-            <Input type="email" {...register("email")} autoComplete="email" />
+            {(id) => <Input id={id} type="email" {...register("email")} autoComplete="email" />}
           </Field>
 
           <Field label="Telefonnummer" error={errors.phone?.message}>
-            <Input type="tel" {...register("phone")} autoComplete="tel" />
+            {(id) => <Input id={id} type="tel" {...register("phone")} autoComplete="tel" />}
           </Field>
 
           <div className="flex items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground -mt-3">
@@ -234,13 +238,17 @@ export function BookingForm({ preselected }: Props) {
             error={errors.fin_1?.message}
             hint="Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
           >
-            <Input
-              {...register("fin_1")}
-              maxLength={4}
-              className="uppercase tracking-widest"
-              placeholder="z.B. 4F8K"
-            />
+            {(id) => (
+              <Input
+                id={id}
+                {...register("fin_1")}
+                maxLength={4}
+                className="uppercase tracking-widest"
+                placeholder="z.B. 4F8K"
+              />
+            )}
           </Field>
+
 
           {/* Calendar */}
           <Field
@@ -353,12 +361,13 @@ function Field({
   label: string;
   hint?: string;
   error?: string;
-  children: React.ReactNode;
+  children: React.ReactNode | ((id: string) => React.ReactNode);
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label className="text-sm font-medium">{label} *</Label>
-      {children}
+      <Label htmlFor={id} className="text-sm font-medium">{label} *</Label>
+      {typeof children === "function" ? children(id) : children}
       {hint && !error && (
         <p className="text-xs text-muted-foreground">{hint}</p>
       )}

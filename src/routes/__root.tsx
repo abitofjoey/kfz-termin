@@ -99,6 +99,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "KFZ-Termin Köln",
+          url: "https://kfz-termin.online",
+          logo: "https://kfz-termin.online/icon-512.png",
+          email: "info@kfz-termin.online",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Longericher Str. 31",
+            postalCode: "50739",
+            addressLocality: "Köln",
+            addressCountry: "DE",
+          },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "KFZ-Termin Köln",
+          url: "https://kfz-termin.online",
+          inLanguage: "de-DE",
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

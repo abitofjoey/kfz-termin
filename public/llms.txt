@@ -1,0 +1,12 @@
+# KFZ-Termin Köln
+
+> Automatisierte Terminsuche bei der Kölner Kfz-Zulassungsstelle. Wir buchen täglich von 7 bis 18 Uhr im Auftrag des Kunden einen freien Termin – mit Geld-zurück-Garantie ab 19 €.
+
+KFZ-Termin Köln ist ein Dienst von Eike Hoffmann (Köln, Deutschland). Kunden geben ihre Wunschtermine und Kfz-Daten an, die Plattform sucht automatisiert nach einem freien Termin bei der Zulassungsstelle der Stadt Köln und bucht diesen im Namen des Kunden. Der Dienst ist weder mit der Stadt Köln noch mit der dortigen Zulassungsstelle geschäftlich oder rechtlich verbunden.
+
+## Pages
+
+- [Startseite](/): Leistungsbeschreibung, Ablauf, Preise (ab 19 €), FAQ und Buchungsformular.
+- [Impressum](/impressum): Anbieterkennzeichnung gemäß § 5 DDG.
+- [Datenschutz](/datenschutz): Datenschutzerklärung nach DSGVO, inkl. Rechtsgrundlagen der Datenverarbeitung.
+- [AGB](/agb): Allgemeine Geschäftsbedingungen, u.a. Leistungsumfang, Vergütung, Widerrufsrecht.
