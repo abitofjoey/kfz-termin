@@ -30,9 +30,11 @@ export const Route = createFileRoute("/agb")({
         <p className="mt-2">
           Der Anbieter stellt einen Service zur automatisierten Terminsuche bei der
           Zulassungsstelle der Stadt Köln zur Verfügung. Der Anbieter sucht im Auftrag des Kunden
-          nach einem freien Termin im vom Kunden gewünschten Zeitraum und nimmt diesen mit den
-          vom Kunden bereitgestellten Daten in dessen Namen wahr. Der Anbieter ist weder mit der
-          Stadt Köln noch mit der dortigen Zulassungsstelle geschäftlich oder rechtlich verbunden.
+          nach einem freien Termin im vom Kunden gewünschten Zeitraum und bucht diesen mit den
+          vom Kunden bereitgestellten Daten in dessen Namen. Die Wahrnehmung des Termins
+          (Erscheinen bei der Kfz-Zulassungsstelle) erfolgt durch den Kunden selbst. Der Anbieter
+          ist weder mit der Stadt Köln noch mit der dortigen Zulassungsstelle geschäftlich oder
+          rechtlich verbunden.
         </p>
         <p className="mt-2">
           (4) Nach erfolgreicher Terminbuchung sendet der Anbieter dem Kunden eine Erinnerung
