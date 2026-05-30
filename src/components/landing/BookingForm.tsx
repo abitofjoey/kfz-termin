@@ -178,7 +178,7 @@ export function BookingForm({ preselected }: Props) {
                     <SelectContent>
                       {SERVICES.map((s) => (
                         <SelectItem key={s.id} value={s.id}>
-                          {s.label} – 19€
+                          {s.label} – 9,99 €
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -339,12 +339,12 @@ export function BookingForm({ preselected }: Props) {
                 Wird verarbeitet...
               </>
             ) : (
-              "Jetzt für 19 € buchen"
+              "Jetzt für 9,99 € buchen"
             )}
           </Button>
 
           <p className="text-center text-xs text-muted-foreground">
-            19,00 € inkl. aller Gebühren (keine USt.) · Sichere Zahlung über Stripe · Bestätigungs-E-Mail direkt nach der Buchung
+            9,99 € inkl. aller Gebühren (keine USt.) · Sichere Zahlung über Stripe · Bestätigungs-E-Mail direkt nach der Buchung
           </p>
         </form>
       </div>

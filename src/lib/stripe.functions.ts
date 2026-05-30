@@ -40,14 +40,14 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      payment_method_types: ["card"],
+      automatic_payment_methods: { enabled: true },
       customer_email: booking.email,
       line_items: [
         {
           quantity: 1,
           price_data: {
             currency: "eur",
-            unit_amount: 1900,
+            unit_amount: 999,
             product_data: {
               name: booking.service_type,
               description: "KFZ-Termin Köln – Terminservice bei der Zulassungsstelle",
