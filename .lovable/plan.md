@@ -1,30 +1,48 @@
-## Änderungen
+# Plan: Preis 9,99 € + zusätzliche Zahlungsmethoden
 
-### 1) Formulierungen zur Suchzeit vereinheitlichen → „täglich von 7 bis 18 Uhr"
+## 1. Preis von 19 € auf 9,99 € ändern
 
-Ersetzt werden nur Stellen, die sich auf die **Suchzeit** beziehen. Allgemeine „automatisch"-Stellen (z. B. automatische Buchung, automatische Bestätigungs-E-Mail der Zulassungsstelle, Stripe-Quittung) und „jederzeit" im Kontext von Cookie-Einwilligung/Widerruf bleiben unverändert.
+Alle Fundstellen werden konsistent angepasst:
 
-- `src/components/landing/Hero.tsx`
-  - Zeile 19–20: „prüft die Verfügbarkeit automatisch, rund um die Uhr." → „prüft die Verfügbarkeit täglich von 7 bis 18 Uhr."
-  - Zeile 39 (Badge): „Suche rund um die Uhr" → „Suche täglich von 7 bis 18 Uhr"
-  - Zeile 15 („automatisch gebucht.") bleibt – bezieht sich auf das Buchen, nicht auf die Suchzeit.
-- `src/components/landing/Pricing.tsx`
-  - Zeile 10: „Suche rund um die Uhr" → „Suche täglich von 7 bis 18 Uhr"
-- `src/components/landing/Steps.tsx`
-  - Zeile 20: „… unser System prüft die Verfügbarkeit automatisch, rund um die Uhr." → „… unser System prüft die Verfügbarkeit täglich von 7 bis 18 Uhr."
-  - Zeile 26 („automatische E-Mail der Zulassungsstelle") bleibt – Mail-Versand, keine Suchzeit.
-- `src/components/landing/Faq.tsx`
-  - Zeile 11: „Unser Service übernimmt die tägliche Suche automatisch für dich." → „Unser Service prüft täglich von 7 bis 18 Uhr für dich."
-  - Zeile 15: „Wir prüfen das automatisch für dich …" → „Wir prüfen das täglich von 7 bis 18 Uhr für dich …"
-  - Zeilen 19, 27, 31 bleiben – beziehen sich nicht auf die Suchzeit.
+| Datei | Stelle | Alt → Neu |
+|---|---|---|
+| `src/lib/stripe.functions.ts` | `unit_amount: 1900` | `999` (Cent) |
+| `src/components/landing/BookingForm.tsx` | „19€" im Service-Dropdown | „9,99 €" |
+| `src/components/landing/BookingForm.tsx` | Button „Jetzt für 19 € buchen" | „Jetzt für 9,99 € buchen" |
+| `src/components/landing/BookingForm.tsx` | Hinweistext „19,00 € inkl. aller Gebühren …" | „9,99 € …" |
+| `src/components/landing/Pricing.tsx` | „19€ einmalig" Preis-Kachel | „9,99 €" |
+| `src/components/landing/Hero.tsx` | „Für nur 19 €" | „Für nur 9,99 €" |
+| `src/routes/index.tsx` | Meta-Description „Ab 19 €." | „Ab 9,99 €." |
+| `src/routes/agb.tsx` | „19,00 € pro Auftrag" | „9,99 € pro Auftrag" |
+| `src/lib/email-templates/booking-confirmation.tsx` | Bestätigungs-Mail „Betrag 19,00 €" | „9,99 €" |
 
-Nicht angefasst (kein Suchzeit-Bezug): `__root.tsx`/`index.tsx` Meta-Descriptions („Automatische Terminsuche"), Datenschutz/Cookie-Texte mit „jederzeit", `stripe.functions.ts`, `buchung-abgebrochen.tsx`.
+Ich greppe nach dem Commit nochmal nach „19" / „1900", damit nichts vergessen wurde.
 
-### 2) Hilfetext beim Telefonfeld im Buchungsformular
+## 2. PayPal & weitere Zahlungsmethoden bei Stripe Checkout
 
-- `src/components/landing/BookingForm.tsx`: Das `<Field label="Telefonnummer" …>` erhält einen `hint`-Prop (wird bereits von der `Field`-Komponente unter dem Input gerendert):
-  
-  „Wir senden Ihnen eine SMS und E-Mail sobald ein Termin für Sie gefunden wurde – damit Sie die Bestätigungsmail rechtzeitig anklicken können."
+**Was im Code passiert:**
+In `src/lib/stripe.functions.ts` ist Checkout aktuell hart auf Karte begrenzt:
+```ts
+payment_method_types: ["card"],
+```
+Ich ersetze das durch Stripes „Automatic Payment Methods":
+```ts
+automatic_payment_methods: { enabled: true },
+```
+Damit zeigt Stripe automatisch alle Zahlungsarten an, die in deinem Stripe-Konto aktiviert sind (Karte, PayPal, Klarna, Apple/Google Pay, Sofort, Giropay, etc.) – passend zum Gerät und Land des Käufers.
 
-### Hinweis
-Die Texte verwenden ansonsten durchgängig „du"/„dich". Der vom Nutzer vorgegebene Hilfetext ist im „Sie"-Stil – ich übernehme ihn **wörtlich** wie angegeben. Sag Bescheid, falls ich ihn auf „du" umformulieren soll („Wir senden dir eine SMS und E-Mail, sobald ein Termin für dich gefunden wurde – damit du die Bestätigungsmail rechtzeitig anklicken kannst.").
+**Was du in Stripe selbst machen musst:**
+Stripe Checkout zeigt nur Methoden, die in deinem Stripe-Konto freigeschaltet sind. PayPal & Co. müssen einmalig im Stripe-Dashboard aktiviert werden:
+
+1. Stripe-Dashboard → **Settings → Payments → Payment methods**
+2. PayPal, Klarna, Apple Pay, Google Pay, Sofort, Giropay etc. jeweils auf **„Turn on"** stellen.
+3. Bei PayPal: Stripe verbindet sich automatisch mit PayPal – kein eigenes PayPal-Konto nötig (Stripe wickelt die Auszahlung).
+
+**Produkt in Stripe anlegen?** Nein, nicht nötig. Wir nutzen `price_data` mit dynamischen Beträgen (kein Stripe-Produktkatalog), das funktioniert weiter wie bisher – nur der Betrag ändert sich auf 999 Cent.
+
+## Technische Hinweise
+
+- Preise in Stripe immer in **Cent als Integer** → `999` (nicht `9.99`).
+- `automatic_payment_methods` ist mit dem aktuellen `mode: "payment"` voll kompatibel.
+- `receipt_email` / Erfolgs-/Abbruch-URLs bleiben unverändert.
+- Keine DB-Migration nötig, der Preis wird nirgendwo in der Datenbank gespeichert.
