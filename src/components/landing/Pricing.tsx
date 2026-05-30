@@ -81,7 +81,9 @@ export function Pricing({ onSelect }: Props) {
             ) : null}
 
             <div className="mt-6 flex items-baseline gap-1">
-              <span className="text-5xl font-bold text-primary">9,99 €</span>
+              <span className="text-5xl font-bold text-primary">
+                9<span className="text-3xl">,99 €</span>
+              </span>
               <span className="text-sm text-muted-foreground">einmalig</span>
             </div>
 
