@@ -16,7 +16,7 @@ export function Hero() {
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
             Neue Termine sind oft innerhalb von Minuten vergeben – unser System
-            prüft die Verfügbarkeit täglich von 7 bis 18 Uhr. Für nur 19 €,
+            prüft die Verfügbarkeit täglich von 7 bis 18 Uhr. Für nur 9,99 €,
             ohne Stress und ohne tägliches Nachschauen.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

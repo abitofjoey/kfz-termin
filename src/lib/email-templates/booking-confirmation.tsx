@@ -87,7 +87,7 @@ const BookingConfirmationEmail = ({
 
           <Section style={card}>
             <Text style={cardTitle}>Zahlung</Text>
-            <DataRow label="Betrag" value="19,00 €" />
+            <DataRow label="Betrag" value="9,99 €" />
             <DataRow
               label="Umsatzsteuer"
               value="Keine USt. gem. § 19 UStG"

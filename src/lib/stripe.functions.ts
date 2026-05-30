@@ -40,14 +40,16 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      payment_method_types: ["card"],
+      // Keine payment_method_types setzen → Stripe Checkout zeigt automatisch
+      // alle im Dashboard aktivierten Zahlungsarten (Karte, PayPal, Klarna,
+      // Apple/Google Pay, Sofort, Giropay, …) passend zu Gerät und Land.
       customer_email: booking.email,
       line_items: [
         {
           quantity: 1,
           price_data: {
             currency: "eur",
-            unit_amount: 1900,
+            unit_amount: 999,
             product_data: {
               name: booking.service_type,
               description: "KFZ-Termin Köln – Terminservice bei der Zulassungsstelle",

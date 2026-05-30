@@ -54,7 +54,7 @@ export const Route = createFileRoute("/agb")({
       <section>
         <h2 className="text-lg font-semibold">§ 4 Preise und Zahlung</h2>
         <p className="mt-2">
-          Der Preis für die Terminbuchung beträgt 19,00 € pro Auftrag (Pauschalpreis). Der Preis
+          Der Preis für die Terminbuchung beträgt 9,99 € pro Auftrag (Pauschalpreis). Der Preis
           ist mit Vertragsschluss sofort fällig. Die Zahlung erfolgt über den Zahlungsdienstleister
           Stripe. Es gelten zusätzlich die AGB von Stripe. Gemäß § 19 UStG wird keine
           Umsatzsteuer ausgewiesen.

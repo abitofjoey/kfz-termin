@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Automatische Terminsuche bei der Kölner Zulassungsstelle – täglich von 7 bis 18 Uhr. Geld-zurück-Garantie. Ab 19 €.",
+          "Automatische Terminsuche bei der Kölner Zulassungsstelle – täglich von 7 bis 18 Uhr. Geld-zurück-Garantie. Ab 9,99 €.",
       },
       { property: "og:title", content: "KFZ-Termin Köln – Schneller Termin bei der Zulassungsstelle" },
       {
