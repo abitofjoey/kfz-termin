@@ -1,15 +1,12 @@
-## Ziel
-Den Satz in § 2 Leistungsbeschreibung der AGB (`src/routes/agb.tsx`) rechtlich präzisieren, damit klar wird: Der Anbieter bucht den Termin im Namen des Kunden, die tatsächliche Wahrnehmung (Erscheinen bei der Zulassungsstelle) liegt jedoch beim Kunden selbst.
+## Hinweis zu Halter:in-Daten im Buchungsformular ergänzen
 
-## Änderung
-**Aktueller Text:**
-> Der Anbieter sucht im Auftrag des Kunden nach einem freien Termin im vom Kunden gewünschten Zeitraum und nimmt diesen mit den vom Kunden bereitgestellten Daten in dessen Namen wahr.
+**Ziel:** Klar machen, dass alle eingegebenen Daten (Anrede, Vorname, Name, E-Mail, Telefon) die der **künftigen Halter:in des Fahrzeugs** sein müssen — nicht z. B. die einer dritten Person, die für jemanden bucht.
 
-**Neuer Text:**
-> Der Anbieter sucht im Auftrag des Kunden nach einem freien Termin im vom Kunden gewünschten Zeitraum und bucht diesen mit den vom Kunden bereitgestellten Daten in dessen Namen. Die Wahrnehmung des Termins erfolgt durch den Kunden selbst.
+**Ort:** `src/components/landing/BookingForm.tsx`, direkt unter der Headline „Jetzt Termin buchen" und der bestehenden Unterzeile, vor dem `<form>`.
 
-## Prüfung auf weitere Vorkommen
-Vor dem Commit wird geprüft, ob die alte Formulierung ("nimmt [...] wahr") auch in E-Mail-Templates, Meta-Beschreibungen oder anderen Rechtstexten vorkommt, damit die Aussage überall konsistent ist.
+**Umsetzung:**
+Eine dezente Info-Box (gleicher Stil wie der bestehende `warning`-Hinweis im Formular, mit `Info`-Icon) mit folgendem Text:
 
-## Dateien
-- `src/routes/agb.tsx`
+> **Wichtig:** Bitte gib die Daten der **künftigen Halterin / des künftigen Halters** des Fahrzeugs an (Anrede, Vor- und Nachname, E-Mail, Telefonnummer). Diese Angaben werden bei der Zulassungsstelle für die Terminbuchung verwendet.
+
+Keine Änderung an Formularfeldern, Validierung oder Server-Logik — rein visueller, klärender Hinweis.
