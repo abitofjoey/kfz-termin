@@ -1,17 +1,21 @@
+import eikeUrl from "@/assets/brand/eike.webp";
+
 export function Founder() {
   return (
     <section className="py-12">
       <div className="mx-auto max-w-3xl px-4">
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:gap-8">
           <img
-            src="https://jeh-digital.de/wp-content/uploads/2025/03/Eike-Hoffmann_Smile2.jpg"
+            src={eikeUrl}
             alt="Eike Hoffmann, Gründer von KFZ-Termin Köln"
             width={120}
             height={120}
             loading="lazy"
+            decoding="async"
             className="h-30 w-30 shrink-0 rounded-full object-cover"
             style={{ height: 120, width: 120 }}
           />
+
           <div className="text-center sm:text-left">
             <h2 className="text-xl font-bold">Wer steckt hinter KFZ-Termin.</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
