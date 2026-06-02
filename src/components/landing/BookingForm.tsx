@@ -229,16 +229,9 @@ export function BookingForm({ preselected }: Props) {
             {(id) => <Input id={id} type="email" {...register("email")} autoComplete="email" />}
           </Field>
 
-          <Field label="Telefonnummer" error={errors.phone?.message}>
+          <Field label="Telefonnummer" error={errors.phone?.message} hint="Nach der Buchung erhältst du eine Bestätigungsmail der Kölner Zulassungsstelle – bitte klicke den Link darin innerhalb von 3 Stunden an.">
             {(id) => <Input id={id} type="tel" {...register("phone")} autoComplete="tel" />}
           </Field>
-
-          <div className="flex items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground -mt-3">
-            <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
-            <p>
-              Die Kölner Zulassungsstelle sendet dir nach der Buchung eine Bestätigungsmail – bitte klicke den Link darin <strong>innerhalb von 3 Stunden</strong> an. Damit du nichts verpasst, schicken wir dir zusätzlich eine SMS und E-Mail als Erinnerung.
-            </p>
-          </div>
 
           <Field
             label="FIN – letzte 4 Zeichen"
@@ -320,9 +313,7 @@ export function BookingForm({ preselected }: Props) {
               name="agree_waiver"
               error={errors.agree_waiver?.message}
             >
-              Ich verlange ausdrücklich den sofortigen Beginn der Terminsuche vor Ablauf der
-              Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger
-              Erbringung der Leistung erlischt (§ 356 Abs. 4 BGB).
+              Ich möchte, dass die Terminsuche sofort beginnt, und akzeptiere, dass mein Widerrufsrecht damit entfällt (§ 356 Abs. 4 BGB).
             </CheckboxRow>
             <CheckboxRow
               control={control}
