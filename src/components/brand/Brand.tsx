@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import markUrl from "@/assets/brand/mark.png";
+import markUrl from "@/assets/brand/mark.svg";
 
 interface BrandProps {
   city?: string;
