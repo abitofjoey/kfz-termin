@@ -219,12 +219,12 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">12. Google Ads – Conversion-Import aus Google Analytics 4</h2>
+        <h2 className="text-lg font-semibold">13. Google Ads – Conversion-Import aus Google Analytics 4</h2>
         <p className="mt-2">
           Für die Messung unserer Werbeanzeigen bei Google Ads importieren wir Conversions
           direkt aus Google Analytics 4 (Mess-ID G-NQXH96FZW3). Auf unserer Website wird dafür
           kein eigenes Google Ads Conversion-Tag eingesetzt. Die erforderlichen Daten zur
-          Erfolgsmessung stammen aus den unter § 10 genannten Google Analytics 4-Cookies und
+          Erfolgsmessung stammen aus den unter § 11 genannten Google Analytics 4-Cookies und
           werden ausschließlich auf Grundlage deiner Einwilligung in die Kategorie
           „Marketing" verarbeitet (Art. 6 Abs. 1 lit. a DSGVO). Widerruf jederzeit über die
           Cookie-Einstellungen.
