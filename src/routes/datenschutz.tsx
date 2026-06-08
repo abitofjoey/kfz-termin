@@ -187,7 +187,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">11. Hotjar</h2>
+        <h2 className="text-lg font-semibold">12. Hotjar</h2>
         <p className="mt-2">
           Bei erteilter Einwilligung nutzen wir Hotjar, einen Analyse-Dienst der Hotjar Ltd., Level
           2, St Julians Business Centre, 3, Elia Zammit Street, St Julians STJ 1000, Malta
