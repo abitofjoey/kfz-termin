@@ -4,6 +4,7 @@ import { useConsent } from "@/lib/consent";
 const GA_ID = "G-NQXH96FZW3";
 const HOTJAR_ID = 6719467;
 const HOTJAR_SV = 6;
+const GTM_ID = "GTM-KJPNQMXH";
 
 declare global {
   interface Window {
@@ -64,6 +65,13 @@ function loadHotjar() {
   );
 }
 
+function loadGTM() {
+  if (document.getElementById("gtm-script")) return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+  loadScript("gtm-script", `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`);
+}
+
 export function TrackingScripts() {
   const { hydrated, state } = useConsent();
   const initialized = useRef(false);
@@ -85,6 +93,10 @@ export function TrackingScripts() {
     if (state.categories.analytics) {
       loadGA();
       loadHotjar();
+    }
+
+    if (state.categories.analytics || state.categories.marketing) {
+      loadGTM();
     }
   }, [hydrated, state.categories.analytics, state.categories.marketing]);
 

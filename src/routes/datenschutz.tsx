@@ -146,7 +146,23 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">10. Google Analytics 4</h2>
+        <h2 className="text-lg font-semibold">10. Google Tag Manager</h2>
+        <p className="mt-2">
+          Bei erteilter Einwilligung in die Kategorie „Analyse" oder „Marketing" setzen wir den
+          Google Tag Manager (GTM) der Google Ireland Limited, Gordon House, Barrow Street,
+          Dublin 4, Irland, ein. Container-ID: GTM-KJPNQMXH. Der Google Tag Manager dient
+          ausschließlich der zentralen Verwaltung der von uns eingesetzten Tags (z. B. Google
+          Analytics 4) und setzt selbst keine Cookies, die personenbezogene Daten speichern. Beim
+          Laden des Skripts wird jedoch deine IP-Adresse an Google übermittelt; die Übertragung
+          kann auch in die USA erfolgen. Google LLC ist nach dem EU-US Data Privacy Framework
+          zertifiziert; ergänzend bestehen Standardvertragsklauseln gemäß Art. 46 DSGVO.
+          Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO bzw. § 25 Abs. 1 TDDDG. Widerruf jederzeit
+          über die Cookie-Einstellungen.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-semibold">11. Google Analytics 4</h2>
         <p className="mt-2">
           Bei erteilter Einwilligung nutzen wir Google Analytics 4, einen Webanalysedienst der
           Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Mess-ID:
@@ -171,7 +187,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">11. Hotjar</h2>
+        <h2 className="text-lg font-semibold">12. Hotjar</h2>
         <p className="mt-2">
           Bei erteilter Einwilligung nutzen wir Hotjar, einen Analyse-Dienst der Hotjar Ltd., Level
           2, St Julians Business Centre, 3, Elia Zammit Street, St Julians STJ 1000, Malta
@@ -203,12 +219,12 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">12. Google Ads – Conversion-Import aus Google Analytics 4</h2>
+        <h2 className="text-lg font-semibold">13. Google Ads – Conversion-Import aus Google Analytics 4</h2>
         <p className="mt-2">
           Für die Messung unserer Werbeanzeigen bei Google Ads importieren wir Conversions
           direkt aus Google Analytics 4 (Mess-ID G-NQXH96FZW3). Auf unserer Website wird dafür
           kein eigenes Google Ads Conversion-Tag eingesetzt. Die erforderlichen Daten zur
-          Erfolgsmessung stammen aus den unter § 10 genannten Google Analytics 4-Cookies und
+          Erfolgsmessung stammen aus den unter § 11 genannten Google Analytics 4-Cookies und
           werden ausschließlich auf Grundlage deiner Einwilligung in die Kategorie
           „Marketing" verarbeitet (Art. 6 Abs. 1 lit. a DSGVO). Widerruf jederzeit über die
           Cookie-Einstellungen.
@@ -216,7 +232,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">13. Deine Rechte</h2>
+        <h2 className="text-lg font-semibold">14. Deine Rechte</h2>
         <p className="mt-2">
           Dir stehen folgende Rechte zu: Recht auf Auskunft (Art. 15 DSGVO), Berichtigung
           (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertrag-
@@ -227,7 +243,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">14. Speicherdauer</h2>
+        <h2 className="text-lg font-semibold">15. Speicherdauer</h2>
         <p className="mt-2">
           Personenbezogene Daten werden gelöscht, sobald der Zweck der Verarbeitung entfällt und
           keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Abrechnungsrelevante Daten
