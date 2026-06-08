@@ -313,7 +313,7 @@ export function BookingForm({ preselected }: Props) {
               name="agree_waiver"
               error={errors.agree_waiver?.message}
             >
-              Ich möchte, dass die Terminsuche sofort beginnt, und akzeptiere, dass mein Widerrufsrecht damit entfällt (§ 356 Abs. 4 BGB).
+              Ich verlange ausdrücklich den sofortigen Beginn der Terminsuche vor Ablauf der Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger Erbringung der Leistung erlischt (§ 356 Abs. 4 BGB).
             </CheckboxRow>
             <CheckboxRow
               control={control}
