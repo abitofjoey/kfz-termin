@@ -43,8 +43,8 @@ export function CookieSettingsDialog() {
             disabled
           />
           <Row
-            title="Analyse (Google Analytics 4, Hotjar)"
-            description="Hilft uns, Nutzung und Probleme zu verstehen (anonymisierte Statistiken, Heatmaps, Session-Aufzeichnungen)."
+            title="Analyse (Google Tag Manager, Google Analytics 4, Hotjar)"
+            description="Lädt den Google Tag Manager und hilft uns, Nutzung und Probleme zu verstehen (anonymisierte Statistiken, Heatmaps, Session-Aufzeichnungen)."
             checked={analytics}
             onChange={setAnalytics}
           />
