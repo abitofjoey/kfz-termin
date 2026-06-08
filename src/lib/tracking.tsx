@@ -4,6 +4,7 @@ import { useConsent } from "@/lib/consent";
 const GA_ID = "G-NQXH96FZW3";
 const HOTJAR_ID = 6719467;
 const HOTJAR_SV = 6;
+const GTM_ID = "GTM-KJPNQMXH";
 
 declare global {
   interface Window {
