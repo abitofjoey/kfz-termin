@@ -90,7 +90,7 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
     writeStorage(next);
     // Cookies bei Widerruf entfernen
     if (previous.categories.analytics && !next.categories.analytics) {
-      clearCookies(["_ga", "_gid", "_gat", "_hj"]);
+      clearCookies(["_ga", "_gid", "_gat", "_hj", "_dc_gtm_"]);
     }
     if (previous.categories.marketing && !next.categories.marketing) {
       clearCookies(["_gcl", "_gac"]);
