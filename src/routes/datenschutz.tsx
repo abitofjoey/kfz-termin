@@ -243,7 +243,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">14. Speicherdauer</h2>
+        <h2 className="text-lg font-semibold">15. Speicherdauer</h2>
         <p className="mt-2">
           Personenbezogene Daten werden gelöscht, sobald der Zweck der Verarbeitung entfällt und
           keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Abrechnungsrelevante Daten
