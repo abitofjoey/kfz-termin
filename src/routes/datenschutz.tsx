@@ -232,7 +232,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">13. Deine Rechte</h2>
+        <h2 className="text-lg font-semibold">14. Deine Rechte</h2>
         <p className="mt-2">
           Dir stehen folgende Rechte zu: Recht auf Auskunft (Art. 15 DSGVO), Berichtigung
           (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertrag-
