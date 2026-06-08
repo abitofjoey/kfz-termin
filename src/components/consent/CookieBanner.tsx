@@ -16,9 +16,9 @@ export function CookieBanner() {
       <h2 className="text-base font-semibold text-foreground">Cookies & Analyse</h2>
       <p className="mt-2 text-sm text-muted-foreground">
         Wir verwenden technisch notwendige Cookies, damit die Website funktioniert. Mit deiner
-        Einwilligung nutzen wir zusätzlich Analyse-Cookies, um die Seite zu verbessern, sowie
-        Marketing-Cookies zur Erfolgsmessung unserer Anzeigen. Du kannst deine Auswahl jederzeit
-        widerrufen oder in den Einstellungen anpassen.{" "}
+        Einwilligung nutzen wir zusätzlich Analyse-Cookies inkl. Google Tag Manager, um die Seite
+        zu verbessern, sowie Marketing-Cookies zur Erfolgsmessung unserer Anzeigen. Du kannst
+        deine Auswahl jederzeit widerrufen oder in den Einstellungen anpassen.{" "}
         <Link to="/datenschutz" className="text-accent underline">
           Mehr Infos
         </Link>
