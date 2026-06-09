@@ -15,9 +15,8 @@ export function Hero() {
             <span className="text-accent">automatisch gebucht.</span>
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
-            Neue Termine sind oft innerhalb von Minuten vergeben – unser System
-            prüft die Verfügbarkeit täglich von 7 bis 18 Uhr. Für nur 9,99 €,
-            ohne Stress und ohne tägliches Nachschauen.
+            Kein freier Termin oder keiner der zeitlich passt? Wir übernehmen
+            die Suche und buchen automatisch – sobald ein Slot frei wird.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
