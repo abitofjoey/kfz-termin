@@ -15,8 +15,8 @@ export function Hero() {
             <span className="text-accent">automatisch gebucht.</span>
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
-            Unser System prüft täglich von 7–18 Uhr auf freie Termine – du musst
-            nichts tun.
+            Kein freier Termin oder keiner der zeitlich passt? Wir übernehmen
+            die Suche und buchen automatisch – sobald ein Slot frei wird.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
