@@ -17,7 +17,7 @@ const steps = [
     n: 3,
     icon: Search,
     title: "Wir suchen für dich",
-    text: "Unser System prüft automatisch täglich von 7–18 Uhr auf freie Termine – du musst nichts tun.",
+    text: "Kein freier Termin oder keiner der zeitlich passt? Wir übernehmen die Suche und buchen automatisch – sobald ein Slot frei wird.",
   },
   {
     n: 4,
