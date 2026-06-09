@@ -15,17 +15,17 @@ import type { ServiceId } from "@/lib/services";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KFZ-Termin Köln – Schneller Termin bei der Zulassungsstelle" },
+      { title: "KFZ-Termin Köln – Wunschtermin bei der Zulassungsstelle" },
       {
         name: "description",
         content:
-          "Automatische Terminsuche bei der Kölner Zulassungsstelle – täglich von 7 bis 18 Uhr. Geld-zurück-Garantie. Ab 9,99 €.",
+          "Kein passender Termin bei der Kölner Zulassungsstelle? Wir suchen automatisch täglich und buchen sobald ein Slot frei wird. 9,99€ mit Geld-zurück-Garantie.",
       },
-      { property: "og:title", content: "KFZ-Termin Köln – Schneller Termin bei der Zulassungsstelle" },
+      { property: "og:title", content: "KFZ-Termin Köln – Wunschtermin bei der Zulassungsstelle" },
       {
         property: "og:description",
         content:
-          "Wir finden täglich von 7 bis 18 Uhr einen freien Termin bei der Kölner Zulassungsstelle – schnell, zuverlässig und ohne Stress.",
+          "Kein passender Termin bei der Kölner Zulassungsstelle? Wir suchen automatisch täglich und buchen sobald ein Slot frei wird. 9,99€ mit Geld-zurück-Garantie.",
       },
       { property: "og:url", content: "https://kfz-termin.online/" },
     ],
