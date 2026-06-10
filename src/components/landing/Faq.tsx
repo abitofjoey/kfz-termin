@@ -8,7 +8,7 @@ import {
 const items = [
   {
     q: "Lohnt sich der Service für mich?",
-    a: "Ja – besonders wenn du einen konkreten Wunschtermin brauchst, einen früheren Termin als aktuell verfügbar suchst, oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots.",
+    a: "Ja – besonders wenn du kurzfristig einen Termin brauchst, einen konkreten Wunschzeitraum hast oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots, zum Beispiel wenn du gerade ein Auto gekauft hast, umgezogen bist oder eine Frist läuft.",
   },
   {
     q: "Was kostet der Service?",
