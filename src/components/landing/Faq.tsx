@@ -16,11 +16,15 @@ const items = [
   },
   {
     q: "Wie schnell bekomme ich einen Termin?",
-    a: "Termine bei der Kölner Zulassungsstelle sind immer 14 Tage im Voraus buchbar – täglich kommen neue Slots dazu, manchmal sogar für denselben Tag. Wir prüfen das täglich von 7 bis 18 Uhr und buchen den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Erfolgswahrscheinlichkeit.",
+    a: "Termine bei der Kölner Zulassungsstelle sind immer 14 Tage im Voraus buchbar – täglich kommen neue Slots dazu, manchmal sogar für denselben Tag. Wir prüfen das täglich von 7 bis 18 Uhr und buchen den ersten freien Termin an einem deiner Wunschtage.",
   },
   {
     q: "Welche Tage soll ich im Kalender auswählen?",
     a: "Je mehr Tage du auswählst, desto schneller finden wir einen Termin. Für den frühestmöglichen Termin empfehlen wir alle verfügbaren Tage anzuhaken – das System bucht dann den ersten freien Slot.",
+  },
+  {
+    q: "Was ist die FIN und wo finde ich sie?",
+    a: "Die FIN ist die Fahrzeug-Identifizierungsnummer deines Autos. Wir benötigen nur die letzten 4 Zeichen – diese findest du in deinem Fahrzeugschein (Zulassungsbescheinigung Teil I) unter dem Feld „E\".",
   },
   {
     q: "Wie werde ich informiert wenn ein Termin gefunden wurde?",
@@ -31,12 +35,16 @@ const items = [
     a: "Nach unserer Buchung schickt die Kölner Zulassungsstelle automatisch eine E-Mail mit einem Bestätigungslink. Diesen musst du innerhalb von 3 Stunden anklicken – sonst verfällt der Termin unwiderruflich. Tipp: Prüfe direkt nach unserer Buchungsbestätigung dein Postfach – auch den Spam-Ordner.",
   },
   {
-    q: "Was passiert wenn kein Termin gefunden wird?",
-    a: "Wir suchen täglich innerhalb deines gewählten Zeitraums – maximal 14 Tage. Wird in diesem Zeitraum kein passender Termin gefunden, erstatten wir dir den vollen Betrag. Schreib uns dazu einfach eine kurze Mail an info@kfz-termin.online.",
-  },
-  {
     q: "Was passiert wenn ich die Bestätigungsmail verpasse?",
     a: "In diesem Fall verfällt der Termin und wir können leider keinen neuen garantieren. Halte dein Postfach im Blick sobald du gebucht hast – auch den Spam-Ordner.",
+  },
+  {
+    q: "Was passiert wenn kein Termin gefunden wird?",
+    a: "Wir suchen täglich innerhalb deines gewählten Zeitraums – maximal 14 Tage. Wird kein passender Termin gefunden, erstatten wir dir den vollen Betrag. Schreib uns dazu einfach eine kurze Mail an info@kfz-termin.online.",
+  },
+  {
+    q: "Kann ich den Auftrag stornieren?",
+    a: "Ja – solange noch kein Termin gebucht wurde, kannst du jederzeit per Mail an info@kfz-termin.online stornieren. Nach erfolgter Buchung gilt die Leistung als erbracht.",
   },
   {
     q: "Für welche Anliegen gilt der Service?",
@@ -49,14 +57,6 @@ const items = [
   {
     q: "Kann ich eine Uhrzeit wählen?",
     a: "Nein. Wir buchen den erstmöglichen freien Slot an einem deiner Wunschtage. Eine Uhrzeitauswahl ist bei der Kölner Zulassungsstelle nicht möglich.",
-  },
-  {
-    q: "Muss ich einen Account anlegen?",
-    a: "Nein. Kein Login, kein Passwort. Alles läuft über deine E-Mail-Adresse.",
-  },
-  {
-    q: "Gibt es Anliegen die ich ohne Termin erledigen kann?",
-    a: "Ja – Kurzanliegen wie Abmeldung, Adressänderung, Ersatzkennzeichen oder Feinstaubplakette kannst du ohne Termin direkt bei der Zulassungsstelle erledigen. Servicezeiten: Mo 8–12h | Di 10–15h | Mi 8–12h | Do 9–14h | Fr 8–12h. Bitte melde dich beim Wachpersonal am Eingang.",
   },
 ];
 
