@@ -40,7 +40,7 @@ const items = [
   },
   {
     q: "Für welche Anliegen gilt der Service?",
-    a: "Wir unterstützen alle auf dieser Seite aufgeführten Anliegen – von der Fahrzeuganmeldung über Kennzeichenwechsel und technische Änderungen bis hin zu H-Kennzeichen, Saisonkennzeichen und mehr. Über die „Infos Stadt Köln"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln.",
+    a: "Wir unterstützen alle auf dieser Seite aufgeführten Anliegen – von der Fahrzeuganmeldung über Kennzeichenwechsel und technische Änderungen bis hin zu H-Kennzeichen, Saisonkennzeichen und mehr. Über die \"Infos Stadt Köln\"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln.",
   },
   {
     q: "Was muss ich zum Termin mitbringen?",
