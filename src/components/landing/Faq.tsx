@@ -44,7 +44,7 @@ const items = [
   },
   {
     q: "Was muss ich zum Termin mitbringen?",
-    a: "Das hängt von deinem Anliegen ab. Über die „Infos Stadt Köln"-Links bei jedem Service oben auf dieser Seite findest du die offiziellen Informationen mit den genauen Unterlagen. Wichtig: Bitte erscheine pünktlich – bei Verspätungen von mehr als 30 Minuten verfällt der Termin automatisch.",
+    a: "Das hängt von deinem Anliegen ab. Über die \"Infos Stadt Köln\"-Links bei jedem Service oben auf dieser Seite findest du die offiziellen Informationen mit den genauen Unterlagen. Wichtig: Bitte erscheine pünktlich – bei Verspätungen von mehr als 30 Minuten verfällt der Termin automatisch.",
   },
   {
     q: "Kann ich eine Uhrzeit wählen?",
