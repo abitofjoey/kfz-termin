@@ -56,7 +56,7 @@ const items = [
   },
   {
     q: "Kann ich eine Uhrzeit wählen?",
-    a: "Nein. Wir buchen den erstmöglichen freien Slot an einem deiner Wunschtage. Eine Uhrzeitauswahl ist bei der Kölner Zulassungsstelle nicht möglich.",
+    a: "Nein. Wir buchen den erstmöglichen freien Slot an einem deiner Wunschtage. Eine Uhrzeitauswahl ist aktuell nicht möglich.",
   },
 ];
 
