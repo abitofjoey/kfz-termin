@@ -11,7 +11,7 @@ const BookingInput = z.object({
   email: z.string().trim().email().max(255),
   phone: z.string().trim().min(4).max(40),
   fin_1: z.string().trim().regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen"),
-  selected_dates: z.array(z.string()).min(5).max(60),
+  selected_dates: z.array(z.string()).min(3).max(60),
 });
 
 export const createBooking = createServerFn({ method: "POST" })
