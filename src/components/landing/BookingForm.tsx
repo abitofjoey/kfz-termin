@@ -249,7 +249,7 @@ export function BookingForm({ preselected }: Props) {
 
           {/* Calendar */}
           <Field
-            label="Wunschtermine (mindestens 5 Tage)"
+            label="Wunschtermine (mindestens 3 Tage)"
             error={errors.selected_dates?.message as string | undefined}
           >
             <Controller
