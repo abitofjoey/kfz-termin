@@ -33,7 +33,17 @@ function SuccessPage() {
   useEffect(() => {
     if (!session_id) return;
     confirm({ data: { sessionId: session_id } })
-      .then((r) => setState(r.paid ? "paid" : "unpaid"))
+      .then((r) => {
+        setState(r.paid ? "paid" : "unpaid");
+
+        if (r.paid && typeof window !== "undefined" && typeof window.gtag === "function") {
+          window.gtag("event", "purchase", {
+            transaction_id: session_id,
+            value: 9.99,
+            currency: "EUR",
+          });
+        }
+      })
       .catch(() => setState("error"));
   }, [session_id, confirm]);
 
