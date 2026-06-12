@@ -42,7 +42,7 @@ const schema = z.object({
     .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen (Buchstaben oder Zahlen)"),
   selected_dates: z
     .array(z.date())
-    .min(5, "Bitte wähle mindestens 5 Wunschtage aus, um die Erfolgschance zu erhöhen."),
+    .min(3, "Bitte wähle mindestens 3 Wunschtage aus, um die Erfolgschance zu erhöhen."),
   agree_terms: z.literal(true, {
     errorMap: () => ({ message: "Bitte zustimmen" }),
   }),
@@ -249,7 +249,7 @@ export function BookingForm({ preselected }: Props) {
 
           {/* Calendar */}
           <Field
-            label="Wunschtermine (mindestens 5 Tage)"
+            label="Wunschtermine (mindestens 3 Tage)"
             error={errors.selected_dates?.message as string | undefined}
           >
             <Controller
