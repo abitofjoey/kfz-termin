@@ -360,14 +360,14 @@ export function BookingForm({ preselected }: Props) {
                     <div className="h-[320px]" aria-hidden="true" />
                   )}
                   {selectedDates.length < 3 ? (
-                    <p className="mt-2 px-2 flex items-center gap-1 text-xs text-destructive">
+                    <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-destructive sm:flex-row sm:items-center">
                       <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
-                      Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} – bitte noch {3 - selectedDates.length} {3 - selectedDates.length === 1 ? "weiteren Tag" : "weitere Tage"} wählen.
+                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} – bitte noch {3 - selectedDates.length} {3 - selectedDates.length === 1 ? "weiteren Tag" : "weitere Tage"} wählen.</span>
                     </p>
                   ) : (
-                    <p className="mt-2 px-2 flex items-center gap-1 text-xs text-emerald-600">
+                    <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-emerald-600 sm:flex-row sm:items-center">
                       <Check className="h-3.5 w-3.5 flex-shrink-0" />
-                      Ausgewählt: <strong>{selectedDates.length}</strong> Tage ✓
+                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> Tage ✓</span>
                     </p>
                   )}
                 </div>
@@ -441,7 +441,7 @@ function Field({
   const id = useId();
   return (
     <div className="space-y-1.5">
-      <div className="flex items-center gap-1.5">
+      <div className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-1.5">
         <Label htmlFor={id} className="text-sm font-medium">{label} *</Label>
         {info && (
           <Popover>
