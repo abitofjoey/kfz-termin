@@ -455,3 +455,44 @@ function CheckboxRow({
     </div>
   );
 }
+
+function ExtraFinField({
+  index,
+  error,
+  register,
+  onRemove,
+}: {
+  index: 2 | 3;
+  error?: string;
+  register: ReturnType<ReturnType<typeof useForm<FormValues>>["register"]>;
+  onRemove: () => void;
+}) {
+  const id = useId();
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <Label htmlFor={id} className="text-sm font-medium">
+          FIN Fahrzeug {index} – letzte 4 Zeichen{" "}
+          <span className="font-normal text-muted-foreground">(optional)</span>
+        </Label>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive"
+          aria-label={`Fahrzeug ${index} entfernen`}
+        >
+          <X className="h-3.5 w-3.5" />
+          Entfernen
+        </button>
+      </div>
+      <Input
+        id={id}
+        {...register}
+        maxLength={4}
+        className="uppercase tracking-widest"
+        placeholder="z.B. 9X2P"
+      />
+      {error && <p className="text-xs text-destructive">{error}</p>}
+    </div>
+  );
+}
