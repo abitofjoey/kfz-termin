@@ -365,8 +365,7 @@ export function BookingForm({ preselected }: Props) {
                       <span>Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} – bitte noch {3 - selectedDates.length} {3 - selectedDates.length === 1 ? "weiteren Tag" : "weitere Tage"} wählen.</span>
                     </p>
                   ) : (
-                    <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-emerald-600 sm:flex-row sm:items-center">
-                      <Check className="h-3.5 w-3.5 flex-shrink-0" />
+                    <p className="mt-2 px-2 text-xs text-emerald-600">
                       <span>Ausgewählt: <strong>{selectedDates.length}</strong> Tage ✓</span>
                     </p>
                   )}
