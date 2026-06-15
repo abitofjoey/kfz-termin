@@ -12,6 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -22,6 +27,7 @@ import { createBooking } from "@/lib/booking.functions";
 import { createCheckoutSession } from "@/lib/stripe.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
+import finFahrzeugscheinImg from "@/assets/fin-fahrzeugschein.jpg";
 import { toast } from "sonner";
 import { SERVICES, SERVICE_IDS, type ServiceId } from "@/lib/services";
 
@@ -249,7 +255,19 @@ export function BookingForm({ preselected }: Props) {
             <Field
               label={vehicleCount > 1 ? "FIN Fahrzeug 1 – letzte 4 Zeichen" : "FIN – letzte 4 Zeichen"}
               error={errors.fin_1?.message}
-              hint="Bis zu 3 Fahrzeuge pro Termin möglich. Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
+              info={
+                <div className="space-y-2">
+                  <p>
+                    Bis zu 3 Fahrzeuge pro Termin möglich. Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief).
+                  </p>
+                  <img
+                    src={finFahrzeugscheinImg}
+                    alt="Beispiel: FIN auf dem Fahrzeugschein mit hervorgehobenen letzten 4 Zeichen"
+                    loading="lazy"
+                    className="w-full h-auto rounded-md border border-border"
+                  />
+                </div>
+              }
             >
               {(id) => (
                 <Input
@@ -311,7 +329,7 @@ export function BookingForm({ preselected }: Props) {
           {/* Calendar */}
           <Field
             label="Wunschtermine"
-            hint="Wähle die Tage an denen du einen Termin bekommen möchtest – mindestens 3 Tage erforderlich."
+            info="Wähle die Tage an denen du einen Termin bekommen möchtest – mindestens 3 Tage erforderlich."
             error={errors.selected_dates?.message as string | undefined}
           >
             <Controller
@@ -410,18 +428,43 @@ export function BookingForm({ preselected }: Props) {
 function Field({
   label,
   hint,
+  info,
   error,
   children,
 }: {
   label: string;
   hint?: string;
+  info?: React.ReactNode;
   error?: string;
   children: React.ReactNode | ((id: string) => React.ReactNode);
 }) {
   const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label htmlFor={id} className="text-sm font-medium">{label} *</Label>
+      <div className="flex items-center gap-1.5">
+        <Label htmlFor={id} className="text-sm font-medium">{label} *</Label>
+        {info && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                aria-label="Mehr Informationen"
+                className="inline-flex h-5 w-5 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <Info className="h-4 w-4" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent
+              side="top"
+              align="start"
+              collisionPadding={16}
+              className="w-80 max-w-[calc(100vw-2rem)] text-sm"
+            >
+              {info}
+            </PopoverContent>
+          </Popover>
+        )}
+      </div>
       {typeof children === "function" ? children(id) : children}
       {hint && !error && (
         <p className="text-xs text-muted-foreground">{hint}</p>
