@@ -11,6 +11,18 @@ const BookingInput = z.object({
   email: z.string().trim().email().max(255),
   phone: z.string().trim().min(4).max(40),
   fin_1: z.string().trim().regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen"),
+  fin_2: z
+    .string()
+    .trim()
+    .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen")
+    .optional()
+    .or(z.literal("")),
+  fin_3: z
+    .string()
+    .trim()
+    .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen")
+    .optional()
+    .or(z.literal("")),
   selected_dates: z.array(z.string()).min(3).max(60),
 });
 
@@ -31,6 +43,8 @@ export const createBooking = createServerFn({ method: "POST" })
         email: data.email,
         phone: data.phone,
         fin_1: data.fin_1.toUpperCase(),
+        fin_2: data.fin_2 ? data.fin_2.toUpperCase() : null,
+        fin_3: data.fin_3 ? data.fin_3.toUpperCase() : null,
         selected_dates: data.selected_dates,
         status: "open",
         paid: false,

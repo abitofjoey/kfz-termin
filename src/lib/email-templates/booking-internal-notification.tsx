@@ -12,6 +12,7 @@ interface BookingInternalProps {
   phone?: string
   serviceType?: string
   finEnding?: string
+  finEndings?: string[]
   notes?: string
   selectedDates?: string[]
   stripeSessionId?: string
@@ -26,11 +27,15 @@ const BookingInternalNotificationEmail = ({
   phone,
   serviceType,
   finEnding,
+  finEndings,
   notes,
   selectedDates = [],
   stripeSessionId,
 }: BookingInternalProps) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
+  const fins = (finEndings && finEndings.length > 0)
+    ? finEndings
+    : (finEnding ? [finEnding] : [])
   return (
     <Html lang="de" dir="ltr">
       <Head />
@@ -47,7 +52,10 @@ const BookingInternalNotificationEmail = ({
             <Row label="E-Mail" value={email} />
             <Row label="Telefon" value={phone} />
             <Hr style={hr} />
-            <Row label="FIN (letzte Ziffern)" value={finEnding} />
+            <Text style={label}>FIN (letzte Ziffern){fins.length > 1 ? ` – ${fins.length} Fahrzeuge` : ''}</Text>
+            {fins.length > 0
+              ? fins.map((f, i) => <Text key={`${f}-${i}`} style={value}>• {f}</Text>)
+              : <Text style={value}>—</Text>}
             <Text style={label}>Gewünschte Termine</Text>
             {selectedDates.length > 0
               ? selectedDates.map((d) => <Text key={d} style={value}>• {d}</Text>)
@@ -89,7 +97,7 @@ export const template = {
     email: 'max@example.com',
     phone: '+49 170 1234567',
     serviceType: 'Gebrauchtwagen anmelden',
-    finEnding: '1234',
+    finEndings: ['1234'],
     selectedDates: ['Mo, 25.05.2026 vormittags'],
     stripeSessionId: 'cs_test_a1b2c3',
   },

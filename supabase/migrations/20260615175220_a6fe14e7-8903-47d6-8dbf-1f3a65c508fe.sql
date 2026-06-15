@@ -1,0 +1,1 @@
+ALTER TABLE public.bookings ADD COLUMN fin_2 text NULL; ALTER TABLE public.bookings ADD COLUMN fin_3 text NULL;

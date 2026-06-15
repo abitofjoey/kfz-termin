@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format, addDays, startOfDay } from "date-fns";
 import { de } from "date-fns/locale";
-import { Info, Loader2 } from "lucide-react";
+import { Info, Loader2, Plus, X } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,6 +40,18 @@ const schema = z.object({
     .string()
     .trim()
     .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen (Buchstaben oder Zahlen)"),
+  fin_2: z
+    .string()
+    .trim()
+    .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen (Buchstaben oder Zahlen)")
+    .optional()
+    .or(z.literal("")),
+  fin_3: z
+    .string()
+    .trim()
+    .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen (Buchstaben oder Zahlen)")
+    .optional()
+    .or(z.literal("")),
   selected_dates: z
     .array(z.date())
     .min(3, "Bitte wähle mindestens 3 Wunschtage aus, um die Erfolgschance zu erhöhen."),
@@ -59,6 +71,7 @@ type Props = {
 
 export function BookingForm({ preselected }: Props) {
   const [submitting, setSubmitting] = useState(false);
+  const [vehicleCount, setVehicleCount] = useState(1);
   const submitBooking = useServerFn(createBooking);
   const startCheckout = useServerFn(createCheckoutSession);
   
@@ -120,6 +133,8 @@ export function BookingForm({ preselected }: Props) {
           email: values.email,
           phone: values.phone,
           fin_1: values.fin_1,
+          fin_2: values.fin_2 || undefined,
+          fin_3: values.fin_3 || undefined,
           selected_dates: dateStrings,
         },
       });
@@ -230,21 +245,67 @@ export function BookingForm({ preselected }: Props) {
             {(id) => <Input id={id} type="tel" {...register("phone")} autoComplete="tel" />}
           </Field>
 
-          <Field
-            label="FIN – letzte 4 Zeichen"
-            error={errors.fin_1?.message}
-            hint="Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
-          >
-            {(id) => (
-              <Input
-                id={id}
-                {...register("fin_1")}
-                maxLength={4}
-                className="uppercase tracking-widest"
-                placeholder="z.B. 4F8K"
+          <div className="space-y-3">
+            <Field
+              label={vehicleCount > 1 ? "FIN Fahrzeug 1 – letzte 4 Zeichen" : "FIN – letzte 4 Zeichen"}
+              error={errors.fin_1?.message}
+              hint="Bis zu 3 Fahrzeuge pro Termin möglich. Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
+            >
+              {(id) => (
+                <Input
+                  id={id}
+                  {...register("fin_1")}
+                  maxLength={4}
+                  className="uppercase tracking-widest"
+                  placeholder="z.B. 4F8K"
+                />
+              )}
+            </Field>
+
+            {vehicleCount >= 2 && (
+              <ExtraFinField
+                index={2}
+                error={errors.fin_2?.message}
+                register={register("fin_2")}
+                onRemove={() => {
+                  setValue("fin_2", "", { shouldValidate: true });
+                  if (vehicleCount === 2) setVehicleCount(1);
+                  else {
+                    // shift fin_3 down into fin_2
+                    const v3 = (watch("fin_3") ?? "") as string;
+                    setValue("fin_2", v3, { shouldValidate: true });
+                    setValue("fin_3", "", { shouldValidate: true });
+                    setVehicleCount(2);
+                  }
+                }}
               />
             )}
-          </Field>
+
+            {vehicleCount >= 3 && (
+              <ExtraFinField
+                index={3}
+                error={errors.fin_3?.message}
+                register={register("fin_3")}
+                onRemove={() => {
+                  setValue("fin_3", "", { shouldValidate: true });
+                  setVehicleCount(2);
+                }}
+              />
+            )}
+
+            {vehicleCount < 3 && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setVehicleCount((c) => Math.min(3, c + 1))}
+                className="gap-1.5"
+              >
+                <Plus className="h-4 w-4" />
+                Weiteres Fahrzeug hinzufügen
+              </Button>
+            )}
+          </div>
 
 
           {/* Calendar */}
@@ -391,6 +452,47 @@ function CheckboxRow({
         <span className="text-foreground">{children}</span>
       </label>
       {error && <p className="ml-7 mt-1 text-xs text-destructive">{error}</p>}
+    </div>
+  );
+}
+
+function ExtraFinField({
+  index,
+  error,
+  register,
+  onRemove,
+}: {
+  index: 2 | 3;
+  error?: string;
+  register: ReturnType<ReturnType<typeof useForm<FormValues>>["register"]>;
+  onRemove: () => void;
+}) {
+  const id = useId();
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <Label htmlFor={id} className="text-sm font-medium">
+          FIN Fahrzeug {index} – letzte 4 Zeichen{" "}
+          <span className="font-normal text-muted-foreground">(optional)</span>
+        </Label>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive"
+          aria-label={`Fahrzeug ${index} entfernen`}
+        >
+          <X className="h-3.5 w-3.5" />
+          Entfernen
+        </button>
+      </div>
+      <Input
+        id={id}
+        {...register}
+        maxLength={4}
+        className="uppercase tracking-widest"
+        placeholder="z.B. 9X2P"
+      />
+      {error && <p className="text-xs text-destructive">{error}</p>}
     </div>
   );
 }

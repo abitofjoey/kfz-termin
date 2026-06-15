@@ -107,7 +107,7 @@ export const confirmCheckoutSession = createServerFn({ method: "POST" })
           email: booking.email,
           phone: booking.phone,
           serviceType: booking.service_type,
-          finEnding: booking.fin_1,
+          finEndings: [booking.fin_1, booking.fin_2, booking.fin_3].filter((v): v is string => !!v),
           notes: booking.notes ?? undefined,
           selectedDates: booking.selected_dates ?? [],
           stripeSessionId: booking.stripe_session_id ?? undefined,
