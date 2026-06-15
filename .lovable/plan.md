@@ -1,31 +1,58 @@
-## Rechtliche Klärung: Wann erlischt das Widerrufsrecht?
+## Ziel
+Im Buchungsformular können bis zu **3 Fahrzeuge** pro Termin angegeben werden. Feld 1 bleibt Pflicht, Felder 2 und 3 sind optional und werden per Klick eingeblendet.
 
-Nach **§ 356 Abs. 4 BGB** erlischt das Widerrufsrecht bei einer Dienstleistung **nicht schon mit dem Beginn der Ausführung**, sondern erst, wenn **alle** drei Voraussetzungen erfüllt sind:
+## UX-Empfehlung: Progressive Disclosure mit "+ Weiteres Fahrzeug hinzufügen"
 
-1. Der Unternehmer hat die Dienstleistung **vollständig erbracht**.
-2. Der Verbraucher hat **vor** Beginn der Ausführung **ausdrücklich zugestimmt**, dass mit der Ausführung vor Ablauf der Widerrufsfrist begonnen wird.
-3. Der Verbraucher hat seine **Kenntnis bestätigt**, dass er das Widerrufsrecht **mit vollständiger Vertragserfüllung verliert**.
+**Empfohlen:** Nur Feld 1 sofort sichtbar. Darunter Hinweistext *"Bis zu 3 Fahrzeuge pro Termin möglich"* + Button **"+ Weiteres Fahrzeug hinzufügen"**. Beim Klick erscheint Feld 2 mit "✕ Entfernen", danach Feld 3.
 
-Konkret für kfz-termin.online: Solange nur „gesucht" wird und noch kein Termin gebucht ist, **bleibt das Widerrufsrecht bestehen** – der Kunde kann widerrufen, schuldet aber Wertersatz für die bereits erbrachte Sucharbeit (§ 357a Abs. 2 BGB). Erst mit dem **erfolgreich gebuchten Termin** (vollständige Erbringung, vgl. AGB § 6) erlischt das Widerrufsrecht.
+**Warum nicht alle 3 Felder direkt anzeigen:**
+- Die große Mehrheit hat nur 1 Fahrzeug → 3 leere Felder wirken einschüchternd und suggerieren fälschlich Pflicht
+- Klare visuelle Hierarchie: Das Wesentliche zuerst, Erweitertes auf Wunsch
+- Entspricht etablierter Praxis (Booking.com, Airbnb für zusätzliche Gäste, etc.)
+- Der Hinweistext löst die Discoverability-Sorge: Nutzer **wissen**, dass mehr möglich ist
 
-## Status der vorhandenen Inhalte
+**Warum nicht 3 Felder mit "(optional)"-Label:**
+- Funktioniert, ist aber visuell schwerer und weniger elegant
+- Mehr Scrollen, höhere wahrgenommene Komplexität
 
-- **AGB (`src/routes/agb.tsx` § 7, Zeilen 98–146)**: rechtlich **korrekt formuliert** – nennt ausdrücklich „mit vollständiger Erbringung der Leistung erlischt" und differenziert sauber zwischen Widerruf vor / während / nach der Suche.
-- **Bestätigungs-E-Mail (`src/lib/email-templates/booking-confirmation.tsx` Zeilen 111–117)**: ebenfalls **korrekt** – „erlischt mit vollständiger Erbringung der Leistung (gebuchter Termin)".
-- **Checkbox im Buchungsformular (`src/components/landing/BookingForm.tsx` Zeile 316)**: **juristisch falsch** in der aktuellen Kurzfassung („damit entfällt"), weil sie suggeriert, dass das Widerrufsrecht bereits mit Beginn der Suche erlischt. Das genügt zudem nicht den formalen Anforderungen an die Zustimmungs- und Kenntnisnahmeerklärung nach § 356 Abs. 4 BGB.
+## Umsetzung
 
-## Änderung
+### 1. Datenbank-Migration
+Neue Spalten in `bookings`:
+- `fin_2 text NULL`
+- `fin_3 text NULL`
 
-Nur **eine Zeile** im Buchungsformular zurück auf die rechtlich saubere Langfassung setzen, identisch mit dem in der AGB § 7 zitierten Wortlaut:
+(Beide nullable, kein Default. Keine RLS-Änderungen nötig — die bestehende INSERT-Policy prüft nur Name/Email/paid/status.)
 
-**`src/components/landing/BookingForm.tsx`, Zeile 316** – ersetzen durch:
+### 2. Frontend `src/components/landing/BookingForm.tsx`
+- Schema erweitern: `fin_1` (Pflicht, 4 Zeichen), `fin_2` und `fin_3` optional mit gleicher Regex aber `.optional().or(z.literal(""))`.
+- Lokaler State `vehicleCount` (1–3) steuert sichtbare Felder.
+- Feld 1: Label *"FIN Fahrzeug 1 – letzte 4 Zeichen"*. Hinweistext: *"Bis zu 3 Fahrzeuge pro Termin möglich. Die FIN findest du im Fahrzeugschein."*
+- Unter dem letzten sichtbaren FIN-Feld:
+  - Wenn `vehicleCount < 3`: Button **"+ Weiteres Fahrzeug hinzufügen"** (Variant `outline`, dezent).
+  - Bei zusätzlichen Feldern: kleiner **"✕ Entfernen"**-Link rechts oben am Feld (setzt Wert auf "" und reduziert Count).
+- Submit übergibt `fin_2`/`fin_3` nur wenn nicht leer.
 
-> „Ich verlange ausdrücklich den sofortigen Beginn der Terminsuche vor Ablauf der Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger Erbringung der Leistung erlischt (§ 356 Abs. 4 BGB)."
+### 3. Server `src/lib/booking.functions.ts`
+- Schema um `fin_2`/`fin_3` als optionale 4-Zeichen-Strings erweitern.
+- Beim Insert: `fin_2: data.fin_2?.toUpperCase() ?? null`, gleich für fin_3.
 
-AGB und E-Mail-Templates bleiben unverändert, da bereits korrekt.
+### 4. Stripe / Mail-Übergabe `src/lib/stripe.functions.ts`
+- `finEnding` umbenennen bzw. ergänzen: an Mail-Templates jetzt ein Array oder kombinierter String übergeben, z.B. `finEndings: [booking.fin_1, booking.fin_2, booking.fin_3].filter(Boolean)`.
 
-## Kein Handlungsbedarf an
+### 5. Mail-Templates
+- `src/lib/email-templates/booking-confirmation.tsx`: Prop `finEndings: string[]`. Zeile "FIN (letzte 4 Ziffern)" rendert je Fahrzeug eine Zeile bzw. komma-getrennt, z.B. *"4F8K, 9X2P"* — bei 1 Fahrzeug unverändertes Verhalten. Hinweistext anpassen: *"Sollten Name, E-Mail oder eine der FIN nicht korrekt sein..."*.
+- `src/lib/email-templates/booking-internal-notification.tsx`: gleiche Anpassung, intern listen wir alle FIN klar untereinander.
+- `previewData` in beiden Templates auf `finEndings: ['1234']` bzw. Beispiel mit 2 Einträgen aktualisieren.
 
-- `src/routes/agb.tsx`
-- `src/lib/email-templates/booking-confirmation.tsx`
-- `src/routes/buchung-erfolgreich.tsx` / FAQ (betreffen nur den 3-Stunden-Bestätigungslink der Zulassungsstelle, nicht das Widerrufsrecht)
+### 6. FAQ `src/components/landing/Faq.tsx`
+- Bestehende FIN-Frage Antwort ergänzen um den Hinweis: *"Pro Termin können bis zu 3 Fahrzeuge angemeldet werden – du kannst im Buchungsformular weitere FIN-Felder hinzufügen."*
+- Optional neue Frage: *"Kann ich mehrere Fahrzeuge in einem Termin anmelden?"* mit Antwort, dass bis zu 3 Fahrzeuge pro Termin möglich sind und die Pauschale von 9,99 € unverändert gilt.
+
+### 7. Nicht betroffen
+- Stripe-Preis bleibt 9,99 € pro Buchung (Termin), unabhängig von Fahrzeuganzahl — sofern das deine Absicht ist. **Frage:** Soll der Preis pro Fahrzeug skalieren oder pauschal pro Termin bleiben?
+- GA4/GTM-Tracking unverändert (eine Buchung = ein purchase-Event).
+
+## Offene Fragen
+1. **Preisgestaltung:** Pauschal 9,99 € egal wie viele Fahrzeuge, oder z. B. 9,99 € + 4,99 € pro weiterem Fahrzeug?
+2. **Neue FAQ-Frage** zusätzlich zur Ergänzung der bestehenden — ja oder reicht die Ergänzung?
