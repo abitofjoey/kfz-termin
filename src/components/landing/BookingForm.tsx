@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format, addDays, startOfDay } from "date-fns";
 import { de } from "date-fns/locale";
-import { Info, Loader2, Plus, X } from "lucide-react";
+import { AlertCircle, Check, Info, Loader2, Plus, X } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -310,7 +310,8 @@ export function BookingForm({ preselected }: Props) {
 
           {/* Calendar */}
           <Field
-            label="Wunschtermine (mindestens 3 Tage)"
+            label="Wunschtermine"
+            hint="Wähle die Tage an denen du einen Termin bekommen möchtest – mindestens 3 Tage erforderlich."
             error={errors.selected_dates?.message as string | undefined}
           >
             <Controller
@@ -340,14 +341,20 @@ export function BookingForm({ preselected }: Props) {
                   ) : (
                     <div className="h-[320px]" aria-hidden="true" />
                   )}
-                  <p className="mt-2 px-2 text-xs text-muted-foreground">
-                    Ausgewählt: <strong>{selectedDates.length}</strong> Tage
-                  </p>
+                  {selectedDates.length < 3 ? (
+                    <p className="mt-2 px-2 flex items-center gap-1 text-xs text-destructive">
+                      <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                      Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} – bitte noch {3 - selectedDates.length} {3 - selectedDates.length === 1 ? "weiteren Tag" : "weitere Tage"} wählen.
+                    </p>
+                  ) : (
+                    <p className="mt-2 px-2 flex items-center gap-1 text-xs text-emerald-600">
+                      <Check className="h-3.5 w-3.5 flex-shrink-0" />
+                      Ausgewählt: <strong>{selectedDates.length}</strong> Tage ✓
+                    </p>
+                  )}
                 </div>
               )}
             />
-
-
           </Field>
 
           <div className="space-y-3">
