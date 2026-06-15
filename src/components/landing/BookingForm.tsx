@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format, addDays, startOfDay } from "date-fns";
 import { de } from "date-fns/locale";
-import { Info, Loader2 } from "lucide-react";
+import { Info, Loader2, Plus, X } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,6 +40,18 @@ const schema = z.object({
     .string()
     .trim()
     .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen (Buchstaben oder Zahlen)"),
+  fin_2: z
+    .string()
+    .trim()
+    .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen (Buchstaben oder Zahlen)")
+    .optional()
+    .or(z.literal("")),
+  fin_3: z
+    .string()
+    .trim()
+    .regex(/^[A-Za-z0-9]{4}$/, "Genau 4 Zeichen (Buchstaben oder Zahlen)")
+    .optional()
+    .or(z.literal("")),
   selected_dates: z
     .array(z.date())
     .min(3, "Bitte wähle mindestens 3 Wunschtage aus, um die Erfolgschance zu erhöhen."),
@@ -59,6 +71,7 @@ type Props = {
 
 export function BookingForm({ preselected }: Props) {
   const [submitting, setSubmitting] = useState(false);
+  const [vehicleCount, setVehicleCount] = useState(1);
   const submitBooking = useServerFn(createBooking);
   const startCheckout = useServerFn(createCheckoutSession);
   
@@ -120,6 +133,8 @@ export function BookingForm({ preselected }: Props) {
           email: values.email,
           phone: values.phone,
           fin_1: values.fin_1,
+          fin_2: values.fin_2 || undefined,
+          fin_3: values.fin_3 || undefined,
           selected_dates: dateStrings,
         },
       });
