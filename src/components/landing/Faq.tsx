@@ -24,7 +24,11 @@ const items = [
   },
   {
     q: "Was ist die FIN und wo finde ich sie?",
-    a: "Die FIN ist die Fahrzeug-Identifizierungsnummer deines Autos. Wir benötigen nur die letzten 4 Zeichen – diese findest du in deinem Fahrzeugschein (Zulassungsbescheinigung Teil I) unter dem Feld „E\".",
+    a: "Die FIN ist die Fahrzeug-Identifizierungsnummer deines Autos. Wir benötigen nur die letzten 4 Zeichen – diese findest du in deinem Fahrzeugschein (Zulassungsbescheinigung Teil I) unter dem Feld „E\". Pro Termin können bis zu 3 Fahrzeuge angemeldet werden – du kannst im Buchungsformular weitere FIN-Felder hinzufügen.",
+  },
+  {
+    q: "Kann ich mehrere Fahrzeuge in einem Termin anmelden?",
+    a: "Ja, du kannst bis zu 3 Fahrzeuge in einem Termin anmelden. Im Buchungsformular fügst du über „+ Weiteres Fahrzeug hinzufügen\" einfach die FIN-Endung jedes weiteren Fahrzeugs hinzu. Der Preis bleibt pauschal 9,99 € pro Termin, unabhängig von der Anzahl der Fahrzeuge.",
   },
   {
     q: "Wie werde ich informiert wenn ein Termin gefunden wurde?",
