@@ -16,6 +16,7 @@ interface BookingConfirmationProps {
   phone?: string
   serviceType?: string
   finEnding?: string
+  finEndings?: string[]
   notes?: string
   selectedDates?: string[]
 }
@@ -28,10 +29,18 @@ const BookingConfirmationEmail = ({
   phone,
   serviceType,
   finEnding,
+  finEndings,
   notes,
   selectedDates = [],
 }: BookingConfirmationProps) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
+  const fins = (finEndings && finEndings.length > 0)
+    ? finEndings
+    : (finEnding ? [finEnding] : [])
+  const finLabel = fins.length > 1
+    ? `FIN-Endungen (${fins.length} Fahrzeuge)`
+    : 'FIN (letzte 4 Ziffern)'
+  const finValue = fins.length > 0 ? fins.join(', ') : '—'
   return (
     <Html lang="de" dir="ltr">
       <Head />
@@ -70,7 +79,7 @@ const BookingConfirmationEmail = ({
             <DataRow label="E-Mail" value={email || '—'} />
             <DataRow label="Telefon" value={phone || '—'} />
             <DataRow label="Service" value={serviceType || '—'} />
-            <DataRow label="FIN (letzte 4 Ziffern)" value={finEnding || '—'} />
+            <DataRow label={finLabel} value={finValue} />
             {notes ? <DataRow label="Anmerkungen" value={notes} last /> : null}
           </Section>
 
@@ -101,7 +110,7 @@ const BookingConfirmationEmail = ({
           <Section style={warnBox}>
             <Text style={warnTitle}>⚠️ Bitte prüfe deine Angaben</Text>
             <Text style={warnText}>
-              Sollten Name, E-Mail oder FIN nicht korrekt sein, kann die
+              Sollten Name, E-Mail oder eine der FIN nicht korrekt sein, kann die
               Bestätigung der Zulassungsstelle dich nicht erreichen. Antworte
               in diesem Fall einfach auf diese E-Mail.
             </Text>
@@ -168,7 +177,7 @@ export const template = {
     email: 'max.mustermann@example.com',
     phone: '+49 151 12345678',
     serviceType: 'Gebrauchtwagen anmelden',
-    finEnding: '1234',
+    finEndings: ['1234', '9X2P'],
     notes: 'Bitte möglichst vormittags.',
     selectedDates: ['Mo, 25.05.2026 – vormittags', 'Di, 26.05.2026 – nachmittags'],
   },
