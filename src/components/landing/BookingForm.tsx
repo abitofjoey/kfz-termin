@@ -245,21 +245,67 @@ export function BookingForm({ preselected }: Props) {
             {(id) => <Input id={id} type="tel" {...register("phone")} autoComplete="tel" />}
           </Field>
 
-          <Field
-            label="FIN – letzte 4 Zeichen"
-            error={errors.fin_1?.message}
-            hint="Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
-          >
-            {(id) => (
-              <Input
-                id={id}
-                {...register("fin_1")}
-                maxLength={4}
-                className="uppercase tracking-widest"
-                placeholder="z.B. 4F8K"
+          <div className="space-y-3">
+            <Field
+              label={vehicleCount > 1 ? "FIN Fahrzeug 1 – letzte 4 Zeichen" : "FIN – letzte 4 Zeichen"}
+              error={errors.fin_1?.message}
+              hint="Bis zu 3 Fahrzeuge pro Termin möglich. Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
+            >
+              {(id) => (
+                <Input
+                  id={id}
+                  {...register("fin_1")}
+                  maxLength={4}
+                  className="uppercase tracking-widest"
+                  placeholder="z.B. 4F8K"
+                />
+              )}
+            </Field>
+
+            {vehicleCount >= 2 && (
+              <ExtraFinField
+                index={2}
+                error={errors.fin_2?.message}
+                register={register("fin_2")}
+                onRemove={() => {
+                  setValue("fin_2", "", { shouldValidate: true });
+                  if (vehicleCount === 2) setVehicleCount(1);
+                  else {
+                    // shift fin_3 down into fin_2
+                    const v3 = (watch("fin_3") ?? "") as string;
+                    setValue("fin_2", v3, { shouldValidate: true });
+                    setValue("fin_3", "", { shouldValidate: true });
+                    setVehicleCount(2);
+                  }
+                }}
               />
             )}
-          </Field>
+
+            {vehicleCount >= 3 && (
+              <ExtraFinField
+                index={3}
+                error={errors.fin_3?.message}
+                register={register("fin_3")}
+                onRemove={() => {
+                  setValue("fin_3", "", { shouldValidate: true });
+                  setVehicleCount(2);
+                }}
+              />
+            )}
+
+            {vehicleCount < 3 && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setVehicleCount((c) => Math.min(3, c + 1))}
+                className="gap-1.5"
+              >
+                <Plus className="h-4 w-4" />
+                Weiteres Fahrzeug hinzufügen
+              </Button>
+            )}
+          </div>
 
 
           {/* Calendar */}
