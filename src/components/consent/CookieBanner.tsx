@@ -17,8 +17,12 @@ export function CookieBanner() {
       <p className="mt-2 text-sm text-muted-foreground">
         Wir verwenden technisch notwendige Cookies, damit die Website funktioniert. Mit deiner
         Einwilligung nutzen wir zusätzlich Analyse-Cookies inkl. Google Tag Manager, um die Seite
-        zu verbessern, sowie Marketing-Cookies zur Erfolgsmessung unserer Anzeigen. Du kannst
-        deine Auswahl jederzeit widerrufen oder in den Einstellungen anpassen.{" "}
+        zu verbessern, sowie Marketing-Cookies (Google Ads) zur Erfolgsmessung unserer Anzeigen.
+        Dabei können personenbezogene Daten an Google in die USA übertragen werden – ein Land
+        ohne mit der EU vergleichbares Datenschutzniveau (Risiko: Zugriff durch US-Behörden).
+        Mit „Alle akzeptieren" willigst du ausdrücklich in diese Übermittlung nach Art. 49
+        Abs. 1 lit. a DSGVO ein. Du kannst deine Auswahl jederzeit widerrufen oder in den
+        Einstellungen anpassen.{" "}
         <Link to="/datenschutz" className="text-accent underline">
           Mehr Infos
         </Link>
