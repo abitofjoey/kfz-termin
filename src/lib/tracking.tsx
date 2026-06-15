@@ -43,14 +43,17 @@ function loadGTM() {
 }
 
 export function TrackingScripts() {
-  const { hydrated, state } = useConsent();
+  const { hydrated, hasDecided, state } = useConsent();
   const initialized = useRef(false);
 
   useEffect(() => {
     if (!hydrated) return;
+    // GTM erst nach aktiver Einwilligungsentscheidung laden (DSGVO/TTDSG-sicher).
+    // Vor der Entscheidung wird kein Drittanbieter-Script geladen.
+    if (!hasDecided) return;
+
     if (!initialized.current) {
       ensureGtag();
-      // GTM immer laden – GTM steuert GA4/Hotjar via Consent Mode selbst
       loadGTM();
       initialized.current = true;
     }
@@ -61,7 +64,7 @@ export function TrackingScripts() {
       ad_user_data: state.categories.marketing ? "granted" : "denied",
       ad_personalization: state.categories.marketing ? "granted" : "denied",
     });
-  }, [hydrated, state.categories.analytics, state.categories.marketing]);
+  }, [hydrated, hasDecided, state.categories.analytics, state.categories.marketing]);
 
   return null;
 }
