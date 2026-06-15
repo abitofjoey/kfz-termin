@@ -36,11 +36,14 @@ function SuccessPage() {
       .then((r) => {
         setState(r.paid ? "paid" : "unpaid");
 
-        if (r.paid && typeof window !== "undefined" && typeof window.gtag === "function") {
-          window.gtag("event", "purchase", {
-            transaction_id: session_id,
-            value: 9.99,
-            currency: "EUR",
+        if (r.paid && typeof window !== "undefined" && Array.isArray(window.dataLayer)) {
+          window.dataLayer.push({
+            event: "purchase",
+            ecommerce: {
+              transaction_id: session_id,
+              value: 9.99,
+              currency: "EUR",
+            },
           });
         }
       })
