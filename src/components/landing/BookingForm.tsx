@@ -12,6 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -22,6 +27,7 @@ import { createBooking } from "@/lib/booking.functions";
 import { createCheckoutSession } from "@/lib/stripe.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
+import finFahrzeugscheinImg from "@/assets/fin-fahrzeugschein.jpg";
 import { toast } from "sonner";
 import { SERVICES, SERVICE_IDS, type ServiceId } from "@/lib/services";
 
