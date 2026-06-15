@@ -328,7 +328,7 @@ export function BookingForm({ preselected }: Props) {
 
           {/* Calendar */}
           <Field
-            label="Wunschtermine"
+            label="Wunschtermine (mindestens 3 Tage)"
             info="Wähle die Tage an denen du einen Termin bekommen möchtest – mindestens 3 Tage erforderlich."
             error={errors.selected_dates?.message as string | undefined}
           >
