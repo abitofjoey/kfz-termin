@@ -428,18 +428,43 @@ export function BookingForm({ preselected }: Props) {
 function Field({
   label,
   hint,
+  info,
   error,
   children,
 }: {
   label: string;
   hint?: string;
+  info?: React.ReactNode;
   error?: string;
   children: React.ReactNode | ((id: string) => React.ReactNode);
 }) {
   const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label htmlFor={id} className="text-sm font-medium">{label} *</Label>
+      <div className="flex items-center gap-1.5">
+        <Label htmlFor={id} className="text-sm font-medium">{label} *</Label>
+        {info && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                aria-label="Mehr Informationen"
+                className="inline-flex h-5 w-5 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <Info className="h-4 w-4" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent
+              side="top"
+              align="start"
+              collisionPadding={16}
+              className="w-80 max-w-[calc(100vw-2rem)] text-sm"
+            >
+              {info}
+            </PopoverContent>
+          </Popover>
+        )}
+      </div>
       {typeof children === "function" ? children(id) : children}
       {hint && !error && (
         <p className="text-xs text-muted-foreground">{hint}</p>
