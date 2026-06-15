@@ -27,7 +27,7 @@ import { createBooking } from "@/lib/booking.functions";
 import { createCheckoutSession } from "@/lib/stripe.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
-import finFahrzeugscheinImg from "@/assets/fin-fahrzeugschein.jpg";
+import finFahrzeugscheinImg from "@/assets/fin-fahrzeugschein.png.asset.json";
 import { toast } from "sonner";
 import { SERVICES, SERVICE_IDS, type ServiceId } from "@/lib/services";
 
@@ -256,12 +256,12 @@ export function BookingForm({ preselected }: Props) {
               label={vehicleCount > 1 ? "FIN Fahrzeug 1 – letzte 4 Zeichen" : "FIN – letzte 4 Zeichen"}
               error={errors.fin_1?.message}
               info={
-                <div className="space-y-2">
+              <div className="space-y-2">
                   <p>
                     Bis zu 3 Fahrzeuge pro Termin möglich. Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief).
                   </p>
                   <img
-                    src={finFahrzeugscheinImg}
+                    src={finFahrzeugscheinImg.url}
                     alt="Beispiel: FIN auf dem Fahrzeugschein mit hervorgehobenen letzten 4 Zeichen"
                     loading="lazy"
                     className="w-full h-auto rounded-md border border-border"
