@@ -28,7 +28,6 @@ import { createCheckoutSession } from "@/lib/stripe.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
 import finFahrzeugscheinImg from "@/assets/fin-fahrzeugschein.png.asset.json";
-import finFahrzeugscheinImg from "@/assets/fin-fahrzeugschein.png.asset.json";
 import { toast } from "sonner";
 import { SERVICES, SERVICE_IDS, type ServiceId } from "@/lib/services";
 
