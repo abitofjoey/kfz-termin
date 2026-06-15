@@ -255,7 +255,19 @@ export function BookingForm({ preselected }: Props) {
             <Field
               label={vehicleCount > 1 ? "FIN Fahrzeug 1 – letzte 4 Zeichen" : "FIN – letzte 4 Zeichen"}
               error={errors.fin_1?.message}
-              hint="Bis zu 3 Fahrzeuge pro Termin möglich. Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief)."
+              info={
+                <div className="space-y-2">
+                  <p>
+                    Bis zu 3 Fahrzeuge pro Termin möglich. Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief).
+                  </p>
+                  <img
+                    src={finFahrzeugscheinImg}
+                    alt="Beispiel: FIN auf dem Fahrzeugschein mit hervorgehobenen letzten 4 Zeichen"
+                    loading="lazy"
+                    className="w-full h-auto rounded-md border border-border"
+                  />
+                </div>
+              }
             >
               {(id) => (
                 <Input
