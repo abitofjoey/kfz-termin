@@ -23,8 +23,8 @@ export const Route = createFileRoute("/datenschutz")({
           Longericher Str. 31<br />
           50739 Köln<br />
           E-Mail:{" "}
-          <a className="text-accent underline" href="mailto:eike@jeh-digital.de">
-            eike@jeh-digital.de
+          <a className="text-accent underline" href="mailto:info@kfz-termin.online">
+            info@kfz-termin.online
           </a>
         </p>
       </section>
