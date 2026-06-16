@@ -290,7 +290,6 @@ export const Route = createFileRoute("/datenschutz")({
         </ul>
         <p className="mt-4 text-xs text-muted-foreground">Stand: Juni 2026</p>
       </section>
-      </section>
     </LegalPage>
   ),
 });
