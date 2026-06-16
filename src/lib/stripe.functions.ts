@@ -85,57 +85,8 @@ export const confirmCheckoutSession = createServerFn({ method: "POST" })
     const isPaid = session.payment_status === "paid";
 
     if (isPaid && bookingId) {
-      // Mark as paid
-      await supabaseAdmin
-        .from("bookings")
-        .update({ paid: true, status: "paid" })
-        .eq("id", bookingId);
-
-      // Load full booking to send confirmation emails (idempotent)
-      const { data: booking } = await supabaseAdmin
-        .from("bookings")
-        .select("*")
-        .eq("id", bookingId)
-        .single();
-
-      if (booking && !booking.confirmation_sent_at) {
-        const templateData = {
-          bookingId: booking.id,
-          salutation: booking.salutation,
-          firstName: booking.first_name,
-          lastName: booking.last_name,
-          email: booking.email,
-          phone: booking.phone,
-          serviceType: booking.service_type,
-          finEndings: [booking.fin_1, booking.fin_2, booking.fin_3].filter((v): v is string => !!v),
-          notes: booking.notes ?? undefined,
-          selectedDates: booking.selected_dates ?? [],
-          stripeSessionId: booking.stripe_session_id ?? undefined,
-        };
-
-        try {
-          await Promise.all([
-            sendTransactionalEmailServer({
-              templateName: "booking-confirmation",
-              recipientEmail: booking.email,
-              idempotencyKey: `booking-confirm-${booking.id}`,
-              templateData,
-            }),
-            sendTransactionalEmailServer({
-              templateName: "booking-internal-notification",
-              idempotencyKey: `booking-internal-${booking.id}`,
-              templateData,
-            }),
-          ]);
-
-          await supabaseAdmin
-            .from("bookings")
-            .update({ confirmation_sent_at: new Date().toISOString() })
-            .eq("id", booking.id);
-        } catch (e) {
-          console.error("Failed to send booking confirmation emails", e);
-        }
-      }
+      const { finalizePaidBooking } = await import("@/lib/booking-finalize.server");
+      await finalizePaidBooking(bookingId);
     }
 
     return { ok: true as const, paid: isPaid };
