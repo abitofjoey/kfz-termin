@@ -99,7 +99,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">6. Zahlungsabwicklung über Stripe</h2>
+        <h2 className="text-lg font-semibold">7. Zahlungsabwicklung über Stripe</h2>
         <p className="mt-2">
           Für die Zahlungsabwicklung nutzen wir Stripe Payments Europe, Ltd., 1 Grand Canal
           Street Lower, Grand Canal Dock, Dublin, Irland. Bei einer Zahlung werden die für die
