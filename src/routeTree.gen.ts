@@ -22,6 +22,7 @@ import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lova
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
+import { Route as ApiPublicAdminFinalizeBookingRouteImport } from './routes/api/public/admin/finalize-booking'
 
 const UnsubscribeRoute = UnsubscribeRouteImport.update({
   id: '/unsubscribe',
@@ -91,6 +92,12 @@ const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   path: '/api/public/stripe/webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicAdminFinalizeBookingRoute =
+  ApiPublicAdminFinalizeBookingRouteImport.update({
+    id: '/api/public/admin/finalize-booking',
+    path: '/api/public/admin/finalize-booking',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/unsubscribe': typeof UnsubscribeRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -117,6 +125,7 @@ export interface FileRoutesByTo {
   '/unsubscribe': typeof UnsubscribeRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -133,6 +142,7 @@ export interface FileRoutesById {
   '/unsubscribe': typeof UnsubscribeRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -150,6 +160,7 @@ export interface FileRouteTypes {
     | '/unsubscribe'
     | '/email/unsubscribe'
     | '/lovable/email/suppression'
+    | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -165,6 +176,7 @@ export interface FileRouteTypes {
     | '/unsubscribe'
     | '/email/unsubscribe'
     | '/lovable/email/suppression'
+    | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -180,6 +192,7 @@ export interface FileRouteTypes {
     | '/unsubscribe'
     | '/email/unsubscribe'
     | '/lovable/email/suppression'
+    | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -196,6 +209,7 @@ export interface RootRouteChildren {
   UnsubscribeRoute: typeof UnsubscribeRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
+  ApiPublicAdminFinalizeBookingRoute: typeof ApiPublicAdminFinalizeBookingRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -295,6 +309,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/admin/finalize-booking': {
+      id: '/api/public/admin/finalize-booking'
+      path: '/api/public/admin/finalize-booking'
+      fullPath: '/api/public/admin/finalize-booking'
+      preLoaderRoute: typeof ApiPublicAdminFinalizeBookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -308,6 +329,7 @@ const rootRouteChildren: RootRouteChildren = {
   UnsubscribeRoute: UnsubscribeRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
+  ApiPublicAdminFinalizeBookingRoute: ApiPublicAdminFinalizeBookingRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
