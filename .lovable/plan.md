@@ -1,34 +1,48 @@
-## Ziel
+# Audit: Zahlungen & Buchungsbestätigungen für alle Methoden
 
-Jan Rauschs Buchung nachträglich finalisieren und beide Bestätigungsmails (Kunde + intern) versenden, jetzt wo der Stripe-Webhook live ist.
+Ziel: Sicherstellen, dass jede in Stripe aktivierte Zahlungsart (Karte, PayPal, Klarna, Apple/Google Pay, Sofort/Giropay etc.) eine bezahlte Buchung **garantiert** finalisiert und beide Mails verschickt — auch wenn der Kunde die Success-Seite nie öffnet oder die Zahlung asynchron erfolgt.
 
-## Vorgehen
+## Was geprüft wird (nur lesend, keine Code-Änderungen)
 
-1. **Einmalige Admin-Server-Funktion `triggerFinalizeBooking`** in `src/lib/admin-finalize.functions.ts` anlegen
-   - Geschützt mit `requireSupabaseAuth` + Rollenprüfung (`has_role(..., 'admin')`), damit das kein offener Endpoint ist.
-   - Nimmt `bookingId` als Input, lädt intern `finalizePaidBooking` aus `@/lib/booking-finalize.server` und ruft sie auf.
-   - Gibt `{ ok: true, alreadySent: boolean }` zurück.
+### 1. Stripe-Webhook-Konfiguration
+- Webhook im Stripe-Dashboard zeigt auf `https://kfz-termin.online/api/public/stripe/webhook`
+- Abonnierte Events enthalten **mindestens**:
+  - `checkout.session.completed` (sofortige Methoden: Karte, Apple/Google Pay, PayPal)
+  - `checkout.session.async_payment_succeeded` (verzögerte Methoden: Klarna, SEPA, Sofort, Giropay-Nachfolger)
+  - `checkout.session.async_payment_failed` (für Fehlerlog/Monitoring, optional)
+- `STRIPE_WEBHOOK_SECRET` ist gesetzt (✓ laut Secrets-Liste)
+- Recent Deliveries: alle Calls geben 200 zurück
 
-2. **Direkt nach Deployment via `invoke-server-function` aufrufen** mit Jans `booking_id` (`eb5f03c6-ef4d-4e9e-8c08-5ce8004797f5`).
-   - `finalizePaidBooking` ist bereits idempotent über `confirmation_sent_at` → kein Risiko bei Mehrfachaufruf.
-   - Setzt `paid=true`, `status='paid'`, verschickt `booking-confirmation` an `jrausch@mail.de` und `booking-internal-notification` an dich, setzt `confirmation_sent_at`.
+### 2. Webhook-Handler-Code (`src/routes/api/public/stripe/webhook.ts`)
+- Verifiziert Signatur korrekt mit Raw-Body
+- Reagiert auf beide Event-Typen (`completed` + `async_payment_succeeded`) → ✓ bereits drin
+- Idempotenz: `finalizePaidBooking` setzt `confirmation_sent_at` → mehrfaches Feuern erzeugt keine Duplikat-Mails
 
-3. **Verifizieren**
-   - `email_send_log` für `booking-confirm-eb5f03c6...` und `booking-internal-eb5f03c6...` checken (Status `sent`).
-   - `bookings`-Row checken: `paid=true`, `confirmation_sent_at` gesetzt.
-   - Du prüfst zusätzlich deinen Posteingang.
+### 3. Success-Page-Pfad (`confirmCheckoutSession`)
+- Wird beim Öffnen von `/buchung-erfolgreich` getriggert → sendet Mails sofort (bessere UX)
+- Aber: Funktioniert auch ohne, da Webhook die Quelle der Wahrheit ist
+- Race-Condition zwischen Webhook und Success-Page ist durch `confirmation_sent_at`-Check abgedeckt
 
-4. **Stripe-Webhook-Smoketest** (du)
-   - Im Stripe-Dashboard → Developers → Webhooks → dein Endpoint → "Recent deliveries" prüfen, ob die Aufrufe `200` zurückbekommen.
-   - Optional eine kleine Test-Buchung mit deiner eigenen Mail, um zu sehen dass Webhook + Success-Page beide harmlos koexistieren (genau eine Mail dank Idempotenz).
+### 4. Verifikation an echten Daten
+- Letzte ~10 Buchungen aus `bookings` prüfen: alle bezahlten haben `paid=true`, `confirmation_sent_at` gesetzt
+- `email_send_log` prüfen: für jede bezahlte Buchung existieren beide Logs (`booking-confirm-*` + `booking-internal-*`) mit Status `sent`
+- DLQ / Failed-Mails: keine offenen Fehler in den letzten 7 Tagen
 
-## Technische Details
+### 5. Async-Zahlungen (Klarna, SEPA, Sofort)
+- Bei diesen wird der Checkout abgeschlossen, aber `payment_status` ist erst `unpaid`/`processing`
+- Erst `async_payment_succeeded` (Minuten bis Tage später) liefert `paid` — der Webhook MUSS dieses Event abonniert haben, sonst bleiben solche Buchungen ewig auf `unpaid`
+- Prüfung: Liste der abonnierten Events im Stripe-Dashboard
 
-- Neue Datei: `src/lib/admin-finalize.functions.ts` (client-safe Pfad, damit der Build-Schutz nicht greift; lädt `booking-finalize.server` erst im Handler dynamisch).
-- Kein Schema-Change, keine Migration, kein neuer Secret.
-- Die Funktion bleibt nach Jans Fall im Code — nützlich, falls in Zukunft mal manuell nachgefahren werden muss.
+## Was ich liefere
 
-## Was passiert NICHT
+Ein kurzer Report mit:
+- ✓/✗ für jeden der 5 Punkte oben
+- Ggf. exakte Liste fehlender Events im Webhook (mit copy-paste-fertiger Anleitung wie du sie in Stripe nachträgst)
+- Ggf. Liste von Buchungen, die "hängen" (bezahlt laut Stripe, aber nicht bei uns als `paid` markiert) und für die wir die Admin-Route nochmal triggern sollten
 
-- Keine Änderung am Webhook, an `finalizePaidBooking`, an `confirmCheckoutSession` oder an den Templates.
-- Kein direkter DB-Update per SQL — das würde den Mailversand umgehen.
+## Was ich NICHT mache (außer du sagst es nochmal explizit)
+- Keine Code-Änderungen — der Webhook-Handler ist aktuell korrekt
+- Keine neuen Secrets
+- Kein Refactoring von `confirmCheckoutSession` oder `finalizePaidBooking`
+
+Falls beim Audit ein konkretes Problem auftaucht (z. B. `async_payment_succeeded` nicht abonniert), erstelle ich danach einen neuen Plan für den Fix.
