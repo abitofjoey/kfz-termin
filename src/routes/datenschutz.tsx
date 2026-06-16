@@ -76,10 +76,30 @@ export const Route = createFileRoute("/datenschutz")({
           Termins zu erinnern. Eine Weitergabe der Telefonnummer an Dritte erfolgt nicht.
           Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragsdurchführung).
         </p>
+        <p className="mt-2">
+          Zur konkreten Speicherdauer der Buchungsdaten siehe Abschnitt 16 (Speicherdauer).
+        </p>
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">6. Zahlungsabwicklung über Stripe</h2>
+        <h2 className="text-lg font-semibold">
+          6. Automatisierte Terminbuchung bei der Kölner Zulassungsstelle
+        </h2>
+        <p className="mt-2">
+          Kern unseres Dienstes ist die automatisierte Suche und Buchung eines freien Termins im
+          Online-Portal der Stadt Köln (Zulassungsstelle) in deinem Namen. Hierzu übermitteln wir
+          die für die Buchung erforderlichen Daten – insbesondere Vor- und Nachname,
+          E-Mail-Adresse, Telefonnummer, Anliegen sowie die letzten vier Stellen der
+          Fahrzeug-Identifikationsnummer (FIN) – an das Buchungssystem der Stadt Köln. Empfänger
+          ist die Stadt Köln als eigenständig Verantwortliche; die weitere Verarbeitung richtet
+          sich nach deren Datenschutzhinweisen. Rechtsgrundlage für die Übermittlung ist Art. 6
+          Abs. 1 lit. b DSGVO (Durchführung des mit dir geschlossenen Vertrags über die
+          Terminvermittlung). Ohne diese Übermittlung kann der Dienst nicht erbracht werden.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-semibold">7. Zahlungsabwicklung über Stripe</h2>
         <p className="mt-2">
           Für die Zahlungsabwicklung nutzen wir Stripe Payments Europe, Ltd., 1 Grand Canal
           Street Lower, Grand Canal Dock, Dublin, Irland. Bei einer Zahlung werden die für die
@@ -99,7 +119,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">7. E-Mail-Versand</h2>
+        <h2 className="text-lg font-semibold">8. E-Mail-Versand</h2>
         <p className="mt-2">
           Zur Versendung von Buchungsbestätigungen und transaktionalen E-Mails (Absender:
           buchung@kfz-termin.online) verarbeiten wir deine E-Mail-Adresse sowie die zur Buchung
@@ -109,7 +129,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">8. Kontaktaufnahme via WhatsApp</h2>
+        <h2 className="text-lg font-semibold">9. Kontaktaufnahme via WhatsApp</h2>
         <p className="mt-2">
           Auf unserer Website findest du einen Button, der einen Chat über WhatsApp mit uns
           startet. Sofern du diese Funktion nutzt, wirst du auf den Dienst WhatsApp Ireland
@@ -132,7 +152,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">9. Cookies & Einwilligung</h2>
+        <h2 className="text-lg font-semibold">10. Cookies & Einwilligung</h2>
         <p className="mt-2">
           Wir setzen technisch notwendige Cookies bzw. lokalen Speicher ein, die für den Betrieb
           der Website und der Buchungsfunktion erforderlich sind (Rechtsgrundlage § 25 Abs. 2 Nr. 2
@@ -146,7 +166,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">10. Google Tag Manager</h2>
+        <h2 className="text-lg font-semibold">11. Google Tag Manager</h2>
         <p className="mt-2">
           Bei erteilter Einwilligung in die Kategorie „Analyse" oder „Marketing" setzen wir den
           Google Tag Manager (GTM) der Google Ireland Limited, Gordon House, Barrow Street,
@@ -162,7 +182,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">11. Google Analytics 4</h2>
+        <h2 className="text-lg font-semibold">12. Google Analytics 4</h2>
         <p className="mt-2">
           Bei erteilter Einwilligung nutzen wir Google Analytics 4, einen Webanalysedienst der
           Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Mess-ID:
@@ -187,7 +207,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">12. Hotjar</h2>
+        <h2 className="text-lg font-semibold">13. Hotjar</h2>
         <p className="mt-2">
           Bei erteilter Einwilligung nutzen wir Hotjar, einen Analyse-Dienst der Hotjar Ltd., Level
           2, St Julians Business Centre, 3, Elia Zammit Street, St Julians STJ 1000, Malta
@@ -219,7 +239,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">13. Google Ads – Conversion-Import aus Google Analytics 4</h2>
+        <h2 className="text-lg font-semibold">14. Google Ads – Conversion-Import aus Google Analytics 4</h2>
         <p className="mt-2">
           Für die Messung unserer Werbeanzeigen bei Google Ads importieren wir Conversions
           direkt aus Google Analytics 4 (Mess-ID G-NQXH96FZW3). Auf unserer Website wird dafür
@@ -232,7 +252,7 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">14. Deine Rechte</h2>
+        <h2 className="text-lg font-semibold">15. Deine Rechte</h2>
         <p className="mt-2">
           Dir stehen folgende Rechte zu: Recht auf Auskunft (Art. 15 DSGVO), Berichtigung
           (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertrag-
@@ -243,13 +263,32 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">15. Speicherdauer</h2>
+        <h2 className="text-lg font-semibold">16. Speicherdauer</h2>
         <p className="mt-2">
-          Personenbezogene Daten werden gelöscht, sobald der Zweck der Verarbeitung entfällt und
-          keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Abrechnungsrelevante Daten
-          werden bis zu 10 Jahre aufbewahrt (§ 147 AO).
+          Wir löschen bzw. anonymisieren personenbezogene Daten gestaffelt nach Erforderlichkeit:
         </p>
-        <p className="mt-4 text-xs text-muted-foreground">Stand: Mai 2026</p>
+        <ul className="mt-2 list-disc pl-6 space-y-1">
+          <li>
+            <strong>Fahrzeugdaten (FIN), Telefonnummer, gewählte Wunschtermine und interne
+            Notizen:</strong> automatische Anonymisierung 90 Tage nach dem spätesten von dir
+            gewählten Wunschtermin. Die Anonymisierung erfolgt durch einen täglichen, automatisierten
+            Prozess in unserer Datenbank.
+          </li>
+          <li>
+            <strong>Rechnungs- und zahlungsrelevante Daten</strong> (Name, E-Mail, Buchungs-ID,
+            Zahlungsreferenz, Betrag): Aufbewahrung für 10 Jahre gemäß § 147 AO / § 257 HGB,
+            danach vollständige Löschung des Datensatzes.
+          </li>
+          <li>
+            <strong>E-Mail-Sperrliste (Unsubscribe):</strong> so lange erforderlich, um
+            Werbewidersprüche dauerhaft zu dokumentieren (Art. 21 DSGVO).
+          </li>
+          <li>
+            <strong>Server-Logfiles und Analyse-Cookies:</strong> siehe die jeweiligen Abschnitte
+            oben.
+          </li>
+        </ul>
+        <p className="mt-4 text-xs text-muted-foreground">Stand: Juni 2026</p>
       </section>
     </LegalPage>
   ),
