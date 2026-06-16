@@ -3,7 +3,7 @@ import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
 import Stripe from "stripe";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
-import { sendTransactionalEmailServer } from "@/lib/email/send.server";
+
 
 function getStripe() {
   const key = process.env.STRIPE_SECRET_KEY;
