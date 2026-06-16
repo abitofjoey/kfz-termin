@@ -16,7 +16,7 @@ const items = [
   },
   {
     q: "Wie schnell bekomme ich einen Termin?",
-    a: "Termine bei der Kölner Zulassungsstelle sind immer 14 Tage im Voraus buchbar – täglich kommen neue Slots dazu, manchmal sogar für denselben Tag. Wir prüfen das täglich von 7 bis 18 Uhr und buchen den ersten freien Termin an einem deiner Wunschtage.",
+    a: "Es ist nicht genau vorhersagbar – es kann wenige Minuten dauern, wenn gerade ein Slot frei wird, aber auch einige Tage. Das hängt davon ab, wann die Zulassungsstelle neue Termine freigibt. Unser System prüft das täglich von 7 bis 18 Uhr und bucht sofort den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Wahrscheinlichkeit, dass schnell ein Termin gefunden wird.",
   },
   {
     q: "Welche Tage soll ich im Kalender auswählen?",
