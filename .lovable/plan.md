@@ -1,58 +1,78 @@
 ## Ziel
-Im Buchungsformular können bis zu **3 Fahrzeuge** pro Termin angegeben werden. Feld 1 bleibt Pflicht, Felder 2 und 3 sind optional und werden per Klick eingeblendet.
 
-## UX-Empfehlung: Progressive Disclosure mit "+ Weiteres Fahrzeug hinzufügen"
+1. Datenschutzerklärung um den fehlenden Punkt **automatisierte Buchung bei der Kölner Zulassungsstelle** ergänzen (Datenübermittlung an Dritte, Art. 6 Abs. 1 lit. b DSGVO).
+2. **Speicherdauer konkretisieren** und technisch durchsetzen: 90 Tage nach dem spätesten Wunschtermin werden sensible Buchungsdetails automatisch anonymisiert; abrechnungsrelevante Daten bleiben 10 Jahre.
 
-**Empfohlen:** Nur Feld 1 sofort sichtbar. Darunter Hinweistext *"Bis zu 3 Fahrzeuge pro Termin möglich"* + Button **"+ Weiteres Fahrzeug hinzufügen"**. Beim Klick erscheint Feld 2 mit "✕ Entfernen", danach Feld 3.
+---
 
-**Warum nicht alle 3 Felder direkt anzeigen:**
-- Die große Mehrheit hat nur 1 Fahrzeug → 3 leere Felder wirken einschüchternd und suggerieren fälschlich Pflicht
-- Klare visuelle Hierarchie: Das Wesentliche zuerst, Erweitertes auf Wunsch
-- Entspricht etablierter Praxis (Booking.com, Airbnb für zusätzliche Gäste, etc.)
-- Der Hinweistext löst die Discoverability-Sorge: Nutzer **wissen**, dass mehr möglich ist
+## Teil 1 — Datenschutzerklärung ergänzen
 
-**Warum nicht 3 Felder mit "(optional)"-Label:**
-- Funktioniert, ist aber visuell schwerer und weniger elegant
-- Mehr Scrollen, höhere wahrgenommene Komplexität
+Datei: `src/routes/datenschutz.tsx`
 
-## Umsetzung
+**Neuer Abschnitt 6** (zwischen aktuell 5 und 6, alle folgenden Punkte rutschen eins nach hinten):
 
-### 1. Datenbank-Migration
-Neue Spalten in `bookings`:
-- `fin_2 text NULL`
-- `fin_3 text NULL`
+> **6. Automatisierte Terminbuchung bei der Kölner Zulassungsstelle**
+> Kern unseres Dienstes ist die automatisierte Suche und Buchung eines freien Termins im Online-Portal der Stadt Köln (Zulassungsstelle) in deinem Namen. Hierzu übermitteln wir die für die Buchung erforderlichen Daten – insbesondere Vor- und Nachname, E-Mail-Adresse, Telefonnummer, Anliegen sowie die letzten vier Stellen der Fahrzeug-Identifikationsnummer (FIN) – an das Buchungssystem der Stadt Köln. Empfänger ist die Stadt Köln als eigenständig Verantwortliche; die weitere Verarbeitung richtet sich nach deren Datenschutzhinweisen. Rechtsgrundlage für die Übermittlung ist Art. 6 Abs. 1 lit. b DSGVO (Durchführung des mit dir geschlossenen Vertrags über die Terminvermittlung). Ohne diese Übermittlung kann der Dienst nicht erbracht werden.
 
-(Beide nullable, kein Default. Keine RLS-Änderungen nötig — die bestehende INSERT-Policy prüft nur Name/Email/paid/status.)
+**Punkt „Speicherdauer" konkretisieren:**
 
-### 2. Frontend `src/components/landing/BookingForm.tsx`
-- Schema erweitern: `fin_1` (Pflicht, 4 Zeichen), `fin_2` und `fin_3` optional mit gleicher Regex aber `.optional().or(z.literal(""))`.
-- Lokaler State `vehicleCount` (1–3) steuert sichtbare Felder.
-- Feld 1: Label *"FIN Fahrzeug 1 – letzte 4 Zeichen"*. Hinweistext: *"Bis zu 3 Fahrzeuge pro Termin möglich. Die FIN findest du im Fahrzeugschein."*
-- Unter dem letzten sichtbaren FIN-Feld:
-  - Wenn `vehicleCount < 3`: Button **"+ Weiteres Fahrzeug hinzufügen"** (Variant `outline`, dezent).
-  - Bei zusätzlichen Feldern: kleiner **"✕ Entfernen"**-Link rechts oben am Feld (setzt Wert auf "" und reduziert Count).
-- Submit übergibt `fin_2`/`fin_3` nur wenn nicht leer.
+> Wir löschen bzw. anonymisieren personenbezogene Daten gestaffelt nach Erforderlichkeit:
+> - **Fahrzeugdaten (FIN), Telefonnummer, gewählte Wunschtermine und interne Notizen:** automatische Anonymisierung **90 Tage nach dem spätesten von dir gewählten Wunschtermin**.
+> - **Rechnungs- und zahlungsrelevante Daten** (Name, E-Mail, Buchungs-ID, Zahlungsreferenz, Betrag): **10 Jahre** gemäß § 147 AO / § 257 HGB, danach vollständige Löschung des Datensatzes.
+> - **E-Mail-Sperrliste (Unsubscribe):** so lange erforderlich, um Werbewidersprüche zu dokumentieren.
 
-### 3. Server `src/lib/booking.functions.ts`
-- Schema um `fin_2`/`fin_3` als optionale 4-Zeichen-Strings erweitern.
-- Beim Insert: `fin_2: data.fin_2?.toUpperCase() ?? null`, gleich für fin_3.
+Punkt „Buchung eines Termins" am Ende um einen Verweis ergänzen: *„Zur konkreten Speicherdauer siehe Abschnitt zur Speicherdauer."*
 
-### 4. Stripe / Mail-Übergabe `src/lib/stripe.functions.ts`
-- `finEnding` umbenennen bzw. ergänzen: an Mail-Templates jetzt ein Array oder kombinierter String übergeben, z.B. `finEndings: [booking.fin_1, booking.fin_2, booking.fin_3].filter(Boolean)`.
+---
 
-### 5. Mail-Templates
-- `src/lib/email-templates/booking-confirmation.tsx`: Prop `finEndings: string[]`. Zeile "FIN (letzte 4 Ziffern)" rendert je Fahrzeug eine Zeile bzw. komma-getrennt, z.B. *"4F8K, 9X2P"* — bei 1 Fahrzeug unverändertes Verhalten. Hinweistext anpassen: *"Sollten Name, E-Mail oder eine der FIN nicht korrekt sein..."*.
-- `src/lib/email-templates/booking-internal-notification.tsx`: gleiche Anpassung, intern listen wir alle FIN klar untereinander.
-- `previewData` in beiden Templates auf `finEndings: ['1234']` bzw. Beispiel mit 2 Einträgen aktualisieren.
+## Teil 2 — Automatische Anonymisierung in der Datenbank
 
-### 6. FAQ `src/components/landing/Faq.tsx`
-- Bestehende FIN-Frage Antwort ergänzen um den Hinweis: *"Pro Termin können bis zu 3 Fahrzeuge angemeldet werden – du kannst im Buchungsformular weitere FIN-Felder hinzufügen."*
-- Optional neue Frage: *"Kann ich mehrere Fahrzeuge in einem Termin anmelden?"* mit Antwort, dass bis zu 3 Fahrzeuge pro Termin möglich sind und die Pauschale von 9,99 € unverändert gilt.
+### 2a. Schema-Anpassung (Migration)
 
-### 7. Nicht betroffen
-- Stripe-Preis bleibt 9,99 € pro Buchung (Termin), unabhängig von Fahrzeuganzahl — sofern das deine Absicht ist. **Frage:** Soll der Preis pro Fahrzeug skalieren oder pauschal pro Termin bleiben?
-- GA4/GTM-Tracking unverändert (eine Buchung = ein purchase-Event).
+Tabelle `bookings`:
+- Neue Spalte `anonymized_at timestamptz NULL` — Marker, dass der Datensatz bereits anonymisiert wurde (idempotent, vermeidet Mehrfach-Updates).
 
-## Offene Fragen
-1. **Preisgestaltung:** Pauschal 9,99 € egal wie viele Fahrzeuge, oder z. B. 9,99 € + 4,99 € pro weiterem Fahrzeug?
-2. **Neue FAQ-Frage** zusätzlich zur Ergänzung der bestehenden — ja oder reicht die Ergänzung?
+**Kein** neuer Status-Workflow, **kein** `completed_at` — als Termin-Referenz nutzen wir das maximale Datum aus `selected_dates`. Das ist die obere Schranke des möglichen Termins (Wunschtermine liegen in der Zukunft, die Buchung erfolgt an genau einem dieser Tage). 90 Tage nach dem spätesten Wunschtermin ist garantiert nach Terminwahrnehmung.
+
+### 2b. Anonymisierungs-Funktion (SQL)
+
+`public.anonymize_old_bookings()` (SECURITY DEFINER, `search_path = public`) macht für alle Zeilen wo
+`anonymized_at IS NULL` UND `(SELECT max(d::date) FROM unnest(selected_dates) d) < current_date - interval '90 days'`:
+
+- `phone = ''`
+- `fin_1 = 'XXXX'`, `fin_2 = NULL`, `fin_3 = NULL`
+- `selected_dates = '{}'`
+- `notes = NULL`
+- `anonymized_at = now()`
+
+**Fallback** für defekte/leere `selected_dates`: zusätzlich anonymisieren wenn `created_at < now() - interval '180 days'`.
+
+**Bewusst NICHT geleert:** `first_name`, `last_name`, `email`, `service_type`, `stripe_session_id`, `paid`, `created_at`, `id` — bleiben für 10 Jahre Aufbewahrung von Zahlungsbelegen.
+
+`public.delete_ancient_bookings()` löscht Zeilen mit `created_at < now() - interval '10 years'` komplett.
+
+### 2c. Täglicher Cron-Job
+
+`pg_cron` ist bereits aktiv. Täglich um 03:15 Uhr:
+
+```sql
+select cron.schedule(
+  'anonymize-old-bookings',
+  '15 3 * * *',
+  $$ select public.anonymize_old_bookings(); select public.delete_ancient_bookings(); $$
+);
+```
+
+Reiner SQL-Job, kein HTTP-Endpoint. Fehler/Erfolge sind in `cron.job_run_details` einsehbar (kein eigenes Log nötig).
+
+### 2d. Code-Auswirkungen
+
+Keine. Neue Spalte `anonymized_at` ist nullable; bestehende Schreib- und Lese-Pfade in `booking.functions.ts`, `stripe.functions.ts` und den Mail-Templates bleiben unverändert. TypeScript-Typen werden nach Migration automatisch regeneriert.
+
+---
+
+## Reihenfolge der Umsetzung
+
+1. Migration: neue Spalte + beide Funktionen + Cron-Job (eine Migration).
+2. Datenschutzerklärung aktualisieren.
+3. Manueller erster Testlauf von `anonymize_old_bookings()` direkt nach der Migration, um Verhalten an den aktuellen Daten zu prüfen.
