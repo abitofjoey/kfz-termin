@@ -76,6 +76,26 @@ export const Route = createFileRoute("/datenschutz")({
           Termins zu erinnern. Eine Weitergabe der Telefonnummer an Dritte erfolgt nicht.
           Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragsdurchführung).
         </p>
+        <p className="mt-2">
+          Zur konkreten Speicherdauer der Buchungsdaten siehe Abschnitt 16 (Speicherdauer).
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-semibold">
+          6. Automatisierte Terminbuchung bei der Kölner Zulassungsstelle
+        </h2>
+        <p className="mt-2">
+          Kern unseres Dienstes ist die automatisierte Suche und Buchung eines freien Termins im
+          Online-Portal der Stadt Köln (Zulassungsstelle) in deinem Namen. Hierzu übermitteln wir
+          die für die Buchung erforderlichen Daten – insbesondere Vor- und Nachname,
+          E-Mail-Adresse, Telefonnummer, Anliegen sowie die letzten vier Stellen der
+          Fahrzeug-Identifikationsnummer (FIN) – an das Buchungssystem der Stadt Köln. Empfänger
+          ist die Stadt Köln als eigenständig Verantwortliche; die weitere Verarbeitung richtet
+          sich nach deren Datenschutzhinweisen. Rechtsgrundlage für die Übermittlung ist Art. 6
+          Abs. 1 lit. b DSGVO (Durchführung des mit dir geschlossenen Vertrags über die
+          Terminvermittlung). Ohne diese Übermittlung kann der Dienst nicht erbracht werden.
+        </p>
       </section>
 
       <section>
