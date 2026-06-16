@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       bookings: {
         Row: {
+          anonymized_at: string | null
           confirmation_sent_at: string | null
           created_at: string
           email: string
@@ -35,6 +36,7 @@ export type Database = {
           stripe_session_id: string | null
         }
         Insert: {
+          anonymized_at?: string | null
           confirmation_sent_at?: string | null
           created_at?: string
           email: string
@@ -54,6 +56,7 @@ export type Database = {
           stripe_session_id?: string | null
         }
         Update: {
+          anonymized_at?: string | null
           confirmation_sent_at?: string | null
           created_at?: string
           email?: string
@@ -190,6 +193,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      anonymize_old_bookings: { Args: never; Returns: number }
+      delete_ancient_bookings: { Args: never; Returns: number }
       delete_email: {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
