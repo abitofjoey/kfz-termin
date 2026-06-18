@@ -89,7 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: "https://kfz-termin.online/og-image.jpg" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "KFZ-Termin Köln – Automatische Terminbuchung bei der Kölner Zulassungsstelle" },
+      { property: "og:image:alt", content: "KFZ-Termin Köln – Logo" },
       { name: "twitter:image", content: "https://kfz-termin.online/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

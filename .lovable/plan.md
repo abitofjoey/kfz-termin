@@ -1,48 +1,41 @@
-# Audit: Zahlungen & Buchungsbestätigungen für alle Methoden
+## Ziel
 
-Ziel: Sicherstellen, dass jede in Stripe aktivierte Zahlungsart (Karte, PayPal, Klarna, Apple/Google Pay, Sofort/Giropay etc.) eine bezahlte Buchung **garantiert** finalisiert und beide Mails verschickt — auch wenn der Kunde die Success-Seite nie öffnet oder die Zahlung asynchron erfolgt.
+Cleanes Markenbild (Logo + Schriftzug "KFZ-Termin Köln") als Link-Vorschaubild + zwei Download-Varianten.
 
-## Was geprüft wird (nur lesend, keine Code-Änderungen)
+## Was ich mache
 
-### 1. Stripe-Webhook-Konfiguration
-- Webhook im Stripe-Dashboard zeigt auf `https://kfz-termin.online/api/public/stripe/webhook`
-- Abonnierte Events enthalten **mindestens**:
-  - `checkout.session.completed` (sofortige Methoden: Karte, Apple/Google Pay, PayPal)
-  - `checkout.session.async_payment_succeeded` (verzögerte Methoden: Klarna, SEPA, Sofort, Giropay-Nachfolger)
-  - `checkout.session.async_payment_failed` (für Fehlerlog/Monitoring, optional)
-- `STRIPE_WEBHOOK_SECRET` ist gesetzt (✓ laut Secrets-Liste)
-- Recent Deliveries: alle Calls geben 200 zurück
+### 1. OG-Bild für Link-Vorschau (`public/og-image.jpg`, 1200×630)
 
-### 2. Webhook-Handler-Code (`src/routes/api/public/stripe/webhook.ts`)
-- Verifiziert Signatur korrekt mit Raw-Body
-- Reagiert auf beide Event-Typen (`completed` + `async_payment_succeeded`) → ✓ bereits drin
-- Idempotenz: `finalizePaidBooking` setzt `confirmation_sent_at` → mehrfaches Feuern erzeugt keine Duplikat-Mails
+- **Hintergrund:** Markenblau `#1c2233` (vollflächig).
+- **Logo invertiert:** weißes abgerundetes Quadrat mit blauem Haken (`#1c2233`).
+- **Schriftzug daneben:** „KFZ-Termin **Köln**" in Weiß, „Köln" im Akzent-Orange wie im Header.
+- **Untertitel klein darunter:** „Wunschtermin bei der Zulassungsstelle".
+- Erzeugt mit `imagegen` (premium-Tier wegen Text-Lesbarkeit), Format JPG.
 
-### 3. Success-Page-Pfad (`confirmCheckoutSession`)
-- Wird beim Öffnen von `/buchung-erfolgreich` getriggert → sendet Mails sofort (bessere UX)
-- Aber: Funktioniert auch ohne, da Webhook die Quelle der Wahrheit ist
-- Race-Condition zwischen Webhook und Success-Page ist durch `confirmation_sent_at`-Check abgedeckt
+### 2. Download-Variante hell (`public/brand-kfz-termin-light.png`, 1200×630)
 
-### 4. Verifikation an echten Daten
-- Letzte ~10 Buchungen aus `bookings` prüfen: alle bezahlten haben `paid=true`, `confirmation_sent_at` gesetzt
-- `email_send_log` prüfen: für jede bezahlte Buchung existieren beide Logs (`booking-confirm-*` + `booking-internal-*`) mit Status `sent`
-- DLQ / Failed-Mails: keine offenen Fehler in den letzten 7 Tagen
+- **Weißer Hintergrund**, original Logo (dunkelblaues Quadrat, weißer Haken), dunkelblauer Text.
+- Für Print, E-Mail-Signatur, helle Hintergründe.
+- Abrufbar unter `https://kfz-termin.online/brand-kfz-termin-light.png`.
 
-### 5. Async-Zahlungen (Klarna, SEPA, Sofort)
-- Bei diesen wird der Checkout abgeschlossen, aber `payment_status` ist erst `unpaid`/`processing`
-- Erst `async_payment_succeeded` (Minuten bis Tage später) liefert `paid` — der Webhook MUSS dieses Event abonniert haben, sonst bleiben solche Buchungen ewig auf `unpaid`
-- Prüfung: Liste der abonnierten Events im Stripe-Dashboard
+### 3. Download-Variante dunkel (`public/brand-kfz-termin-dark.png`, 1200×630)
 
-## Was ich liefere
+- **Blauer Hintergrund** `#1c2233`, invertiertes Logo (weißes Quadrat, blauer Haken), weißer Text, „Köln" in Akzent-Orange.
+- Selbes Design wie das OG-Bild, aber als separate PNG-Datei zum Download.
+- Abrufbar unter `https://kfz-termin.online/brand-kfz-termin-dark.png`.
 
-Ein kurzer Report mit:
-- ✓/✗ für jeden der 5 Punkte oben
-- Ggf. exakte Liste fehlender Events im Webhook (mit copy-paste-fertiger Anleitung wie du sie in Stripe nachträgst)
-- Ggf. Liste von Buchungen, die "hängen" (bezahlt laut Stripe, aber nicht bei uns als `paid` markiert) und für die wir die Admin-Route nochmal triggern sollten
+### 4. Meta-Tag minimal angleichen
 
-## Was ich NICHT mache (außer du sagst es nochmal explizit)
-- Keine Code-Änderungen — der Webhook-Handler ist aktuell korrekt
-- Keine neuen Secrets
-- Kein Refactoring von `confirmCheckoutSession` oder `finalizePaidBooking`
+- In `src/routes/__root.tsx`: `og:image:alt` auf „KFZ-Termin Köln – Logo" aktualisieren.
+- `og:image`-Pfad bleibt `/og-image.jpg` — Datei wird einfach überschrieben.
 
-Falls beim Audit ein konkretes Problem auftaucht (z. B. `async_payment_succeeded` nicht abonniert), erstelle ich danach einen neuen Plan für den Fix.
+## Was ich NICHT ändere
+
+- Header/Menübar (nutzt weiterhin `mark.svg`).
+- Keine Änderungen an Pricing, Booking-Form, Mails oder Routen.
+
+## Hinweis nach dem Publish
+
+Facebook/LinkedIn/WhatsApp cachen Vorschaubilder tagelang. Nach dem Publish manuell refreshen:
+- **Facebook/Instagram/WhatsApp:** https://developers.facebook.com/tools/debug/
+- **LinkedIn:** https://www.linkedin.com/post-inspector/
