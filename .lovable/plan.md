@@ -1,41 +1,33 @@
 ## Ziel
 
-Cleanes Markenbild (Logo + Schriftzug "KFZ-Termin Köln") als Link-Vorschaubild + zwei Download-Varianten.
+Zwei Bilder für Google Search Ads im gleichen cleanen Marken-Stil wie das OG-Bild (dunkelblauer Hintergrund + invertiertes Logo + Schriftzug).
 
-## Was ich mache
+## Was ich erstelle
 
-### 1. OG-Bild für Link-Vorschau (`public/og-image.jpg`, 1200×630)
+### 1. Quadrat 1:1 (`public/ads-square.jpg`, 1200×1200)
 
-- **Hintergrund:** Markenblau `#1c2233` (vollflächig).
-- **Logo invertiert:** weißes abgerundetes Quadrat mit blauem Haken (`#1c2233`).
-- **Schriftzug daneben:** „KFZ-Termin **Köln**" in Weiß, „Köln" im Akzent-Orange wie im Header.
-- **Untertitel klein darunter:** „Wunschtermin bei der Zulassungsstelle".
-- Erzeugt mit `imagegen` (premium-Tier wegen Text-Lesbarkeit), Format JPG.
+- Hintergrund: Markenblau `#1c2233` vollflächig
+- Mittig: invertiertes Logo (weißes abgerundetes Quadrat mit blauem Haken)
+- Darunter: „KFZ-Termin **Köln**" in Weiß, „Köln" in Akzent-Orange
+- Untertitel klein: „Wunschtermin bei der Zulassungsstelle"
+- Großzügige Sicherheitszone am Rand (Google schneidet ggf. zu)
+- Erfüllt Mindestauflösung 300×300, liefert empfohlene 1200×1200
 
-### 2. Download-Variante hell (`public/brand-kfz-termin-light.png`, 1200×630)
+### 2. Querformat 1,91:1 (`public/ads-landscape.jpg`, 1200×628)
 
-- **Weißer Hintergrund**, original Logo (dunkelblaues Quadrat, weißer Haken), dunkelblauer Text.
-- Für Print, E-Mail-Signatur, helle Hintergründe.
-- Abrufbar unter `https://kfz-termin.online/brand-kfz-termin-light.png`.
+- Gleiches Markenblau, gleiches invertiertes Logo
+- Layout: Logo links, Schriftzug rechts daneben, Untertitel darunter
+- Erfüllt Mindestauflösung 600×314, liefert empfohlene 1200×628
 
-### 3. Download-Variante dunkel (`public/brand-kfz-termin-dark.png`, 1200×630)
+## Technische Details
 
-- **Blauer Hintergrund** `#1c2233`, invertiertes Logo (weißes Quadrat, blauer Haken), weißer Text, „Köln" in Akzent-Orange.
-- Selbes Design wie das OG-Bild, aber als separate PNG-Datei zum Download.
-- Abrufbar unter `https://kfz-termin.online/brand-kfz-termin-dark.png`.
-
-### 4. Meta-Tag minimal angleichen
-
-- In `src/routes/__root.tsx`: `og:image:alt` auf „KFZ-Termin Köln – Logo" aktualisieren.
-- `og:image`-Pfad bleibt `/og-image.jpg` — Datei wird einfach überschrieben.
+- Generiert mit `imagegen` (premium-Tier wegen Text-Lesbarkeit)
+- Format JPG (von Google für Ads bevorzugt, kleinere Dateien)
+- Beide Bilder zum Download verfügbar unter:
+  - `https://kfz-termin.online/ads-square.jpg`
+  - `https://kfz-termin.online/ads-landscape.jpg`
 
 ## Was ich NICHT ändere
 
-- Header/Menübar (nutzt weiterhin `mark.svg`).
-- Keine Änderungen an Pricing, Booking-Form, Mails oder Routen.
-
-## Hinweis nach dem Publish
-
-Facebook/LinkedIn/WhatsApp cachen Vorschaubilder tagelang. Nach dem Publish manuell refreshen:
-- **Facebook/Instagram/WhatsApp:** https://developers.facebook.com/tools/debug/
-- **LinkedIn:** https://www.linkedin.com/post-inspector/
+- Keine Änderungen an Code, Meta-Tags, Header, Pricing, Booking oder Mails
+- OG-Bild und Download-Varianten bleiben wie sie sind
