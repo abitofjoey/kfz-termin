@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Check, ExternalLink } from "lucide-react";
 import { SERVICES, type ServiceId, getService } from "@/lib/services";
 
@@ -16,6 +16,16 @@ const features = [
 export function Pricing({ onSelect }: Props) {
   const [activeId, setActiveId] = useState<ServiceId>("gebraucht");
   const active = getService(activeId);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleBadgeClick = (id: ServiceId) => {
+    setActiveId(id);
+    if (typeof window !== "undefined" && window.innerWidth < 640) {
+      requestAnimationFrame(() => {
+        cardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  };
 
   return (
     <section id="preise" className="py-20">
@@ -41,7 +51,7 @@ export function Pricing({ onSelect }: Props) {
                 type="button"
                 role="tab"
                 aria-selected={isActive}
-                onClick={() => setActiveId(s.id)}
+                onClick={() => handleBadgeClick(s.id)}
                 className={[
                   "rounded-lg border px-3 py-3 text-center text-sm font-medium transition",
                   "min-h-[3.25rem] flex items-center justify-center",
@@ -57,7 +67,8 @@ export function Pricing({ onSelect }: Props) {
         </div>
 
         {/* Dynamische Karte */}
-        <div className="mx-auto mt-8 max-w-xl">
+        <div ref={cardRef} className="mx-auto mt-8 max-w-xl scroll-mt-4">
+
           <div className="flex flex-col rounded-2xl border border-border bg-card p-8 shadow-sm">
             <div className="flex items-start justify-between gap-3">
               <h3 className="text-xl font-bold">{active.label}</h3>
