@@ -4,13 +4,13 @@ import { Card, CardContent } from "@/components/ui/card";
 const testimonials = [
   {
     name: "Lukas M.",
-    service: "Ummeldung",
+    service: "Anmeldung Gebrauchtfahrzeug",
     quote:
       "Auftrag morgens abgeschickt – keine Stunde später kam die Mail mit dem Termin für den nächsten Tag. Damit hatte ich ehrlich nicht gerechnet. Top.",
   },
   {
     name: "Sabine K.",
-    service: "Wunschkennzeichen",
+    service: "Anmeldung Gebrauchtfahrzeug",
     quote:
       "Ich brauchte kurzfristig einen Termin und hatte wenig Hoffnung, online noch etwas Passendes zu finden. Noch am selben Tag kam die Bestätigung – Termin in drei Tagen. Hat sich für mich wirklich gelohnt.",
   },
@@ -22,7 +22,7 @@ const testimonials = [
   },
   {
     name: "Jonas R.",
-    service: "Außerbetriebsetzung",
+    service: "Anmeldung Gebrauchtfahrzeug",
     quote:
       "Formular ausgefüllt, bezahlt, fertig. Musste nichts mehr machen, bis die Bestätigungsmail kam. Genau so soll's sein.",
   },
