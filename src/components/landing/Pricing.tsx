@@ -116,6 +116,7 @@ export function Pricing({ onSelect }: Props) {
           </div>
         </div>
       </div>
+    </div>
     </section>
   );
 }
