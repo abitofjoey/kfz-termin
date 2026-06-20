@@ -37,37 +37,38 @@ export function Pricing({ onSelect }: Props) {
           </p>
         </div>
 
-        {/* Kachel-Auswahl */}
-        <div
-          role="tablist"
-          aria-label="Dienstleistung wählen"
-          className="mt-10 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3"
-        >
-          {SERVICES.map((s) => {
-            const isActive = s.id === activeId;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => handleBadgeClick(s.id)}
-                className={[
-                  "rounded-lg border px-3 py-3 text-center text-sm font-medium transition",
-                  "min-h-[3.25rem] flex items-center justify-center",
-                  isActive
-                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                    : "border-border bg-card text-foreground hover:border-primary/40 hover:bg-accent/30",
-                ].join(" ")}
-              >
-                {s.shortLabel}
-              </button>
-            );
-          })}
-        </div>
+        {/* Kachel-Auswahl + Karte */}
+        <div ref={cardRef} className="scroll-mt-4">
+          <div
+            role="tablist"
+            aria-label="Dienstleistung wählen"
+            className="mt-10 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3"
+          >
+            {SERVICES.map((s) => {
+              const isActive = s.id === activeId;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => handleBadgeClick(s.id)}
+                  className={[
+                    "rounded-lg border px-3 py-3 text-center text-sm font-medium transition",
+                    "min-h-[3.25rem] flex items-center justify-center",
+                    isActive
+                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                      : "border-border bg-card text-foreground hover:border-primary/40 hover:bg-accent/30",
+                  ].join(" ")}
+                >
+                  {s.shortLabel}
+                </button>
+              );
+            })}
+          </div>
 
-        {/* Dynamische Karte */}
-        <div ref={cardRef} className="mx-auto mt-8 max-w-xl scroll-mt-4">
+          {/* Dynamische Karte */}
+          <div className="mx-auto mt-8 max-w-xl">
 
           <div className="flex flex-col rounded-2xl border border-border bg-card p-8 shadow-sm">
             <div className="flex items-start justify-between gap-3">
