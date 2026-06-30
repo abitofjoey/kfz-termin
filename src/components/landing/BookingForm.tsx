@@ -328,8 +328,9 @@ export function BookingForm({ preselected }: Props) {
 
           {/* Calendar */}
           <Field
-            label="Wunschtermine"
-            info="Wähle die Tage an denen du einen Termin bekommen möchtest. Je mehr Tage, desto höher die Chance auf einen schnellen Termin."
+            label="Wunschtag(e)"
+            hint="Wähle Tage, an denen du verfügbar bist. Wir buchen dir genau einen Termin – den ersten freien Slot an einem deiner Tage."
+            info="Wähle möglichst viele Tage aus, damit wir schneller einen passenden Termin finden."
             error={errors.selected_dates?.message as string | undefined}
           >
             <Controller
@@ -364,9 +365,15 @@ export function BookingForm({ preselected }: Props) {
                       <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
                       <span>Bitte wähle mindestens 1 Wunschtag aus.</span>
                     </p>
+                  ) : selectedDates.length === 1 ? (
+                    <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-emerald-600 sm:flex-row sm:items-center">
+                      <Check className="h-3.5 w-3.5 flex-shrink-0" />
+                      <span>1 Tag ausgewählt. Du kannst noch mehr Tage hinzufügen – das erhöht die Chance auf einen schnellen Termin.</span>
+                    </p>
                   ) : (
-                    <p className="mt-2 px-2 text-xs text-emerald-600">
-                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} ✓</span>
+                    <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-emerald-600 sm:flex-row sm:items-center">
+                      <Check className="h-3.5 w-3.5 flex-shrink-0" />
+                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> Tage. Je mehr Tage, desto höher die Chance.</span>
                     </p>
                   )}
                 </div>
