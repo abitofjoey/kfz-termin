@@ -16,11 +16,11 @@ const items = [
   },
   {
     q: "Wie schnell bekomme ich einen Termin?",
-    a: "Es ist nicht genau vorhersagbar – es kann wenige Minuten dauern, wenn gerade ein Slot frei wird, aber auch einige Tage. Das hängt davon ab, wann die Zulassungsstelle neue Termine freigibt. Unser System prüft das täglich von 7 bis 18 Uhr und bucht sofort den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Wahrscheinlichkeit, dass schnell ein Termin gefunden wird.",
+    a: "Es ist nicht genau vorhersagbar – es kann wenige Minuten dauern, wenn gerade ein Slot frei wird, aber auch einige Tage. Unser System prüft täglich von 7 bis 18 Uhr und bucht sofort den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Wahrscheinlichkeit und desto schneller geht es.",
   },
   {
     q: "Welche Tage soll ich im Kalender auswählen?",
-    a: "Je mehr Tage du auswählst, desto höher ist die Wahrscheinlichkeit und desto schneller finden wir einen Termin. Für den frühestmöglichen Termin empfehlen wir alle verfügbaren Tage anzuhaken – das System bucht dann den ersten freien Slot.",
+    a: "Du wählst Tage, an denen du Zeit hast. Wir buchen dir nur einen einzigen Termin – den ersten freien Slot an einem deiner Wunschtage. Je mehr Tage du wählst, desto höher die Chance und desto schneller geht es.",
   },
   {
     q: "Was ist die FIN und wo finde ich sie?",
