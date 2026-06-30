@@ -359,10 +359,10 @@ export function BookingForm({ preselected }: Props) {
                   ) : (
                     <div className="h-[320px]" aria-hidden="true" />
                   )}
-                  {selectedDates.length < 3 ? (
+                  {selectedDates.length < 2 ? (
                     <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-destructive sm:flex-row sm:items-center">
                       <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
-                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} – bitte noch {3 - selectedDates.length} {3 - selectedDates.length === 1 ? "weiteren Tag" : "weitere Tage"} wählen.</span>
+                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} – bitte noch {2 - selectedDates.length} {2 - selectedDates.length === 1 ? "weiteren Tag" : "weitere Tage"} wählen.</span>
                     </p>
                   ) : (
                     <p className="mt-2 px-2 text-xs text-emerald-600">
