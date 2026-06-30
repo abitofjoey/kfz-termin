@@ -328,8 +328,8 @@ export function BookingForm({ preselected }: Props) {
 
           {/* Calendar */}
           <Field
-            label="Wunschtermine (mindestens 2 Tage)"
-            info="Wähle die Tage an denen du einen Termin bekommen möchtest – mindestens 2 Tage erforderlich."
+            label="Wunschtermine"
+            info="Wähle die Tage an denen du einen Termin bekommen möchtest. Je mehr Tage, desto höher die Chance auf einen schnellen Termin."
             error={errors.selected_dates?.message as string | undefined}
           >
             <Controller
@@ -359,14 +359,14 @@ export function BookingForm({ preselected }: Props) {
                   ) : (
                     <div className="h-[320px]" aria-hidden="true" />
                   )}
-                  {selectedDates.length < 2 ? (
+                  {selectedDates.length < 1 ? (
                     <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-destructive sm:flex-row sm:items-center">
                       <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
-                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} – bitte noch {2 - selectedDates.length} {2 - selectedDates.length === 1 ? "weiteren Tag" : "weitere Tage"} wählen.</span>
+                      <span>Bitte wähle mindestens 1 Wunschtag aus.</span>
                     </p>
                   ) : (
                     <p className="mt-2 px-2 text-xs text-emerald-600">
-                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> Tage ✓</span>
+                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} ✓</span>
                     </p>
                   )}
                 </div>
