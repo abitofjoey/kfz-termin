@@ -60,7 +60,7 @@ const schema = z.object({
     .or(z.literal("")),
   selected_dates: z
     .array(z.date())
-    .min(3, "Bitte wähle mindestens 3 Wunschtage aus, um die Erfolgschance zu erhöhen."),
+    .min(2, "Bitte wähle mindestens 2 Wunschtage aus, um die Erfolgschance zu erhöhen."),
   agree_terms: z.literal(true, {
     errorMap: () => ({ message: "Bitte zustimmen" }),
   }),
@@ -328,8 +328,8 @@ export function BookingForm({ preselected }: Props) {
 
           {/* Calendar */}
           <Field
-            label="Wunschtermine (mindestens 3 Tage)"
-            info="Wähle die Tage an denen du einen Termin bekommen möchtest – mindestens 3 Tage erforderlich."
+            label="Wunschtermine (mindestens 2 Tage)"
+            info="Wähle die Tage an denen du einen Termin bekommen möchtest – mindestens 2 Tage erforderlich."
             error={errors.selected_dates?.message as string | undefined}
           >
             <Controller
@@ -359,10 +359,10 @@ export function BookingForm({ preselected }: Props) {
                   ) : (
                     <div className="h-[320px]" aria-hidden="true" />
                   )}
-                  {selectedDates.length < 3 ? (
+                  {selectedDates.length < 2 ? (
                     <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-destructive sm:flex-row sm:items-center">
                       <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
-                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} – bitte noch {3 - selectedDates.length} {3 - selectedDates.length === 1 ? "weiteren Tag" : "weitere Tage"} wählen.</span>
+                      <span>Ausgewählt: <strong>{selectedDates.length}</strong> {selectedDates.length === 1 ? "Tag" : "Tage"} – bitte noch {2 - selectedDates.length} {2 - selectedDates.length === 1 ? "weiteren Tag" : "weitere Tage"} wählen.</span>
                     </p>
                   ) : (
                     <p className="mt-2 px-2 text-xs text-emerald-600">
