@@ -60,7 +60,7 @@ const schema = z.object({
     .or(z.literal("")),
   selected_dates: z
     .array(z.date())
-    .min(2, "Bitte wähle mindestens 2 Wunschtage aus, um die Erfolgschance zu erhöhen."),
+    .min(1, "Bitte wähle mindestens 1 Wunschtag aus."),
   agree_terms: z.literal(true, {
     errorMap: () => ({ message: "Bitte zustimmen" }),
   }),
