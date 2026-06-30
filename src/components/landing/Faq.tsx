@@ -20,7 +20,7 @@ const items = [
   },
   {
     q: "Welche Tage soll ich im Kalender auswählen?",
-    a: "Es müssen mindestens 2 Tage ausgewählt werden. Je mehr Tage du auswählst, desto höher ist die Wahrscheinlichkeit und desto schneller finden wir einen Termin. Für den frühestmöglichen Termin empfehlen wir alle verfügbaren Tage anzuhaken – das System bucht dann den ersten freien Slot.",
+    a: "Je mehr Tage du auswählst, desto höher ist die Wahrscheinlichkeit und desto schneller finden wir einen Termin. Für den frühestmöglichen Termin empfehlen wir alle verfügbaren Tage anzuhaken – das System bucht dann den ersten freien Slot.",
   },
   {
     q: "Was ist die FIN und wo finde ich sie?",
