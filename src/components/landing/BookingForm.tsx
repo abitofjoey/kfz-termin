@@ -329,8 +329,7 @@ export function BookingForm({ preselected }: Props) {
           {/* Calendar */}
           <Field
             label="Wunschtag(e)"
-            hint="Wähle Tage, an denen du verfügbar bist. Wir buchen dir genau einen Termin – den ersten freien Slot an einem deiner Tage."
-            info="Wähle möglichst viele Tage aus, damit wir schneller einen passenden Termin finden."
+            info="Wähle Tage, an denen du verfügbar bist. Wir buchen dir genau einen Termin – den ersten freien Slot an einem deiner Tage."
             error={errors.selected_dates?.message as string | undefined}
           >
             <Controller
