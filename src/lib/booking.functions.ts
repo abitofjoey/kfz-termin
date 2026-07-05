@@ -27,11 +27,12 @@ export const getCalendarBounds = createServerFn({ method: "GET" }).handler(
     };
 
     // Ab 14 Uhr Berlin-Zeit: frühester wählbarer Tag ist übermorgen.
+    // maxDate wird mitverschoben, damit das buchbare Fenster konstant 14 Tage bleibt.
     const minOffset = berlinHour >= 14 ? 2 : 1;
     return {
       todayISO,
       minDateISO: addDaysISO(todayISO, minOffset),
-      maxDateISO: addDaysISO(todayISO, 14),
+      maxDateISO: addDaysISO(todayISO, 13 + minOffset),
     };
   },
 );
