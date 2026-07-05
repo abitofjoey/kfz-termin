@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Anyone can create a booking with valid data" ON public.bookings;
