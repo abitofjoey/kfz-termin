@@ -16,7 +16,7 @@ const items = [
   },
   {
     q: "Wie schnell bekomme ich einen Termin?",
-    a: "Es ist nicht genau vorhersagbar – es kann wenige Minuten dauern, wenn gerade ein Slot frei wird, aber auch einige Tage. Unser System prüft täglich von 7 bis 18 Uhr und bucht sofort den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Wahrscheinlichkeit und desto schneller geht es.",
+    a: "Es ist nicht genau vorhersagbar – es kann wenige Minuten dauern, wenn gerade ein Slot frei wird, aber auch einige Tage. Unser System prüft täglich von 7 bis 20 Uhr und bucht sofort den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Wahrscheinlichkeit und desto schneller geht es.",
   },
   {
     q: "Welche Tage soll ich im Kalender auswählen?",
