@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createBooking } from "@/lib/booking.functions";
+import { createBooking, getCalendarBounds } from "@/lib/booking.functions";
 import { createCheckoutSession } from "@/lib/stripe.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
@@ -105,14 +105,41 @@ export function BookingForm({ preselected }: Props) {
     }
   }, [preselected, setValue]);
 
-  // Compute date boundaries on the client only to avoid SSR hydration mismatches
-  // (server and client `new Date()` differ → React error #418 / blank page).
-  const [today, setToday] = useState<Date | null>(null);
+  // Kalender-Grenzen werden serverseitig (Europe/Berlin) berechnet, damit
+  // der 14-Uhr-Cutoff für den Folgetag unabhängig von der Client-Uhr greift.
+  const fetchBounds = useServerFn(getCalendarBounds);
+  const [bounds, setBounds] = useState<{
+    today: Date;
+    minDate: Date;
+    maxDate: Date;
+  } | null>(null);
   useEffect(() => {
-    setToday(startOfDay(new Date()));
-  }, []);
-  const minDate = useMemo(() => (today ? addDays(today, 1) : null), [today]);
-  const maxDate = useMemo(() => (today ? addDays(today, 14) : null), [today]);
+    let cancelled = false;
+    fetchBounds()
+      .then((b) => {
+        if (cancelled) return;
+        const parse = (iso: string) => {
+          const [y, m, d] = iso.split("-").map(Number);
+          return new Date(y, m - 1, d);
+        };
+        setBounds({
+          today: parse(b.todayISO),
+          minDate: parse(b.minDateISO),
+          maxDate: parse(b.maxDateISO),
+        });
+      })
+      .catch(() => {
+        // Fallback: bisherige Client-Logik (heute + 1 … heute + 14).
+        const t = startOfDay(new Date());
+        setBounds({ today: t, minDate: addDays(t, 1), maxDate: addDays(t, 14) });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [fetchBounds]);
+  const today = bounds?.today ?? null;
+  const minDate = bounds?.minDate ?? null;
+  const maxDate = bounds?.maxDate ?? null;
   const threeDayThreshold = useMemo(
     () => (today ? addDays(today, 3) : null),
     [today],

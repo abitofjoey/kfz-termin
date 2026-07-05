@@ -17,7 +17,7 @@ const steps = [
     n: 3,
     icon: Search,
     title: "Wir suchen für dich",
-    text: "Unser System prüft täglich von 7–18 Uhr auf einen freien Slot an einem deiner Wunschtage – du musst nichts tun.",
+    text: "Unser System prüft täglich von 7–20 Uhr auf einen freien Slot an einem deiner Wunschtage – du musst nichts tun.",
   },
   {
     n: 4,
