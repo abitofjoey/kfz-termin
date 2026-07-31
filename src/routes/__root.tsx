@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import interLatinWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ConsentProvider } from "@/lib/consent";
 import { CookieBanner } from "@/components/consent/CookieBanner";
@@ -94,6 +95,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      {
+        rel: "preload",
+        as: "font",
+        type: "font/woff2",
+        href: interLatinWoff2,
+        crossOrigin: "anonymous",
+      },
       {
         rel: "stylesheet",
         href: appCss,

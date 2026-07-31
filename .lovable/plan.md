@@ -1,32 +1,31 @@
-## Ziel
-Die Startseite so strukturieren, dass KI-Agenten (und Screenreader) sie zuverlässig lesen, verstehen und bedienen können. Keine sichtbaren Design- oder Funktionsänderungen.
+## Ausgangslage (geprüft)
 
-## 1. Landmarks eindeutig benennen
-Aktuell gibt es mehrere `<nav>`- und `<section>`-Elemente ohne Namen – Agenten können sie nicht unterscheiden.
-- `Header.tsx`: `<nav aria-label="Hauptnavigation">`
-- `Footer.tsx`: `<nav aria-label="Rechtliches und Kontakt">`
-- Jeder Abschnitt (`Hero`, `Steps`, `Pricing`, `Founder`, `Testimonials`, `BookingForm`, `InfoBlock`, `Faq`) bekommt `aria-labelledby`, das auf die vorhandene `h1`/`h2` zeigt (IDs an den Überschriften ergänzen). Damit hat jeder Bereich im Accessibility-Tree einen sprechenden Namen.
-- Skip-Link „Zum Inhalt springen" vor dem Header, nur bei Tastaturfokus sichtbar.
+- Die kritische Kette ist: HTML (478 ms) → `styles-*.css` (508 ms) → `inter-lat...woff2` (575 ms).
+- `src/styles.css` importiert `@fontsource-variable/inter` **komplett**. Das Paket enthält alle Subsets (latin, latin-ext, cyrillic, greek, vietnamese) – die Schriftdateien werden zwar nur bei Bedarf geladen, aber alle `@font-face`-Regeln landen im CSS und blähen die 15 KiB Stylesheet unnötig auf.
+- In `src/routes/__root.tsx` gibt es aktuell nur den Stylesheet-Link, **keinen** `preload` für die Schrift. Deshalb wird die Schrift erst entdeckt, wenn das CSS fertig geparst ist (die dritte Stufe der Kette).
 
-## 2. Strukturierte Daten erweitern (das liest ein Agent zuerst)
-In `src/routes/index.tsx` als JSON-LD ergänzen:
-- **Service/Offer**: Leistungsbeschreibung, Anbieter, Preis `9.99 EUR`, Verfügbarkeit, Einsatzgebiet Köln.
-- **FAQPage**: aus den vorhandenen FAQ-Einträgen in `Faq.tsx` generiert (eine Quelle, kein doppelter Text).
-- **BreadcrumbList** ist bei einer Onepager-Struktur nicht sinnvoll – wird weggelassen.
+Realistisch sind hier ca. 70–150 ms, keine Wunder. Score 93 ist bereits gut – die folgenden Schritte sind risikoarm und ändern nichts an Optik oder Funktion.
 
-## 3. Formular agentenlesbar machen
-`BookingForm.tsx` prüfen und ergänzen:
-- Jedes Feld hat eine echte `label`/`id`-Verknüpfung, Pflichtfelder `aria-required`, Fehlermeldungen per `aria-describedby` + `aria-invalid` verknüpft.
-- Statusmeldungen (Fehler/Erfolg) in einer `aria-live="polite"`-Region, damit Agenten den Ausgang einer Aktion mitbekommen.
-- `<form>` bekommt `aria-labelledby` auf die Abschnittsüberschrift; `autoComplete`-Attribute (`given-name`, `family-name`, `email`, `tel`) ergänzen – hilft Agenten und echten Nutzern beim Ausfüllen.
+## Geplante Änderungen
 
-## 4. `public/llms.txt` korrigieren und ausbauen
-Die Datei nennt aktuell **„ab 19 €"** – der echte Preis ist **9,99 €**. Das ist die Datei, die KI-Agenten bevorzugt lesen, also:
-- Preis korrigieren.
-- Kurzabschnitte ergänzen: Ablauf in Schritten, was der Dienst NICHT tut (keine Behörde, kein Erscheinen vor Ort), Geld-zurück-Garantie, Kontaktadresse, Öffnungszeiten der Zulassungsstelle.
+### 1. Nur das benötigte Latin-Subset laden
+In `src/styles.css` den Import von `@fontsource-variable/inter` auf die Latin-Variante umstellen (`.../latin.css` bzw. das entsprechende Subset-File des Pakets). Ergebnis: weniger `@font-face`-Regeln, kleineres render-blockierendes Stylesheet. Darstellung bleibt identisch, da auf der Seite ausschließlich lateinische Zeichen (inkl. Umlaute) vorkommen.
 
-## 5. Verifikation
-Automatisierter axe-Lauf im Browser über Startseite plus Impressum/Datenschutz/AGB, dazu ein Dump des Accessibility-Trees, um zu prüfen, dass alle Landmarks und Formularfelder benannt sind. Ergebnis melde ich dir.
+### 2. Schrift vorladen (Kette von 3 auf 2 Stufen kürzen)
+In `src/routes/__root.tsx` in `head().links` ein `rel="preload"` mit `as="font"`, `type="font/woff2"` und `crossOrigin="anonymous"` auf die Inter-Latin-woff2 ergänzen. Der Browser startet den Font-Download dann parallel zum CSS statt danach.
 
-## Technisches Detail
-Betroffen sind ausschließlich Präsentations-/Markup-Dateien: `Header.tsx`, `Footer.tsx`, die Landing-Sections, `BookingForm.tsx` (nur ARIA/Autocomplete, keine Logik), `src/routes/index.tsx` (JSON-LD) und `public/llms.txt`. Keine Änderungen an Datenbank, Stripe, E-Mail oder Buchungsablauf.
+Da Vite die Datei mit Hash ausliefert, wird der Pfad über einen Asset-Import (`?url`) aus `@fontsource-variable/inter/files/...` ermittelt, nicht hartkodiert – sonst bricht der Preload beim nächsten Build.
+
+### 3. `font-display` prüfen
+Sicherstellen, dass die Schrift mit `font-display: swap` geladen wird (Fontsource setzt das standardmäßig). Falls nicht gesetzt, ergänzen – verhindert unsichtbaren Text während des Ladens.
+
+## Bewusst nicht gemacht
+
+- **„Ungenutztes JavaScript 136 KiB"**: Der Rest steckt in React/Router/Formular-Logik, die für die interaktive Buchung gebraucht wird. Weiteres Aufsplitten würde die Ladereihenfolge verkomplizieren und Regressionsrisiko beim Buchungsformular erzeugen – Nutzen wenige Millisekunden. Nicht empfohlen.
+- **CSS inline einbetten**: Würde das Render-Blocking ganz entfernen, aber das HTML um ~15 KiB aufblähen und den Browser-Cache für wiederkehrende Besucher aushebeln. Netto kein klarer Gewinn.
+- **Cache-TTL für `flock.js`**: Das ist ein Skript der Lovable-Plattform, dessen Cache-Header wir nicht steuern können. Auf der veröffentlichten Domain ohne Preview-Overhead fällt das ohnehin weg.
+- **Preconnect-Hinweise**: Lighthouse meldet selbst „keine weiteren Ursprünge geeignet" – alles wird schon von der eigenen Domain geliefert.
+
+## Verifikation
+
+TypeScript-Check, danach im Preview prüfen, dass „Inter Variable" weiterhin gerendert wird und Umlaute korrekt aussehen. Die Verbesserung wird erst nach dem Veröffentlichen in PageSpeed messbar.
