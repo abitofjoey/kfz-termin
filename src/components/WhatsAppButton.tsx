@@ -46,7 +46,8 @@ export function WhatsAppButton() {
   const promptActive = showPrompt && scrolled && !dismissed;
 
   return (
-    <div
+    <aside
+      aria-label="Direktkontakt per WhatsApp"
       className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end gap-3 transition-opacity duration-500 ${
         visible ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
@@ -135,6 +136,6 @@ export function WhatsAppButton() {
           100% { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-    </div>
+    </aside>
   );
 }

@@ -197,10 +197,10 @@ export function BookingForm({ preselected }: Props) {
   };
 
   return (
-    <section id="buchung" className="bg-background py-20">
+    <section id="buchung" aria-labelledby="buchung-heading" className="bg-background py-20">
       <div className="mx-auto max-w-3xl px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">Jetzt Termin buchen</h2>
+          <h2 id="buchung-heading" className="text-3xl font-bold sm:text-4xl">Jetzt Termin buchen</h2>
           <p className="mt-4 text-muted-foreground">
             Fülle das Formular aus – wir kümmern uns um den Rest.
           </p>
@@ -215,18 +215,19 @@ export function BookingForm({ preselected }: Props) {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
+          aria-labelledby="buchung-heading"
           className="mt-10 space-y-6 rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8"
           noValidate
         >
           {/* Service */}
           <Field label="Dienstleistung" error={errors.service_type?.message}>
-            {(id) => (
+            {(id, aria) => (
               <Controller
                 control={control}
                 name="service_type"
                 render={({ field }) => (
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger id={id}>
+                    <SelectTrigger id={id} {...aria}>
                       <SelectValue placeholder="Bitte auswählen" />
                     </SelectTrigger>
                     <SelectContent>
@@ -244,13 +245,13 @@ export function BookingForm({ preselected }: Props) {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Anrede" error={errors.salutation?.message}>
-              {(id) => (
+              {(id, aria) => (
                 <Controller
                   control={control}
                   name="salutation"
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id={id}>
+                      <SelectTrigger id={id} {...aria}>
                         <SelectValue placeholder="Bitte auswählen" />
                       </SelectTrigger>
                       <SelectContent>
@@ -265,19 +266,19 @@ export function BookingForm({ preselected }: Props) {
             </Field>
             <div /> {/* spacer */}
             <Field label="Vorname" error={errors.first_name?.message}>
-              {(id) => <Input id={id} {...register("first_name")} autoComplete="given-name" />}
+              {(id, aria) => <Input id={id} {...aria} {...register("first_name")} autoComplete="given-name" />}
             </Field>
             <Field label="Nachname" error={errors.last_name?.message}>
-              {(id) => <Input id={id} {...register("last_name")} autoComplete="family-name" />}
+              {(id, aria) => <Input id={id} {...aria} {...register("last_name")} autoComplete="family-name" />}
             </Field>
           </div>
 
           <Field label="E-Mail" error={errors.email?.message} hint="Nach der Buchung erhältst du eine Bestätigungsmail der Kölner Zulassungsstelle – bitte klicke den Link darin innerhalb von 3 Stunden an.">
-            {(id) => <Input id={id} type="email" {...register("email")} autoComplete="email" />}
+            {(id, aria) => <Input id={id} {...aria} type="email" {...register("email")} autoComplete="email" />}
           </Field>
 
           <Field label="Telefonnummer" error={errors.phone?.message}>
-            {(id) => <Input id={id} type="tel" {...register("phone")} autoComplete="tel" />}
+            {(id, aria) => <Input id={id} {...aria} type="tel" {...register("phone")} autoComplete="tel" />}
           </Field>
 
           <div className="space-y-3">
@@ -298,9 +299,10 @@ export function BookingForm({ preselected }: Props) {
                 </div>
               }
             >
-              {(id) => (
+              {(id, aria) => (
                 <Input
                   id={id}
+                  {...aria}
                   {...register("fin_1")}
                   maxLength={4}
                   className="uppercase tracking-widest"
@@ -461,6 +463,12 @@ export function BookingForm({ preselected }: Props) {
   );
 }
 
+type FieldAria = {
+  "aria-required": true;
+  "aria-invalid": boolean;
+  "aria-describedby"?: string;
+};
+
 function Field({
   label,
   hint,
@@ -472,9 +480,19 @@ function Field({
   hint?: string;
   info?: React.ReactNode;
   error?: string;
-  children: React.ReactNode | ((id: string) => React.ReactNode);
+  children: React.ReactNode | ((id: string, aria: FieldAria) => React.ReactNode);
 }) {
   const id = useId();
+  const hintId = `${id}-hint`;
+  const errorId = `${id}-error`;
+  const describedBy = [error ? errorId : null, hint && !error ? hintId : null]
+    .filter(Boolean)
+    .join(" ");
+  const aria: FieldAria = {
+    "aria-required": true,
+    "aria-invalid": !!error,
+    ...(describedBy ? { "aria-describedby": describedBy } : {}),
+  };
   return (
     <div className="space-y-1.5">
       <div className="flex items-center gap-1.5">
@@ -501,11 +519,15 @@ function Field({
           </Popover>
         )}
       </div>
-      {typeof children === "function" ? children(id) : children}
+      {typeof children === "function" ? children(id, aria) : children}
       {hint && !error && (
-        <p className="text-xs text-muted-foreground">{hint}</p>
+        <p id={hintId} className="text-xs text-muted-foreground">{hint}</p>
       )}
-      {error && <p className="text-xs text-destructive">{error}</p>}
+      {error && (
+        <p id={errorId} role="alert" className="text-xs text-destructive">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

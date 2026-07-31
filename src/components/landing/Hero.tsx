@@ -2,7 +2,7 @@ import { Clock, ShieldCheck, MapPin } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-primary text-primary-foreground">
+    <section aria-labelledby="hero-heading" className="relative overflow-hidden bg-primary text-primary-foreground">
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-[oklch(0.18_0.04_258)] opacity-90" />
       <div className="relative mx-auto max-w-6xl px-4 py-20 sm:py-28">
         <div className="max-w-3xl">
@@ -10,7 +10,7 @@ export function Hero() {
             <MapPin className="h-3.5 w-3.5" />
             Zulassungsstelle Köln
           </div>
-          <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+          <h1 id="hero-heading" className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Dein Wunschtermin bei der Kölner Zulassungsstelle –{" "}
             <span className="text-accent">automatisch gebucht.</span>
           </h1>

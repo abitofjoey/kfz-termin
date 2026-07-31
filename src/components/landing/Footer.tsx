@@ -14,7 +14,7 @@ export function Footer() {
           </p>
         </div>
 
-        <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/90">
+        <nav aria-label="Rechtliches und Kontakt" className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/90">
           <Link to="/impressum" className="hover:text-white">Impressum</Link>
           <Link to="/datenschutz" className="hover:text-white">Datenschutz</Link>
           <Link to="/agb" className="hover:text-white">AGB</Link>

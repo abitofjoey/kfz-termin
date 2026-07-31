@@ -79,14 +79,14 @@ const faqJsonLd = {
 
 export function Faq() {
   return (
-    <section id="faq" className="bg-secondary/40 py-20">
+    <section id="faq" aria-labelledby="faq-heading" className="bg-secondary/40 py-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <div className="mx-auto max-w-3xl px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">Häufige Fragen</h2>
+          <h2 id="faq-heading" className="text-3xl font-bold sm:text-4xl">Häufige Fragen</h2>
           <p className="mt-4 text-muted-foreground">
             Antworten auf die wichtigsten Fragen zu unserem Service.
           </p>

@@ -2,10 +2,10 @@ import { MapPin, Clock, Phone, ExternalLink } from "lucide-react";
 
 export function InfoBlock() {
   return (
-    <section className="py-12">
+    <section aria-labelledby="info-heading" className="py-12">
       <div className="mx-auto max-w-3xl px-4">
         <div className="rounded-2xl border border-border bg-muted/50 p-8">
-          <h2 className="text-xl font-bold">
+          <h2 id="info-heading" className="text-xl font-bold">
             Wissenswertes zur Kölner Zulassungsstelle
           </h2>
           <dl className="mt-6 space-y-3 text-sm">

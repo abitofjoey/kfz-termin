@@ -35,10 +35,10 @@ const steps = [
 
 export function Steps() {
   return (
-    <section id="ablauf" className="bg-secondary/40 py-20">
+    <section id="ablauf" aria-labelledby="ablauf-heading" className="bg-secondary/40 py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">So funktioniert's</h2>
+          <h2 id="ablauf-heading" className="text-3xl font-bold sm:text-4xl">So funktioniert's</h2>
           <p className="mt-4 text-muted-foreground">
             In fünf einfachen Schritten zu deinem Termin bei der Kölner
             Zulassungsstelle.
