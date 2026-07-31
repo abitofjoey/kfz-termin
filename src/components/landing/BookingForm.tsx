@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useId } from "react";
+import { useState, useMemo, useEffect, useId, lazy, Suspense } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,7 +9,9 @@ import { AlertCircle, Check, Info, Loader2, Plus, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+const Calendar = lazy(() =>
+  import("@/components/ui/calendar").then((m) => ({ default: m.Calendar })),
+);
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Popover,
@@ -365,6 +367,7 @@ export function BookingForm({ preselected }: Props) {
               render={({ field }) => (
                 <div className="rounded-md border border-border bg-background p-2">
                   {today && minDate && maxDate ? (
+                    <Suspense fallback={<div className="h-[320px]" aria-hidden="true" />}>
                     <Calendar
                       mode="multiple"
                       locale={de}
@@ -383,6 +386,7 @@ export function BookingForm({ preselected }: Props) {
                       endMonth={maxDate}
                       className="pointer-events-auto mx-auto"
                     />
+                    </Suspense>
                   ) : (
                     <div className="h-[320px]" aria-hidden="true" />
                   )}
