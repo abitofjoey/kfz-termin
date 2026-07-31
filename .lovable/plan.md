@@ -1,27 +1,32 @@
 ## Ziel
-Ladezeit verbessern, ohne Design, Funktion oder Texte zu ändern. Nur die Punkte umsetzen, die wirklich messbar helfen und risikoarm sind.
+Die Startseite so strukturieren, dass KI-Agenten (und Screenreader) sie zuverlässig lesen, verstehen und bedienen können. Keine sichtbaren Design- oder Funktionsänderungen.
 
-## 1. Google Fonts selbst hosten (größter Hebel, ca. 500–700 ms)
-Aktuell lädt die Seite Inter über `fonts.googleapis.com` → das erzeugt die kritische Kette
-HTML → googleapis-CSS → gstatic-woff2 (658 ms) und blockiert das Rendering.
+## 1. Landmarks eindeutig benennen
+Aktuell gibt es mehrere `<nav>`- und `<section>`-Elemente ohne Namen – Agenten können sie nicht unterscheiden.
+- `Header.tsx`: `<nav aria-label="Hauptnavigation">`
+- `Footer.tsx`: `<nav aria-label="Rechtliches und Kontakt">`
+- Jeder Abschnitt (`Hero`, `Steps`, `Pricing`, `Founder`, `Testimonials`, `BookingForm`, `InfoBlock`, `Faq`) bekommt `aria-labelledby`, das auf die vorhandene `h1`/`h2` zeigt (IDs an den Überschriften ergänzen). Damit hat jeder Bereich im Accessibility-Tree einen sprechenden Namen.
+- Skip-Link „Zum Inhalt springen" vor dem Header, nur bei Tastaturfokus sichtbar.
 
-- Paket `@fontsource-variable/inter` installieren und in `src/styles.css` importieren (lokale Paket-CSS, kein URL-Import).
-- Die drei `<link>`-Tags für Google Fonts (2× preconnect + stylesheet) in `src/routes/__root.tsx` entfernen.
-- `--font-sans` bleibt `"Inter", …` – identische Schrift, identische Optik. Die Font-Datei kommt dann vom selben Server, wird mit `font-display: swap` geladen und blockiert das Rendering nicht mehr.
+## 2. Strukturierte Daten erweitern (das liest ein Agent zuerst)
+In `src/routes/index.tsx` als JSON-LD ergänzen:
+- **Service/Offer**: Leistungsbeschreibung, Anbieter, Preis `9.99 EUR`, Verfügbarkeit, Einsatzgebiet Köln.
+- **FAQPage**: aus den vorhandenen FAQ-Einträgen in `Faq.tsx` generiert (eine Quelle, kein doppelter Text).
+- **BreadcrumbList** ist bei einer Onepager-Struktur nicht sinnvoll – wird weggelassen.
 
-## 2. Gründerbild verkleinern (ca. 7 KiB)
-`src/assets/brand/eike.webp` ist 240×240 und wird mit 120×120 angezeigt (bewusst für Retina).
-- Statt einer starren Verkleinerung ein `srcset` mit einer zusätzlichen 120px-Variante ergänzen, damit Standard-Displays die kleine Datei laden und Retina weiterhin scharf bleibt.
-- Bild bleibt `loading="lazy"`, Optik unverändert.
+## 3. Formular agentenlesbar machen
+`BookingForm.tsx` prüfen und ergänzen:
+- Jedes Feld hat eine echte `label`/`id`-Verknüpfung, Pflichtfelder `aria-required`, Fehlermeldungen per `aria-describedby` + `aria-invalid` verknüpft.
+- Statusmeldungen (Fehler/Erfolg) in einer `aria-live="polite"`-Region, damit Agenten den Ausgang einer Aktion mitbekommen.
+- `<form>` bekommt `aria-labelledby` auf die Abschnittsüberschrift; `autoComplete`-Attribute (`given-name`, `family-name`, `email`, `tel`) ergänzen – hilft Agenten und echten Nutzern beim Ausfüllen.
 
-## 3. Nicht genutztes JavaScript im Startbundle reduzieren
-Der Kalender im Buchungsformular (`react-day-picker` + `date-fns`-Locale) ist der größte einzelne Brocken, den beim ersten Rendern niemand sieht – er liegt weit unter dem Fold.
-- Den `Calendar` in `BookingForm.tsx` per `React.lazy` + `Suspense` nachladen, mit einem Platzhalter in exakt gleicher Höhe, damit kein Layout-Sprung entsteht.
-- Verhalten, Validierung und Server-Logik bleiben unverändert; der Kalender ist beim Scrollen/Öffnen bereits geladen.
+## 4. `public/llms.txt` korrigieren und ausbauen
+Die Datei nennt aktuell **„ab 19 €"** – der echte Preis ist **9,99 €**. Das ist die Datei, die KI-Agenten bevorzugt lesen, also:
+- Preis korrigieren.
+- Kurzabschnitte ergänzen: Ablauf in Schritten, was der Dienst NICHT tut (keine Behörde, kein Erscheinen vor Ort), Geld-zurück-Garantie, Kontaktadresse, Öffnungszeiten der Zulassungsstelle.
 
-## Nicht umgesetzt (bewusst)
-- `/~flock.js` Cache-TTL: Lovable-interne Datei, nicht durch den Projektcode beeinflussbar.
-- Weiteres Code-Splitting des Router-/React-Bundles: hoher Aufwand, geringer Nutzen, erhöhtes Risiko.
+## 5. Verifikation
+Automatisierter axe-Lauf im Browser über Startseite plus Impressum/Datenschutz/AGB, dazu ein Dump des Accessibility-Trees, um zu prüfen, dass alle Landmarks und Formularfelder benannt sind. Ergebnis melde ich dir.
 
 ## Technisches Detail
-Betroffene Dateien: `package.json` (eine neue Font-Dependency), `src/styles.css`, `src/routes/__root.tsx`, `src/components/landing/Founder.tsx`, `src/components/landing/BookingForm.tsx`. Keine Änderungen an Datenbank, Server-Funktionen, Stripe- oder E-Mail-Flow. Abschluss mit Typecheck und einem Blick auf die Vorschau (Schrift + Kalender sichtbar korrekt).
+Betroffen sind ausschließlich Präsentations-/Markup-Dateien: `Header.tsx`, `Footer.tsx`, die Landing-Sections, `BookingForm.tsx` (nur ARIA/Autocomplete, keine Logik), `src/routes/index.tsx` (JSON-LD) und `public/llms.txt`. Keine Änderungen an Datenbank, Stripe, E-Mail oder Buchungsablauf.
