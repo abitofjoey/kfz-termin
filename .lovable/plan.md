@@ -1,9 +1,18 @@
-## Status
+## Ziel
+Die drei Lighthouse-Barrierefreiheitsfehler beheben – ohne Funktions- oder sichtbare Layoutänderungen (bis auf eine minimal hellere Akzentfarbe im Footer, die für den Kontrast nötig ist).
 
-Der Fix für `email_send_weak_auth` ist bereits im Code:
+## 1. Sterne-Bewertung (unzulässiges ARIA)
+`src/components/landing/Testimonials.tsx`: Das `<div class="flex gap-0.5" aria-label="5 von 5 Sternen">` hat keine Rolle, darf also kein `aria-label` tragen.
+- `role="img"` auf dem Div ergänzen. Optisch identisch, Screenreader liest weiterhin „5 von 5 Sternen".
 
-`src/routes/lovable/email/transactional/send.ts` prüft den `Authorization`-Header jetzt gegen `SUPABASE_SERVICE_ROLE_KEY` (timing-safe Vergleich). Ein normaler Supabase-JWT wird abgelehnt (401). Die internen Aufrufer (`booking-finalize.server.ts` → `sendTransactionalEmailServer`) rufen die HTTP-Route gar nicht auf, sondern die Helper-Funktion direkt — sind also nicht betroffen.
+## 2. Definitionsliste (Infobox Zulassungsstelle)
+`src/components/landing/InfoBlock.tsx`: `<dt>`/`<dd>` liegen zwei Ebenen tief (`dl > div > div > dt`), erlaubt ist nur `dl > div > dt/dd`.
+- Struktur pro Eintrag auf ein Grid umbauen: das direkte `div`-Kind der `dl` bekommt `grid grid-cols-[auto_1fr] gap-x-3`, das Icon wandert in das `<dt>` (Icon + Label nebeneinander), das `<dd>` steht direkt darunter in der zweiten Spalte.
+- Ergebnis ist pixelnah zur jetzigen Darstellung (Icon links, Label fett, Wert darunter grau).
 
-## Aufgabe
+## 3. Kontrast
+- **Footer** (`src/components/brand/Brand.tsx` / `Footer.tsx`): `text-accent` (blau) auf dunkelblauem Footer-Hintergrund erreicht kein AA. Der `Brand`-Komponente eine Option geben, für dunkle Flächen eine hellere Akzentfarbe zu verwenden (z. B. `text-accent-foreground/80` bzw. ein neues Token für hellen Akzent), und diese nur im Footer setzen. Header/heller Hintergrund bleibt unverändert.
+- **Footer-Links** (`text-white/70`, `text-white/80`): auf volle Deckkraft bzw. `text-primary-foreground` anheben, damit auch der als fehlerhaft gemeldete Footer-Block besteht. Optisch nur minimal heller.
 
-Nur das persistierte Security-Finding als **fixed** markieren, damit es aus dem Security-Panel verschwindet. Keine Code- oder DB-Änderungen.
+## Technisches Detail
+Nur Präsentations-/Markup-Änderungen in drei Dateien: `Testimonials.tsx`, `InfoBlock.tsx`, `Brand.tsx` + `Footer.tsx`. Keine Logik, keine Datenbank, keine Routen betroffen. Danach Build-Check.
