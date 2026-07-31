@@ -1,4 +1,5 @@
 import eikeUrl from "@/assets/brand/eike.webp";
+import eikeSmallUrl from "@/assets/brand/eike-120.webp";
 
 export function Founder() {
   return (
@@ -6,7 +7,8 @@ export function Founder() {
       <div className="mx-auto max-w-3xl px-4">
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:gap-8">
           <img
-            src={eikeUrl}
+            src={eikeSmallUrl}
+            srcSet={`${eikeSmallUrl} 1x, ${eikeUrl} 2x`}
             alt="Eike Hoffmann, Gründer von KFZ-Termin Köln"
             width={120}
             height={120}
