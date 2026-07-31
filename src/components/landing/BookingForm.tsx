@@ -197,10 +197,10 @@ export function BookingForm({ preselected }: Props) {
   };
 
   return (
-    <section id="buchung" className="bg-background py-20">
+    <section id="buchung" aria-labelledby="buchung-heading" className="bg-background py-20">
       <div className="mx-auto max-w-3xl px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">Jetzt Termin buchen</h2>
+          <h2 id="buchung-heading" className="text-3xl font-bold sm:text-4xl">Jetzt Termin buchen</h2>
           <p className="mt-4 text-muted-foreground">
             Fülle das Formular aus – wir kümmern uns um den Rest.
           </p>
@@ -215,6 +215,7 @@ export function BookingForm({ preselected }: Props) {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
+          aria-labelledby="buchung-heading"
           className="mt-10 space-y-6 rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8"
           noValidate
         >

@@ -28,10 +28,10 @@ export function Pricing({ onSelect }: Props) {
   };
 
   return (
-    <section id="preise" className="py-20">
+    <section id="preise" aria-labelledby="preise-heading" className="py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">Unsere Services</h2>
+          <h2 id="preise-heading" className="text-3xl font-bold sm:text-4xl">Unsere Services</h2>
           <p className="mt-4 text-muted-foreground">
             Wähle deine Dienstleistung – einheitlicher Preis, keine versteckten Kosten.
           </p>

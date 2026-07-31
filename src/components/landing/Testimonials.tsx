@@ -30,10 +30,10 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="py-12">
+    <section aria-labelledby="testimonials-heading" className="py-12">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold sm:text-3xl">
+          <h2 id="testimonials-heading" className="text-2xl font-bold sm:text-3xl">
             Erfahrungen unserer Kund:innen
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">

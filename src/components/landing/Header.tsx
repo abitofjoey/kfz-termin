@@ -5,7 +5,7 @@ export function Header() {
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Brand city="Köln" />
-        <nav className="hidden gap-6 text-sm font-medium text-muted-foreground sm:flex">
+        <nav aria-label="Hauptnavigation" className="hidden gap-6 text-sm font-medium text-muted-foreground sm:flex">
           <a href="/#ablauf" className="hover:text-foreground">Ablauf</a>
           <a href="/#preise" className="hover:text-foreground">Preise</a>
           <a href="/#buchung" className="hover:text-foreground">Buchen</a>

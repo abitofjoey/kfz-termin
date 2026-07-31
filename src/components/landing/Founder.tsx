@@ -3,7 +3,7 @@ import eikeSmallUrl from "@/assets/brand/eike-120.webp";
 
 export function Founder() {
   return (
-    <section className="py-12">
+    <section aria-labelledby="founder-heading" className="py-12">
       <div className="mx-auto max-w-3xl px-4">
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:gap-8">
           <img
@@ -19,7 +19,7 @@ export function Founder() {
           />
 
           <div className="text-center sm:text-left">
-            <h2 className="text-xl font-bold">Wer steckt hinter KFZ-Termin.</h2>
+            <h2 id="founder-heading" className="text-xl font-bold">Wer steckt hinter KFZ-Termin.</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Hallo, ich bin Eike – Freelancer aus Köln im Bereich Online-Marketing und Digitales.
               Als wir kurzfristig ein Wohnmobil gekauft hatten und zwei Wochen später in den Urlaub
