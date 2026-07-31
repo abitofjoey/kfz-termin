@@ -6,11 +6,14 @@ interface BrandProps {
   size?: "sm" | "md";
   asLink?: boolean;
   className?: string;
+  /** Use a lighter accent tone for dark backgrounds (contrast AA) */
+  onDark?: boolean;
 }
 
-export function Brand({ city = "Köln", size = "md", asLink = true, className }: BrandProps) {
+export function Brand({ city = "Köln", size = "md", asLink = true, className, onDark = false }: BrandProps) {
   const iconSize = size === "sm" ? "h-7 w-7" : "h-8 w-8";
   const textSize = size === "sm" ? "text-base" : "text-lg";
+  const accentClass = onDark ? "text-[oklch(0.82_0.09_235)]" : "text-accent";
 
   const content = (
     <>
@@ -22,7 +25,7 @@ export function Brand({ city = "Köln", size = "md", asLink = true, className }:
         className={`${iconSize} rounded-md`}
       />
       <span className={`${textSize} font-bold leading-none`}>
-        KFZ-Termin{city ? <span className="text-accent"> {city}</span> : null}
+        KFZ-Termin{city ? <span className={accentClass}> {city}</span> : null}
       </span>
     </>
   );
