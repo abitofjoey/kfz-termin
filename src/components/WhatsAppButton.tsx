@@ -136,6 +136,6 @@ export function WhatsAppButton() {
           100% { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-    </div>
+    </aside>
   );
 }
