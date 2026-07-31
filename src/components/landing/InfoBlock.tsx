@@ -9,30 +9,30 @@ export function InfoBlock() {
             Wissenswertes zur Kölner Zulassungsstelle
           </h2>
           <dl className="mt-6 space-y-3 text-sm">
-            <div className="grid grid-cols-[auto_1fr] gap-x-3">
-              <dt className="col-span-2 flex gap-3 font-semibold">
+            <div>
+              <dt className="flex gap-3 font-semibold">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
                 <span>Adresse</span>
               </dt>
-              <dd className="col-start-2 text-muted-foreground">
+              <dd className="pl-7 text-muted-foreground">
                 Max-Glomsda-Straße 4, 51105 Köln
               </dd>
             </div>
-            <div className="grid grid-cols-[auto_1fr] gap-x-3">
-              <dt className="col-span-2 flex gap-3 font-semibold">
+            <div>
+              <dt className="flex gap-3 font-semibold">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
                 <span>Öffnungszeiten</span>
               </dt>
-              <dd className="col-start-2 text-muted-foreground">
+              <dd className="pl-7 text-muted-foreground">
                 Mo 7–14h | Di 7–18h | Mi 7–13h | Do 7–16h | Fr 7–13h
               </dd>
             </div>
-            <div className="grid grid-cols-[auto_1fr] gap-x-3">
-              <dt className="col-span-2 flex gap-3 font-semibold">
+            <div>
+              <dt className="flex gap-3 font-semibold">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
                 <span>Telefon</span>
               </dt>
-              <dd className="col-start-2 text-muted-foreground">0221 / 221-26635</dd>
+              <dd className="pl-7 text-muted-foreground">0221 / 221-26635</dd>
             </div>
           </dl>
           <div className="mt-6 flex flex-col gap-2 text-sm">
