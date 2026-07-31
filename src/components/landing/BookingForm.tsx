@@ -299,9 +299,10 @@ export function BookingForm({ preselected }: Props) {
                 </div>
               }
             >
-              {(id) => (
+              {(id, aria) => (
                 <Input
                   id={id}
+                  {...aria}
                   {...register("fin_1")}
                   maxLength={4}
                   className="uppercase tracking-widest"
