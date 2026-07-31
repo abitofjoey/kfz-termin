@@ -1,12 +1,55 @@
 # KFZ-Termin Köln
 
-> Automatisierte Terminsuche bei der Kölner Kfz-Zulassungsstelle. Wir buchen täglich von 7 bis 20 Uhr im Auftrag des Kunden einen freien Termin – mit Geld-zurück-Garantie ab 19 €.
+> Automatisierte Terminsuche bei der Kölner Kfz-Zulassungsstelle. Wir suchen täglich von 7 bis 20 Uhr und buchen im Auftrag des Kunden einen freien Termin – pauschal 9,99 € mit Geld-zurück-Garantie.
 
 KFZ-Termin Köln ist ein Dienst von Eike Hoffmann (Köln, Deutschland). Kunden geben ihre Wunschtermine und Kfz-Daten an, die Plattform sucht automatisiert nach einem freien Termin bei der Zulassungsstelle der Stadt Köln und bucht diesen im Namen des Kunden. Der Dienst ist weder mit der Stadt Köln noch mit der dortigen Zulassungsstelle geschäftlich oder rechtlich verbunden.
 
 ## Pages
 
-- [Startseite](/): Leistungsbeschreibung, Ablauf, Preise (ab 19 €), FAQ und Buchungsformular.
+- [Startseite](/): Leistungsbeschreibung, Ablauf, Preise (9,99 €), FAQ und Buchungsformular.
 - [Impressum](/impressum): Anbieterkennzeichnung gemäß § 5 DDG.
 - [Datenschutz](/datenschutz): Datenschutzerklärung nach DSGVO, inkl. Rechtsgrundlagen der Datenverarbeitung.
 - [AGB](/agb): Allgemeine Geschäftsbedingungen, u.a. Leistungsumfang, Vergütung, Widerrufsrecht.
+
+## Preis
+
+- 9,99 € einmalig pro Termin, inkl. aller Gebühren, keine Umsatzsteuer (§ 19 UStG), keine Folgekosten.
+- Der Preis gilt unabhängig vom Anliegen und für bis zu 3 Fahrzeuge in einem Termin.
+- Zahlung über Stripe direkt im Buchungsformular.
+- Geld-zurück-Garantie: Wird innerhalb des gewählten Zeitraums (max. 14 Tage) kein Termin gefunden, wird der volle Betrag auf Anfrage an info@kfz-termin.online erstattet.
+
+## Ablauf
+
+1. Kunde wählt auf der Startseite unter „Jetzt Termin buchen" die Dienstleistung aus.
+2. Kunde gibt die Daten der künftigen Halterin / des künftigen Halters an: Anrede, Vor- und Nachname, E-Mail, Telefonnummer.
+3. Kunde gibt die letzten 4 Zeichen der FIN an (Fahrzeugschein, Feld E); bis zu 3 Fahrzeuge möglich.
+4. Kunde wählt im Kalender die Wunschtage aus, an denen er verfügbar ist. Mehr Tage erhöhen die Chance.
+5. Kunde bezahlt 9,99 € über Stripe.
+6. Das System sucht täglich von 7 bis 20 Uhr und bucht den ersten freien Slot an einem der Wunschtage.
+7. Die Zulassungsstelle Köln schickt anschließend eine Bestätigungsmail mit Link, der innerhalb von 3 Stunden bestätigt werden muss – sonst verfällt der Termin.
+
+## Was der Dienst nicht ist
+
+- Keine Behörde, keine Kooperation mit der Stadt Köln oder der Zulassungsstelle.
+- Kein Erscheinen vor Ort: Den Termin nimmt der Kunde selbst wahr.
+- Keine Uhrzeitauswahl: Es wird der erstmögliche freie Slot an einem Wunschtag gebucht.
+- Keine Erfolgsgarantie: Buchbar ist nur, was die Zulassungsstelle freigibt (daher die Geld-zurück-Garantie).
+- Nur ein Termin pro Auftrag.
+
+## Kalender-Regeln
+
+- Buchbar sind Werktage (Montag bis Freitag), Wochenenden sind nicht auswählbar.
+- Ab 14:00 Uhr deutscher Zeit ist der Folgetag nicht mehr auswählbar.
+- Der auswählbare Zeitraum umfasst 14 Tage ab dem frühestmöglichen Tag.
+
+## Kontakt
+
+- E-Mail: info@kfz-termin.online
+- Anbieter: Eike Hoffmann, Longericher Str. 31, 50739 Köln, Deutschland
+
+## Zulassungsstelle Köln (Referenzinformation, nicht Teil des Dienstes)
+
+- Adresse: Max-Glomsda-Straße 4, 51105 Köln
+- Öffnungszeiten: Mo 7–14 Uhr, Di 7–18 Uhr, Mi 7–13 Uhr, Do 7–16 Uhr, Fr 7–13 Uhr
+- Telefon: 0221 / 221-26635
+- Manche Anliegen sind über i-Kfz auch komplett online ohne Termin möglich.
