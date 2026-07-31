@@ -45,7 +45,7 @@ export function Testimonials() {
           {testimonials.map((t) => (
             <Card key={t.name} className="flex h-full flex-col">
               <CardContent className="flex flex-1 flex-col gap-4 p-6">
-                <div className="flex gap-0.5" aria-label="5 von 5 Sternen">
+                <div className="flex gap-0.5" role="img" aria-label="5 von 5 Sternen">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
