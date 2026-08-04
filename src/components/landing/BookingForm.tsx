@@ -209,7 +209,7 @@ export function BookingForm({ preselected }: Props) {
         <div className="mx-auto mt-6 flex max-w-2xl items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground">
           <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
           <p>
-            <strong>Wichtig:</strong> Bitte gib die Daten der <strong>künftigen Halterin / des künftigen Halters</strong> des Fahrzeugs an (Anrede, Vor- und Nachname, E-Mail, Telefonnummer). Diese Angaben werden bei der Zulassungsstelle für die Terminbuchung verwendet.
+            <strong>Wichtig:</strong> Bitte gib die Daten der <strong>künftigen Halterin / des künftigen Halters</strong> des Fahrzeugs an (Anrede, Vor- und Nachname, E-Mail, Telefonnummer). Diese Angaben werden bei der Zulassungsstelle für die Terminbuchung verwendet. Mehrfachbuchungen über dieselbe Email-Adresse sind nicht möglich.&nbsp;
           </p>
         </div>
 
