@@ -82,14 +82,83 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+function BookingFormPlaceholder() {
+  return (
+    <section
+      id="buchung"
+      aria-labelledby="buchung-heading"
+      className="bg-background py-20"
+    >
+      <div className="mx-auto max-w-3xl px-4">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 id="buchung-heading" className="text-3xl font-bold sm:text-4xl">
+            Jetzt Termin buchen
+          </h2>
+          <p className="mt-4 text-muted-foreground">
+            Fülle das Formular aus – wir kümmern uns um den Rest.
+          </p>
+        </div>
+        <div
+          className="mt-10 h-[900px] rounded-2xl border border-border bg-card shadow-sm"
+          aria-hidden="true"
+        />
+      </div>
+    </section>
+  );
+}
+
 function Index() {
   const [preselected, setPreselected] = useState<ServiceId | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [showToaster, setShowToaster] = useState(false);
+  const pendingScroll = useRef(false);
 
-  const handleSelect = (service: ServiceId) => {
-    setPreselected(service);
+  const activate = useCallback(() => {
+    setShowForm(true);
+    setShowToaster(true);
+  }, []);
+
+  // Erste Nutzerinteraktion (Scroll/Pointer/Tastatur) oder Leerlauf lädt das
+  // Formular nach, damit es beim Erreichen des Abschnitts schon bereit ist.
+  useEffect(() => {
+    if (showForm) return;
+    const onFirst = () => activate();
+    const opts = { once: true, passive: true } as const;
+    window.addEventListener("scroll", onFirst, opts);
+    window.addEventListener("pointerdown", onFirst, opts);
+    window.addEventListener("keydown", onFirst, opts);
+    const idle =
+      "requestIdleCallback" in window
+        ? window.requestIdleCallback(onFirst, { timeout: 3000 })
+        : window.setTimeout(onFirst, 2500);
+    return () => {
+      window.removeEventListener("scroll", onFirst);
+      window.removeEventListener("pointerdown", onFirst);
+      window.removeEventListener("keydown", onFirst);
+      if ("cancelIdleCallback" in window) window.cancelIdleCallback(idle as number);
+      else clearTimeout(idle as number);
+    };
+  }, [showForm, activate]);
+
+  // Nach dem Laden des Formulars zum Abschnitt scrollen, falls angefordert.
+  useEffect(() => {
+    if (!showForm || !pendingScroll.current) return;
+    pendingScroll.current = false;
     requestAnimationFrame(() => {
       document.getElementById("buchung")?.scrollIntoView({ behavior: "smooth" });
     });
+  }, [showForm, preselected]);
+
+  const handleSelect = (service: ServiceId) => {
+    setPreselected(service);
+    pendingScroll.current = true;
+    activate();
+    if (showForm) {
+      pendingScroll.current = false;
+      requestAnimationFrame(() => {
+        document.getElementById("buchung")?.scrollIntoView({ behavior: "smooth" });
+      });
+    }
   };
 
   return (
@@ -107,12 +176,23 @@ function Index() {
         <Pricing onSelect={handleSelect} />
         <Founder />
         <Testimonials />
-        <BookingForm preselected={preselected} />
+        {showForm ? (
+          <Suspense fallback={<BookingFormPlaceholder />}>
+            <BookingForm preselected={preselected} />
+          </Suspense>
+        ) : (
+          <BookingFormPlaceholder />
+        )}
         <InfoBlock />
         <Faq />
       </main>
       <Footer />
-      <Toaster />
+      {showToaster ? (
+        <Suspense fallback={null}>
+          <Toaster />
+        </Suspense>
+      ) : null}
     </div>
   );
+
 }
