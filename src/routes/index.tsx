@@ -127,17 +127,14 @@ function Index() {
     window.addEventListener("scroll", onFirst, opts);
     window.addEventListener("pointerdown", onFirst, opts);
     window.addEventListener("keydown", onFirst, opts);
-    const idle =
-      "requestIdleCallback" in window
-        ? window.requestIdleCallback(onFirst, { timeout: 3000 })
-        : window.setTimeout(onFirst, 2500);
+    const timer = window.setTimeout(onFirst, 2500);
     return () => {
       window.removeEventListener("scroll", onFirst);
       window.removeEventListener("pointerdown", onFirst);
       window.removeEventListener("keydown", onFirst);
-      if ("cancelIdleCallback" in window) window.cancelIdleCallback(idle as number);
-      else clearTimeout(idle as number);
+      clearTimeout(timer);
     };
+
   }, [showForm, activate]);
 
   // Nach dem Laden des Formulars zum Abschnitt scrollen, falls angefordert.
