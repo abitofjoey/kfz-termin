@@ -1,17 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
 import { Steps } from "@/components/landing/Steps";
 import { Pricing } from "@/components/landing/Pricing";
-import { BookingForm } from "@/components/landing/BookingForm";
 import { InfoBlock } from "@/components/landing/InfoBlock";
 import { Founder } from "@/components/landing/Founder";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { Faq } from "@/components/landing/Faq";
 import { Footer } from "@/components/landing/Footer";
-import { Toaster } from "@/components/ui/sonner";
 import type { ServiceId } from "@/lib/services";
+
+// Formular und Toaster liegen unter dem Sichtbereich bzw. werden erst nach
+// Interaktion gebraucht – daher erst bei Bedarf nachladen.
+const importBookingForm = () => import("@/components/landing/BookingForm");
+const BookingForm = lazy(() =>
+  importBookingForm().then((m) => ({ default: m.BookingForm })),
+);
+const Toaster = lazy(() =>
+  import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })),
+);
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
