@@ -132,7 +132,6 @@ export const SERVICES: Service[] = [
     infoUrl: "https://www.stadt-koeln.de/service/produkte/00728/index.html",
   },
   {
-  {
     id: "familienname",
     label: "Änderung des Familiennamens in Fahrzeugpapieren",
     shortLabel: "Namensänderung",
