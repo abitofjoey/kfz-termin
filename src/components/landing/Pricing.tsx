@@ -1,6 +1,12 @@
 import { useState, useRef } from "react";
-import { Check, ExternalLink } from "lucide-react";
-import { SERVICES, type ServiceId, getService } from "@/lib/services";
+import { Check, ChevronDown, ExternalLink } from "lucide-react";
+import {
+  POPULAR_SERVICES,
+  MORE_SERVICES,
+  type Service,
+  type ServiceId,
+  getService,
+} from "@/lib/services";
 
 type Props = {
   onSelect: (service: ServiceId) => void;
@@ -15,6 +21,7 @@ const features = [
 
 export function Pricing({ onSelect }: Props) {
   const [activeId, setActiveId] = useState<ServiceId>("gebraucht");
+  const [showMore, setShowMore] = useState(false);
   const active = getService(activeId);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -25,6 +32,28 @@ export function Pricing({ onSelect }: Props) {
         cardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
+  };
+
+  const renderTile = (s: Service) => {
+    const isActive = s.id === activeId;
+    return (
+      <button
+        key={s.id}
+        type="button"
+        role="tab"
+        aria-selected={isActive}
+        onClick={() => handleBadgeClick(s.id)}
+        className={[
+          "rounded-lg border px-3 py-3 text-center text-sm font-medium transition",
+          "min-h-[3.25rem] flex items-center justify-center",
+          isActive
+            ? "border-primary bg-primary text-primary-foreground shadow-sm"
+            : "border-border bg-card text-foreground hover:border-primary/40 hover:bg-accent/30",
+        ].join(" ")}
+      >
+        {s.shortLabel}
+      </button>
+    );
   };
 
   return (
@@ -44,28 +73,37 @@ export function Pricing({ onSelect }: Props) {
             aria-label="Dienstleistung wählen"
             className="mt-10 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3"
           >
-            {SERVICES.map((s) => {
-              const isActive = s.id === activeId;
-              return (
-                <button
-                  key={s.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => handleBadgeClick(s.id)}
-                  className={[
-                    "rounded-lg border px-3 py-3 text-center text-sm font-medium transition",
-                    "min-h-[3.25rem] flex items-center justify-center",
-                    isActive
-                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-card text-foreground hover:border-primary/40 hover:bg-accent/30",
-                  ].join(" ")}
-                >
-                  {s.shortLabel}
-                </button>
-              );
-            })}
+            {POPULAR_SERVICES.map(renderTile)}
           </div>
+
+          <div
+            id="weitere-anliegen"
+            role="tablist"
+            aria-label="Weitere Dienstleistungen"
+            hidden={!showMore}
+            className="mt-2 grid grid-cols-2 gap-2 sm:mt-3 sm:grid-cols-3 sm:gap-3"
+          >
+            {MORE_SERVICES.map(renderTile)}
+          </div>
+
+          <div className="mt-4 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowMore((v) => !v)}
+              aria-expanded={showMore}
+              aria-controls="weitere-anliegen"
+              className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-primary transition hover:bg-accent/30"
+            >
+              {showMore
+                ? "Weniger anzeigen"
+                : `Weitere Anliegen anzeigen (${MORE_SERVICES.length})`}
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${showMore ? "rotate-180" : ""}`}
+                aria-hidden="true"
+              />
+            </button>
+          </div>
+
 
           {/* Dynamische Karte */}
           <div className="mx-auto mt-8 max-w-xl">
