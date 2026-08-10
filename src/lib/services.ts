@@ -33,20 +33,6 @@ export type Service = {
 
 export const SERVICES: Service[] = [
   {
-    id: "ersatz-zb1",
-    label: "Ersatz Zulassungsbescheinigung Teil I",
-    shortLabel: "Ersatz Fahrzeugschein",
-    subtitle: "Neuausstellung des Fahrzeugscheins bei Verlust oder Beschädigung",
-    popular: true,
-  },
-  {
-    id: "abmeldung",
-    label: "Abmeldung eines Fahrzeugs (Außerbetriebsetzung)",
-    shortLabel: "Abmeldung",
-    subtitle: "Außerbetriebsetzung deines Fahrzeugs",
-    popular: true,
-  },
-  {
     id: "gebraucht",
     label: "Anmeldung Gebrauchtfahrzeug",
     shortLabel: "Gebrauchtfahrzeug",
@@ -62,6 +48,36 @@ export const SERVICES: Service[] = [
     subtitle: "Erstzulassung deines neuen Fahrzeugs",
     note: "Ausgenommen technisch veränderte Neufahrzeuge gem. § 13 EG-FGV",
     infoUrl: "https://www.stadt-koeln.de/service/produkte/00729/index.html",
+    popular: true,
+  },
+  {
+    id: "wiederzulassung",
+    label: "Wiederzulassung",
+    shortLabel: "Wiederzulassung",
+    subtitle: "Wiederzulassung eines Fahrzeugs auf dieselbe Person",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00740/index.html",
+    popular: true,
+  },
+  {
+    id: "ausfuhrkennzeichen",
+    label: "Ausfuhrkennzeichen",
+    shortLabel: "Ausfuhrkennzeichen",
+    subtitle: "Für die Ausfuhr eines Fahrzeugs ins Ausland",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00720/index.html",
+    popular: true,
+  },
+  {
+    id: "ersatz-zb1",
+    label: "Ersatz Zulassungsbescheinigung Teil I",
+    shortLabel: "Ersatz Fahrzeugschein",
+    subtitle: "Neuausstellung des Fahrzeugscheins bei Verlust oder Beschädigung",
+    popular: true,
+  },
+  {
+    id: "abmeldung",
+    label: "Abmeldung eines Fahrzeugs (Außerbetriebsetzung)",
+    shortLabel: "Abmeldung",
+    subtitle: "Außerbetriebsetzung deines Fahrzeugs",
     popular: true,
   },
   {
@@ -89,20 +105,11 @@ export const SERVICES: Service[] = [
     popular: true,
   },
   {
-    id: "wiederzulassung",
-    label: "Wiederzulassung",
-    shortLabel: "Wiederzulassung",
-    subtitle: "Wiederzulassung eines Fahrzeugs auf dieselbe Person",
-    infoUrl: "https://www.stadt-koeln.de/service/produkte/00740/index.html",
-    popular: true,
-  },
-  {
     id: "h-kennzeichen",
     label: "H-Kennzeichen",
     shortLabel: "H-Kennzeichen",
     subtitle: "Für historische Fahrzeuge – nur für Kölnerinnen und Kölner",
     infoUrl: "https://www.stadt-koeln.de/service/produkte/00726/index.html",
-    popular: true,
   },
   {
     id: "feinstaubplakette",
@@ -123,13 +130,6 @@ export const SERVICES: Service[] = [
     shortLabel: "Kurzzeitkennzeichen",
     subtitle: "Für Probe- und Überführungsfahrten",
     infoUrl: "https://www.stadt-koeln.de/service/produkte/00728/index.html",
-  },
-  {
-    id: "ausfuhrkennzeichen",
-    label: "Ausfuhrkennzeichen",
-    shortLabel: "Ausfuhrkennzeichen",
-    subtitle: "Für die Ausfuhr eines Fahrzeugs ins Ausland",
-    infoUrl: "https://www.stadt-koeln.de/service/produkte/00720/index.html",
   },
   {
     id: "familienname",
