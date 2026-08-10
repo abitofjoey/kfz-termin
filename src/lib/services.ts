@@ -132,12 +132,6 @@ export const SERVICES: Service[] = [
     infoUrl: "https://www.stadt-koeln.de/service/produkte/00728/index.html",
   },
   {
-    id: "ausfuhrkennzeichen",
-    label: "Ausfuhrkennzeichen",
-    shortLabel: "Ausfuhrkennzeichen",
-    subtitle: "Für die Ausfuhr eines Fahrzeugs ins Ausland",
-    infoUrl: "https://www.stadt-koeln.de/service/produkte/00720/index.html",
-  },
   {
     id: "familienname",
     label: "Änderung des Familiennamens in Fahrzeugpapieren",
