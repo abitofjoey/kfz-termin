@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 const WA_HREF =
-  "https://wa.me/4917643477088?text=Hallo%2C%20ich%20habe%20eine%20Frage%20zu%20KFZ-Termin%20K%C3%B6ln%3A";
+  "https://wa.me/4915153461798?text=Hallo%2C%20ich%20habe%20eine%20Frage%20zu%20KFZ-Termin%20K%C3%B6ln%3A";
 const DISMISS_KEY = "wa-prompt-dismissed";
 const PROMPT_DELAY_MS = 30_000;
 
