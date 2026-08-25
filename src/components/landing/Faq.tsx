@@ -52,7 +52,7 @@ const items = [
   },
   {
     q: "Für welche Anliegen gilt der Service?",
-    a: "Wir unterstützen alle 15 auf dieser Seite aufgeführten Anliegen – von der An- und Abmeldung über Kennzeichenwechsel, Anschriften- und Namensänderung, technische Änderungen bis hin zu H-Kennzeichen, Saison-, Kurzzeit- und Ausfuhrkennzeichen, Feinstaubplakette, Ersatz des Fahrzeugscheins und Neusiegelung. Über die \"Infos Stadt Köln\"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln.",
+    a: "Wir unterstützen alle 15 auf dieser Seite aufgeführten Anliegen – von der An- und Abmeldung über Kennzeichenwechsel, Anschriften- und Namensänderung, technische Änderungen bis hin zu H-Kennzeichen, Saison-, Kurzzeit- und Ausfuhrkennzeichen, Feinstaubplakette, Ersatz des Fahrzeugscheins und Neusiegelung. Über die \"Infos Stadt Köln\"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln.\n\nDie häufigsten Anliegen sind: KFZ anmelden für Neufahrzeuge und Gebrauchtfahrzeuge, Auto ummelden nach Umzug oder Kauf, Kennzeichenwechsel, Wiederzulassung, H-Kennzeichen und Saisonkennzeichen.",
   },
   {
     q: "Was muss ich zum Termin mitbringen?",
