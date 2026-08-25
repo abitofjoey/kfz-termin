@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const items = [
+export const faqItems = [
   {
     q: "Lohnt sich der Service für mich?",
     a: "Ja – besonders wenn du kurzfristig einen Termin brauchst, einen konkreten Wunschzeitraum hast oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots, zum Beispiel wenn du gerade ein Auto gekauft hast, umgezogen bist oder eine Frist läuft. Termine beim Straßenverkehrsamt Köln sind deshalb so schwer zu bekommen, weil die Nachfrage sehr hoch ist und neue Slots meist nur zu bestimmten Zeiten freigegeben werden – oft sind sie innerhalb weniger Minuten vergeben. Die 9,99 € lohnen sich, wenn du nicht jeden Morgen selbst die Seite der Stadt Köln prüfen kannst oder willst. Wer regelmäßig Zeit dafür hat, braucht den Service nicht.",
@@ -64,26 +64,9 @@ const items = [
   },
 ];
 
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: items.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.a,
-    },
-  })),
-};
-
 export function Faq() {
   return (
     <section id="faq" aria-labelledby="faq-heading" className="bg-secondary/40 py-20">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
       <div className="mx-auto max-w-3xl px-4">
         <div className="mx-auto max-w-2xl text-center">
           <h2 id="faq-heading" className="text-3xl font-bold sm:text-4xl">Häufige Fragen</h2>
@@ -92,7 +75,7 @@ export function Faq() {
           </p>
         </div>
         <Accordion type="single" collapsible className="mt-10">
-          {items.map((item, i) => (
+          {faqItems.map((item, i) => (
             <AccordionItem key={i} value={`item-${i}`}>
               <AccordionTrigger className="text-left text-base font-semibold">
                 {item.q}

@@ -7,7 +7,7 @@ import { Pricing } from "@/components/landing/Pricing";
 import { InfoBlock } from "@/components/landing/InfoBlock";
 import { Founder } from "@/components/landing/Founder";
 import { Testimonials } from "@/components/landing/Testimonials";
-import { Faq } from "@/components/landing/Faq";
+import { Faq, faqItems } from "@/components/landing/Faq";
 import { Footer } from "@/components/landing/Footer";
 import type { ServiceId } from "@/lib/services";
 
@@ -75,6 +75,21 @@ export const Route = createFileRoute("/")({
             url: "https://kfz-termin.online/#buchung",
             category: "Einmalige Servicegebühr",
           },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqItems.map((item) => ({
+            "@type": "Question",
+            name: item.q,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.a,
+            },
+          })),
         }),
       },
     ],
