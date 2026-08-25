@@ -181,6 +181,7 @@ function Index() {
       <main id="inhalt">
         <Hero />
         <Steps />
+        <WhyNoSlots />
         <Pricing onSelect={handleSelect} />
         <Founder />
         <Testimonials />
