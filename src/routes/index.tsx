@@ -25,17 +25,17 @@ const Toaster = lazy(() =>
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KFZ-Termin Köln – Wunschtermin bei der Zulassungsstelle" },
+      { title: "KFZ-Zulassung Köln & Auto anmelden – Termin automatisch buchen" },
       {
         name: "description",
         content:
-          "Kein passender Termin bei der Kölner Zulassungsstelle? Wir suchen automatisch täglich und buchen sobald ein Slot frei wird. 9,99€ mit Geld-zurück-Garantie.",
+          "KFZ-Zulassung Köln leicht gemacht: Auto anmelden, ummelden oder abmelden – wir buchen deinen Termin bei der Kölner Zulassungsstelle automatisch. 9,99 € mit Geld-zurück-Garantie.",
       },
-      { property: "og:title", content: "KFZ-Termin Köln – Wunschtermin bei der Zulassungsstelle" },
+      { property: "og:title", content: "KFZ-Zulassung Köln & Auto anmelden – Termin automatisch buchen" },
       {
         property: "og:description",
         content:
-          "Kein passender Termin bei der Kölner Zulassungsstelle? Wir suchen automatisch täglich und buchen sobald ein Slot frei wird. 9,99€ mit Geld-zurück-Garantie.",
+          "KFZ-Zulassung Köln leicht gemacht: Auto anmelden, ummelden oder abmelden – wir buchen deinen Termin bei der Kölner Zulassungsstelle automatisch. 9,99 € mit Geld-zurück-Garantie.",
       },
       { property: "og:url", content: "https://kfz-termin.online/" },
     ],
@@ -46,10 +46,10 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Service",
-          name: "Automatisierte Terminbuchung Kfz-Zulassungsstelle Köln",
+          name: "KFZ-Zulassung Köln & Auto anmelden – Termin automatisch buchen",
           serviceType: "Terminvermittlung Kfz-Zulassung",
           description:
-            "Automatisierte Terminsuche und Buchung bei der Kfz-Zulassungsstelle der Stadt Köln. Tägliche Suche von 7 bis 20 Uhr im Namen des Kunden, Geld-zurück-Garantie wenn kein Termin gefunden wird.",
+            "KFZ-Zulassung Köln leicht gemacht: Auto anmelden, ummelden oder abmelden. Automatisierte Terminsuche und Buchung bei der Kfz-Zulassungsstelle der Stadt Köln. Tägliche Suche von 7 bis 20 Uhr im Namen des Kunden, Geld-zurück-Garantie wenn kein Termin gefunden wird.",
           url: "https://kfz-termin.online/",
           provider: {
             "@type": "Organization",
