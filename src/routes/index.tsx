@@ -3,6 +3,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
 import { Steps } from "@/components/landing/Steps";
+import { WhyNoSlots } from "@/components/landing/WhyNoSlots";
 import { Pricing } from "@/components/landing/Pricing";
 import { InfoBlock } from "@/components/landing/InfoBlock";
 import { Founder } from "@/components/landing/Founder";
@@ -180,6 +181,7 @@ function Index() {
       <main id="inhalt">
         <Hero />
         <Steps />
+        <WhyNoSlots />
         <Pricing onSelect={handleSelect} />
         <Founder />
         <Testimonials />
