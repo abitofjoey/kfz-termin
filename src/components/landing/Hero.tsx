@@ -11,8 +11,8 @@ export function Hero() {
             Zulassungsstelle Köln
           </div>
           <h1 id="hero-heading" className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Dein Wunschtermin bei der Kölner Zulassungsstelle –{" "}
-            <span className="text-accent">automatisch gebucht.</span>
+            KFZ-Zulassung Köln & Auto anmelden –{" "}
+            <span className="text-accent">Termin automatisch gebucht.</span>
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
             Kein freier Termin, keiner der zeitlich passt – oder du brauchst ihn
