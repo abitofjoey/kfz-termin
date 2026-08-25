@@ -38,6 +38,11 @@ export const Route = createFileRoute("/")({
           "KFZ-Zulassung Köln leicht gemacht: Auto anmelden, ummelden oder abmelden – wir buchen deinen Termin bei der Kölner Zulassungsstelle automatisch. 9,99 € mit Geld-zurück-Garantie.",
       },
       { property: "og:url", content: "https://kfz-termin.online/" },
+      { property: "og:image", content: "https://kfz-termin.online/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "KFZ-Termin Köln – Logo" },
+      { name: "twitter:image", content: "https://kfz-termin.online/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://kfz-termin.online/" }],
     scripts: [
