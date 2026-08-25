@@ -8,7 +8,7 @@ import {
 const items = [
   {
     q: "Lohnt sich der Service für mich?",
-    a: "Ja – besonders wenn du kurzfristig einen Termin brauchst, einen konkreten Wunschzeitraum hast oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots, zum Beispiel wenn du gerade ein Auto gekauft hast, umgezogen bist oder eine Frist läuft.\n\nTermine beim Straßenverkehrsamt Köln sind deshalb so schwer zu bekommen, weil die Nachfrage sehr hoch ist und neue Slots meist nur zu bestimmten Zeiten freigegeben werden – oft sind sie innerhalb weniger Minuten vergeben. Die 9,99 € lohnen sich, wenn du nicht jeden Morgen selbst die Seite der Stadt Köln prüfen kannst oder willst. Wer regelmäßig Zeit dafür hat, braucht den Service nicht.",
+    a: "Ja – besonders wenn du kurzfristig einen Termin brauchst, einen konkreten Wunschzeitraum hast oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots, zum Beispiel wenn du gerade ein Auto gekauft hast, umgezogen bist oder eine Frist läuft. Termine beim Straßenverkehrsamt Köln sind deshalb so schwer zu bekommen, weil die Nachfrage sehr hoch ist und neue Slots meist nur zu bestimmten Zeiten freigegeben werden – oft sind sie innerhalb weniger Minuten vergeben. Die 9,99 € lohnen sich, wenn du nicht jeden Morgen selbst die Seite der Stadt Köln prüfen kannst oder willst. Wer regelmäßig Zeit dafür hat, braucht den Service nicht.",
   },
   {
     q: "Was kostet der Service?",
