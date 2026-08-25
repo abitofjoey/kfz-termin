@@ -46,34 +46,24 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Service",
-          name: "KFZ-Zulassung Köln & Auto anmelden – Termin automatisch buchen",
-          serviceType: "Terminvermittlung Kfz-Zulassung",
+          name: "KFZ-Termin Köln",
+          url: "https://kfz-termin.online",
           description:
-            "KFZ-Zulassung Köln leicht gemacht: Auto anmelden, ummelden oder abmelden. Automatisierte Terminsuche und Buchung bei der Kfz-Zulassungsstelle der Stadt Köln. Tägliche Suche von 7 bis 20 Uhr im Namen des Kunden, Geld-zurück-Garantie wenn kein Termin gefunden wird.",
-          url: "https://kfz-termin.online/",
+            "Automatisierte Terminbuchung für die Kfz-Zulassungsstelle Köln. Tägliche Suche nach freien Slots und automatische Buchung, sobald ein Termin passt.",
           provider: {
             "@type": "Organization",
             name: "KFZ-Termin Köln",
-            url: "https://kfz-termin.online",
             email: "info@kfz-termin.online",
+            url: "https://kfz-termin.online",
           },
           areaServed: {
             "@type": "City",
             name: "Köln",
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: "Köln",
-              addressCountry: "DE",
-            },
           },
-          termsOfService: "https://kfz-termin.online/agb",
           offers: {
             "@type": "Offer",
             price: "9.99",
             priceCurrency: "EUR",
-            availability: "https://schema.org/InStock",
-            url: "https://kfz-termin.online/#buchung",
-            category: "Einmalige Servicegebühr",
           },
         }),
       },
