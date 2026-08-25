@@ -7,7 +7,7 @@ import { Pricing } from "@/components/landing/Pricing";
 import { InfoBlock } from "@/components/landing/InfoBlock";
 import { Founder } from "@/components/landing/Founder";
 import { Testimonials } from "@/components/landing/Testimonials";
-import { Faq } from "@/components/landing/Faq";
+import { Faq, faqItems } from "@/components/landing/Faq";
 import { Footer } from "@/components/landing/Footer";
 import type { ServiceId } from "@/lib/services";
 
