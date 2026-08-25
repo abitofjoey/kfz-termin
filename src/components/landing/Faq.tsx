@@ -8,7 +8,7 @@ import {
 const items = [
   {
     q: "Lohnt sich der Service für mich?",
-    a: "Ja – besonders wenn du kurzfristig einen Termin brauchst, einen konkreten Wunschzeitraum hast oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots, zum Beispiel wenn du gerade ein Auto gekauft hast, umgezogen bist oder eine Frist läuft.",
+    a: "Ja – besonders wenn du kurzfristig einen Termin brauchst, einen konkreten Wunschzeitraum hast oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots, zum Beispiel wenn du gerade ein Auto gekauft hast, umgezogen bist oder eine Frist läuft. Termine beim Straßenverkehrsamt Köln sind deshalb so schwer zu bekommen, weil die Nachfrage sehr hoch ist und neue Slots meist nur zu bestimmten Zeiten freigegeben werden – oft sind sie innerhalb weniger Minuten vergeben. Die 9,99 € lohnen sich, wenn du nicht jeden Morgen selbst die Seite der Stadt Köln prüfen kannst oder willst. Wer regelmäßig Zeit dafür hat, braucht den Service nicht.",
   },
   {
     q: "Was kostet der Service?",
@@ -52,7 +52,7 @@ const items = [
   },
   {
     q: "Für welche Anliegen gilt der Service?",
-    a: "Wir unterstützen alle 15 auf dieser Seite aufgeführten Anliegen – von der An- und Abmeldung über Kennzeichenwechsel, Anschriften- und Namensänderung, technische Änderungen bis hin zu H-Kennzeichen, Saison-, Kurzzeit- und Ausfuhrkennzeichen, Feinstaubplakette, Ersatz des Fahrzeugscheins und Neusiegelung. Über die \"Infos Stadt Köln\"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln.",
+    a: "Wir unterstützen alle 15 auf dieser Seite aufgeführten Anliegen – von der An- und Abmeldung über Kennzeichenwechsel, Anschriften- und Namensänderung, technische Änderungen bis hin zu H-Kennzeichen, Saison-, Kurzzeit- und Ausfuhrkennzeichen, Feinstaubplakette, Ersatz des Fahrzeugscheins und Neusiegelung. Über die \"Infos Stadt Köln\"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln. Die häufigsten Anliegen sind: KFZ anmelden für Neufahrzeuge und Gebrauchtfahrzeuge, Auto ummelden nach Umzug oder Kauf, Kennzeichenwechsel, Wiederzulassung, H-Kennzeichen und Saisonkennzeichen.",
   },
   {
     q: "Was muss ich zum Termin mitbringen?",
