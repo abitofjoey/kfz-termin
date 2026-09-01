@@ -18,6 +18,7 @@ import { Route as AgbRouteImport } from './routes/agb'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
+import { Route as LovableEmailEventsRouteImport } from './routes/lovable/email/events'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
@@ -69,6 +70,11 @@ const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
   path: '/lovable/email/suppression',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LovableEmailEventsRoute = LovableEmailEventsRouteImport.update({
+  id: '/lovable/email/events',
+  path: '/lovable/email/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailTransactionalSendRoute =
   LovableEmailTransactionalSendRouteImport.update({
     id: '/lovable/email/transactional/send',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/impressum': typeof ImpressumRoute
   '/unsubscribe': typeof UnsubscribeRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/lovable/email/events': typeof LovableEmailEventsRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/impressum': typeof ImpressumRoute
   '/unsubscribe': typeof UnsubscribeRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/lovable/email/events': typeof LovableEmailEventsRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/impressum': typeof ImpressumRoute
   '/unsubscribe': typeof UnsubscribeRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/lovable/email/events': typeof LovableEmailEventsRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/impressum'
     | '/unsubscribe'
     | '/email/unsubscribe'
+    | '/lovable/email/events'
     | '/lovable/email/suppression'
     | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/impressum'
     | '/unsubscribe'
     | '/email/unsubscribe'
+    | '/lovable/email/events'
     | '/lovable/email/suppression'
     | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/impressum'
     | '/unsubscribe'
     | '/email/unsubscribe'
+    | '/lovable/email/events'
     | '/lovable/email/suppression'
     | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
@@ -208,6 +220,7 @@ export interface RootRouteChildren {
   ImpressumRoute: typeof ImpressumRoute
   UnsubscribeRoute: typeof UnsubscribeRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
+  LovableEmailEventsRoute: typeof LovableEmailEventsRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   ApiPublicAdminFinalizeBookingRoute: typeof ApiPublicAdminFinalizeBookingRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
@@ -281,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailSuppressionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lovable/email/events': {
+      id: '/lovable/email/events'
+      path: '/lovable/email/events'
+      fullPath: '/lovable/email/events'
+      preLoaderRoute: typeof LovableEmailEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/send': {
       id: '/lovable/email/transactional/send'
       path: '/lovable/email/transactional/send'
@@ -328,6 +348,7 @@ const rootRouteChildren: RootRouteChildren = {
   ImpressumRoute: ImpressumRoute,
   UnsubscribeRoute: UnsubscribeRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
+  LovableEmailEventsRoute: LovableEmailEventsRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   ApiPublicAdminFinalizeBookingRoute: ApiPublicAdminFinalizeBookingRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
