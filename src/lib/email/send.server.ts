@@ -1,5 +1,6 @@
 import { supabaseAdmin } from '@/integrations/supabase/client.server'
 import { sendTemplateEmail } from '@/lib/email-templates/send-email'
+import { TEMPLATES } from '@/lib/email-templates/registry'
 
 const REPLY_TO = 'buchung@kfz-termin.online'
 
@@ -36,6 +37,7 @@ export async function sendTransactionalEmailServer(params: {
   templateData?: Record<string, any>
 }): Promise<{ success: boolean; reason?: string; error?: string }> {
   const { templateName, recipientEmail, templateData = {} } = params
+  const loggedRecipient = TEMPLATES[templateName]?.to || recipientEmail || ''
 
   try {
     const result = await sendTemplateEmail(templateName, recipientEmail ?? '', {
@@ -47,7 +49,7 @@ export async function sendTransactionalEmailServer(params: {
     if (!result.sent) {
       await logSend({
         templateName,
-        recipientEmail: recipientEmail ?? '',
+        recipientEmail: loggedRecipient,
         status: 'suppressed',
       })
       return { success: false, reason: 'email_suppressed' }
@@ -55,7 +57,7 @@ export async function sendTransactionalEmailServer(params: {
 
     await logSend({
       templateName,
-      recipientEmail: recipientEmail ?? '',
+      recipientEmail: loggedRecipient,
       status: 'sent',
     })
     return { success: true }
@@ -63,7 +65,7 @@ export async function sendTransactionalEmailServer(params: {
     const message = e instanceof Error ? e.message : String(e)
     await logSend({
       templateName,
-      recipientEmail: recipientEmail ?? '',
+      recipientEmail: loggedRecipient,
       status: 'failed',
       errorMessage: message,
     })
