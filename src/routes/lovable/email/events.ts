@@ -1,6 +1,51 @@
 import { createEmailWebhookHandler } from '@lovable.dev/email-js'
 import { createFileRoute } from '@tanstack/react-router'
 
+// Reacts to terminal email outcomes (bounce, complaint, unsubscribe) by keeping
+// the app's own notification tables in sync. Lovable enforces suppression at
+// send time — these rows are a convenience view, never a send gate.
+
+async function recordOutcome(params: {
+  recipient: string
+  reason: 'bounce' | 'complaint' | 'unsubscribe'
+  status: 'bounced' | 'complained' | 'suppressed'
+  message: string
+  messageId?: string | null
+  eventId: string
+}) {
+  const { supabaseAdmin } = await import('@/integrations/supabase/client.server')
+  const email = params.recipient.toLowerCase()
+
+  const { error: suppressError } = await supabaseAdmin
+    .from('suppressed_emails')
+    .upsert({ email, reason: params.reason, metadata: null }, { onConflict: 'email' })
+
+  if (suppressError) {
+    console.error('Failed to upsert suppressed email', {
+      error: { code: suppressError.code, message: suppressError.message },
+      event_id: params.eventId,
+    })
+    throw new Error('Failed to write suppression')
+  }
+
+  const { error: insertError } = await supabaseAdmin.from('email_send_log').insert({
+    message_id: params.messageId ?? null,
+    template_name: 'system',
+    recipient_email: email,
+    status: params.status,
+    error_message: params.message,
+    metadata: null,
+  })
+
+  if (insertError) {
+    // Non-fatal — the suppression record is already stored.
+    console.warn('Failed to insert email_send_log', {
+      error: { code: insertError.code, message: insertError.message },
+      event_id: params.eventId,
+    })
+  }
+}
+
 export const Route = createFileRoute("/lovable/email/events")({
   server: {
     handlers: {
@@ -13,16 +58,35 @@ export const Route = createFileRoute("/lovable/email/events")({
         const handler = createEmailWebhookHandler({
           apiKey,
           on: {
-            // Placeholder handlers — replace each log with the feature's reaction.
-            // Throw on failure so the delivery is retried.
             'email.bounced': async (event) => {
-              console.log('Email bounced', { event_id: event.event_id })
+              await recordOutcome({
+                recipient: event.data.recipient,
+                reason: 'bounce',
+                status: 'bounced',
+                message: 'Permanent bounce — email address is invalid or rejected',
+                messageId: event.data.message_id,
+                eventId: event.event_id,
+              })
             },
             'email.complaint': async (event) => {
-              console.log('Email complaint', { event_id: event.event_id })
+              await recordOutcome({
+                recipient: event.data.recipient,
+                reason: 'complaint',
+                status: 'complained',
+                message: 'Spam complaint — recipient marked email as spam',
+                messageId: event.data.message_id,
+                eventId: event.event_id,
+              })
             },
             'email.unsubscribed': async (event) => {
-              console.log('Email unsubscribed', { event_id: event.event_id })
+              await recordOutcome({
+                recipient: event.data.recipient,
+                reason: 'unsubscribe',
+                status: 'suppressed',
+                message: 'Recipient unsubscribed',
+                messageId: event.data.message_id,
+                eventId: event.event_id,
+              })
             },
           },
         })
