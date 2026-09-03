@@ -17,6 +17,8 @@ export type Database = {
       bookings: {
         Row: {
           anonymized_at: string | null
+          assigned_to_script: boolean
+          assigned_to_script_at: string | null
           confirmation_sent_at: string | null
           created_at: string
           email: string
@@ -37,6 +39,8 @@ export type Database = {
         }
         Insert: {
           anonymized_at?: string | null
+          assigned_to_script?: boolean
+          assigned_to_script_at?: string | null
           confirmation_sent_at?: string | null
           created_at?: string
           email: string
@@ -57,6 +61,8 @@ export type Database = {
         }
         Update: {
           anonymized_at?: string | null
+          assigned_to_script?: boolean
+          assigned_to_script_at?: string | null
           confirmation_sent_at?: string | null
           created_at?: string
           email?: string
