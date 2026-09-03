@@ -19,7 +19,9 @@ Ein Projekt-Secret `SCRIPT_API_KEY` wird angelegt; den Wert (langer Zufallsstrin
 Zwei Route-Dateien, aufgebaut wie der bestehende Stripe-Webhook (`createFileRoute` mit `server.handlers`, `supabaseAdmin` aus `@/integrations/supabase/client.server`):
 
 - `src/routes/api/internal/pending-bookings.ts` — GET: alle Buchungen mit `paid = true` und `assigned_to_script = false`.
-- `src/routes/api/internal/pending-bookings.$id.ack.ts` — POST: markiert eine Buchung als übernommen.
+- `src/routes/api/internal/pending-bookings/$id/ack.ts` — POST: markiert eine Buchung als übernommen (Ordner-Variante, analog `api/public/stripe/webhook.ts`).
+
+Hinweis: Da `/api/internal` nicht dem automatisch öffentlichen `/api/public/*` entspricht, zusätzlicher API-Key-Check im Handler notwendig. Die Ordner-Variante für `pending-bookings/$id/ack` verwendet TanStacks dateibasierte Ordner-Routing (`$id.ts` als Kinde-Route unterhalb `pending-bookings`).
 
 ### GET-Antwort
 
