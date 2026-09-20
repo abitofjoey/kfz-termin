@@ -25,17 +25,17 @@ const Toaster = lazy(() =>
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KFZ-Zulassung Köln & Auto anmelden – Termin automatisch buchen" },
+      { title: "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht" },
       {
         name: "description",
         content:
-          "KFZ-Zulassung Köln leicht gemacht: Auto anmelden, ummelden oder abmelden – wir buchen deinen Termin bei der Kölner Zulassungsstelle automatisch. 9,99 € mit Geld-zurück-Garantie.",
+          "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht. Für KFZ-Zulassung, Auto anmelden, Ummeldung & Abmeldung. 9,99 € mit Geld-zurück-Garantie.",
       },
-      { property: "og:title", content: "KFZ-Zulassung Köln & Auto anmelden – Termin automatisch buchen" },
+      { property: "og:title", content: "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht" },
       {
         property: "og:description",
         content:
-          "KFZ-Zulassung Köln leicht gemacht: Auto anmelden, ummelden oder abmelden – wir buchen deinen Termin bei der Kölner Zulassungsstelle automatisch. 9,99 € mit Geld-zurück-Garantie.",
+          "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht. Für KFZ-Zulassung, Auto anmelden, Ummeldung & Abmeldung. 9,99 € mit Geld-zurück-Garantie.",
       },
       { property: "og:url", content: "https://kfz-termin.online/" },
       { property: "og:image", content: "https://kfz-termin.online/og-image.jpg" },
