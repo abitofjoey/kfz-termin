@@ -2,7 +2,7 @@ import { supabaseAdmin } from '@/integrations/supabase/client.server'
 import { sendTemplateEmail } from '@/lib/email-templates/send-email'
 import { TEMPLATES } from '@/lib/email-templates/registry'
 
-const REPLY_TO = 'buchung@kfz-termin.online'
+const REPLY_TO = 'info@kfz-termin.online'
 
 async function logSend(params: {
   templateName: string

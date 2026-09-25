@@ -88,7 +88,7 @@ export const template = {
   subject: (d: Record<string, any>) =>
     `Neue Buchung: ${[d.firstName, d.lastName].filter(Boolean).join(' ') || 'Unbekannt'} – ${d.serviceType || ''}`.trim(),
   displayName: 'Buchungs-Benachrichtigung (intern)',
-  to: 'j.eikehoffmann@gmail.com',
+  to: 'info@kfz-termin.online',
   previewData: {
     bookingId: '00000000-0000-0000-0000-000000000000',
     salutation: 'Herr',
