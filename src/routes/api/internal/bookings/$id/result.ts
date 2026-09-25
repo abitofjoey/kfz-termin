@@ -3,11 +3,16 @@ import { z } from "zod";
 
 const isoDate = z.string().refine((v) => !isNaN(Date.parse(v)), "invalid date");
 
-const BodySchema = z.object({
-  result: z.literal("found"),
-  appointmentAt: isoDate,
-  bookedAt: isoDate,
-});
+const BodySchema = z.discriminatedUnion("result", [
+  z.object({
+    result: z.literal("found"),
+    appointmentAt: isoDate,
+    bookedAt: isoDate,
+  }),
+  z.object({
+    result: z.literal("not_found"),
+  }),
+]);
 
 export const Route = createFileRoute("/api/internal/bookings/$id/result")({
   server: {
@@ -34,8 +39,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
         if (!parsed.success) {
           return new Response("Invalid body", { status: 400 });
         }
-        const appointmentAt = new Date(parsed.data.appointmentAt).toISOString();
-        const foundAt = new Date(parsed.data.bookedAt).toISOString();
+        const body = parsed.data;
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
@@ -52,6 +56,52 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
         if (!booking || !booking.paid) {
           return new Response("Not found", { status: 404 });
         }
+
+        if (body.result === "not_found") {
+          const { data: nfUpdated, error: nfError } = await supabaseAdmin
+            .from("bookings")
+            .update({ search_result: "not_found" })
+            .eq("id", params.id)
+            .is("search_result", null)
+            .select("id");
+
+          if (nfError) {
+            console.error("booking result: database error (update not_found)", nfError.code);
+            return new Response("Database error", { status: 500 });
+          }
+          if (!nfUpdated || nfUpdated.length === 0) {
+            return Response.json({ ok: true, alreadyRecorded: true });
+          }
+
+          const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
+          let nfEmailSent = false;
+          try {
+            const internal = await sendTransactionalEmailServer({
+              templateName: "search-not-found-internal",
+              idempotencyKey: `booking-notfound-internal-${booking.id}`,
+              templateData: {
+                bookingId: booking.id,
+                salutation: booking.salutation,
+                firstName: booking.first_name,
+                lastName: booking.last_name,
+                email: booking.email,
+                phone: booking.phone,
+                serviceType: booking.service_type,
+                selectedDates: booking.selected_dates,
+                stripeSessionId: booking.stripe_session_id,
+              },
+            });
+            nfEmailSent = internal.success;
+            if (!internal.success) console.error("booking result: not_found internal email not sent");
+          } catch {
+            console.error("booking result: not_found email sending failed");
+          }
+          return Response.json({ ok: true, emailSent: nfEmailSent });
+        }
+
+        const appointmentAt = new Date(body.appointmentAt).toISOString();
+        const foundAt = new Date(body.bookedAt).toISOString();
+
 
         const { data: updated, error: updateError } = await supabaseAdmin
           .from("bookings")
