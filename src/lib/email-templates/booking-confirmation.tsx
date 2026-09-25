@@ -63,13 +63,19 @@ const BookingConfirmationEmail = ({
           <Section style={infoBox}>
             <Text style={infoTitle}>🕐 So läuft es ab</Text>
             <Text style={infoText}>
-              Sobald wir einen passenden Termin gefunden haben, erhältst du
-              direkt eine Bestätigungs-E-Mail von der Zulassungsstelle.{' '}
+              Sobald wir einen passenden Termin gefunden haben, bekommst du
+              zwei E-Mails: eine von uns mit Datum und Uhrzeit und eine von
+              der Zulassungsstelle mit einem Bestätigungslink.{" "}
               <strong>
-                Du hast dann 3 Stunden Zeit, diesen Termin über den
-                enthaltenen Link zu bestätigen
-              </strong>{' '}
+                Du hast dann 3 Stunden Zeit, den Termin über diesen Link
+                zu bestätigen
+              </strong>{" "}
               – andernfalls verfällt er unwiderruflich.
+            </Text>
+            <Text style={infoText}>
+              <strong>Wichtig:</strong> Schau in dieser Zeit bitte auch in
+              deine Ordner Spam und Werbung. Automatische E-Mails landen dort
+              manchmal.
             </Text>
           </Section>
 
