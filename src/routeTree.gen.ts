@@ -21,6 +21,7 @@ import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/l
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
 import { Route as ApiPublicAdminFinalizeBookingRouteImport } from './routes/api/public/admin/finalize-booking'
 import { Route as ApiInternalPendingBookingsIdAckRouteImport } from './routes/api/internal/pending-bookings/$id/ack'
+import { Route as ApiInternalBookingsIdResultRouteImport } from './routes/api/internal/bookings/$id/result'
 
 const ImpressumRoute = ImpressumRouteImport.update({
   id: '/impressum',
@@ -86,6 +87,12 @@ const ApiInternalPendingBookingsIdAckRoute =
     path: '/$id/ack',
     getParentRoute: () => ApiInternalPendingBookingsRoute,
   } as any)
+const ApiInternalBookingsIdResultRoute =
+  ApiInternalBookingsIdResultRouteImport.update({
+    id: '/api/internal/bookings/$id/result',
+    path: '/api/internal/bookings/$id/result',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/api/internal/bookings/$id/result': typeof ApiInternalBookingsIdResultRoute
   '/api/internal/pending-bookings/$id/ack': typeof ApiInternalPendingBookingsIdAckRoute
 }
 export interface FileRoutesByTo {
@@ -113,6 +121,7 @@ export interface FileRoutesByTo {
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/api/internal/bookings/$id/result': typeof ApiInternalBookingsIdResultRoute
   '/api/internal/pending-bookings/$id/ack': typeof ApiInternalPendingBookingsIdAckRoute
 }
 export interface FileRoutesById {
@@ -128,6 +137,7 @@ export interface FileRoutesById {
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/api/internal/bookings/$id/result': typeof ApiInternalBookingsIdResultRoute
   '/api/internal/pending-bookings/$id/ack': typeof ApiInternalPendingBookingsIdAckRoute
 }
 export interface FileRouteTypes {
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
+    | '/api/internal/bookings/$id/result'
     | '/api/internal/pending-bookings/$id/ack'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -158,6 +169,7 @@ export interface FileRouteTypes {
     | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
+    | '/api/internal/bookings/$id/result'
     | '/api/internal/pending-bookings/$id/ack'
   id:
     | '__root__'
@@ -172,6 +184,7 @@ export interface FileRouteTypes {
     | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
+    | '/api/internal/bookings/$id/result'
     | '/api/internal/pending-bookings/$id/ack'
   fileRoutesById: FileRoutesById
 }
@@ -187,6 +200,7 @@ export interface RootRouteChildren {
   ApiPublicAdminFinalizeBookingRoute: typeof ApiPublicAdminFinalizeBookingRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
+  ApiInternalBookingsIdResultRoute: typeof ApiInternalBookingsIdResultRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -275,6 +289,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiInternalPendingBookingsIdAckRouteImport
       parentRoute: typeof ApiInternalPendingBookingsRoute
     }
+    '/api/internal/bookings/$id/result': {
+      id: '/api/internal/bookings/$id/result'
+      path: '/api/internal/bookings/$id/result'
+      fullPath: '/api/internal/bookings/$id/result'
+      preLoaderRoute: typeof ApiInternalBookingsIdResultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -304,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicAdminFinalizeBookingRoute: ApiPublicAdminFinalizeBookingRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
+  ApiInternalBookingsIdResultRoute: ApiInternalBookingsIdResultRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
