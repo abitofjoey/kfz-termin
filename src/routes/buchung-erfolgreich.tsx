@@ -104,9 +104,13 @@ function SuccessPage() {
           <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0" />
           <p>
             <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben,
-            erhältst du eine E-Mail der Zulassungsstelle Köln mit einem
-            Bestätigungslink. Diesen musst du <strong>innerhalb von 3 Stunden </strong>
-            anklicken – sonst verfällt der Termin unwiderruflich.
+            bekommst du zwei E-Mails: eine von uns mit Datum und Uhrzeit und
+            eine von der Zulassungsstelle Köln mit einem Bestätigungslink.
+            Diesen Link musst du <strong>innerhalb von 3 Stunden</strong>{" "}
+            anklicken – sonst verfällt der Termin unwiderruflich. Bitte schau
+            dann auch in deinen Ordnern <strong>Spam</strong> und{" "}
+            <strong>Werbung</strong> nach, automatische E-Mails landen dort
+            manchmal.
           </p>
         </div>
 
