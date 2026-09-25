@@ -17,6 +17,7 @@ export type Database = {
       bookings: {
         Row: {
           anonymized_at: string | null
+          appointment_at: string | null
           assigned_to_script: boolean
           assigned_to_script_at: string | null
           confirmation_sent_at: string | null
@@ -26,12 +27,15 @@ export type Database = {
           fin_2: string | null
           fin_3: string | null
           first_name: string
+          found_at: string | null
           id: string
           last_name: string
           notes: string | null
           paid: boolean
           phone: string
+          result_notified_at: string | null
           salutation: string
+          search_result: string | null
           selected_dates: string[]
           service_type: string
           status: string
@@ -39,6 +43,7 @@ export type Database = {
         }
         Insert: {
           anonymized_at?: string | null
+          appointment_at?: string | null
           assigned_to_script?: boolean
           assigned_to_script_at?: string | null
           confirmation_sent_at?: string | null
@@ -48,12 +53,15 @@ export type Database = {
           fin_2?: string | null
           fin_3?: string | null
           first_name: string
+          found_at?: string | null
           id?: string
           last_name: string
           notes?: string | null
           paid?: boolean
           phone: string
+          result_notified_at?: string | null
           salutation: string
+          search_result?: string | null
           selected_dates?: string[]
           service_type: string
           status?: string
@@ -61,6 +69,7 @@ export type Database = {
         }
         Update: {
           anonymized_at?: string | null
+          appointment_at?: string | null
           assigned_to_script?: boolean
           assigned_to_script_at?: string | null
           confirmation_sent_at?: string | null
@@ -70,12 +79,15 @@ export type Database = {
           fin_2?: string | null
           fin_3?: string | null
           first_name?: string
+          found_at?: string | null
           id?: string
           last_name?: string
           notes?: string | null
           paid?: boolean
           phone?: string
+          result_notified_at?: string | null
           salutation?: string
+          search_result?: string | null
           selected_dates?: string[]
           service_type?: string
           status?: string
