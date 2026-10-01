@@ -9,38 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AgbRouteImport } from './routes/agb'
-import { Route as BuchungAbgebrochenRouteImport } from './routes/buchung-abgebrochen'
-import { Route as BuchungErfolgreichRouteImport } from './routes/buchung-erfolgreich'
-import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as ImpressumRouteImport } from './routes/impressum'
-import { Route as ApiInternalPendingBookingsRouteImport } from './routes/api/internal/pending-bookings'
+import { Route as DatenschutzRouteImport } from './routes/datenschutz'
+import { Route as BuchungErfolgreichRouteImport } from './routes/buchung-erfolgreich'
+import { Route as BuchungAbgebrochenRouteImport } from './routes/buchung-abgebrochen'
+import { Route as AgbRouteImport } from './routes/agb'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as LovableEmailEventsRouteImport } from './routes/lovable/email/events'
-import { Route as ApiPublicAdminFinalizeBookingRouteImport } from './routes/api/public/admin/finalize-booking'
-import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
+import { Route as ApiInternalPendingBookingsRouteImport } from './routes/api/internal/pending-bookings'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
-import { Route as ApiInternalBookingsIdResultRouteImport } from './routes/api/internal/bookings/$id/result'
+import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
+import { Route as ApiPublicAdminFinalizeBookingRouteImport } from './routes/api/public/admin/finalize-booking'
 import { Route as ApiInternalPendingBookingsIdAckRouteImport } from './routes/api/internal/pending-bookings/$id/ack'
+import { Route as ApiInternalBookingsIdResultRouteImport } from './routes/api/internal/bookings/$id/result'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgbRoute = AgbRouteImport.update({
-  id: '/agb',
-  path: '/agb',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BuchungAbgebrochenRoute = BuchungAbgebrochenRouteImport.update({
-  id: '/buchung-abgebrochen',
-  path: '/buchung-abgebrochen',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BuchungErfolgreichRoute = BuchungErfolgreichRouteImport.update({
-  id: '/buchung-erfolgreich',
-  path: '/buchung-erfolgreich',
+const ImpressumRoute = ImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DatenschutzRoute = DatenschutzRouteImport.update({
@@ -48,9 +33,29 @@ const DatenschutzRoute = DatenschutzRouteImport.update({
   path: '/datenschutz',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ImpressumRoute = ImpressumRouteImport.update({
-  id: '/impressum',
-  path: '/impressum',
+const BuchungErfolgreichRoute = BuchungErfolgreichRouteImport.update({
+  id: '/buchung-erfolgreich',
+  path: '/buchung-erfolgreich',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuchungAbgebrochenRoute = BuchungAbgebrochenRouteImport.update({
+  id: '/buchung-abgebrochen',
+  path: '/buchung-abgebrochen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgbRoute = AgbRouteImport.update({
+  id: '/agb',
+  path: '/agb',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailEventsRoute = LovableEmailEventsRouteImport.update({
+  id: '/lovable/email/events',
+  path: '/lovable/email/events',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiInternalPendingBookingsRoute =
@@ -59,9 +64,15 @@ const ApiInternalPendingBookingsRoute =
     path: '/api/internal/pending-bookings',
     getParentRoute: () => rootRouteImport,
   } as any)
-const LovableEmailEventsRoute = LovableEmailEventsRouteImport.update({
-  id: '/lovable/email/events',
-  path: '/lovable/email/events',
+const LovableEmailTransactionalPreviewRoute =
+  LovableEmailTransactionalPreviewRouteImport.update({
+    id: '/lovable/email/transactional/preview',
+    path: '/lovable/email/transactional/preview',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
+  id: '/api/public/stripe/webhook',
+  path: '/api/public/stripe/webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicAdminFinalizeBookingRoute =
@@ -70,28 +81,17 @@ const ApiPublicAdminFinalizeBookingRoute =
     path: '/api/public/admin/finalize-booking',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
-  id: '/api/public/stripe/webhook',
-  path: '/api/public/stripe/webhook',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LovableEmailTransactionalPreviewRoute =
-  LovableEmailTransactionalPreviewRouteImport.update({
-    id: '/lovable/email/transactional/preview',
-    path: '/lovable/email/transactional/preview',
-    getParentRoute: () => rootRouteImport,
+const ApiInternalPendingBookingsIdAckRoute =
+  ApiInternalPendingBookingsIdAckRouteImport.update({
+    id: '/$id/ack',
+    path: '/$id/ack',
+    getParentRoute: () => ApiInternalPendingBookingsRoute,
   } as any)
 const ApiInternalBookingsIdResultRoute =
   ApiInternalBookingsIdResultRouteImport.update({
     id: '/api/internal/bookings/$id/result',
     path: '/api/internal/bookings/$id/result',
     getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiInternalPendingBookingsIdAckRoute =
-  ApiInternalPendingBookingsIdAckRouteImport.update({
-    id: '/$id/ack',
-    path: '/$id/ack',
-    getParentRoute: () => ApiInternalPendingBookingsRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -205,32 +205,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/agb': {
-      id: '/agb'
-      path: '/agb'
-      fullPath: '/agb'
-      preLoaderRoute: typeof AgbRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/buchung-abgebrochen': {
-      id: '/buchung-abgebrochen'
-      path: '/buchung-abgebrochen'
-      fullPath: '/buchung-abgebrochen'
-      preLoaderRoute: typeof BuchungAbgebrochenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/buchung-erfolgreich': {
-      id: '/buchung-erfolgreich'
-      path: '/buchung-erfolgreich'
-      fullPath: '/buchung-erfolgreich'
-      preLoaderRoute: typeof BuchungErfolgreichRouteImport
+    '/impressum': {
+      id: '/impressum'
+      path: '/impressum'
+      fullPath: '/impressum'
+      preLoaderRoute: typeof ImpressumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/datenschutz': {
@@ -240,18 +219,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DatenschutzRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/impressum': {
-      id: '/impressum'
-      path: '/impressum'
-      fullPath: '/impressum'
-      preLoaderRoute: typeof ImpressumRouteImport
+    '/buchung-erfolgreich': {
+      id: '/buchung-erfolgreich'
+      path: '/buchung-erfolgreich'
+      fullPath: '/buchung-erfolgreich'
+      preLoaderRoute: typeof BuchungErfolgreichRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/internal/pending-bookings': {
-      id: '/api/internal/pending-bookings'
-      path: '/api/internal/pending-bookings'
-      fullPath: '/api/internal/pending-bookings'
-      preLoaderRoute: typeof ApiInternalPendingBookingsRouteImport
+    '/buchung-abgebrochen': {
+      id: '/buchung-abgebrochen'
+      path: '/buchung-abgebrochen'
+      fullPath: '/buchung-abgebrochen'
+      preLoaderRoute: typeof BuchungAbgebrochenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agb': {
+      id: '/agb'
+      path: '/agb'
+      fullPath: '/agb'
+      preLoaderRoute: typeof AgbRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/events': {
@@ -261,18 +254,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailEventsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/admin/finalize-booking': {
-      id: '/api/public/admin/finalize-booking'
-      path: '/api/public/admin/finalize-booking'
-      fullPath: '/api/public/admin/finalize-booking'
-      preLoaderRoute: typeof ApiPublicAdminFinalizeBookingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/stripe/webhook': {
-      id: '/api/public/stripe/webhook'
-      path: '/api/public/stripe/webhook'
-      fullPath: '/api/public/stripe/webhook'
-      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
+    '/api/internal/pending-bookings': {
+      id: '/api/internal/pending-bookings'
+      path: '/api/internal/pending-bookings'
+      fullPath: '/api/internal/pending-bookings'
+      preLoaderRoute: typeof ApiInternalPendingBookingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/transactional/preview': {
@@ -282,11 +268,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/internal/bookings/$id/result': {
-      id: '/api/internal/bookings/$id/result'
-      path: '/api/internal/bookings/$id/result'
-      fullPath: '/api/internal/bookings/$id/result'
-      preLoaderRoute: typeof ApiInternalBookingsIdResultRouteImport
+    '/api/public/stripe/webhook': {
+      id: '/api/public/stripe/webhook'
+      path: '/api/public/stripe/webhook'
+      fullPath: '/api/public/stripe/webhook'
+      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/admin/finalize-booking': {
+      id: '/api/public/admin/finalize-booking'
+      path: '/api/public/admin/finalize-booking'
+      fullPath: '/api/public/admin/finalize-booking'
+      preLoaderRoute: typeof ApiPublicAdminFinalizeBookingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/internal/pending-bookings/$id/ack': {
@@ -295,6 +288,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/internal/pending-bookings/$id/ack'
       preLoaderRoute: typeof ApiInternalPendingBookingsIdAckRouteImport
       parentRoute: typeof ApiInternalPendingBookingsRoute
+    }
+    '/api/internal/bookings/$id/result': {
+      id: '/api/internal/bookings/$id/result'
+      path: '/api/internal/bookings/$id/result'
+      fullPath: '/api/internal/bookings/$id/result'
+      preLoaderRoute: typeof ApiInternalBookingsIdResultRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
