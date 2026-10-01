@@ -3,28 +3,27 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const testimonials = [
   {
-    name: "Lukas M.",
-    service: "Anmeldung Gebrauchtfahrzeug",
+    name: "Mona Liskow",
+    service: "Google Rezension",
     quote:
-      "Auftrag morgens abgeschickt – keine Stunde später kam die Mail mit dem Termin für den nächsten Tag. Damit hatte ich ehrlich nicht gerechnet. Top.",
+      "Klasse Tool für eine schnelle Terminvergabe. Sehr intuitiv aufgebaut, hat alles problemlos geklappt. Würde ich jedem empfehlen, der kurzfristig einen KFZ-Termin benötigt.",
   },
   {
-    name: "Sabine K.",
-    service: "Anmeldung Gebrauchtfahrzeug",
+    name: "Konstantin Inspektor",
+    service: "Google Rezension",
     quote:
-      "Ich brauchte kurzfristig einen Termin und hatte wenig Hoffnung, online noch etwas Passendes zu finden. Noch am selben Tag kam die Bestätigung – Termin in drei Tagen. Hat sich für mich wirklich gelohnt.",
+      "Reibungsloser Vorgang von der Bezahlung bis zum Termin in der KFZ-Stelle Köln. Vertrauenswürdiger Anbieter. 100% Weiterempfehlung!",
   },
   {
-    name: "Markus B.",
-    service: "Neuzulassung",
-    quote:
-      "Hatte noch eine Frage zur FIN und einfach kurz angerufen. Wurde direkt und freundlich erklärt, ging super unkompliziert.",
+    name: "Mario T",
+    service: "Google Rezension",
+    quote: "Top service",
   },
   {
-    name: "Jonas R.",
-    service: "Anmeldung Gebrauchtfahrzeug",
+    name: "M. K.",
+    service: "Google Rezension",
     quote:
-      "Formular ausgefüllt, bezahlt, fertig. Musste nichts mehr machen, bis die Bestätigungsmail kam. Genau so soll's sein.",
+      "Top. Termin schon am Folgetag erhalten und damit das Fahrzeug anmelden können. Dies bei total nettem Kontakt. Besser geht nicht!",
   },
 ];
 
