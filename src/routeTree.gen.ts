@@ -15,6 +15,7 @@ import { Route as BuchungAbgebrochenRouteImport } from './routes/buchung-abgebro
 import { Route as BuchungErfolgreichRouteImport } from './routes/buchung-erfolgreich'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as WiderrufsbelehrungRouteImport } from './routes/widerrufsbelehrung'
 import { Route as ApiInternalPendingBookingsRouteImport } from './routes/api/internal/pending-bookings'
 import { Route as LovableEmailEventsRouteImport } from './routes/lovable/email/events'
 import { Route as ApiPublicAdminFinalizeBookingRouteImport } from './routes/api/public/admin/finalize-booking'
@@ -51,6 +52,11 @@ const DatenschutzRoute = DatenschutzRouteImport.update({
 const ImpressumRoute = ImpressumRouteImport.update({
   id: '/impressum',
   path: '/impressum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WiderrufsbelehrungRoute = WiderrufsbelehrungRouteImport.update({
+  id: '/widerrufsbelehrung',
+  path: '/widerrufsbelehrung',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiInternalPendingBookingsRoute =
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/buchung-erfolgreich'
     | '/datenschutz'
     | '/impressum'
+    | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
     | '/api/public/admin/finalize-booking'
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/buchung-erfolgreich'
     | '/datenschutz'
     | '/impressum'
+    | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
     | '/api/public/admin/finalize-booking'
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/buchung-erfolgreich'
     | '/datenschutz'
     | '/impressum'
+    | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
     | '/api/public/admin/finalize-booking'
@@ -195,6 +207,7 @@ export interface RootRouteChildren {
   BuchungErfolgreichRoute: typeof BuchungErfolgreichRoute
   DatenschutzRoute: typeof DatenschutzRoute
   ImpressumRoute: typeof ImpressumRoute
+  WiderrufsbelehrungRoute: typeof WiderrufsbelehrungRoute
   ApiInternalPendingBookingsRoute: typeof ApiInternalPendingBookingsRouteWithChildren
   LovableEmailEventsRoute: typeof LovableEmailEventsRoute
   ApiPublicAdminFinalizeBookingRoute: typeof ApiPublicAdminFinalizeBookingRoute
@@ -245,6 +258,13 @@ declare module '@tanstack/react-router' {
       path: '/impressum'
       fullPath: '/impressum'
       preLoaderRoute: typeof ImpressumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/widerrufsbelehrung': {
+      id: '/widerrufsbelehrung'
+      path: '/widerrufsbelehrung'
+      fullPath: '/widerrufsbelehrung'
+      preLoaderRoute: typeof WiderrufsbelehrungRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/internal/pending-bookings': {
@@ -320,6 +340,7 @@ const rootRouteChildren: RootRouteChildren = {
   BuchungErfolgreichRoute: BuchungErfolgreichRoute,
   DatenschutzRoute: DatenschutzRoute,
   ImpressumRoute: ImpressumRoute,
+  WiderrufsbelehrungRoute: WiderrufsbelehrungRoute,
   ApiInternalPendingBookingsRoute: ApiInternalPendingBookingsRouteWithChildren,
   LovableEmailEventsRoute: LovableEmailEventsRoute,
   ApiPublicAdminFinalizeBookingRoute: ApiPublicAdminFinalizeBookingRoute,
