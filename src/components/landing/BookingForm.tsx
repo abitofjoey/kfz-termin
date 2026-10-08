@@ -135,7 +135,7 @@ export function BookingForm({ preselected }: Props) {
       .catch(() => {
         // Fallback: bisherige Client-Logik (heute + 1 … heute + 14).
         const t = startOfDay(new Date());
-        setBounds({ today: t, minDate: addDays(t, 1), maxDate: addDays(t, 14) });
+        setBounds({ today: t, minDate: addDays(t, 1), maxDate: addDays(t, 14), blockedDates: [] });
       });
     return () => {
       cancelled = true;
@@ -144,6 +144,7 @@ export function BookingForm({ preselected }: Props) {
   const today = bounds?.today ?? null;
   const minDate = bounds?.minDate ?? null;
   const maxDate = bounds?.maxDate ?? null;
+  const blockedDates = bounds?.blockedDates ?? [];
   const threeDayThreshold = useMemo(
     () => (today ? addDays(today, 3) : null),
     [today],
@@ -384,7 +385,10 @@ export function BookingForm({ preselected }: Props) {
                         date < minDate ||
                         date > maxDate ||
                         date.getDay() === 0 ||
-                        date.getDay() === 6
+                        date.getDay() === 6 ||
+                        blockedDates.some(
+                          (b) => b.getTime() === date.getTime(),
+                        )
                       }
                       startMonth={today}
                       endMonth={maxDate}
