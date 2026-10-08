@@ -41,3 +41,18 @@ Dateien:
 - Geändert: `Footer.tsx`, `registry.ts`, `booking-confirmation.tsx`, `booking-finalize.server.ts` (gibt `bookingId` mit), `api/internal/pending-bookings.ts` (Filter), `public/sitemap.xml` bleibt unverändert, weil die Seite `noindex` ist.
 
 Nichts wird veröffentlicht.
+
+## Ergänzungen (Freigabe 08.10.2026)
+1. **Zuordnung über E-Mail:** Es zählen nur bezahlte Buchungen.
+   - Genau eine offene Buchung (noch kein Ergebnis): Sie wird zugeordnet und `widerruf_eingegangen_at` wird gesetzt.
+   - Mehrere offene Buchungen: Keine wird markiert und `booking_id` bleibt leer. Die interne Mail listet alle Kandidaten mit ID, Buchungsnummer, Buchungsdatum und Dienstleistung.
+   - Keine offene, aber mindestens eine erledigte Buchung: Die jüngste wird zugeordnet, aber nicht markiert.
+   - Die Zuordnung über die Buchungsnummer bleibt wie geplant.
+2. **Ergebnis-Route („found“):** Ist `widerruf_eingegangen_at` gesetzt, wird das Ergebnis gespeichert, aber der Kunde bekommt keine Mail. Stattdessen geht das neue Template `appointment-after-withdrawal-internal` an info@kfz-termin.online.
+   - Betreff: „Achtung: Termin trotz Widerruf gebucht – [Name]“
+   - Inhalt: Buchungs-ID, der gebuchte Termin und der Hinweis „Termin bei der Stadt stornieren und Kunden informieren“.
+   - Ohne Widerruf läuft alles unverändert.
+3. **Reihenfolge:** Zuerst wird der Widerruf gespeichert, dann werden die Mails versendet. Schlägt der Versand fehl, erscheint trotzdem die Erfolgsansicht und der Fehler wird geloggt. Die neue Spalte `widerrufe.bestaetigung_gesendet_at` wird nur gesetzt, wenn die Eingangsbestätigung erfolgreich versendet wurde.
+4. **Tests:**
+   - Alle Testmails gehen ausschließlich an info@kfz-termin.online. In Fall 3 ist die Buchungs-E-Mail unbekannt, die Bestätigungs-E-Mail ist info@kfz-termin.online.
+   - Vor Fall 6 halte ich an und warte auf dein OK, weil zuerst das Live-Script abgeschaltet werden muss.
