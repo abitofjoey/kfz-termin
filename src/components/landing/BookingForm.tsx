@@ -114,6 +114,7 @@ export function BookingForm({ preselected }: Props) {
     today: Date;
     minDate: Date;
     maxDate: Date;
+    blockedDates: Date[];
   } | null>(null);
   useEffect(() => {
     let cancelled = false;
@@ -128,6 +129,7 @@ export function BookingForm({ preselected }: Props) {
           today: parse(b.todayISO),
           minDate: parse(b.minDateISO),
           maxDate: parse(b.maxDateISO),
+          blockedDates: (b.blockedDatesISO ?? []).map(parse),
         });
       })
       .catch(() => {
