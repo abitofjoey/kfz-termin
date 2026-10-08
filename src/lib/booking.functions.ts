@@ -3,6 +3,10 @@ import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { SERVICE_IDS, getServiceLabel } from "@/lib/services";
 
+// Einmalig gesperrte Tage (z.B. Schließtage der Zulassungsstelle).
+// Nach dem Tag einfach wieder entfernen.
+const BLOCKED_DATES: string[] = ["2026-10-12"];
+
 export const getCalendarBounds = createServerFn({ method: "GET" }).handler(
   async () => {
     const fmt = new Intl.DateTimeFormat("en-CA", {
@@ -33,6 +37,7 @@ export const getCalendarBounds = createServerFn({ method: "GET" }).handler(
       todayISO,
       minDateISO: addDaysISO(todayISO, minOffset),
       maxDateISO: addDaysISO(todayISO, 13 + minOffset),
+      blockedDatesISO: BLOCKED_DATES,
     };
   },
 );
@@ -64,6 +69,15 @@ export const createBooking = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => BookingInput.parse(data))
   .handler(async ({ data }) => {
     const supabase = supabaseAdmin;
+
+    const blocked = data.selected_dates.filter((d) => BLOCKED_DATES.includes(d));
+    if (blocked.length > 0) {
+      return {
+        ok: false as const,
+        error:
+          "Am 12.10.2026 ist die Zulassungsstelle wegen einer Personalversammlung geschlossen. Bitte entferne diesen Tag aus deiner Auswahl.",
+      };
+    }
 
     const serviceLabel = getServiceLabel(data.service_type);
 
