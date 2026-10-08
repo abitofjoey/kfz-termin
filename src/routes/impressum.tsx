@@ -32,6 +32,8 @@ export const Route = createFileRoute("/impressum")({
           <a className="text-accent underline" href="mailto:info@kfz-termin.online">
             info@kfz-termin.online
           </a>
+          <br />
+          Telefon: 0151 53461798
         </p>
       </section>
 
@@ -52,19 +54,9 @@ export const Route = createFileRoute("/impressum")({
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">Streitschlichtung</h2>
+        <h2 className="text-lg font-semibold">Verbraucherstreitbeilegung</h2>
         <p className="mt-2">
-          Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{" "}
-          <a
-            className="text-accent underline"
-            href="https://ec.europa.eu/consumers/odr"
-            target="_blank"
-            rel="noreferrer"
-          >
-            https://ec.europa.eu/consumers/odr
-          </a>
-          . Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
-          Verbraucherschlichtungsstelle teilzunehmen.
+          Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
         </p>
       </section>
 
