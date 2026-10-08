@@ -435,6 +435,21 @@ export function BookingForm({ preselected }: Props) {
               </Link>{" "}
               gelesen und stimme zu.
             </CheckboxRow>
+            <p className="text-sm text-muted-foreground">
+              Es gelten unsere{" "}
+              <Link to="/agb" target="_blank" rel="noreferrer" className="text-accent underline">
+                AGB
+              </Link>
+              . Informationen zum Widerrufsrecht findest du in der{" "}
+              <Link to="/widerrufsbelehrung" target="_blank" rel="noreferrer" className="text-accent underline">
+                Widerrufsbelehrung
+              </Link>
+              , zum Datenschutz in der{" "}
+              <Link to="/datenschutz" target="_blank" rel="noreferrer" className="text-accent underline">
+                Datenschutzerklärung
+              </Link>
+              .
+            </p>
             <CheckboxRow
               control={control}
               name="agree_waiver"
@@ -456,7 +471,7 @@ export function BookingForm({ preselected }: Props) {
                 Wird verarbeitet...
               </>
             ) : (
-              "Jetzt für 9,99 € buchen"
+              "Zahlungspflichtig buchen"
             )}
           </Button>
 

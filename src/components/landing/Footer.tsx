@@ -18,6 +18,7 @@ export function Footer() {
           <Link to="/impressum" className="hover:text-white">Impressum</Link>
           <Link to="/datenschutz" className="hover:text-white">Datenschutz</Link>
           <Link to="/agb" className="hover:text-white">AGB</Link>
+          <Link to="/widerrufsbelehrung" className="hover:text-white">Widerrufsbelehrung</Link>
           <button
             type="button"
             onClick={openSettings}
