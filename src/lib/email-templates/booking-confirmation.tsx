@@ -6,7 +6,6 @@ import type { TemplateEntry } from './registry'
 
 const SITE_NAME = 'KFZ-Termin Köln'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
-const OPERATOR_NAME = 'Eike Hoffmann'
 
 interface BookingConfirmationProps {
   salutation?: string

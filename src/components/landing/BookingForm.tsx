@@ -435,6 +435,21 @@ export function BookingForm({ preselected }: Props) {
               </Link>{" "}
               gelesen und stimme zu.
             </CheckboxRow>
+            <p className="text-sm text-muted-foreground">
+              Es gelten unsere{" "}
+              <Link to="/agb" target="_blank" rel="noreferrer" className="text-accent underline">
+                AGB
+              </Link>
+              . Informationen zum Widerrufsrecht findest du in der{" "}
+              <Link to="/widerrufsbelehrung" target="_blank" rel="noreferrer" className="text-accent underline">
+                Widerrufsbelehrung
+              </Link>
+              , zum Datenschutz in der{" "}
+              <Link to="/datenschutz" target="_blank" rel="noreferrer" className="text-accent underline">
+                Datenschutzerklärung
+              </Link>
+              .
+            </p>
             <CheckboxRow
               control={control}
               name="agree_waiver"
@@ -443,22 +458,6 @@ export function BookingForm({ preselected }: Props) {
               Ich verlange ausdrücklich den sofortigen Beginn der Terminsuche vor Ablauf der Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger Erbringung der Leistung erlischt (§ 356 Abs. 4 BGB).
             </CheckboxRow>
           </div>
-
-          <p className="text-sm text-muted-foreground">
-            Es gelten unsere{" "}
-            <Link to="/agb" target="_blank" rel="noreferrer" className="text-accent underline">
-              AGB
-            </Link>
-            . Informationen zum Widerrufsrecht findest du in der{" "}
-            <Link to="/widerrufsbelehrung" target="_blank" rel="noreferrer" className="text-accent underline">
-              Widerrufsbelehrung
-            </Link>
-            , zum Datenschutz in der{" "}
-            <Link to="/datenschutz" target="_blank" rel="noreferrer" className="text-accent underline">
-              Datenschutzerklärung
-            </Link>
-            .
-          </p>
 
           <Button
             type="submit"
