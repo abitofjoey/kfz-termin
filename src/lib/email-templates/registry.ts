@@ -20,6 +20,10 @@ import { template as searchNotFound } from './search-not-found'
 import { template as searchRebookOffer } from './search-rebook-offer'
 import { template as searchRebookConfirmed } from './search-rebook-confirmed'
 import { template as searchRebookInternal } from './search-rebook-internal'
+import { template as piDownInternal } from './pi-down-internal'
+import { template as piRecoveredInternal } from './pi-recovered-internal'
+import { template as bookingNotPickedUpInternal } from './booking-not-picked-up-internal'
+import { template as bookingStuckInternal } from './booking-stuck-internal'
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'booking-confirmation': bookingConfirmation,
@@ -33,4 +37,8 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'search-rebook-offer': searchRebookOffer,
   'search-rebook-confirmed': searchRebookConfirmed,
   'search-rebook-internal': searchRebookInternal,
+  'pi-down-internal': piDownInternal,
+  'pi-recovered-internal': piRecoveredInternal,
+  'booking-not-picked-up-internal': bookingNotPickedUpInternal,
+  'booking-stuck-internal': bookingStuckInternal,
 }

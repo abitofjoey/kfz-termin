@@ -99,6 +99,15 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
+        try {
+          const { error: hbError } = await supabaseAdmin
+            .from("script_heartbeat")
+            .upsert({ city: "koeln", last_poll_at: new Date().toISOString() }, { onConflict: "city" });
+          if (hbError) console.error("pending-bookings: heartbeat error", hbError.code);
+        } catch (e) {
+          console.error("pending-bookings: heartbeat failed", e instanceof Error ? e.message : "unknown");
+        }
+
         const { data, error } = await supabaseAdmin
           .from("bookings")
           .select("*")

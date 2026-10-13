@@ -19,6 +19,7 @@ import { Route as TermineAendernRouteImport } from './routes/termine-aendern'
 import { Route as WiderrufsbelehrungRouteImport } from './routes/widerrufsbelehrung'
 import { Route as ApiInternalPendingBookingsRouteImport } from './routes/api/internal/pending-bookings'
 import { Route as LovableEmailEventsRouteImport } from './routes/lovable/email/events'
+import { Route as ApiInternalHealthCheckRouteImport } from './routes/api/internal/health/check'
 import { Route as ApiInternalRefundsDueRouteImport } from './routes/api/internal/refunds/due'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -76,6 +77,11 @@ const LovableEmailEventsRoute = LovableEmailEventsRouteImport.update({
   path: '/lovable/email/events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiInternalHealthCheckRoute = ApiInternalHealthCheckRouteImport.update({
+  id: '/api/internal/health/check',
+  path: '/api/internal/health/check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiInternalRefundsDueRoute = ApiInternalRefundsDueRouteImport.update({
   id: '/api/internal/refunds/due',
   path: '/api/internal/refunds/due',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
+  '/api/internal/health/check': typeof ApiInternalHealthCheckRoute
   '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
+  '/api/internal/health/check': typeof ApiInternalHealthCheckRoute
   '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
+  '/api/internal/health/check': typeof ApiInternalHealthCheckRoute
   '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
+    | '/api/internal/health/check'
     | '/api/internal/refunds/due'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
+    | '/api/internal/health/check'
     | '/api/internal/refunds/due'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
+    | '/api/internal/health/check'
     | '/api/internal/refunds/due'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
@@ -222,6 +234,7 @@ export interface RootRouteChildren {
   WiderrufsbelehrungRoute: typeof WiderrufsbelehrungRoute
   ApiInternalPendingBookingsRoute: typeof ApiInternalPendingBookingsRouteWithChildren
   LovableEmailEventsRoute: typeof LovableEmailEventsRoute
+  ApiInternalHealthCheckRoute: typeof ApiInternalHealthCheckRoute
   ApiInternalRefundsDueRoute: typeof ApiInternalRefundsDueRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -300,6 +313,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailEventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/internal/health/check': {
+      id: '/api/internal/health/check'
+      path: '/api/internal/health/check'
+      fullPath: '/api/internal/health/check'
+      preLoaderRoute: typeof ApiInternalHealthCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/internal/refunds/due': {
       id: '/api/internal/refunds/due'
       path: '/api/internal/refunds/due'
@@ -363,6 +383,7 @@ const rootRouteChildren: RootRouteChildren = {
   WiderrufsbelehrungRoute: WiderrufsbelehrungRoute,
   ApiInternalPendingBookingsRoute: ApiInternalPendingBookingsRouteWithChildren,
   LovableEmailEventsRoute: LovableEmailEventsRoute,
+  ApiInternalHealthCheckRoute: ApiInternalHealthCheckRoute,
   ApiInternalRefundsDueRoute: ApiInternalRefundsDueRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,

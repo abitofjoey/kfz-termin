@@ -209,6 +209,24 @@ export type Database = {
         }
         Relationships: []
       }
+      script_heartbeat: {
+        Row: {
+          alert_sent_at: string | null
+          city: string
+          last_poll_at: string
+        }
+        Insert: {
+          alert_sent_at?: string | null
+          city: string
+          last_poll_at: string
+        }
+        Update: {
+          alert_sent_at?: string | null
+          city?: string
+          last_poll_at?: string
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
