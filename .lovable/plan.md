@@ -13,8 +13,8 @@ Interne Mails an info@kfz-termin.online, wenn der Pi still ist oder Aufträge li
 Datei `src/routes/api/internal/health/check.ts`, gleicher `x-script-key`-Check vor jedem DB-Zugriff (401).
 - a) `last_poll_at` älter als 30 Min. und `alert_sent_at` leer: Mail „Pi meldet sich nicht“ (letzte Abfrage in Europe/Berlin, Hinweis „Prüfen: Strom, Internet, VNC auf 100.121.9.74:5901“), danach `alert_sent_at = now()`. Gibt es noch keine Zeile, wird kein Alarm ausgelöst.
 - b) `last_poll_at` jünger als 5 Min. und `alert_sent_at` gesetzt: Mail „Pi wieder erreichbar“, `alert_sent_at = null`.
-- c) Nicht abgeholt: `paid=true`, `assigned_to_script=false`, `search_result` leer, `created_at` älter als 30 Min. und ab 14.10.2026 → Mail je Buchung, idempotencyKey `health-notpickedup-<id>`.
-- d) Ohne Ergebnis: `paid=true`, `assigned_to_script=true`, `search_result` leer, `refund_claimed_at` leer, `created_at` ab 14.10.2026, letzter Wunschtag mehr als 2 Tage vor heute (Berlin) → Mail je Buchung, idempotencyKey `health-stuck-<id>`.
+- c) Nicht abgeholt: `paid=true`, `assigned_to_script=false`, `search_result` leer, `created_at` ab 14.10.2026; letzte Freigabe = spätestes von `confirmation_sent_at` und `rebook_used_at` (beide leer: `created_at`), diese älter als 30 Min. → Mail je Buchung, idempotencyKey `health-notpickedup-<id>-<rebook_used_at oder "erst">`.
+- d) Ohne Ergebnis: `paid=true`, `assigned_to_script=true`, `search_result` leer, `refund_claimed_at` leer, `created_at` ab 14.10.2026, letzter Wunschtag mehr als 2 Tage vor heute (Berlin) → Mail je Buchung, idempotencyKey `health-stuck-<id>-<rebook_used_at oder "erst">`.
 - Buchungen ohne Wunschtermine werden übersprungen. Mailfehler blockieren den Rest nicht.
 - Antwort: `{ ok: true, piAlert, notPickedUp, stuck }`. Dabei ist `piAlert` gleich `"down"`, `"recovered"` oder `null`; die anderen Werte sind Anzahlen.
 
