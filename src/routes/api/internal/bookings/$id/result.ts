@@ -129,6 +129,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
             .update({ search_result: "not_found" })
             .eq("id", params.id)
             .is("search_result", null)
+            .or("rebook_used_at.is.null,assigned_to_script.eq.true")
             .select("id");
 
           if (nfError) {
@@ -136,33 +137,70 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
             return new Response("Database error", { status: 500 });
           }
           if (!nfUpdated || nfUpdated.length === 0) {
+            // search_result noch leer → verspätete Meldung eines alten Durchlaufs
+            if (booking.search_result === null) {
+              return Response.json({ ok: true, stale: true });
+            }
             return Response.json({ ok: true, alreadyRecorded: true });
           }
 
+          if (booking.rebook_used_at || booking.search_error === "email_limit") {
+            const { refundBooking } = await import("@/lib/refund.server");
+            const r = await refundBooking(booking, "direkt");
+            if (r.skipped) {
+              return Response.json({ ok: true, emailSent: false, outcome: "skipped" });
+            }
+            return Response.json({ ok: true, emailSent: r.emailSent, outcome: r.refundStatus });
+          }
+
+          const offeredAt = new Date().toISOString();
+          const token = booking.rebook_token ?? crypto.randomUUID();
+          const { error: offerError } = await supabaseAdmin
+            .from("bookings")
+            .update({ rebook_token: token, rebook_offered_at: offeredAt })
+            .eq("id", booking.id);
+          if (offerError) {
+            console.error("booking result: database error (offer)", offerError.code);
+            return new Response("Database error", { status: 500 });
+          }
+
           const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
+          const deadline = new Date(new Date(offeredAt).getTime() + 48 * 3600_000).toISOString();
+          const offerData = {
+            bookingId: booking.id,
+            salutation: booking.salutation,
+            firstName: booking.first_name,
+            lastName: booking.last_name,
+            email: booking.email,
+            phone: booking.phone,
+            serviceType: booking.service_type,
+            selectedDates: booking.selected_dates,
+            stripeSessionId: booking.stripe_session_id,
+            rebookToken: token,
+            deadline,
+          };
           let nfEmailSent = false;
           try {
-            const internal = await sendTransactionalEmailServer({
-              templateName: "search-not-found-internal",
-              idempotencyKey: `booking-notfound-internal-${booking.id}`,
-              templateData: {
-                bookingId: booking.id,
-                salutation: booking.salutation,
-                firstName: booking.first_name,
-                lastName: booking.last_name,
-                email: booking.email,
-                phone: booking.phone,
-                serviceType: booking.service_type,
-                selectedDates: booking.selected_dates,
-                stripeSessionId: booking.stripe_session_id,
-              },
-            });
-            nfEmailSent = internal.success;
+            const [customer, internal] = await Promise.all([
+              sendTransactionalEmailServer({
+                templateName: "search-rebook-offer",
+                recipientEmail: booking.email,
+                idempotencyKey: `booking-rebook-offer-${booking.id}`,
+                templateData: offerData,
+              }),
+              sendTransactionalEmailServer({
+                templateName: "search-not-found-internal",
+                idempotencyKey: `booking-notfound-internal-${booking.id}-offer`,
+                templateData: { ...offerData, refundStatus: "offered" },
+              }),
+            ]);
+            nfEmailSent = customer.success;
+            if (!customer.success) console.error("booking result: rebook offer email not sent");
             if (!internal.success) console.error("booking result: not_found internal email not sent");
           } catch {
             console.error("booking result: not_found email sending failed");
           }
-          return Response.json({ ok: true, emailSent: nfEmailSent });
+          return Response.json({ ok: true, emailSent: nfEmailSent, outcome: "offered" });
         }
 
         const appointmentAt = new Date(body.appointmentAt).toISOString();
