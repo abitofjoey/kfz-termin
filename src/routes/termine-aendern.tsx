@@ -16,7 +16,7 @@ const Calendar = lazy(() =>
 );
 
 export const Route = createFileRoute("/termine-aendern")({
-  validateSearch: z.object({ t: z.string().optional() }),
+  validateSearch: z.object({ t: z.string().optional(), aktion: z.string().optional() }),
   head: () => ({
     meta: [
       { title: "Neue Wunschtermine wählen – KFZ-Termin Köln" },
@@ -43,7 +43,7 @@ const parseISO = (iso: string) => {
 type State = Awaited<ReturnType<typeof getRebookState>>;
 
 function RebookPage() {
-  const { t } = Route.useSearch();
+  const { t, aktion } = Route.useSearch();
   const loadState = useServerFn(getRebookState);
   const fetchBounds = useServerFn(getCalendarBounds);
   const submitDates = useServerFn(submitRebookDates);
@@ -54,7 +54,7 @@ function RebookPage() {
   const [selected, setSelected] = useState<Date[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [confirmRefund, setConfirmRefund] = useState(false);
+  const [confirmRefund, setConfirmRefund] = useState(aktion === "erstattung");
 
   useEffect(() => {
     loadState({ data: { token: t ?? "" } }).then(setState).catch(() => setState({ state: "invalid" }));
@@ -112,6 +112,11 @@ function RebookPage() {
                 {state.selectedDates.map((d) => <li key={d}>{fmtDay(d)}</li>)}
               </ul>
             </>
+          ) : state.state === "found" ? (
+            <p>
+              Wir haben einen Termin für dich gebucht. Alle Details findest du in unserer E-Mail
+              und in der Bestätigung der Zulassungsstelle.
+            </p>
           ) : state.state === "refunded" ? (
             <p>
               Die Rückerstattung wurde bereits beantragt. Du kannst jederzeit neu buchen auf{" "}

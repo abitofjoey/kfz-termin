@@ -8,6 +8,7 @@ type State =
   | { state: "invalid" }
   | { state: "used"; firstName: string; serviceType: string; selectedDates: string[] }
   | { state: "refunded" }
+  | { state: "found" }
   | { state: "expired" }
   | { state: "choose"; firstName: string; serviceType: string; selectedDates: string[] };
 
@@ -31,8 +32,9 @@ export const getRebookState = createServerFn({ method: "POST" })
     const b = await loadByToken(data.token);
     if (!b || !b.rebook_offered_at) return { state: "invalid" };
     const info = { firstName: b.first_name, serviceType: b.service_type, selectedDates: b.selected_dates };
-    if (b.rebook_used_at) return { state: "used", ...info };
     if (b.refund_claimed_at || b.refunded_at) return { state: "refunded" };
+    if (b.search_result === "found") return { state: "found" };
+    if (b.rebook_used_at) return { state: "used", ...info };
     if (Date.now() - new Date(b.rebook_offered_at).getTime() > WINDOW_MS) return { state: "expired" };
     return { state: "choose", ...info };
   });
