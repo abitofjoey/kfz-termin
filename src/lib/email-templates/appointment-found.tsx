@@ -9,6 +9,7 @@ const SITE_NAME = 'KFZ-Termin Köln'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
 const LOCATION = 'Kfz-Zulassungsstelle, Max-Glomsda-Str. 4, 51105 Köln'
 const CITY_URL = 'https://www.stadt-koeln.de/service/adressen/00205/index.html'
+const REVIEW_URL = 'https://g.page/r/CQtnwHapR1yhEBM/review'
 
 interface AppointmentFoundProps {
   salutation?: string
@@ -73,6 +74,11 @@ const AppointmentFoundEmail = ({
               <Link href={CITY_URL} style={infoLink}>Seite der Kfz-Zulassungsstelle Köln</Link>.
             </Text>
           </Section>
+
+          <Text style={text}>
+            Wir freuen uns über deine Bewertung bei Google:{' '}
+            <Link href={REVIEW_URL} style={link}>Jetzt bewerten</Link>
+          </Text>
 
           <Section style={card}>
             <Text style={cardTitle}>Fragen?</Text>
