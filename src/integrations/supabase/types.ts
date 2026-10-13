@@ -240,6 +240,7 @@ export type Database = {
     Functions: {
       anonymize_old_bookings: { Args: never; Returns: number }
       delete_ancient_bookings: { Args: never; Returns: number }
+      tmp_store_script_key: { Args: { k: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never

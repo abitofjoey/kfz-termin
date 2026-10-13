@@ -15,6 +15,13 @@
       "when": 1791907117311,
       "tag": "0001_rebook_and_refund_columns",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791908624712,
+      "tag": "0002_tmp_store_script_key_fn",
+      "breakpoints": true
     }
   ]
 }
