@@ -14,6 +14,8 @@ import { template as bookingInternalNotification } from './booking-internal-noti
 import { template as appointmentFound } from './appointment-found'
 import { template as appointmentFoundInternal } from './appointment-found-internal'
 import { template as searchNotFoundInternal } from './search-not-found-internal'
+import { template as searchEmailLimit } from './search-email-limit'
+import { template as searchErrorInternal } from './search-error-internal'
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'booking-confirmation': bookingConfirmation,
@@ -21,4 +23,6 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'appointment-found': appointmentFound,
   'appointment-found-internal': appointmentFoundInternal,
   'search-not-found-internal': searchNotFoundInternal,
+  'search-email-limit': searchEmailLimit,
+  'search-error-internal': searchErrorInternal,
 }

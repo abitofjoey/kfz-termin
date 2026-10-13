@@ -12,6 +12,10 @@ const BodySchema = z.discriminatedUnion("result", [
   z.object({
     result: z.literal("not_found"),
   }),
+  z.object({
+    result: z.literal("error"),
+    reason: z.enum(["email_limit", "booking_failed"]),
+  }),
 ]);
 
 export const Route = createFileRoute("/api/internal/bookings/$id/result")({
@@ -55,6 +59,68 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
         }
         if (!booking || !booking.paid) {
           return new Response("Not found", { status: 404 });
+        }
+
+        if (body.result === "error") {
+          const searchErrorAt = new Date().toISOString();
+          const { data: errUpdated, error: errError } = await supabaseAdmin
+            .from("bookings")
+            .update({ search_error: body.reason, search_error_at: searchErrorAt })
+            .eq("id", params.id)
+            .is("search_result", null)
+            .select("id");
+
+          if (errError) {
+            console.error("booking result: database error (update error)", errError.code);
+            return new Response("Database error", { status: 500 });
+          }
+          if (!errUpdated || errUpdated.length === 0) {
+            return Response.json({ ok: true, alreadyRecorded: true });
+          }
+
+          const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
+          const errData = {
+            reason: body.reason,
+            bookingId: booking.id,
+            salutation: booking.salutation,
+            firstName: booking.first_name,
+            lastName: booking.last_name,
+            email: booking.email,
+            phone: booking.phone,
+            serviceType: booking.service_type,
+            fins: [booking.fin_1, booking.fin_2, booking.fin_3].filter(Boolean),
+            selectedDates: booking.selected_dates,
+            stripeSessionId: booking.stripe_session_id,
+          };
+
+          let errEmailSent = false;
+          try {
+            const internalPromise = sendTransactionalEmailServer({
+              templateName: "search-error-internal",
+              idempotencyKey: `booking-error-internal-${booking.id}-${body.reason}-${searchErrorAt}`,
+              templateData: errData,
+            });
+            const customerPromise =
+              body.reason === "email_limit"
+                ? sendTransactionalEmailServer({
+                    templateName: "search-email-limit",
+                    recipientEmail: booking.email,
+                    idempotencyKey: `booking-error-${booking.id}-email_limit-${booking.email}`,
+                    templateData: errData,
+                  })
+                : null;
+            const [internal, customer] = await Promise.all([internalPromise, customerPromise]);
+            if (!internal.success) console.error("booking result: error internal email not sent");
+            if (customer) {
+              errEmailSent = customer.success;
+              if (!customer.success) console.error("booking result: error customer email not sent");
+            } else {
+              errEmailSent = internal.success;
+            }
+          } catch {
+            console.error("booking result: error email sending failed");
+          }
+          return Response.json({ ok: true, emailSent: errEmailSent });
         }
 
         if (body.result === "not_found") {
