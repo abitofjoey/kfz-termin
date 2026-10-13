@@ -13,6 +13,11 @@ interface Props {
   serviceType?: string
   selectedDates?: string[]
   stripeSessionId?: string
+  refundStatus?: 'offered' | 'refunded' | 'already' | 'failed' | 'disabled'
+  stripeRefundId?: string | null
+  refundError?: string | null
+  anlass?: 'direkt' | 'gewaehlt' | 'frist'
+  deadline?: string
 }
 
 const formatDate = (d: string) => {
@@ -20,9 +25,41 @@ const formatDate = (d: string) => {
   return m ? `${m[3]}.${m[2]}.${m[1]}` : d
 }
 
-const SearchNotFoundInternalEmail = ({
-  bookingId, salutation, firstName, lastName, email, phone, serviceType, selectedDates, stripeSessionId,
-}: Props) => {
+const formatDeadline = (iso?: string) => {
+  if (!iso) return '—'
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return '—'
+  return new Intl.DateTimeFormat('de-DE', {
+    timeZone: 'Europe/Berlin', day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', hour12: false,
+  }).format(d) + ' Uhr'
+}
+
+const ANLASS_TEXT: Record<string, string> = {
+  direkt: 'direkt',
+  gewaehlt: 'vom Kunden gewählt',
+  frist: 'Frist abgelaufen',
+}
+
+function noticeText(p: Props): string {
+  switch (p.refundStatus) {
+    case 'offered':
+      return `Der Kunde kann bis ${formatDeadline(p.deadline)} neue Termine wählen. Danach wird automatisch erstattet. Keine Aktion nötig.`
+    case 'refunded':
+      return `Rückerstattung automatisch über Stripe ausgelöst. Refund-ID: ${p.stripeRefundId || '—'}`
+    case 'already':
+      return 'Die Zahlung war bereits erstattet. Keine Aktion nötig.'
+    case 'failed':
+      return `Automatische Rückerstattung fehlgeschlagen: ${p.refundError || '—'}. Bitte im Stripe-Dashboard erstatten.`
+    case 'disabled':
+      return 'Automatische Rückerstattung abgeschaltet (AUTO_REFUND=off). Bitte im Stripe-Dashboard erstatten.'
+    default:
+      return 'Für diese Buchung wurde im Zeitraum der Wunschtermine kein Termin gefunden. Bitte die Rückerstattung im Stripe-Dashboard veranlassen.'
+  }
+}
+
+const SearchNotFoundInternalEmail = (props: Props) => {
+  const { bookingId, salutation, firstName, lastName, email, phone, serviceType, selectedDates, stripeSessionId, anlass } = props
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   const dates = (selectedDates ?? []).map(formatDate)
   return (
@@ -32,9 +69,8 @@ const SearchNotFoundInternalEmail = ({
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>Kein Termin gefunden</Heading>
-          <Text style={notice}>
-            Für diese Buchung wurde im Zeitraum der Wunschtermine kein Termin gefunden. Bitte die Rückerstattung im Stripe-Dashboard veranlassen.
-          </Text>
+          <Text style={notice}>{noticeText(props)}</Text>
+          {anlass ? <Text style={notice}>Anlass: {ANLASS_TEXT[anlass] ?? anlass}</Text> : null}
           <Section style={card}>
             <Row label="Name" value={fullName} />
             <Row label="E-Mail" value={email} />
@@ -64,8 +100,17 @@ const Row = ({ label: l, value: v, mono }: { label: string; value?: string; mono
 
 export const template = {
   component: SearchNotFoundInternalEmail,
-  subject: (d: Record<string, any>) =>
-    `Kein Termin gefunden – Rückerstattung: ${[d.firstName, d.lastName].filter(Boolean).join(' ') || 'Unbekannt'}`,
+  subject: (d: Record<string, any>) => {
+    const name = [d.firstName, d.lastName].filter(Boolean).join(' ') || 'Unbekannt'
+    switch (d.refundStatus) {
+      case 'offered': return `Kein Termin gefunden – Angebot neue Termine: ${name}`
+      case 'refunded':
+      case 'already': return `Erstattet (${ANLASS_TEXT[d.anlass] ?? d.anlass ?? '—'}): ${name}`
+      case 'failed':
+      case 'disabled': return `BITTE MANUELL ERSTATTEN: ${name}`
+      default: return `Kein Termin gefunden – Rückerstattung: ${name}`
+    }
+  },
   displayName: 'Kein Termin gefunden (intern)',
   to: 'info@kfz-termin.online',
   previewData: {

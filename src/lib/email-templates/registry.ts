@@ -16,6 +16,10 @@ import { template as appointmentFoundInternal } from './appointment-found-intern
 import { template as searchNotFoundInternal } from './search-not-found-internal'
 import { template as searchEmailLimit } from './search-email-limit'
 import { template as searchErrorInternal } from './search-error-internal'
+import { template as searchNotFound } from './search-not-found'
+import { template as searchRebookOffer } from './search-rebook-offer'
+import { template as searchRebookConfirmed } from './search-rebook-confirmed'
+import { template as searchRebookInternal } from './search-rebook-internal'
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'booking-confirmation': bookingConfirmation,
@@ -25,4 +29,8 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'search-not-found-internal': searchNotFoundInternal,
   'search-email-limit': searchEmailLimit,
   'search-error-internal': searchErrorInternal,
+  'search-not-found': searchNotFound,
+  'search-rebook-offer': searchRebookOffer,
+  'search-rebook-confirmed': searchRebookConfirmed,
+  'search-rebook-internal': searchRebookInternal,
 }
