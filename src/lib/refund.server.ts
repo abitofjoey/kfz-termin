@@ -88,7 +88,7 @@ export async function refundBooking(
     }
   }
 
-  const update: Record<string, string> = {};
+  const update: { refunded_at?: string; stripe_refund_id?: string; refund_error?: string } = {};
   if (refundStatus === "refunded" || refundStatus === "already") {
     update.refunded_at = new Date().toISOString();
   }
