@@ -276,9 +276,14 @@ export function BookingForm({ preselected }: Props) {
             </Field>
           </div>
 
-          <Field label="E-Mail" error={errors.email?.message} hint="Nach der Buchung erhältst du eine Bestätigungsmail der Kölner Zulassungsstelle – bitte klicke den Link darin innerhalb von 3 Stunden an.">
-            {(id, aria) => <Input id={id} {...aria} type="email" {...register("email")} autoComplete="email" />}
-          </Field>
+          <div className="space-y-1.5">
+            <Field label="E-Mail" error={errors.email?.message} hint="Nach der Buchung erhältst du eine Bestätigungsmail der Kölner Zulassungsstelle – bitte klicke den Link darin innerhalb von 3 Stunden an.">
+              {(id, aria) => <Input id={id} {...aria} type="email" {...register("email")} autoComplete="email" />}
+            </Field>
+            <p className="text-xs text-muted-foreground">
+              Wichtig: Die Zulassungsstelle lässt pro E-Mail-Adresse nur eine begrenzte Anzahl an Terminen zu. Hast du mit dieser Adresse bereits einen Termin bei der Zulassungsstelle Köln, nutze bitte eine andere. Buchst du mehrere Termine, verwende bitte jeweils eine eigene Adresse.
+            </p>
+          </div>
 
           <Field label="Telefonnummer" error={errors.phone?.message}>
             {(id, aria) => <Input id={id} {...aria} type="tel" {...register("phone")} autoComplete="tel" />}
