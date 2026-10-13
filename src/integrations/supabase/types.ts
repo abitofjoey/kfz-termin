@@ -33,6 +33,12 @@ export type Database = {
           notes: string | null
           paid: boolean
           phone: string
+          rebook_offered_at: string | null
+          rebook_token: string | null
+          rebook_used_at: string | null
+          refund_claimed_at: string | null
+          refund_error: string | null
+          refunded_at: string | null
           result_notified_at: string | null
           salutation: string
           search_error: string | null
@@ -41,6 +47,7 @@ export type Database = {
           selected_dates: string[]
           service_type: string
           status: string
+          stripe_refund_id: string | null
           stripe_session_id: string | null
         }
         Insert: {
@@ -61,6 +68,12 @@ export type Database = {
           notes?: string | null
           paid?: boolean
           phone: string
+          rebook_offered_at?: string | null
+          rebook_token?: string | null
+          rebook_used_at?: string | null
+          refund_claimed_at?: string | null
+          refund_error?: string | null
+          refunded_at?: string | null
           result_notified_at?: string | null
           salutation: string
           search_error?: string | null
@@ -69,6 +82,7 @@ export type Database = {
           selected_dates?: string[]
           service_type: string
           status?: string
+          stripe_refund_id?: string | null
           stripe_session_id?: string | null
         }
         Update: {
@@ -89,6 +103,12 @@ export type Database = {
           notes?: string | null
           paid?: boolean
           phone?: string
+          rebook_offered_at?: string | null
+          rebook_token?: string | null
+          rebook_used_at?: string | null
+          refund_claimed_at?: string | null
+          refund_error?: string | null
+          refunded_at?: string | null
           result_notified_at?: string | null
           salutation?: string
           search_error?: string | null
@@ -97,6 +117,7 @@ export type Database = {
           selected_dates?: string[]
           service_type?: string
           status?: string
+          stripe_refund_id?: string | null
           stripe_session_id?: string | null
         }
         Relationships: []
