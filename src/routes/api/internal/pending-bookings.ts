@@ -104,6 +104,7 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
           .select("*")
           .eq("paid", true)
           .eq("assigned_to_script", false)
+          .is("search_result", null)
           .order("created_at", { ascending: true });
 
         if (error) {

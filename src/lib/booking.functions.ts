@@ -2,44 +2,10 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { SERVICE_IDS, getServiceLabel } from "@/lib/services";
-
-// Einmalig gesperrte Tage (z.B. Schließtage der Zulassungsstelle).
-// Nach dem Tag einfach wieder entfernen.
-const BLOCKED_DATES: string[] = ["2026-10-12"];
+import { BLOCKED_DATES, computeCalendarBounds } from "@/lib/calendar-rules";
 
 export const getCalendarBounds = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const fmt = new Intl.DateTimeFormat("en-CA", {
-      timeZone: "Europe/Berlin",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      hour12: false,
-    });
-    const parts = Object.fromEntries(
-      fmt.formatToParts(new Date()).map((p) => [p.type, p.value]),
-    );
-    const berlinHour = Number(parts.hour);
-    const todayISO = `${parts.year}-${parts.month}-${parts.day}`;
-
-    const addDaysISO = (iso: string, days: number) => {
-      const [y, m, d] = iso.split("-").map(Number);
-      const dt = new Date(Date.UTC(y, m - 1, d));
-      dt.setUTCDate(dt.getUTCDate() + days);
-      return dt.toISOString().slice(0, 10);
-    };
-
-    // Ab 14 Uhr Berlin-Zeit: frühester wählbarer Tag ist übermorgen.
-    // maxDate wird mitverschoben, damit das buchbare Fenster konstant 14 Tage bleibt.
-    const minOffset = berlinHour >= 14 ? 2 : 1;
-    return {
-      todayISO,
-      minDateISO: addDaysISO(todayISO, minOffset),
-      maxDateISO: addDaysISO(todayISO, 13 + minOffset),
-      blockedDatesISO: BLOCKED_DATES,
-    };
-  },
+  async () => computeCalendarBounds(),
 );
 
 const BookingInput = z.object({

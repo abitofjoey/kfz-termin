@@ -64,7 +64,7 @@ export const Route = createFileRoute("/agb")({
 
       <section>
         <h2 className="text-lg font-semibold">§ 6 Leistungsumfang, keine Erfolgsgarantie</h2>
-        <p className="mt-2">(1) Der Anbieter schuldet die sorgfältige Bemühung, einen Termin im vom Kunden angegebenen Zeitraum zu finden, nicht jedoch einen bestimmten Erfolg. Eine Garantie für die Verfügbarkeit eines Termins wird nicht übernommen. Sollte innerhalb des vom Kunden gewählten Zeitraums kein Termin gefunden werden können, erhält der Kunde auf Anfrage den gezahlten Betrag vollständig zurückerstattet (Geld-zurück-Garantie).</p>
+        <p className="mt-2">(1) Der Anbieter schuldet die sorgfältige Bemühung, einen Termin im vom Kunden angegebenen Zeitraum zu finden, nicht jedoch einen bestimmten Erfolg. Eine Garantie für die Verfügbarkeit eines Termins wird nicht übernommen. Sollte innerhalb des vom Kunden gewählten Zeitraums kein Termin gefunden werden können, kann der Kunde einmalig neue Wunschtermine wählen oder erhält den gezahlten Betrag vollständig zurückerstattet (Geld-zurück-Garantie). Wählt der Kunde innerhalb von 48 Stunden keine neuen Wunschtermine, erfolgt die Rückerstattung automatisch.</p>
         <p className="mt-2">(2) Die Dienstleistung gilt als vollständig erbracht, sobald der Anbieter im Namen des Kunden einen Termin bei der Kfz-Zulassungsstelle gebucht und der Kunde eine Buchungs- bzw. Bestätigungs-E-Mail der Zulassungsstelle erhalten hat. Ob der Kunde den gebuchten Termin anschließend wahrnimmt oder eine zusätzliche Bestätigung innerhalb der Wahrnehmungsfrist abgibt, ist für die Leistungserbringung unerheblich.</p>
       </section>
 
