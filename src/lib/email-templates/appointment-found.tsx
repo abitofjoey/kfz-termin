@@ -35,7 +35,7 @@ const AppointmentFoundEmail = ({
           <Heading style={h1}>Termin gefunden!</Heading>
           <Hr style={topRule} />
 
-          <Text style={text}>{fullName ? `Hallo ${fullName},` : 'Hallo,'}</Text>
+          <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={text}>
             gute Nachrichten: Wir haben einen Termin bei der Kölner
             Zulassungsstelle für dich gefunden und auf deinen Namen reserviert.

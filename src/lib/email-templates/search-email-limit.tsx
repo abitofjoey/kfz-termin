@@ -25,7 +25,7 @@ const SearchEmailLimitEmail = ({ salutation, firstName, lastName, email }: Props
           <Heading style={h1}>Wir brauchen kurz deine Hilfe</Heading>
           <Hr style={topRule} />
 
-          <Text style={text}>{fullName ? `Hallo ${fullName},` : 'Hallo,'}</Text>
+          <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={text}>
             wir hatten bereits einen passenden Termin für dich gefunden, konnten
             ihn aber nicht buchen: Die Zulassungsstelle Köln lässt für deine

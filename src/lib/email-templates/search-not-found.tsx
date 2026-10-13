@@ -39,7 +39,7 @@ const SearchNotFoundEmail = ({
           <Hr style={s.topRule} />
 
           <Text style={s.text}>
-            {fullName ? `Hallo ${fullName},` : 'Hallo,'} {intro(anlass, searchError)}
+            {firstName ? `Hallo ${firstName},` : 'Hallo,'} {intro(anlass, searchError)}
           </Text>
 
           <Section style={s.card}>

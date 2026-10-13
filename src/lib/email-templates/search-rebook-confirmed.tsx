@@ -23,7 +23,7 @@ const SearchRebookConfirmedEmail = ({ salutation, firstName, lastName, serviceTy
           <Hr style={s.topRule} />
 
           <Text style={s.text}>
-            {fullName ? `Hallo ${fullName},` : 'Hallo,'} danke! Wir suchen ab sofort für deine neuen Wunschtermine weiter:
+            {firstName ? `Hallo ${firstName},` : 'Hallo,'} danke! Wir suchen ab sofort für deine neuen Wunschtermine weiter:
           </Text>
 
           <Section style={s.card}>

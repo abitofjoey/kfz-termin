@@ -24,7 +24,7 @@ const SearchRebookOfferEmail = ({ salutation, firstName, lastName, rebookToken, 
           <Heading style={s.h1}>Leider kein Termin frei geworden</Heading>
           <Hr style={s.topRule} />
 
-          <Text style={s.text}>{fullName ? `Hallo ${fullName},` : 'Hallo,'}</Text>
+          <Text style={s.text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={s.text}>
             leider ist im Zeitraum deiner Wunschtermine keiner der gewünschten
             Termine bei der Kölner Zulassungsstelle frei geworden. Das tut uns leid.
