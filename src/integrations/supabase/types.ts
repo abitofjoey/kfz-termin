@@ -35,6 +35,8 @@ export type Database = {
           phone: string
           result_notified_at: string | null
           salutation: string
+          search_error: string | null
+          search_error_at: string | null
           search_result: string | null
           selected_dates: string[]
           service_type: string
@@ -61,6 +63,8 @@ export type Database = {
           phone: string
           result_notified_at?: string | null
           salutation: string
+          search_error?: string | null
+          search_error_at?: string | null
           search_result?: string | null
           selected_dates?: string[]
           service_type: string
@@ -87,6 +91,8 @@ export type Database = {
           phone?: string
           result_notified_at?: string | null
           salutation?: string
+          search_error?: string | null
+          search_error_at?: string | null
           search_result?: string | null
           selected_dates?: string[]
           service_type?: string
