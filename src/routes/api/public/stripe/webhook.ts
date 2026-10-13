@@ -59,6 +59,10 @@ export const Route = createFileRoute("/api/public/stripe/webhook")({
           }
         } catch (err) {
           console.error("Stripe webhook: handler error", err);
+          if (err instanceof Error && err.name === "BookingPaidUpdateError") {
+            // Bezahlt-Status konnte nicht gespeichert werden → Stripe soll erneut zustellen.
+            return new Response("db error", { status: 500 });
+          }
           // 200 zurückgeben, damit Stripe nicht endlos retried — Fehler ist im Log.
           // Bei echten transient-fails würde 500 Retry triggern; das hier ist eine
           // bewusste Idempotenz-Strategie, da Mailversand bereits idempotent ist.

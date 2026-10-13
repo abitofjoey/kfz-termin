@@ -23,7 +23,7 @@ const steps = [
     n: 4,
     icon: Mail,
     title: "Bestätigungs-E-Mail erhalten",
-    text: "Sobald ein Termin reserviert ist, erhältst du eine automatische E-Mail der Zulassungsstelle Köln.",
+    text: "Sobald ein Termin reserviert ist, bekommst du eine E-Mail von uns und eine von der Zulassungsstelle Köln mit dem Bestätigungslink.",
   },
   {
     n: 5,

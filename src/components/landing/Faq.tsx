@@ -12,7 +12,7 @@ export const faqItems = [
   },
   {
     q: "Was kostet der Service?",
-    a: "9,99 € einmalig, keine weiteren Kosten. Wird innerhalb deines gewählten Zeitraums kein Termin gefunden, erstatten wir dir den vollen Betrag – ohne Wenn und Aber.",
+    a: "9,99 € einmalig, keine weiteren Kosten. Wird in deinem Zeitraum kein Termin frei, kannst du einmalig neue Wunschtermine wählen oder bekommst den vollen Betrag zurück – ohne Wenn und Aber.",
   },
   {
     q: "Wie schnell bekomme ich einen Termin?",
@@ -32,7 +32,7 @@ export const faqItems = [
   },
   {
     q: "Wie werde ich informiert wenn ein Termin gefunden wurde?",
-    a: "Sobald wir einen Termin für dich gebucht haben, bekommst du automatisch eine E-Mail direkt von der Kölner Zulassungsstelle mit deinem persönlichen Bestätigungslink.",
+    a: "Sobald wir einen Termin für dich gebucht haben, bekommst du zwei E-Mails: eine von uns mit Datum und Uhrzeit und eine von der Kölner Zulassungsstelle mit deinem persönlichen Bestätigungslink.",
   },
   {
     q: "Was ist die Bestätigungsmail der Zulassungsstelle?",
@@ -44,7 +44,7 @@ export const faqItems = [
   },
   {
     q: "Was passiert wenn kein Termin gefunden wird?",
-    a: "Wir suchen täglich innerhalb deines gewählten Zeitraums – maximal 14 Tage. Wird kein passender Termin gefunden, erstatten wir dir den vollen Betrag. Schreib uns dazu einfach eine kurze Mail an info@kfz-termin.online.",
+    a: "Wir suchen täglich innerhalb deines gewählten Zeitraums – maximal 14 Tage. Wird kein Termin frei, bekommst du automatisch eine E-Mail: Du kannst einmalig neue Wunschtermine wählen, ohne erneut zu bezahlen, oder dir mit einem Klick den vollen Betrag erstatten lassen. Meldest du dich nicht innerhalb von 48 Stunden, erstatten wir automatisch.",
   },
   {
     q: "Kann ich den Auftrag stornieren?",

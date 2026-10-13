@@ -41,7 +41,7 @@ export const createBooking = createServerFn({ method: "POST" })
       return {
         ok: false as const,
         error:
-          "Am 12.10.2026 ist die Zulassungsstelle wegen einer Personalversammlung geschlossen. Bitte entferne diesen Tag aus deiner Auswahl.",
+          "An einem der gewählten Tage ist die Zulassungsstelle geschlossen. Bitte entferne diesen Tag aus deiner Auswahl.",
       };
     }
 

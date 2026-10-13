@@ -3,6 +3,7 @@ import {
   Row, Column,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { formatDayLong } from './customer-email-parts'
 
 const SITE_NAME = 'KFZ-Termin Köln'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
@@ -51,7 +52,7 @@ const BookingConfirmationEmail = ({
           <Hr style={topRule} />
 
           <Text style={text}>
-            {fullName ? `Hallo ${fullName},` : 'Hallo,'}
+            {firstName ? `Hallo ${firstName},` : 'Hallo,'}
           </Text>
           <Text style={text}>
             vielen Dank für deine Buchung. Deine Zahlung ist eingegangen und
@@ -76,6 +77,11 @@ const BookingConfirmationEmail = ({
               deine Ordner Spam und Werbung. Automatische E-Mails landen dort
               manchmal.
             </Text>
+            <Text style={infoText}>
+              Wird an deinen Wunschtagen kein Termin frei, bekommst du von uns
+              eine E-Mail: Du kannst dann einmalig neue Wunschtermine wählen
+              oder dir den vollen Betrag erstatten lassen.
+            </Text>
           </Section>
 
           <Section style={card}>
@@ -89,10 +95,10 @@ const BookingConfirmationEmail = ({
           </Section>
 
           <Section style={card}>
-            <Text style={cardTitle}>Gewünschte Termine</Text>
+            <Text style={cardTitle}>Deine Wunschtermine</Text>
             {selectedDates.length > 0 ? (
               selectedDates.map((d) => (
-                <Text key={d} style={dateLine}>📅 {d}</Text>
+                <Text key={d} style={dateLine}>📅 {formatDayLong(d)}</Text>
               ))
             ) : (
               <Text style={dateLine}>—</Text>
@@ -216,7 +222,7 @@ export const template = {
     serviceType: 'Gebrauchtwagen anmelden',
     finEndings: ['1234', '9X2P'],
     notes: 'Bitte möglichst vormittags.',
-    selectedDates: ['Mo, 25.05.2026 – vormittags', 'Di, 26.05.2026 – nachmittags'],
+    selectedDates: ['2026-10-06', '2026-10-07'],
   },
 } satisfies TemplateEntry
 

@@ -10,12 +10,23 @@ import { sendTransactionalEmailServer } from "@/lib/email/send.server";
  *  - Success page (confirmCheckoutSession) — for immediate UX feedback
  *  - Stripe webhook (checkout.session.completed) — authoritative trigger
  */
+export class BookingPaidUpdateError extends Error {
+  constructor(message: string) {
+    super(`finalizePaidBooking: failed to mark booking as paid: ${message}`);
+    this.name = "BookingPaidUpdateError";
+  }
+}
+
 export async function finalizePaidBooking(bookingId: string): Promise<void> {
   // Mark as paid (no-op if already paid)
-  await supabaseAdmin
+  const { error: updateError } = await supabaseAdmin
     .from("bookings")
     .update({ paid: true, status: "paid" })
     .eq("id", bookingId);
+  if (updateError) {
+    // Werfen, damit der Stripe-Webhook mit 500 antwortet und Stripe erneut zustellt.
+    throw new BookingPaidUpdateError(updateError.message);
+  }
 
   const { data: booking, error } = await supabaseAdmin
     .from("bookings")
