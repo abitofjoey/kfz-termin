@@ -16,7 +16,7 @@ const Calendar = lazy(() =>
 );
 
 export const Route = createFileRoute("/termine-aendern")({
-  validateSearch: z.object({ t: z.string().optional() }),
+  validateSearch: z.object({ t: z.string().optional(), aktion: z.string().optional() }),
   head: () => ({
     meta: [
       { title: "Neue Wunschtermine wählen – KFZ-Termin Köln" },
@@ -43,7 +43,7 @@ const parseISO = (iso: string) => {
 type State = Awaited<ReturnType<typeof getRebookState>>;
 
 function RebookPage() {
-  const { t } = Route.useSearch();
+  const { t, aktion } = Route.useSearch();
   const loadState = useServerFn(getRebookState);
   const fetchBounds = useServerFn(getCalendarBounds);
   const submitDates = useServerFn(submitRebookDates);
