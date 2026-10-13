@@ -13,6 +13,7 @@ interface Props {
 const SearchRebookOfferEmail = ({ salutation, firstName, lastName, rebookToken, deadline }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   const url = `${s.SITE_URL}/termine-aendern?t=${rebookToken ?? ''}`
+  const refundUrl = `${url}&aktion=erstattung`
   return (
     <Html lang="de" dir="ltr">
       <Head />
@@ -45,7 +46,7 @@ const SearchRebookOfferEmail = ({ salutation, firstName, lastName, rebookToken, 
             <Text style={s.cardTitle}>Lieber dein Geld zurück?</Text>
             <Text style={s.contactLine}>Kein Problem, das geht mit einem Klick.</Text>
             <Text style={s.contactLine}>
-              <Link href={url} style={s.link}>Rückerstattung anfordern</Link>
+              <Link href={refundUrl} style={s.link}>Rückerstattung anfordern</Link>
             </Text>
           </Section>
 
