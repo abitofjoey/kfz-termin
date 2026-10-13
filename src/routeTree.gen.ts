@@ -15,9 +15,11 @@ import { Route as BuchungAbgebrochenRouteImport } from './routes/buchung-abgebro
 import { Route as BuchungErfolgreichRouteImport } from './routes/buchung-erfolgreich'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as TermineAendernRouteImport } from './routes/termine-aendern'
 import { Route as WiderrufsbelehrungRouteImport } from './routes/widerrufsbelehrung'
 import { Route as ApiInternalPendingBookingsRouteImport } from './routes/api/internal/pending-bookings'
 import { Route as LovableEmailEventsRouteImport } from './routes/lovable/email/events'
+import { Route as ApiInternalRefundsDueRouteImport } from './routes/api/internal/refunds/due'
 import { Route as ApiPublicAdminFinalizeBookingRouteImport } from './routes/api/public/admin/finalize-booking'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -54,6 +56,11 @@ const ImpressumRoute = ImpressumRouteImport.update({
   path: '/impressum',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermineAendernRoute = TermineAendernRouteImport.update({
+  id: '/termine-aendern',
+  path: '/termine-aendern',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WiderrufsbelehrungRoute = WiderrufsbelehrungRouteImport.update({
   id: '/widerrufsbelehrung',
   path: '/widerrufsbelehrung',
@@ -68,6 +75,11 @@ const ApiInternalPendingBookingsRoute =
 const LovableEmailEventsRoute = LovableEmailEventsRouteImport.update({
   id: '/lovable/email/events',
   path: '/lovable/email/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiInternalRefundsDueRoute = ApiInternalRefundsDueRouteImport.update({
+  id: '/api/internal/refunds/due',
+  path: '/api/internal/refunds/due',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicAdminFinalizeBookingRoute =
@@ -107,9 +119,11 @@ export interface FileRoutesByFullPath {
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/termine-aendern': typeof TermineAendernRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
+  '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -123,9 +137,11 @@ export interface FileRoutesByTo {
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/termine-aendern': typeof TermineAendernRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
+  '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -140,9 +156,11 @@ export interface FileRoutesById {
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/termine-aendern': typeof TermineAendernRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
+  '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
   '/api/public/admin/finalize-booking': typeof ApiPublicAdminFinalizeBookingRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -158,9 +176,11 @@ export interface FileRouteTypes {
     | '/buchung-erfolgreich'
     | '/datenschutz'
     | '/impressum'
+    | '/termine-aendern'
     | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
+    | '/api/internal/refunds/due'
     | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
@@ -174,9 +194,11 @@ export interface FileRouteTypes {
     | '/buchung-erfolgreich'
     | '/datenschutz'
     | '/impressum'
+    | '/termine-aendern'
     | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
+    | '/api/internal/refunds/due'
     | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
@@ -190,9 +212,11 @@ export interface FileRouteTypes {
     | '/buchung-erfolgreich'
     | '/datenschutz'
     | '/impressum'
+    | '/termine-aendern'
     | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
+    | '/api/internal/refunds/due'
     | '/api/public/admin/finalize-booking'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
@@ -207,9 +231,11 @@ export interface RootRouteChildren {
   BuchungErfolgreichRoute: typeof BuchungErfolgreichRoute
   DatenschutzRoute: typeof DatenschutzRoute
   ImpressumRoute: typeof ImpressumRoute
+  TermineAendernRoute: typeof TermineAendernRoute
   WiderrufsbelehrungRoute: typeof WiderrufsbelehrungRoute
   ApiInternalPendingBookingsRoute: typeof ApiInternalPendingBookingsRouteWithChildren
   LovableEmailEventsRoute: typeof LovableEmailEventsRoute
+  ApiInternalRefundsDueRoute: typeof ApiInternalRefundsDueRoute
   ApiPublicAdminFinalizeBookingRoute: typeof ApiPublicAdminFinalizeBookingRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -260,6 +286,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImpressumRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/termine-aendern': {
+      id: '/termine-aendern'
+      path: '/termine-aendern'
+      fullPath: '/termine-aendern'
+      preLoaderRoute: typeof TermineAendernRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/widerrufsbelehrung': {
       id: '/widerrufsbelehrung'
       path: '/widerrufsbelehrung'
@@ -279,6 +312,13 @@ declare module '@tanstack/react-router' {
       path: '/lovable/email/events'
       fullPath: '/lovable/email/events'
       preLoaderRoute: typeof LovableEmailEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/internal/refunds/due': {
+      id: '/api/internal/refunds/due'
+      path: '/api/internal/refunds/due'
+      fullPath: '/api/internal/refunds/due'
+      preLoaderRoute: typeof ApiInternalRefundsDueRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/admin/finalize-booking': {
@@ -340,9 +380,11 @@ const rootRouteChildren: RootRouteChildren = {
   BuchungErfolgreichRoute: BuchungErfolgreichRoute,
   DatenschutzRoute: DatenschutzRoute,
   ImpressumRoute: ImpressumRoute,
+  TermineAendernRoute: TermineAendernRoute,
   WiderrufsbelehrungRoute: WiderrufsbelehrungRoute,
   ApiInternalPendingBookingsRoute: ApiInternalPendingBookingsRouteWithChildren,
   LovableEmailEventsRoute: LovableEmailEventsRoute,
+  ApiInternalRefundsDueRoute: ApiInternalRefundsDueRoute,
   ApiPublicAdminFinalizeBookingRoute: ApiPublicAdminFinalizeBookingRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
