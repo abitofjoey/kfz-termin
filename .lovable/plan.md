@@ -16,7 +16,7 @@ Rein additiv, Zugriffsregeln bleiben unverändert. Danach Typen neu erzeugen.
 - Neuer Zweig `error` direkt nach der 404-Prüfung (vor dem not_found-Zweig):
   - Update `search_error = reason`, `search_error_at = now()` nur wenn `search_result IS NULL`; keine Zeile → `{ ok: true, alreadyRecorded: true }`, keine Mails.
   - `search_result` bleibt NULL.
-  - Immer interne Mail `search-error-internal`, Key `booking-error-internal-<id>-<reason>-<email>`.
+  - Immer interne Mail `search-error-internal`, Key `booking-error-internal-<id>-<reason>-<search_error_at als ISO-String>` (der im Update gesetzte Zeitpunkt) – so kommt bei jedem erneuten Auftreten eine interne Mail.
   - Nur bei `email_limit` zusätzlich Kundenmail `search-email-limit` an `booking.email`, Key `booking-error-<id>-email_limit-<email>`.
   - `emailSent`: bei `email_limit` = Erfolg der Kundenmail, bei `booking_failed` = Erfolg der internen Mail.
   - Antwort 200 `{ ok: true, emailSent }`, auch bei Mailfehler; Logging nur Status, keine Kundendaten.
@@ -36,4 +36,4 @@ Direkt unter dem E-Mail-Feld der vorgegebene Hinweistext im Stil der bestehenden
 Typprüfung, 401-Test ohne Schlüssel, Diff zeigen. Kein Deploy, keine Test-Mails.
 
 ## Hinweis
-Wird derselbe Fehler mit derselben Adresse erneut gemeldet (z. B. nach "gleiche Adresse"-Wiederaufnahme), wird die Mail wegen des gleichen Schlüssels nicht doppelt versendet – so wie von dir vorgesehen.
+Wird derselbe Fehler mit derselben Adresse erneut gemeldet, kommt die interne Mail erneut, die Kundenmail aber nur einmal pro Adresse.
