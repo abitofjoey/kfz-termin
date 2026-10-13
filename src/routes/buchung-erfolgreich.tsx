@@ -63,6 +63,34 @@ function SuccessPage() {
     );
   }
 
+  if (state === "unpaid") {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="mx-auto max-w-2xl px-4 py-20 text-center">
+          <Loader2 className="mx-auto h-16 w-16 text-muted-foreground" />
+          <h1 className="mt-6 text-3xl font-bold">Zahlung wird noch verarbeitet</h1>
+          <p className="mt-4 text-muted-foreground">
+            Deine Zahlung ist noch nicht abgeschlossen. Bei manchen
+            Zahlungsarten dauert die Bestätigung etwas länger. Sobald sie da
+            ist, bekommst du eine Bestätigungsmail und wir starten die Suche.
+            Bitte buche nicht noch einmal. Fragen?{" "}
+            <a href="mailto:info@kfz-termin.online" className="text-accent underline">
+              info@kfz-termin.online
+            </a>
+          </p>
+          <Link
+            to="/"
+            className="mt-8 inline-block rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+          >
+            Zurück zur Startseite
+          </Link>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   if (state !== "paid") {
     return (
       <div className="min-h-screen bg-background">

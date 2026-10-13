@@ -40,6 +40,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+      locale: "de",
       // Keine payment_method_types setzen → Stripe Checkout zeigt automatisch
       // alle im Dashboard aktivierten Zahlungsarten (Karte, PayPal, Klarna,
       // Apple/Google Pay, Sofort, Giropay, …) passend zu Gerät und Land.

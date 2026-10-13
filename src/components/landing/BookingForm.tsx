@@ -277,7 +277,7 @@ export function BookingForm({ preselected }: Props) {
           </div>
 
           <div className="space-y-1.5">
-            <Field label="E-Mail" error={errors.email?.message} hint="Nach der Buchung erhältst du eine Bestätigungsmail der Kölner Zulassungsstelle – bitte klicke den Link darin innerhalb von 3 Stunden an.">
+            <Field label="E-Mail" error={errors.email?.message} hint="Sobald wir einen Termin gefunden haben, schickt dir die Kölner Zulassungsstelle eine Bestätigungsmail – bitte klicke den Link darin innerhalb von 3 Stunden an.">
               {(id, aria) => <Input id={id} {...aria} type="email" {...register("email")} autoComplete="email" />}
             </Field>
             <p className="text-xs text-muted-foreground">

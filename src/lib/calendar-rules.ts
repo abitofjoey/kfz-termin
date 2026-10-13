@@ -2,7 +2,7 @@
 
 // Einmalig gesperrte Tage (z.B. Schließtage der Zulassungsstelle).
 // Nach dem Tag einfach wieder entfernen.
-export const BLOCKED_DATES: string[] = ["2026-10-12"];
+export const BLOCKED_DATES: string[] = [];
 
 function addDaysISO(iso: string, days: number) {
   const [y, m, d] = iso.split("-").map(Number);
