@@ -1,19 +1,22 @@
 import {
-  Body, Container, Head, Heading, Html, Preview, Section, Text, Hr, Link,
+  Body, Button, Container, Head, Heading, Html, Preview, Section, Text, Hr, Link,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { button } from './customer-email-parts'
 
 const SITE_NAME = 'KFZ-Termin Köln'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
+const SITE_URL = 'https://kfz-termin.online'
 
 interface Props {
   salutation?: string
   firstName?: string
   lastName?: string
   email?: string
+  emailChangeToken?: string | null
 }
 
-const SearchEmailLimitEmail = ({ salutation, firstName, lastName, email }: Props) => {
+const SearchEmailLimitEmail = ({ salutation, firstName, lastName, email, emailChangeToken }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   return (
     <Html lang="de" dir="ltr">
@@ -49,6 +52,19 @@ const SearchEmailLimitEmail = ({ salutation, firstName, lastName, email }: Props
               Sobald wir von dir hören, suchen wir sofort weiter.
             </Text>
           </Section>
+
+          {emailChangeToken ? (
+            <Section style={{ textAlign: 'center' as const, margin: '24px 0' }}>
+              <Button href={`${SITE_URL}/email-aendern?token=${emailChangeToken}`} style={button}>
+                Andere E-Mail-Adresse eintragen
+              </Button>
+              <Text style={{ ...text, fontSize: '13px', margin: '16px 0 0' }}>
+                <Link href={`${SITE_URL}/email-aendern?token=${emailChangeToken}&aktion=storniert`} style={link}>
+                  Ich habe meinen bestehenden Termin bei der Zulassungsstelle storniert – mit dieser Adresse weitersuchen
+                </Link>
+              </Text>
+            </Section>
+          ) : null}
 
           <Section style={infoBox}>
             <Text style={infoText}>
