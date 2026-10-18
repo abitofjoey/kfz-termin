@@ -23,6 +23,8 @@ export type Database = {
           confirmation_sent_at: string | null
           created_at: string
           email: string
+          email_change_token: string | null
+          email_changed_at: string | null
           fin_1: string
           fin_2: string | null
           fin_3: string | null
@@ -58,6 +60,8 @@ export type Database = {
           confirmation_sent_at?: string | null
           created_at?: string
           email: string
+          email_change_token?: string | null
+          email_changed_at?: string | null
           fin_1: string
           fin_2?: string | null
           fin_3?: string | null
@@ -93,6 +97,8 @@ export type Database = {
           confirmation_sent_at?: string | null
           created_at?: string
           email?: string
+          email_change_token?: string | null
+          email_changed_at?: string | null
           fin_1?: string
           fin_2?: string | null
           fin_3?: string | null

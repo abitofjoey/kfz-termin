@@ -14,6 +14,7 @@ import { Route as AgbRouteImport } from './routes/agb'
 import { Route as BuchungAbgebrochenRouteImport } from './routes/buchung-abgebrochen'
 import { Route as BuchungErfolgreichRouteImport } from './routes/buchung-erfolgreich'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
+import { Route as EmailAendernRouteImport } from './routes/email-aendern'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as TermineAendernRouteImport } from './routes/termine-aendern'
 import { Route as WiderrufsbelehrungRouteImport } from './routes/widerrufsbelehrung'
@@ -49,6 +50,11 @@ const BuchungErfolgreichRoute = BuchungErfolgreichRouteImport.update({
 const DatenschutzRoute = DatenschutzRouteImport.update({
   id: '/datenschutz',
   path: '/datenschutz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmailAendernRoute = EmailAendernRouteImport.update({
+  id: '/email-aendern',
+  path: '/email-aendern',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImpressumRoute = ImpressumRouteImport.update({
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/buchung-abgebrochen': typeof BuchungAbgebrochenRoute
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
   '/datenschutz': typeof DatenschutzRoute
+  '/email-aendern': typeof EmailAendernRoute
   '/impressum': typeof ImpressumRoute
   '/termine-aendern': typeof TermineAendernRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
@@ -135,6 +142,7 @@ export interface FileRoutesByTo {
   '/buchung-abgebrochen': typeof BuchungAbgebrochenRoute
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
   '/datenschutz': typeof DatenschutzRoute
+  '/email-aendern': typeof EmailAendernRoute
   '/impressum': typeof ImpressumRoute
   '/termine-aendern': typeof TermineAendernRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
@@ -154,6 +162,7 @@ export interface FileRoutesById {
   '/buchung-abgebrochen': typeof BuchungAbgebrochenRoute
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
   '/datenschutz': typeof DatenschutzRoute
+  '/email-aendern': typeof EmailAendernRoute
   '/impressum': typeof ImpressumRoute
   '/termine-aendern': typeof TermineAendernRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
@@ -174,6 +183,7 @@ export interface FileRouteTypes {
     | '/buchung-abgebrochen'
     | '/buchung-erfolgreich'
     | '/datenschutz'
+    | '/email-aendern'
     | '/impressum'
     | '/termine-aendern'
     | '/widerrufsbelehrung'
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
     | '/buchung-abgebrochen'
     | '/buchung-erfolgreich'
     | '/datenschutz'
+    | '/email-aendern'
     | '/impressum'
     | '/termine-aendern'
     | '/widerrufsbelehrung'
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/buchung-abgebrochen'
     | '/buchung-erfolgreich'
     | '/datenschutz'
+    | '/email-aendern'
     | '/impressum'
     | '/termine-aendern'
     | '/widerrufsbelehrung'
@@ -229,6 +241,7 @@ export interface RootRouteChildren {
   BuchungAbgebrochenRoute: typeof BuchungAbgebrochenRoute
   BuchungErfolgreichRoute: typeof BuchungErfolgreichRoute
   DatenschutzRoute: typeof DatenschutzRoute
+  EmailAendernRoute: typeof EmailAendernRoute
   ImpressumRoute: typeof ImpressumRoute
   TermineAendernRoute: typeof TermineAendernRoute
   WiderrufsbelehrungRoute: typeof WiderrufsbelehrungRoute
@@ -276,6 +289,13 @@ declare module '@tanstack/react-router' {
       path: '/datenschutz'
       fullPath: '/datenschutz'
       preLoaderRoute: typeof DatenschutzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/email-aendern': {
+      id: '/email-aendern'
+      path: '/email-aendern'
+      fullPath: '/email-aendern'
+      preLoaderRoute: typeof EmailAendernRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/impressum': {
@@ -378,6 +398,7 @@ const rootRouteChildren: RootRouteChildren = {
   BuchungAbgebrochenRoute: BuchungAbgebrochenRoute,
   BuchungErfolgreichRoute: BuchungErfolgreichRoute,
   DatenschutzRoute: DatenschutzRoute,
+  EmailAendernRoute: EmailAendernRoute,
   ImpressumRoute: ImpressumRoute,
   TermineAendernRoute: TermineAendernRoute,
   WiderrufsbelehrungRoute: WiderrufsbelehrungRoute,

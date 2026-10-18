@@ -70,16 +70,17 @@ export const Route = createFileRoute("/api/internal/health/check")({
         let notPickedUp = 0;
         const { data: pending, error: pErr } = await supabaseAdmin
           .from("bookings")
-          .select("id, first_name, last_name, service_type, selected_dates, created_at, confirmation_sent_at, rebook_used_at")
+          .select("id, first_name, last_name, service_type, selected_dates, created_at, confirmation_sent_at, rebook_used_at, email_changed_at")
           .eq("paid", true).eq("assigned_to_script", false).is("search_result", null)
           .gte("created_at", CUTOFF_CREATED).limit(100);
         if (pErr) console.error("health check: pending read error", pErr.code);
         for (const b of pending ?? []) {
           if (!hasDates(b.selected_dates)) continue;
-          const times = [b.confirmation_sent_at, b.rebook_used_at].filter(Boolean).map((t) => new Date(t as string).getTime());
+          const times = [b.confirmation_sent_at, b.rebook_used_at, b.email_changed_at].filter(Boolean).map((t) => new Date(t as string).getTime());
           const released = times.length ? Math.max(...times) : new Date(b.created_at).getTime();
           if (now - released <= 30 * MIN) continue;
-          const ok = await send("booking-not-picked-up-internal", `health-notpickedup-${b.id}-${run(b.rebook_used_at)}`, {
+          const npKey = `health-notpickedup-${b.id}-${run(b.rebook_used_at)}${b.email_changed_at ? `-${b.email_changed_at}` : ""}`;
+          const ok = await send("booking-not-picked-up-internal", npKey, {
             bookingId: b.id, firstName: b.first_name, lastName: b.last_name, serviceType: b.service_type,
           });
           if (ok) notPickedUp++;

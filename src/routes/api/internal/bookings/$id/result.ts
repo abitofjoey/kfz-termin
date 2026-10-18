@@ -78,6 +78,21 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
             return Response.json({ ok: true, alreadyRecorded: true });
           }
 
+          let emailChangeToken: string | null = null;
+          if (body.reason === "email_limit") {
+            emailChangeToken = booking.email_change_token ?? crypto.randomUUID();
+            if (!booking.email_change_token) {
+              const { error: tokError } = await supabaseAdmin
+                .from("bookings")
+                .update({ email_change_token: emailChangeToken })
+                .eq("id", booking.id);
+              if (tokError) {
+                console.error("booking result: database error (email change token)", tokError.code);
+                return new Response("Database error", { status: 500 });
+              }
+            }
+          }
+
           const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
           const errData = {
             reason: body.reason,
@@ -91,6 +106,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
             fins: [booking.fin_1, booking.fin_2, booking.fin_3].filter(Boolean),
             selectedDates: booking.selected_dates,
             stripeSessionId: booking.stripe_session_id,
+            emailChangeToken,
           };
 
           let errEmailSent = false;
