@@ -30,11 +30,14 @@ Aufbau und Stil wie termine-aendern, noindex, eigene Metadaten. Zustände über 
 - Danach Mails `search-email-changed` (an die aktuelle Adresse, mit Wunschterminen im Langformat) und `search-email-changed-internal` (Buchungs-ID, alte und neue Adresse bzw. „storniert, gleiche Adresse"). Keys enthalten email_changed_at, damit ein späterer zweiter Wechsel wieder Mails auslöst. Mailfehler ändern das Ergebnis nicht. Logging ohne Kundendaten.
 - Beide Templates in `registry.ts`.
 
-## Zur Entscheidung: Pi-Wächter
-Der Wächter misst „nicht abgeholt" ab Bestätigung bzw. neuer Wunschtermin-Wahl. Nach einem Adresswechsel läge dieser Zeitpunkt weit zurück → beim nächsten Viertelstunden-Lauf käme sofort eine falsche Mail „Buchung nicht abgeholt". Vorschlag: in `health/check.ts` email_changed_at mit in den Freigabezeitpunkt und in den Mail-Schlüssel aufnehmen (Zwei-Zeilen-Änderung, sonst nichts). Ohne dein OK lasse ich die Datei unverändert.
+## 6. Pi-Wächter (`health/check.ts`)
+email_changed_at zählt mit zum Freigabezeitpunkt für „nicht abgeholt". Mail-Schlüssel bleibt `health-notpickedup-<id>-<run>` und wird nur bei gesetztem email_changed_at zu `health-notpickedup-<id>-<run>-<email_changed_at>`. Sonst bleibt die Datei unverändert.
+
+## 7. Keine paid-Prüfung
+getEmailChangeState und submitEmailChange prüfen paid nicht (der Token entsteht nur bei bezahlten Buchungen), damit die Testbuchung mit paid = false funktioniert.
 
 ## Hinweis
 Nach dem Wechsel ist search_error leer. Meldet das Script dann not_found, bekommt der Kunde wie gewünscht das Wunschtermin-Angebot statt der direkten Erstattung.
 
 ## Danach
-Typprüfung, Seite mit ungültigem Token prüfen, Diff zeigen. Test mit Testbuchung erst nach deinem OK.
+Typprüfung und Build, kein Publish. Test mit Testbuchung erst nach deinem OK.
