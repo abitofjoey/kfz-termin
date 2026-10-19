@@ -3,6 +3,8 @@ import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
 
 interface Props {
+  bookingId?: string
+  withdrawToken?: string | null
   salutation?: string
   firstName?: string
   lastName?: string
@@ -10,7 +12,7 @@ interface Props {
   deadline?: string
 }
 
-const SearchRebookOfferEmail = ({ salutation, firstName, lastName, rebookToken, deadline }: Props) => {
+const SearchRebookOfferEmail = ({ bookingId, salutation, firstName, lastName, rebookToken, deadline }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   const url = `${s.SITE_URL}/termine-aendern?t=${rebookToken ?? ''}`
   const refundUrl = `${url}&aktion=erstattung`
@@ -23,6 +25,7 @@ const SearchRebookOfferEmail = ({ salutation, firstName, lastName, rebookToken, 
           <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
           <Heading style={s.h1}>Leider kein Termin frei geworden</Heading>
           <Hr style={s.topRule} />
+          <s.BookingNumberLine bookingId={bookingId} />
 
           <Text style={s.text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={s.text}>

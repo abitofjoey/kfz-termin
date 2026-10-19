@@ -2,6 +2,7 @@ import {
   Body, Button, Container, Head, Heading, Html, Preview, Section, Text, Hr, Link,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
 import { button } from './customer-email-parts'
 
 const SITE_NAME = 'KFZ-Termin Köln'
@@ -9,6 +10,8 @@ const CONTACT_EMAIL = 'info@kfz-termin.online'
 const SITE_URL = 'https://kfz-termin.online'
 
 interface Props {
+  bookingId?: string
+  withdrawToken?: string | null
   salutation?: string
   firstName?: string
   lastName?: string
@@ -16,7 +19,7 @@ interface Props {
   emailChangeToken?: string | null
 }
 
-const SearchEmailLimitEmail = ({ salutation, firstName, lastName, email, emailChangeToken }: Props) => {
+const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName, lastName, email, emailChangeToken }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   return (
     <Html lang="de" dir="ltr">
@@ -27,6 +30,7 @@ const SearchEmailLimitEmail = ({ salutation, firstName, lastName, email, emailCh
           <Text style={eyebrow}>{SITE_NAME}</Text>
           <Heading style={h1}>Wir brauchen kurz deine Hilfe</Heading>
           <Hr style={topRule} />
+          <BookingNumberLine bookingId={bookingId} />
 
           <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={text}>
@@ -72,6 +76,8 @@ const SearchEmailLimitEmail = ({ salutation, firstName, lastName, email, emailCh
               Wunschzeitraums nichts von dir, erstatten wir dir den vollen Betrag.
             </Text>
           </Section>
+
+          <WithdrawLinkLine withdrawToken={withdrawToken} />
 
           <Section style={card}>
             <Text style={cardTitle}>Fragen?</Text>

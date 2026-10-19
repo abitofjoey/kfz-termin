@@ -3,6 +3,8 @@ import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
 
 interface Props {
+  bookingId?: string
+  withdrawToken?: string | null
   salutation?: string
   firstName?: string
   lastName?: string
@@ -24,7 +26,7 @@ function intro(anlass: Props['anlass'], searchError: Props['searchError']): stri
   return 'leider ist auch im Zeitraum deiner neuen Wunschtermine keiner der gewünschten Termine frei geworden. Das tut uns leid.'
 }
 
-const SearchNotFoundEmail = ({
+const SearchNotFoundEmail = ({ bookingId,
   salutation, firstName, lastName, serviceType, selectedDates, refundOk, anlass, searchError,
 }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
@@ -37,6 +39,7 @@ const SearchNotFoundEmail = ({
           <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
           <Heading style={s.h1}>Deine Rückerstattung</Heading>
           <Hr style={s.topRule} />
+          <s.BookingNumberLine bookingId={bookingId} />
 
           <Text style={s.text}>
             {firstName ? `Hallo ${firstName},` : 'Hallo,'} {intro(anlass, searchError)}

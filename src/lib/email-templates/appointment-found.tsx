@@ -3,6 +3,7 @@ import {
   Row, Column, Link,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
 import { formatBerlinLong, formatBerlinTime } from './format-berlin'
 
 const SITE_NAME = 'KFZ-Termin Köln'
@@ -12,6 +13,8 @@ const CITY_URL = 'https://www.stadt-koeln.de/service/adressen/00205/index.html'
 const REVIEW_URL = 'https://g.page/r/CQtnwHapR1yhEBM/review'
 
 interface AppointmentFoundProps {
+  bookingId?: string
+  withdrawToken?: string | null
   salutation?: string
   firstName?: string
   lastName?: string
@@ -20,7 +23,7 @@ interface AppointmentFoundProps {
   foundAt?: string
 }
 
-const AppointmentFoundEmail = ({
+const AppointmentFoundEmail = ({ bookingId,
   salutation, firstName, lastName, serviceType, appointmentAt, foundAt,
 }: AppointmentFoundProps) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
@@ -34,6 +37,7 @@ const AppointmentFoundEmail = ({
           <Text style={eyebrow}>{SITE_NAME}</Text>
           <Heading style={h1}>Termin gefunden!</Heading>
           <Hr style={topRule} />
+          <BookingNumberLine bookingId={bookingId} />
 
           <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={text}>
