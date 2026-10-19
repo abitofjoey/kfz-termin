@@ -31,7 +31,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
 import finFahrzeugscheinImg from "@/assets/fin-fahrzeugschein.webp.asset.json";
 import { toast } from "sonner";
-import { SERVICES, SERVICE_IDS, type ServiceId } from "@/lib/services";
+import { SERVICES, SERVICE_IDS, getMaxVehicles, type ServiceId } from "@/lib/services";
 
 const schema = z.object({
   service_type: z.enum(SERVICE_IDS, {
