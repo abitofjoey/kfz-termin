@@ -100,6 +100,20 @@ export function BookingForm({ preselected }: Props) {
   });
 
   const selectedDates = watch("selected_dates") ?? [];
+  const selectedService = watch("service_type");
+  const maxVehicles = getMaxVehicles(selectedService);
+  const [vehicleLimitNotice, setVehicleLimitNotice] = useState(false);
+
+  useEffect(() => {
+    if (vehicleCount > maxVehicles) {
+      setValue("fin_3", "", { shouldValidate: true });
+      setVehicleCount(maxVehicles);
+      setVehicleLimitNotice(true);
+    } else if (maxVehicles >= 3) {
+      setVehicleLimitNotice(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [maxVehicles]);
 
   useEffect(() => {
     if (preselected) {
@@ -296,7 +310,7 @@ export function BookingForm({ preselected }: Props) {
               info={
               <div className="space-y-2">
                   <p>
-                    Bis zu 3 Fahrzeuge pro Termin möglich. Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief).
+                    Bis zu {maxVehicles} Fahrzeuge pro Termin möglich. Die letzten 4 Zeichen findest du in deinen Fahrzeugdokumenten (Fahrzeugschein oder Fahrzeugbrief).
                   </p>
                   <img
                     src={finFahrzeugscheinImg.url}
@@ -350,12 +364,18 @@ export function BookingForm({ preselected }: Props) {
               />
             )}
 
-            {vehicleCount < 3 && (
+            {vehicleLimitNotice && (
+              <p className="text-xs text-muted-foreground" role="status">
+                Für dieses Anliegen sind bei der Stadt höchstens 2 Fahrzeuge pro Termin möglich.
+              </p>
+            )}
+
+            {vehicleCount < maxVehicles && (
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
-                onClick={() => setVehicleCount((c) => Math.min(3, c + 1))}
+                onClick={() => setVehicleCount((c) => Math.min(maxVehicles, c + 1))}
                 className="gap-1.5"
               >
                 <Plus className="h-4 w-4" />

@@ -24,11 +24,11 @@ export const faqItems = [
   },
   {
     q: "Was ist die FIN und wo finde ich sie?",
-    a: "Die FIN ist die Fahrzeug-Identifizierungsnummer deines Autos. Wir benötigen nur die letzten 4 Zeichen – diese findest du in deinem Fahrzeugschein (Zulassungsbescheinigung Teil I) unter dem Feld „E\". Pro Termin können bis zu 3 Fahrzeuge angemeldet werden – du kannst im Buchungsformular weitere FIN-Felder hinzufügen.",
+    a: "Die FIN ist die Fahrzeug-Identifizierungsnummer deines Autos. Wir benötigen nur die letzten 4 Zeichen – diese findest du in deinem Fahrzeugschein (Zulassungsbescheinigung Teil I) unter dem Feld „E\". Pro Termin können bis zu 3 Fahrzeuge angemeldet werden (bei einigen Anliegen höchstens 2) – du kannst im Buchungsformular weitere FIN-Felder hinzufügen.",
   },
   {
     q: "Kann ich mehrere Fahrzeuge in einem Termin anmelden?",
-    a: "Ja, du kannst bis zu 3 Fahrzeuge in einem Termin anmelden. Im Buchungsformular fügst du über „+ Weiteres Fahrzeug hinzufügen\" einfach die FIN-Endung jedes weiteren Fahrzeugs hinzu. Der Preis bleibt pauschal 9,99 € pro Termin, unabhängig von der Anzahl der Fahrzeuge.",
+    a: "Ja, du kannst bis zu 3 Fahrzeuge in einem Termin anmelden, bei einigen Anliegen höchstens 2. Im Buchungsformular fügst du über „+ Weiteres Fahrzeug hinzufügen\" einfach die FIN-Endung jedes weiteren Fahrzeugs hinzu. Der Preis bleibt pauschal 9,99 € pro Termin, unabhängig von der Anzahl der Fahrzeuge.",
   },
   {
     q: "Wie werde ich informiert wenn ein Termin gefunden wurde?",
@@ -52,7 +52,7 @@ export const faqItems = [
   },
   {
     q: "Für welche Anliegen gilt der Service?",
-    a: "Wir unterstützen alle 15 auf dieser Seite aufgeführten Anliegen – von der An- und Abmeldung über Kennzeichenwechsel, Anschriften- und Namensänderung, technische Änderungen bis hin zu H-Kennzeichen, Saison-, Kurzzeit- und Ausfuhrkennzeichen, Feinstaubplakette, Ersatz des Fahrzeugscheins und Neusiegelung. Über die \"Infos Stadt Köln\"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln. Die häufigsten Anliegen sind: KFZ anmelden für Neufahrzeuge und Gebrauchtfahrzeuge, Auto ummelden nach Umzug oder Kauf, Kennzeichenwechsel, Wiederzulassung, H-Kennzeichen und Saisonkennzeichen.",
+    a: "Wir unterstützen alle 19 auf dieser Seite aufgeführten Anliegen – von der An- und Abmeldung über Kennzeichenwechsel, Anschriften- und Namensänderung, technische Änderungen bis hin zu H-Kennzeichen, Saison-, Kurzzeit- und Ausfuhrkennzeichen, Feinstaubplakette, Ersatz des Fahrzeugscheins und Neusiegelung sowie Verlust und Abholung des Fahrzeugbriefs, Zulassung importierter Fahrzeuge und technisch veränderter Neufahrzeuge (§ 13 EG-FGV). Über die \"Infos Stadt Köln\"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln. Die häufigsten Anliegen sind: KFZ anmelden für Neufahrzeuge und Gebrauchtfahrzeuge, Auto ummelden nach Umzug oder Kauf, Kennzeichenwechsel, Wiederzulassung, H-Kennzeichen und Saisonkennzeichen.",
   },
   {
     q: "Was muss ich zum Termin mitbringen?",

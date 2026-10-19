@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
-import { SERVICE_IDS, getServiceLabel } from "@/lib/services";
+import { SERVICE_IDS, getServiceLabel, getMaxVehicles } from "@/lib/services";
 import { BLOCKED_DATES, computeCalendarBounds } from "@/lib/calendar-rules";
 
 export const getCalendarBounds = createServerFn({ method: "GET" }).handler(
@@ -42,6 +42,13 @@ export const createBooking = createServerFn({ method: "POST" })
         ok: false as const,
         error:
           "An einem der gewählten Tage ist die Zulassungsstelle geschlossen. Bitte entferne diesen Tag aus deiner Auswahl.",
+      };
+    }
+
+    if (data.fin_3 && getMaxVehicles(data.service_type) < 3) {
+      return {
+        ok: false as const,
+        error: "Für dieses Anliegen sind bei der Stadt höchstens 2 Fahrzeuge pro Termin möglich. Bitte entferne das dritte Fahrzeug.",
       };
     }
 
