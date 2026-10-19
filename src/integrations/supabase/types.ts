@@ -51,6 +51,8 @@ export type Database = {
           status: string
           stripe_refund_id: string | null
           stripe_session_id: string | null
+          withdraw_token: string | null
+          withdrawn_at: string | null
         }
         Insert: {
           anonymized_at?: string | null
@@ -88,6 +90,8 @@ export type Database = {
           status?: string
           stripe_refund_id?: string | null
           stripe_session_id?: string | null
+          withdraw_token?: string | null
+          withdrawn_at?: string | null
         }
         Update: {
           anonymized_at?: string | null
@@ -125,6 +129,8 @@ export type Database = {
           status?: string
           stripe_refund_id?: string | null
           stripe_session_id?: string | null
+          withdraw_token?: string | null
+          withdrawn_at?: string | null
         }
         Relationships: []
       }
@@ -254,6 +260,45 @@ export type Database = {
           id?: string
           metadata?: Json | null
           reason?: string
+        }
+        Relationships: []
+      }
+      withdrawals: {
+        Row: {
+          anonymized_at: string | null
+          booking_id: string | null
+          contract_reference: string | null
+          created_at: string
+          email: string
+          id: string
+          name: string
+          outcome: string | null
+          processed_at: string | null
+          source: string
+        }
+        Insert: {
+          anonymized_at?: string | null
+          booking_id?: string | null
+          contract_reference?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          outcome?: string | null
+          processed_at?: string | null
+          source: string
+        }
+        Update: {
+          anonymized_at?: string | null
+          booking_id?: string | null
+          contract_reference?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          outcome?: string | null
+          processed_at?: string | null
+          source?: string
         }
         Relationships: []
       }
