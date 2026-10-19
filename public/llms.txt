@@ -15,8 +15,8 @@ KFZ-Termin Köln ist ein Dienst von Eike Hoffmann (Köln, Deutschland). Kunden g
 
 1. Ersatz Zulassungsbescheinigung Teil I
 2. Abmeldung eines Fahrzeugs (Außerbetriebsetzung)
-3. Anmeldung Gebrauchtfahrzeug (ausgenommen ausländische Fahrzeuge)
-4. Anmeldung Neufahrzeug (ausgenommen technisch veränderte Neufahrzeuge gem. § 13 EG-FGV)
+3. Anmeldung Gebrauchtfahrzeug (für Fahrzeuge aus dem Ausland: „Zulassung importierter Fahrzeuge“)
+4. Anmeldung Neufahrzeug (für technisch veränderte Neufahrzeuge nach § 13 EG-FGV: eigenes Anliegen)
 5. Kennzeichenwechsel
 6. Anschriftenänderung in den Fahrzeugpapieren (ohne Halterwechsel, nur innerhalb Köln)
 7. Technische Änderung
@@ -28,6 +28,10 @@ KFZ-Termin Köln ist ein Dienst von Eike Hoffmann (Köln, Deutschland). Kunden g
 13. Ausfuhrkennzeichen
 14. Änderung des Familiennamens in Fahrzeugpapieren
 15. Neusiegelung von Kennzeichen
+16. Verlust der Zulassungsbescheinigung Teil II
+17. Zulassung importierter Fahrzeuge
+18. Abholung einer neu beantragten Zulassungsbescheinigung Teil II
+19. Zulassung eines technisch veränderten Neufahrzeugs (§ 13 EG-FGV)
 
 Der Preis von 9,99 € gilt für alle Anliegen gleich.
 
@@ -35,7 +39,7 @@ Der Preis von 9,99 € gilt für alle Anliegen gleich.
 
 
 - 9,99 € einmalig pro Termin, inkl. aller Gebühren, keine Umsatzsteuer (§ 19 UStG), keine Folgekosten.
-- Der Preis gilt unabhängig vom Anliegen und für bis zu 3 Fahrzeuge in einem Termin.
+- Der Preis gilt unabhängig vom Anliegen und für bis zu 3 Fahrzeuge in einem Termin (bei einigen Anliegen höchstens 2).
 - Zahlung über Stripe direkt im Buchungsformular.
 - Geld-zurück-Garantie: Wird innerhalb des gewählten Zeitraums (max. 14 Tage) kein Termin gefunden, wird der volle Betrag auf Anfrage an info@kfz-termin.online erstattet.
 
@@ -43,7 +47,7 @@ Der Preis von 9,99 € gilt für alle Anliegen gleich.
 
 1. Kunde wählt auf der Startseite unter „Jetzt Termin buchen" die Dienstleistung aus.
 2. Kunde gibt die Daten der künftigen Halterin / des künftigen Halters an: Anrede, Vor- und Nachname, E-Mail, Telefonnummer.
-3. Kunde gibt die letzten 4 Zeichen der FIN an (Fahrzeugschein, Feld E); bis zu 3 Fahrzeuge möglich.
+3. Kunde gibt die letzten 4 Zeichen der FIN an (Fahrzeugschein, Feld E); bis zu 3 Fahrzeuge möglich (bei einigen Anliegen höchstens 2).
 4. Kunde wählt im Kalender die Wunschtage aus, an denen er verfügbar ist. Mehr Tage erhöhen die Chance.
 5. Kunde bezahlt 9,99 € über Stripe.
 6. Das System sucht täglich von 6 bis 20 Uhr und bucht den ersten freien Slot an einem der Wunschtage.

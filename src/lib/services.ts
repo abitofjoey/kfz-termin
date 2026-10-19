@@ -13,7 +13,11 @@ export type ServiceId =
   | "kurzzeitkennzeichen"
   | "ausfuhrkennzeichen"
   | "familienname"
-  | "neusiegelung";
+  | "neusiegelung"
+  | "verlust-zb2"
+  | "importfahrzeug"
+  | "abholung-zb2"
+  | "neu-eg-fgv";
 
 export type Service = {
   id: ServiceId;
@@ -29,6 +33,8 @@ export type Service = {
   infoUrl?: string;
   /** Häufig gewählte Anliegen – werden in der Kachel-Auswahl direkt angezeigt */
   popular?: boolean;
+  /** Höchstzahl Fahrzeuge pro Termin (Standard 3) */
+  maxVehicles?: number;
 };
 
 export const SERVICES: Service[] = [
@@ -37,7 +43,7 @@ export const SERVICES: Service[] = [
     label: "Anmeldung Gebrauchtfahrzeug",
     shortLabel: "Gebrauchtfahrzeug",
     subtitle: "Umschreibung nach Zuzug oder bei Verkauf / Halterwechsel",
-    note: "Ausgenommen ausländische Fahrzeuge",
+    note: "Für Fahrzeuge aus dem Ausland bitte „Zulassung importierter Fahrzeuge“ wählen",
     infoUrl: "https://www.stadt-koeln.de/service/produkte/00737/index.html",
     popular: true,
   },
@@ -46,7 +52,7 @@ export const SERVICES: Service[] = [
     label: "Anmeldung Neufahrzeug",
     shortLabel: "Neufahrzeug",
     subtitle: "Erstzulassung deines neuen Fahrzeugs",
-    note: "Ausgenommen technisch veränderte Neufahrzeuge gem. § 13 EG-FGV",
+    note: "Für technisch veränderte Neufahrzeuge (§ 13 EG-FGV) bitte das eigene Anliegen wählen",
     infoUrl: "https://www.stadt-koeln.de/service/produkte/00729/index.html",
     popular: true,
   },
@@ -72,6 +78,7 @@ export const SERVICES: Service[] = [
     shortLabel: "Ersatz Fahrzeugschein",
     subtitle: "Neuausstellung des Fahrzeugscheins bei Verlust oder Beschädigung",
     popular: true,
+    infoUrl: "https://www.stadt-koeln.de/service/produkt/verlust-der-zulassungsbescheinigung-teil-i-fahrzeugschein-1",
   },
   {
     id: "abmeldung",
@@ -79,6 +86,7 @@ export const SERVICES: Service[] = [
     shortLabel: "Abmeldung",
     subtitle: "Außerbetriebsetzung deines Fahrzeugs",
     popular: true,
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/20014/index.html",
   },
   {
     id: "kennzeichenwechsel",
@@ -95,6 +103,7 @@ export const SERVICES: Service[] = [
     subtitle: "Neue Adresse in den Fahrzeugpapieren eintragen",
     note: "Ohne Halterwechsel, nur innerhalb Köln",
     popular: true,
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00718/index.html",
   },
   {
     id: "technische-aenderung",
@@ -116,6 +125,7 @@ export const SERVICES: Service[] = [
     label: "Feinstaubplakette",
     shortLabel: "Feinstaubplakette",
     subtitle: "Ausstellung der Umweltplakette für die Windschutzscheibe",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00783/index.html",
   },
   {
     id: "saisonkennzeichen",
@@ -136,12 +146,46 @@ export const SERVICES: Service[] = [
     label: "Änderung des Familiennamens in Fahrzeugpapieren",
     shortLabel: "Namensänderung",
     subtitle: "Neuer Familienname nach Heirat, Scheidung o. Ä.",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00778/index.html",
   },
   {
     id: "neusiegelung",
     label: "Neusiegelung von Kennzeichen",
     shortLabel: "Neusiegelung",
     subtitle: "Ersatz bei Beschädigung oder Unlesbarkeit des Kennzeichens",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/20013/index.html",
+  },
+  {
+    id: "verlust-zb2",
+    label: "Verlust der Zulassungsbescheinigung Teil II",
+    shortLabel: "Verlust Fahrzeugbrief",
+    subtitle: "Verlustmeldung des Fahrzeugbriefs",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/00781/index.html",
+    maxVehicles: 2,
+  },
+  {
+    id: "importfahrzeug",
+    label: "Zulassung importierter Fahrzeuge",
+    shortLabel: "Importfahrzeug",
+    subtitle: "Zulassung eines Fahrzeugs aus dem Ausland",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/20262/index.html",
+    maxVehicles: 2,
+  },
+  {
+    id: "abholung-zb2",
+    label: "Abholung einer neu beantragten Zulassungsbescheinigung Teil II",
+    shortLabel: "Abholung Fahrzeugbrief",
+    subtitle: "Abholung des neu beantragten Fahrzeugbriefs",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/20269/index.html",
+    maxVehicles: 2,
+  },
+  {
+    id: "neu-eg-fgv",
+    label: "Zulassung eines technisch veränderten Neufahrzeugs (§ 13 EG-FGV)",
+    shortLabel: "Neufahrzeug § 13 EG-FGV",
+    subtitle: "Erstzulassung eines technisch veränderten Neufahrzeugs",
+    infoUrl: "https://www.stadt-koeln.de/service/produkte/20259/index.html",
+    maxVehicles: 2,
   },
 ];
 
@@ -154,3 +198,7 @@ export const getServiceLabel = (id: ServiceId): string => getService(id).label;
 
 export const POPULAR_SERVICES = SERVICES.filter((s) => s.popular);
 export const MORE_SERVICES = SERVICES.filter((s) => !s.popular);
+
+export const DEFAULT_MAX_VEHICLES = 3;
+export const getMaxVehicles = (id: ServiceId | null | undefined): number =>
+  (id && SERVICES.find((s) => s.id === id)?.maxVehicles) || DEFAULT_MAX_VEHICLES;

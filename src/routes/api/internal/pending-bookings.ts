@@ -36,6 +36,10 @@ const SERVICE_MAP: Record<string, string> = {
   "Feinstaubplakette": "13",
   "Änderung des Familiennamens in Fahrzeugpapieren": "14",
   "Neusiegelung von Kennzeichen": "15",
+  "Verlust der Zulassungsbescheinigung Teil II": "16",
+  "Zulassung importierter Fahrzeuge": "17",
+  "Abholung einer neu beantragten Zulassungsbescheinigung Teil II": "18",
+  "Zulassung eines technisch veränderten Neufahrzeugs (§ 13 EG-FGV)": "19",
 };
 
 function mapSalutation(value: string): string {
