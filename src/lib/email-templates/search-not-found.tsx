@@ -11,13 +11,16 @@ interface Props {
   serviceType?: string
   selectedDates?: string[]
   refundOk?: boolean
-  anlass?: 'direkt' | 'gewaehlt' | 'frist'
+  anlass?: 'direkt' | 'gewaehlt' | 'frist' | 'widerruf'
   searchError?: string | null
 }
 
 function intro(anlass: Props['anlass'], searchError: Props['searchError']): string {
   if (anlass === 'frist') {
     return 'da wir innerhalb von 48 Stunden keine neuen Wunschtermine von dir erhalten haben, erstatten wir dir den vollen Betrag.'
+  }
+  if (anlass === 'widerruf') {
+    return 'wir haben deinen Widerruf erhalten. Wir haben die Terminsuche beendet und erstatten dir den vollen Betrag.'
   }
   if (anlass === 'gewaehlt') return 'wie gewünscht erstatten wir dir den vollen Betrag.'
   if (searchError === 'email_limit') {

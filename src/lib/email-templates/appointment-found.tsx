@@ -3,7 +3,7 @@ import {
   Row, Column, Link,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
-import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
+import { BookingNumberLine } from './customer-email-parts'
 import { formatBerlinLong, formatBerlinTime } from './format-berlin'
 
 const SITE_NAME = 'KFZ-Termin Köln'

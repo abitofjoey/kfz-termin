@@ -136,6 +136,11 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             <Text style={text}>
               Du hast vor der Buchung ausdrücklich verlangt, dass wir vor Ablauf der Widerrufsfrist mit der Terminsuche beginnen, und bestätigt, dass dein Widerrufsrecht mit vollständiger Erbringung der Leistung erlischt.
             </Text>
+            <Text style={text}>
+              Den Widerruf kannst du auch online über die Funktion „Vertrag widerrufen“ unter{' '}
+              <Link href="https://kfz-termin.online/widerruf" style={emailLink}>https://kfz-termin.online/widerruf</Link>{' '}
+              erklären.
+            </Text>
             <Text style={legalTitle}>Widerrufsbelehrung</Text>
             <Text style={text}>für Verträge über die automatisierte Terminsuche und -buchung bei der Kfz-Zulassungsstelle Köln (kfz-termin.online)</Text>
             <Text style={text}><strong>Stand: Oktober 2026</strong></Text>
