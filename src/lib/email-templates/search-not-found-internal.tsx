@@ -16,7 +16,7 @@ interface Props {
   refundStatus?: 'offered' | 'refunded' | 'already' | 'failed' | 'disabled'
   stripeRefundId?: string | null
   refundError?: string | null
-  anlass?: 'direkt' | 'gewaehlt' | 'frist'
+  anlass?: 'direkt' | 'gewaehlt' | 'frist' | 'widerruf'
   deadline?: string
 }
 
@@ -39,6 +39,7 @@ const ANLASS_TEXT: Record<string, string> = {
   direkt: 'direkt',
   gewaehlt: 'vom Kunden gewählt',
   frist: 'Frist abgelaufen',
+  widerruf: 'Widerruf des Kunden',
 }
 
 function noticeText(p: Props): string {

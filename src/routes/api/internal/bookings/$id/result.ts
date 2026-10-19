@@ -107,6 +107,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
             selectedDates: booking.selected_dates,
             stripeSessionId: booking.stripe_session_id,
             emailChangeToken,
+            withdrawToken: booking.withdraw_token,
           };
 
           let errEmailSent = false;
@@ -221,6 +222,45 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
 
         const appointmentAt = new Date(body.appointmentAt).toISOString();
         const foundAt = new Date(body.bookedAt).toISOString();
+
+        if (booking.search_result === "withdrawn") {
+          // Termin kurz vor dem Widerruf gebucht: Zustand nicht ändern, nur informieren.
+          const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
+          const wData = {
+            bookingId: booking.id,
+            salutation: booking.salutation,
+            firstName: booking.first_name,
+            lastName: booking.last_name,
+            email: booking.email,
+            phone: booking.phone,
+            serviceType: booking.service_type,
+            appointmentAt,
+            foundAt,
+            withdrawnAt: booking.withdrawn_at,
+          };
+          let wSent = false;
+          try {
+            const [customer, internal] = await Promise.all([
+              sendTransactionalEmailServer({
+                templateName: "withdrawn-found",
+                recipientEmail: booking.email,
+                idempotencyKey: `booking-withdrawn-found-${booking.id}`,
+                templateData: wData,
+              }),
+              sendTransactionalEmailServer({
+                templateName: "withdrawn-found-internal",
+                idempotencyKey: `booking-withdrawn-found-internal-${booking.id}`,
+                templateData: wData,
+              }),
+            ]);
+            wSent = customer.success;
+            if (!customer.success) console.error("booking result: withdrawn-found customer email not sent");
+            if (!internal.success) console.error("booking result: withdrawn-found internal email not sent");
+          } catch {
+            console.error("booking result: withdrawn-found email sending failed");
+          }
+          return Response.json({ ok: true, withdrawn: true, emailSent: wSent });
+        }
 
 
         const { data: updated, error: updateError } = await supabaseAdmin
