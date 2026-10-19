@@ -31,6 +31,11 @@ export const Route = createFileRoute("/widerrufsbelehrung")({
       </section>
 
       <section>
+        <h2 className="text-lg font-semibold">Online-Widerruf</h2>
+        <p className="mt-2">Den Widerruf können Sie auch online über die Funktion „Vertrag widerrufen“ unter <Link to="/widerruf" className="text-accent underline">https://kfz-termin.online/widerruf</Link> erklären.</p>
+      </section>
+
+      <section>
         <h2 className="text-lg font-semibold">Folgen des Widerrufs</h2>
         <p className="mt-2">Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist. Für diese Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.</p>
         <p className="mt-2">Haben Sie verlangt, dass die Dienstleistung während der Widerrufsfrist beginnen soll, so haben Sie uns einen angemessenen Betrag zu zahlen, der dem Anteil der bis zu dem Zeitpunkt, zu dem Sie uns von der Ausübung des Widerrufsrechts hinsichtlich dieses Vertrags unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.</p>
