@@ -31,6 +31,14 @@ export function Footer() {
           </a>
         </nav>
       </div>
+      <div className="mx-auto max-w-6xl px-4 pb-8">
+        <Link
+          to="/widerruf"
+          className="inline-flex items-center rounded-md border-2 border-white/80 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+        >
+          Vertrag widerrufen
+        </Link>
+      </div>
     </footer>
   );
 }

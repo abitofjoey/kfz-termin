@@ -17,6 +17,7 @@ import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as EmailAendernRouteImport } from './routes/email-aendern'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as TermineAendernRouteImport } from './routes/termine-aendern'
+import { Route as WiderrufRouteImport } from './routes/widerruf'
 import { Route as WiderrufsbelehrungRouteImport } from './routes/widerrufsbelehrung'
 import { Route as ApiInternalPendingBookingsRouteImport } from './routes/api/internal/pending-bookings'
 import { Route as LovableEmailEventsRouteImport } from './routes/lovable/email/events'
@@ -65,6 +66,11 @@ const ImpressumRoute = ImpressumRouteImport.update({
 const TermineAendernRoute = TermineAendernRouteImport.update({
   id: '/termine-aendern',
   path: '/termine-aendern',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WiderrufRoute = WiderrufRouteImport.update({
+  id: '/widerruf',
+  path: '/widerruf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WiderrufsbelehrungRoute = WiderrufsbelehrungRouteImport.update({
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/email-aendern': typeof EmailAendernRoute
   '/impressum': typeof ImpressumRoute
   '/termine-aendern': typeof TermineAendernRoute
+  '/widerruf': typeof WiderrufRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/email-aendern': typeof EmailAendernRoute
   '/impressum': typeof ImpressumRoute
   '/termine-aendern': typeof TermineAendernRoute
+  '/widerruf': typeof WiderrufRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/email-aendern': typeof EmailAendernRoute
   '/impressum': typeof ImpressumRoute
   '/termine-aendern': typeof TermineAendernRoute
+  '/widerruf': typeof WiderrufRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/email-aendern'
     | '/impressum'
     | '/termine-aendern'
+    | '/widerruf'
     | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/email-aendern'
     | '/impressum'
     | '/termine-aendern'
+    | '/widerruf'
     | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/email-aendern'
     | '/impressum'
     | '/termine-aendern'
+    | '/widerruf'
     | '/widerrufsbelehrung'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
@@ -244,6 +256,7 @@ export interface RootRouteChildren {
   EmailAendernRoute: typeof EmailAendernRoute
   ImpressumRoute: typeof ImpressumRoute
   TermineAendernRoute: typeof TermineAendernRoute
+  WiderrufRoute: typeof WiderrufRoute
   WiderrufsbelehrungRoute: typeof WiderrufsbelehrungRoute
   ApiInternalPendingBookingsRoute: typeof ApiInternalPendingBookingsRouteWithChildren
   LovableEmailEventsRoute: typeof LovableEmailEventsRoute
@@ -310,6 +323,13 @@ declare module '@tanstack/react-router' {
       path: '/termine-aendern'
       fullPath: '/termine-aendern'
       preLoaderRoute: typeof TermineAendernRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/widerruf': {
+      id: '/widerruf'
+      path: '/widerruf'
+      fullPath: '/widerruf'
+      preLoaderRoute: typeof WiderrufRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/widerrufsbelehrung': {
@@ -401,6 +421,7 @@ const rootRouteChildren: RootRouteChildren = {
   EmailAendernRoute: EmailAendernRoute,
   ImpressumRoute: ImpressumRoute,
   TermineAendernRoute: TermineAendernRoute,
+  WiderrufRoute: WiderrufRoute,
   WiderrufsbelehrungRoute: WiderrufsbelehrungRoute,
   ApiInternalPendingBookingsRoute: ApiInternalPendingBookingsRouteWithChildren,
   LovableEmailEventsRoute: LovableEmailEventsRoute,

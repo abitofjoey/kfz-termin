@@ -26,6 +26,10 @@ import { template as piDownInternal } from './pi-down-internal'
 import { template as piRecoveredInternal } from './pi-recovered-internal'
 import { template as bookingNotPickedUpInternal } from './booking-not-picked-up-internal'
 import { template as bookingStuckInternal } from './booking-stuck-internal'
+import { template as withdrawalReceived } from './withdrawal-received'
+import { template as withdrawalInternal } from './withdrawal-internal'
+import { template as withdrawnFound } from './withdrawn-found'
+import { template as withdrawnFoundInternal } from './withdrawn-found-internal'
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'booking-confirmation': bookingConfirmation,
@@ -45,4 +49,8 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'pi-recovered-internal': piRecoveredInternal,
   'booking-not-picked-up-internal': bookingNotPickedUpInternal,
   'booking-stuck-internal': bookingStuckInternal,
+  'withdrawal-received': withdrawalReceived,
+  'withdrawal-internal': withdrawalInternal,
+  'withdrawn-found': withdrawnFound,
+  'withdrawn-found-internal': withdrawnFoundInternal,
 }

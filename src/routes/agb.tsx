@@ -70,14 +70,14 @@ export const Route = createFileRoute("/agb")({
 
       <section>
         <h2 className="text-lg font-semibold">§ 7 Widerrufsrecht für Verbraucher</h2>
-        <p className="mt-2">(1) Die Einzelheiten zum Widerrufsrecht ergeben sich aus der gesonderten <Link to="/widerrufsbelehrung" className="text-accent underline">Widerrufsbelehrung</Link> samt Muster-Widerrufsformular.</p>
+        <p className="mt-2">(1) Die Einzelheiten zum Widerrufsrecht ergeben sich aus der gesonderten <Link to="/widerrufsbelehrung" className="text-accent underline">Widerrufsbelehrung</Link> samt Muster-Widerrufsformular. Der Widerruf kann auch online über die Funktion „Vertrag widerrufen“ unter <Link to="/widerruf" className="text-accent underline">https://kfz-termin.online/widerruf</Link> erklärt werden.</p>
         <p className="mt-2">(2) Der Anbieter beginnt vor Ablauf der Widerrufsfrist nur dann mit der Dienstleistung, wenn der Kunde im Buchungsformular ausdrücklich folgende Erklärung abgibt:</p>
         <p className="mt-2 border-l-2 border-accent pl-4 italic">„Ich verlange ausdrücklich den sofortigen Beginn der Terminsuche vor Ablauf der Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger Erbringung der Leistung erlischt (§ 356 Abs. 4 BGB).“</p>
         <p className="mt-2">(3) Mit dieser Zustimmung und der vollständigen Erbringung der Dienstleistung durch den Anbieter erlischt das Widerrufsrecht des Kunden gemäß § 356 Abs. 4 BGB.</p>
-        <p className="mt-2">(4) Widerruft der Kunde den Vertrag nach Erteilung der Zustimmung gemäß Abs. 2, bevor die Dienstleistung vollständig erbracht wurde, ist er gemäß § 357a Abs. 2 BGB verpflichtet, für die bis zum Zugang der Widerrufserklärung anteilig bereits erbrachten Leistungen einen angemessenen Betrag zu zahlen.</p>
+        <p className="mt-2">(4) Widerruft der Kunde den Vertrag nach Erteilung der Zustimmung gemäß Abs. 2, bevor die Dienstleistung vollständig erbracht wurde, verzichtet der Anbieter auf den Wertersatz nach § 357a Abs. 2 BGB für die bis zum Zugang der Widerrufserklärung bereits erbrachten Leistungen.</p>
         <ul className="mt-2 list-disc space-y-1 pl-6">
           <li><strong>Widerruf vor Beginn der Terminsuche:</strong> vollständige Rückerstattung des gezahlten Betrags.</li>
-          <li><strong>Widerruf während laufender Suche (noch kein Termin gebucht):</strong> Rückerstattung abzüglich eines angemessenen Betrags für die bis zum Widerruf bereits erbrachte Sucharbeit. Dieser Betrag wird zeitanteilig im Verhältnis zum vereinbarten Gesamtpreis und zum bis dahin betriebenen Aufwand bemessen.</li>
+          <li><strong>Widerruf während laufender Suche (noch kein Termin gebucht):</strong> volle Rückerstattung des gezahlten Betrags.</li>
           <li><strong>Widerruf nach vollständiger Erbringung:</strong> Das Widerrufsrecht ist erloschen; eine Rückerstattung erfolgt nicht.</li>
         </ul>
         <p className="mt-2">(5) Rückzahlungen erfolgen unverzüglich, spätestens binnen vierzehn Tagen, über das ursprünglich verwendete Zahlungsmittel.</p>

@@ -97,6 +97,7 @@ export const submitEmailChange = createServerFn({ method: "POST" })
     const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
     const tpl = {
       bookingId: b.id,
+      withdrawToken: b.withdraw_token,
       salutation: b.salutation,
       firstName: b.first_name,
       lastName: b.last_name,

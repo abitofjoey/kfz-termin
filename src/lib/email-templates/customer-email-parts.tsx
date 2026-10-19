@@ -91,3 +91,28 @@ export const button = {
 export const footerHint = { fontSize: '14px', color: '#374151', margin: '24px 0 4px' }
 export const footerEmail = { fontSize: '14px', color: '#1a2540', margin: '0 0 24px', fontWeight: 500 as const }
 export const footer = { fontSize: '14px', color: '#6b7280', margin: '24px 0 0' }
+
+/** Kurze Buchungsnummer: erste 8 Zeichen der ID in Großbuchstaben. */
+export function bookingNumber(id?: string | null): string {
+  return (id ?? '').slice(0, 8).toUpperCase()
+}
+
+export const BookingNumberLine = ({ bookingId }: { bookingId?: string | null }) =>
+  bookingId ? (
+    <Text style={bookingNumberStyle}>
+      Buchungsnummer: <strong>{bookingNumber(bookingId)}</strong>
+    </Text>
+  ) : null
+
+export const WithdrawLinkLine = ({ withdrawToken }: { withdrawToken?: string | null }) =>
+  withdrawToken ? (
+    <Text style={withdrawLine}>
+      Du möchtest die Suche abbrechen?{' '}
+      <Link href={`${SITE_URL}/widerruf?token=${withdrawToken}`} style={link}>Vertrag widerrufen</Link>
+    </Text>
+  ) : null
+
+export const bookingNumberStyle = {
+  fontSize: '14px', color: '#1a2540', margin: '0 0 16px', letterSpacing: '0.02em',
+}
+export const withdrawLine = { fontSize: '13px', color: '#6b7280', margin: '16px 0 0', lineHeight: '1.5' }

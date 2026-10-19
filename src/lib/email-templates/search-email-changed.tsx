@@ -3,13 +3,15 @@ import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
 
 interface Props {
+  bookingId?: string
+  withdrawToken?: string | null
   firstName?: string
   serviceType?: string
   selectedDates?: string[]
   newEmail?: string
 }
 
-const SearchEmailChangedEmail = ({ firstName, serviceType, selectedDates, newEmail }: Props) => (
+const SearchEmailChangedEmail = ({ bookingId, withdrawToken, firstName, serviceType, selectedDates, newEmail }: Props) => (
   <Html lang="de" dir="ltr">
     <Head />
     <Preview>Danke, wir suchen weiter</Preview>
@@ -18,6 +20,7 @@ const SearchEmailChangedEmail = ({ firstName, serviceType, selectedDates, newEma
         <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
         <Heading style={s.h1}>Danke, wir suchen weiter</Heading>
         <Hr style={s.topRule} />
+        <s.BookingNumberLine bookingId={bookingId} />
 
         <Text style={s.text}>
           {firstName ? `Hallo ${firstName},` : 'Hallo,'} danke für deine Rückmeldung! Wir suchen ab sofort
@@ -39,6 +42,8 @@ const SearchEmailChangedEmail = ({ firstName, serviceType, selectedDates, newEma
             musst du dann innerhalb von 3 Stunden anklicken. Bitte schau dann auch in deine Ordner Spam und Werbung.
           </Text>
         </Section>
+
+        <s.WithdrawLinkLine withdrawToken={withdrawToken} />
 
         <s.ContactCard />
         <s.MailFooter />

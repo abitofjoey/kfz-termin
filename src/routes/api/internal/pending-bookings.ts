@@ -125,8 +125,22 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
           return new Response("Database error", { status: 500 });
         }
 
+        let withdrawn: string[] = [];
+        try {
+          const since = new Date(Date.now() - 14 * 24 * 3600_000).toISOString();
+          const { data: wd, error: wdError } = await supabaseAdmin
+            .from("bookings")
+            .select("id")
+            .gte("withdrawn_at", since);
+          if (wdError) console.error("pending-bookings: withdrawn query error", wdError.code);
+          else withdrawn = (wd ?? []).map((r) => r.id);
+        } catch {
+          console.error("pending-bookings: withdrawn query failed");
+        }
+
         return Response.json({
           bookings: (data ?? []).map((row) => mapBooking(row as unknown as BookingRow)),
+          withdrawn,
         });
       },
     },

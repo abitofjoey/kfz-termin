@@ -3,12 +3,15 @@ import {
   Row, Column,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
 import { formatDayLong } from './customer-email-parts'
 
 const SITE_NAME = 'KFZ-Termin Köln'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
 
 interface BookingConfirmationProps {
+  bookingId?: string
+  withdrawToken?: string | null
   salutation?: string
   firstName?: string
   lastName?: string
@@ -21,7 +24,7 @@ interface BookingConfirmationProps {
   selectedDates?: string[]
 }
 
-const BookingConfirmationEmail = ({
+const BookingConfirmationEmail = ({ bookingId, withdrawToken,
   salutation,
   firstName,
   lastName,
@@ -50,6 +53,7 @@ const BookingConfirmationEmail = ({
           <Text style={eyebrow}>{SITE_NAME}</Text>
           <Heading style={h1}>Buchungsbestätigung</Heading>
           <Hr style={topRule} />
+          <BookingNumberLine bookingId={bookingId} />
 
           <Text style={text}>
             {firstName ? `Hallo ${firstName},` : 'Hallo,'}
@@ -132,6 +136,11 @@ const BookingConfirmationEmail = ({
             <Text style={text}>
               Du hast vor der Buchung ausdrücklich verlangt, dass wir vor Ablauf der Widerrufsfrist mit der Terminsuche beginnen, und bestätigt, dass dein Widerrufsrecht mit vollständiger Erbringung der Leistung erlischt.
             </Text>
+            <Text style={text}>
+              Den Widerruf kannst du auch online über die Funktion „Vertrag widerrufen“ unter{' '}
+              <Link href="https://kfz-termin.online/widerruf" style={emailLink}>https://kfz-termin.online/widerruf</Link>{' '}
+              erklären.
+            </Text>
             <Text style={legalTitle}>Widerrufsbelehrung</Text>
             <Text style={text}>für Verträge über die automatisierte Terminsuche und -buchung bei der Kfz-Zulassungsstelle Köln (kfz-termin.online)</Text>
             <Text style={text}><strong>Stand: Oktober 2026</strong></Text>
@@ -172,6 +181,8 @@ const BookingConfirmationEmail = ({
               Unsere AGB: <Link href="https://kfz-termin.online/agb" style={emailLink}>kfz-termin.online/agb</Link>
             </Text>
           </Section>
+
+          <WithdrawLinkLine withdrawToken={withdrawToken} />
 
           <Text style={footerHint}>
             Bei Fragen antworte einfach auf diese E-Mail.

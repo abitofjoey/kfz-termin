@@ -3,19 +3,24 @@ import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
 
 interface Props {
+  bookingId?: string
+  withdrawToken?: string | null
   salutation?: string
   firstName?: string
   lastName?: string
   serviceType?: string
   selectedDates?: string[]
   refundOk?: boolean
-  anlass?: 'direkt' | 'gewaehlt' | 'frist'
+  anlass?: 'direkt' | 'gewaehlt' | 'frist' | 'widerruf'
   searchError?: string | null
 }
 
 function intro(anlass: Props['anlass'], searchError: Props['searchError']): string {
   if (anlass === 'frist') {
     return 'da wir innerhalb von 48 Stunden keine neuen Wunschtermine von dir erhalten haben, erstatten wir dir den vollen Betrag.'
+  }
+  if (anlass === 'widerruf') {
+    return 'wir haben deinen Widerruf erhalten. Wir haben die Terminsuche beendet und erstatten dir den vollen Betrag.'
   }
   if (anlass === 'gewaehlt') return 'wie gewünscht erstatten wir dir den vollen Betrag.'
   if (searchError === 'email_limit') {
@@ -24,7 +29,7 @@ function intro(anlass: Props['anlass'], searchError: Props['searchError']): stri
   return 'leider ist auch im Zeitraum deiner neuen Wunschtermine keiner der gewünschten Termine frei geworden. Das tut uns leid.'
 }
 
-const SearchNotFoundEmail = ({
+const SearchNotFoundEmail = ({ bookingId,
   salutation, firstName, lastName, serviceType, selectedDates, refundOk, anlass, searchError,
 }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
@@ -37,6 +42,7 @@ const SearchNotFoundEmail = ({
           <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
           <Heading style={s.h1}>Deine Rückerstattung</Heading>
           <Hr style={s.topRule} />
+          <s.BookingNumberLine bookingId={bookingId} />
 
           <Text style={s.text}>
             {firstName ? `Hallo ${firstName},` : 'Hallo,'} {intro(anlass, searchError)}

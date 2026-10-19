@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { LegalPage } from "@/components/landing/LegalPage";
 
 export const Route = createFileRoute("/widerrufsbelehrung")({
@@ -28,6 +28,11 @@ export const Route = createFileRoute("/widerrufsbelehrung")({
         <p className="mt-2 pl-4">Eike Hoffmann<br />KFZ-Termin Köln<br />Longericher Str. 31<br />50739 Köln<br />Telefon: 0151 53461798<br />E-Mail: <a className="text-accent underline" href="mailto:info@kfz-termin.online">info@kfz-termin.online</a></p>
         <p className="mt-2">mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder eine E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</p>
         <p className="mt-2">Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.</p>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-semibold">Online-Widerruf</h2>
+        <p className="mt-2">Den Widerruf können Sie auch online über die Funktion „Vertrag widerrufen“ unter <Link to="/widerruf" className="text-accent underline">https://kfz-termin.online/widerruf</Link> erklären.</p>
       </section>
 
       <section>

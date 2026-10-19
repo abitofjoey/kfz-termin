@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { sendTransactionalEmailServer } from "@/lib/email/send.server";
 
-export type RefundAnlass = "direkt" | "gewaehlt" | "frist";
+export type RefundAnlass = "direkt" | "gewaehlt" | "frist" | "widerruf";
 export type RefundStatus = "refunded" | "already" | "failed" | "disabled";
 
 export const REBOOK_WINDOW_MS = 48 * 3600_000;

@@ -68,6 +68,11 @@ export const Route = createFileRoute("/datenschutz")({
       </section>
 
       <section>
+        <h2 className="text-lg font-semibold">9a. Online-Widerruf („Vertrag widerrufen“)</h2>
+        <p className="mt-2">Über die Funktion „Vertrag widerrufen“ unter <a className="text-accent underline" href="/widerruf">kfz-termin.online/widerruf</a> kannst du deinen Vertrag online widerrufen. Dabei verarbeiten wir deinen Namen, deine E-Mail-Adresse, deine freiwilligen Angaben zur Buchung sowie Datum und Uhrzeit des Eingangs. Zweck ist die Bearbeitung deines Widerrufs (Zuordnung zur Buchung, Beenden der Terminsuche, Rückerstattung), die Eingangsbestätigung per E-Mail und der Nachweis über den Zugang der Erklärung. Rechtsgrundlage ist Art. 6 Abs. 1 lit. c DSGVO in Verbindung mit § 356a BGB sowie Art. 6 Abs. 1 lit. b DSGVO. Zum Schutz vor Missbrauch begrenzen wir die Anzahl der Widerrufe je E-Mail-Adresse. Die Daten werden zusammen mit der zugehörigen Buchung anonymisiert (90 Tage nach dem letzten Wunschtermin); Widerrufe, die keiner Buchung zugeordnet werden können, nach 180 Tagen.</p>
+      </section>
+
+      <section>
         <h2 className="text-lg font-semibold">10. Kontaktaufnahme via WhatsApp</h2>
         <p className="mt-2">Auf unserer Website findest du einen Button, der einen Chat über WhatsApp mit uns startet. Anbieter ist WhatsApp Ireland Limited, 4 Grand Canal Square, Grand Canal Harbour, Dublin 2, Irland. Wir verarbeiten deine über WhatsApp übermittelten Nachrichten und Kontaktdaten zur Beantwortung deiner Anfrage (Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO). Weitere Informationen: <a className="text-accent underline" href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noreferrer">whatsapp.com/legal/privacy-policy-eea</a>. Bitte beachte, dass Daten gegebenenfalls in Drittländer übertragen werden.</p>
       </section>

@@ -3,6 +3,8 @@ import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
 
 interface Props {
+  bookingId?: string
+  withdrawToken?: string | null
   salutation?: string
   firstName?: string
   lastName?: string
@@ -10,7 +12,7 @@ interface Props {
   selectedDates?: string[]
 }
 
-const SearchRebookConfirmedEmail = ({ salutation, firstName, lastName, serviceType, selectedDates }: Props) => {
+const SearchRebookConfirmedEmail = ({ bookingId, withdrawToken, salutation, firstName, lastName, serviceType, selectedDates }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   return (
     <Html lang="de" dir="ltr">
@@ -21,6 +23,7 @@ const SearchRebookConfirmedEmail = ({ salutation, firstName, lastName, serviceTy
           <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
           <Heading style={s.h1}>Deine neuen Wunschtermine sind gespeichert</Heading>
           <Hr style={s.topRule} />
+          <s.BookingNumberLine bookingId={bookingId} />
 
           <Text style={s.text}>
             {firstName ? `Hallo ${firstName},` : 'Hallo,'} danke! Wir suchen ab sofort für deine neuen Wunschtermine weiter:
@@ -41,6 +44,8 @@ const SearchRebookConfirmedEmail = ({ salutation, firstName, lastName, serviceTy
               innerhalb von 3 Stunden anklicken. Bitte schau dann auch in deine Ordner Spam und Werbung.
             </Text>
           </Section>
+
+          <s.WithdrawLinkLine withdrawToken={withdrawToken} />
 
           <s.ContactCard />
           <s.MailFooter />
