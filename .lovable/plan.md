@@ -1,21 +1,15 @@
-# Stripe-Hinweis: Node.js-Sicherheitslücke
+# Stripe-Hinweis: Erklärung (keine Änderungen)
 
 ## Was ist das Problem?
-Stripe sieht an den Anfragen deiner Seite eine Versionsangabe, die nach einem veralteten Node.js aussieht. In Node.js gibt es eine schwere Lücke. Darüber könnte jemand fremde Befehle auf einem Server ausführen und so an den Stripe-Schlüssel kommen.
+Stripe hat an den Anfragen deines Kontos eine Kennung gesehen, die auf ein veraltetes Node.js hindeutet. In Node.js gibt es derzeit eine schwere Sicherheitslücke. Über einen ungepatchten Server könnte jemand an den geheimen Stripe-Schlüssel kommen. Die Warnung betrifft kein Problem bei Stripe selbst.
 
 ## Betrifft das deine Seite?
-Sehr wahrscheinlich nicht direkt. Deine Seite läuft nicht auf einem eigenen Node.js-Server, sondern auf Cloudflare. Dort wird die Laufzeit vom Anbieter aktuell gehalten. Die Stripe-Bibliothek meldet in dieser Umgebung trotzdem eine „Node"-Kennung. Deshalb kann Stripe die Warnung automatisch verschickt haben.
+Sehr wahrscheinlich nicht. Deine Seite läuft auf Cloudflare und nicht auf einem eigenen Node.js-Server. Diese Umgebung hält der Anbieter selbst aktuell. Die Stripe-Bibliothek meldet dort trotzdem eine „Node"-Kennung. Deshalb hat Stripe die Warnung vermutlich automatisch verschickt.
 
-Selbst prüfen solltest du:
-- ob dein Pi-Script oder ein anderes Programm auf deinem PC den Stripe-Schlüssel nutzt und auf einem alten Node.js läuft. Dann Node.js dort aktualisieren.
+## Was du selbst tun kannst
+1. Prüfe, ob auf deinem Pi oder PC ein Programm den geheimen Stripe-Schlüssel nutzt. Läuft es mit einem alten Node.js, aktualisiere Node.js dort.
+2. Sieh im Stripe-Dashboard nach ungewöhnlichen Aktivitäten. Schau dazu in die Request-Logs, die Zahlungen, die Auszahlungen und die Einstellungen.
+3. Optional kannst du zur Sicherheit einen neuen Schlüssel erzeugen („Roll key"). Sag mir dann Bescheid, und ich hinterlege ihn sicher.
 
-## Was empfohlen wird (Vorschlag)
-1. **Du im Stripe-Dashboard:** In den Request-Logs und Zahlungen nach ungewöhnlichen Aktivitäten suchen, also fremde Auszahlungen, Erstattungen oder geänderte Einstellungen.
-2. **Du im Stripe-Dashboard:** Den geheimen Schlüssel neu erzeugen („Roll key"), den alten sofort oder nach kurzer Frist ablaufen lassen.
-3. **Ich:** Den neuen Schlüssel als geschütztes Secret `STRIPE_SECRET_KEY` hinterlegen. Dazu öffne ich ein Eingabefeld, du fügst den Schlüssel dort ein, nicht im Chat.
-4. **Ich:** Danach prüfen, dass Bezahlen und die Bestätigung nach der Zahlung weiter funktionieren. Das Webhook-Signing-Secret bleibt unverändert, solange du den Webhook in Stripe nicht neu anlegst.
-5. Kein Code muss geändert werden. Ein neues Veröffentlichen ist nicht nötig, weil Secrets sofort wirken.
-
-## Technische Details
-- Betroffen sind nur `src/lib/stripe.functions.ts` und `src/routes/api/public/stripe/webhook.ts`. Beide lesen `process.env.STRIPE_SECRET_KEY`.
-- Die Laufzeit ist Cloudflare workerd mit nodejs_compat und kein eigenständiges Node.js.
+## Umsetzung
+Keine. Code, Daten und Einstellungen bleiben unverändert.
