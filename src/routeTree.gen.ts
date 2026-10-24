@@ -19,6 +19,7 @@ import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as TermineAendernRouteImport } from './routes/termine-aendern'
 import { Route as WiderrufRouteImport } from './routes/widerruf'
 import { Route as WiderrufsbelehrungRouteImport } from './routes/widerrufsbelehrung'
+import { Route as ApiInternalHeartbeatRouteImport } from './routes/api/internal/heartbeat'
 import { Route as ApiInternalPendingBookingsRouteImport } from './routes/api/internal/pending-bookings'
 import { Route as LovableEmailEventsRouteImport } from './routes/lovable/email/events'
 import { Route as ApiInternalHealthCheckRouteImport } from './routes/api/internal/health/check'
@@ -78,6 +79,11 @@ const WiderrufsbelehrungRoute = WiderrufsbelehrungRouteImport.update({
   path: '/widerrufsbelehrung',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiInternalHeartbeatRoute = ApiInternalHeartbeatRouteImport.update({
+  id: '/api/internal/heartbeat',
+  path: '/api/internal/heartbeat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiInternalPendingBookingsRoute =
   ApiInternalPendingBookingsRouteImport.update({
     id: '/api/internal/pending-bookings',
@@ -134,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/termine-aendern': typeof TermineAendernRoute
   '/widerruf': typeof WiderrufRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
+  '/api/internal/heartbeat': typeof ApiInternalHeartbeatRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
   '/api/internal/health/check': typeof ApiInternalHealthCheckRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/termine-aendern': typeof TermineAendernRoute
   '/widerruf': typeof WiderrufRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
+  '/api/internal/heartbeat': typeof ApiInternalHeartbeatRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
   '/api/internal/health/check': typeof ApiInternalHealthCheckRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/termine-aendern': typeof TermineAendernRoute
   '/widerruf': typeof WiderrufRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
+  '/api/internal/heartbeat': typeof ApiInternalHeartbeatRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
   '/lovable/email/events': typeof LovableEmailEventsRoute
   '/api/internal/health/check': typeof ApiInternalHealthCheckRoute
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/termine-aendern'
     | '/widerruf'
     | '/widerrufsbelehrung'
+    | '/api/internal/heartbeat'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
     | '/api/internal/health/check'
@@ -217,6 +227,7 @@ export interface FileRouteTypes {
     | '/termine-aendern'
     | '/widerruf'
     | '/widerrufsbelehrung'
+    | '/api/internal/heartbeat'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
     | '/api/internal/health/check'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/termine-aendern'
     | '/widerruf'
     | '/widerrufsbelehrung'
+    | '/api/internal/heartbeat'
     | '/api/internal/pending-bookings'
     | '/lovable/email/events'
     | '/api/internal/health/check'
@@ -258,6 +270,7 @@ export interface RootRouteChildren {
   TermineAendernRoute: typeof TermineAendernRoute
   WiderrufRoute: typeof WiderrufRoute
   WiderrufsbelehrungRoute: typeof WiderrufsbelehrungRoute
+  ApiInternalHeartbeatRoute: typeof ApiInternalHeartbeatRoute
   ApiInternalPendingBookingsRoute: typeof ApiInternalPendingBookingsRouteWithChildren
   LovableEmailEventsRoute: typeof LovableEmailEventsRoute
   ApiInternalHealthCheckRoute: typeof ApiInternalHealthCheckRoute
@@ -337,6 +350,13 @@ declare module '@tanstack/react-router' {
       path: '/widerrufsbelehrung'
       fullPath: '/widerrufsbelehrung'
       preLoaderRoute: typeof WiderrufsbelehrungRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/internal/heartbeat': {
+      id: '/api/internal/heartbeat'
+      path: '/api/internal/heartbeat'
+      fullPath: '/api/internal/heartbeat'
+      preLoaderRoute: typeof ApiInternalHeartbeatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/internal/pending-bookings': {
@@ -423,6 +443,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermineAendernRoute: TermineAendernRoute,
   WiderrufRoute: WiderrufRoute,
   WiderrufsbelehrungRoute: WiderrufsbelehrungRoute,
+  ApiInternalHeartbeatRoute: ApiInternalHeartbeatRoute,
   ApiInternalPendingBookingsRoute: ApiInternalPendingBookingsRouteWithChildren,
   LovableEmailEventsRoute: LovableEmailEventsRoute,
   ApiInternalHealthCheckRoute: ApiInternalHealthCheckRoute,
