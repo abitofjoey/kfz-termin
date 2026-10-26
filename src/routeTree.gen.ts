@@ -26,6 +26,7 @@ import { Route as ApiInternalHealthCheckRouteImport } from './routes/api/interna
 import { Route as ApiInternalRefundsDueRouteImport } from './routes/api/internal/refunds/due'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
+import { Route as ApiInternalBookingsIdDatesRouteImport } from './routes/api/internal/bookings/$id/dates'
 import { Route as ApiInternalBookingsIdResultRouteImport } from './routes/api/internal/bookings/$id/result'
 import { Route as ApiInternalPendingBookingsIdAckRouteImport } from './routes/api/internal/pending-bookings/$id/ack'
 
@@ -116,6 +117,12 @@ const LovableEmailTransactionalPreviewRoute =
     path: '/lovable/email/transactional/preview',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiInternalBookingsIdDatesRoute =
+  ApiInternalBookingsIdDatesRouteImport.update({
+    id: '/api/internal/bookings/$id/dates',
+    path: '/api/internal/bookings/$id/dates',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiInternalBookingsIdResultRoute =
   ApiInternalBookingsIdResultRouteImport.update({
     id: '/api/internal/bookings/$id/result',
@@ -147,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/api/internal/bookings/$id/dates': typeof ApiInternalBookingsIdDatesRoute
   '/api/internal/bookings/$id/result': typeof ApiInternalBookingsIdResultRoute
   '/api/internal/pending-bookings/$id/ack': typeof ApiInternalPendingBookingsIdAckRoute
 }
@@ -168,6 +176,7 @@ export interface FileRoutesByTo {
   '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/api/internal/bookings/$id/dates': typeof ApiInternalBookingsIdDatesRoute
   '/api/internal/bookings/$id/result': typeof ApiInternalBookingsIdResultRoute
   '/api/internal/pending-bookings/$id/ack': typeof ApiInternalPendingBookingsIdAckRoute
 }
@@ -190,6 +199,7 @@ export interface FileRoutesById {
   '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/api/internal/bookings/$id/dates': typeof ApiInternalBookingsIdDatesRoute
   '/api/internal/bookings/$id/result': typeof ApiInternalBookingsIdResultRoute
   '/api/internal/pending-bookings/$id/ack': typeof ApiInternalPendingBookingsIdAckRoute
 }
@@ -213,6 +223,7 @@ export interface FileRouteTypes {
     | '/api/internal/refunds/due'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
+    | '/api/internal/bookings/$id/dates'
     | '/api/internal/bookings/$id/result'
     | '/api/internal/pending-bookings/$id/ack'
   fileRoutesByTo: FileRoutesByTo
@@ -234,6 +245,7 @@ export interface FileRouteTypes {
     | '/api/internal/refunds/due'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
+    | '/api/internal/bookings/$id/dates'
     | '/api/internal/bookings/$id/result'
     | '/api/internal/pending-bookings/$id/ack'
   id:
@@ -255,6 +267,7 @@ export interface FileRouteTypes {
     | '/api/internal/refunds/due'
     | '/api/public/stripe/webhook'
     | '/lovable/email/transactional/preview'
+    | '/api/internal/bookings/$id/dates'
     | '/api/internal/bookings/$id/result'
     | '/api/internal/pending-bookings/$id/ack'
   fileRoutesById: FileRoutesById
@@ -277,6 +290,7 @@ export interface RootRouteChildren {
   ApiInternalRefundsDueRoute: typeof ApiInternalRefundsDueRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
+  ApiInternalBookingsIdDatesRoute: typeof ApiInternalBookingsIdDatesRoute
   ApiInternalBookingsIdResultRoute: typeof ApiInternalBookingsIdResultRoute
 }
 
@@ -401,6 +415,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/internal/bookings/$id/dates': {
+      id: '/api/internal/bookings/$id/dates'
+      path: '/api/internal/bookings/$id/dates'
+      fullPath: '/api/internal/bookings/$id/dates'
+      preLoaderRoute: typeof ApiInternalBookingsIdDatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/internal/bookings/$id/result': {
       id: '/api/internal/bookings/$id/result'
       path: '/api/internal/bookings/$id/result'
@@ -450,6 +471,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiInternalRefundsDueRoute: ApiInternalRefundsDueRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
+  ApiInternalBookingsIdDatesRoute: ApiInternalBookingsIdDatesRoute,
   ApiInternalBookingsIdResultRoute: ApiInternalBookingsIdResultRoute,
 }
 export const routeTree = rootRouteImport
