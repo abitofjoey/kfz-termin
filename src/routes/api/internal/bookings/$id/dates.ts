@@ -43,7 +43,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/dates")({
 
         const { data: booking, error: loadError } = await supabaseAdmin
           .from("bookings")
-          .select("id, paid, email, first_name, service_type, selected_dates, withdraw_token, search_result, withdrawn_at, refund_claimed_at, refunded_at")
+          .select("id, paid, email, first_name, last_name, service_type, selected_dates, withdraw_token, search_result, withdrawn_at, refund_claimed_at, refunded_at")
           .eq("id", params.id)
           .maybeSingle();
         if (loadError) {
@@ -98,6 +98,25 @@ export const Route = createFileRoute("/api/internal/bookings/$id/dates")({
           if (!res.success) console.error("booking dates: customer mail not sent");
         } catch {
           console.error("booking dates: customer mail failed");
+        }
+
+        try {
+          const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
+          const res = await sendTransactionalEmailServer({
+            templateName: "search-dates-updated-internal",
+            idempotencyKey: `booking-dates-updated-${booking.id}-${oldDates.join(",")}->${newDates.join(",")}-internal`,
+            templateData: {
+              bookingId: booking.id,
+              firstName: booking.first_name,
+              lastName: booking.last_name,
+              serviceType: booking.service_type,
+              oldDates,
+              newDates,
+            },
+          });
+          if (!res.success) console.error("booking dates: internal mail not sent");
+        } catch {
+          console.error("booking dates: internal mail failed");
         }
 
         return Response.json({ ok: true, changed: true });
