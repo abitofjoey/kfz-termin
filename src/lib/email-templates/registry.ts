@@ -30,6 +30,7 @@ import { template as withdrawalReceived } from './withdrawal-received'
 import { template as withdrawalInternal } from './withdrawal-internal'
 import { template as withdrawnFound } from './withdrawn-found'
 import { template as withdrawnFoundInternal } from './withdrawn-found-internal'
+import { template as searchDatesUpdated } from './search-dates-updated'
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'booking-confirmation': bookingConfirmation,
@@ -53,4 +54,5 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'withdrawal-internal': withdrawalInternal,
   'withdrawn-found': withdrawnFound,
   'withdrawn-found-internal': withdrawnFoundInternal,
+  'search-dates-updated': searchDatesUpdated,
 }
