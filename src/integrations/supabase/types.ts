@@ -32,6 +32,7 @@ export type Database = {
           found_at: string | null
           id: string
           last_name: string
+          last_status_mail_at: string | null
           notes: string | null
           paid: boolean
           phone: string
@@ -71,6 +72,7 @@ export type Database = {
           found_at?: string | null
           id?: string
           last_name: string
+          last_status_mail_at?: string | null
           notes?: string | null
           paid?: boolean
           phone: string
@@ -110,6 +112,7 @@ export type Database = {
           found_at?: string | null
           id?: string
           last_name?: string
+          last_status_mail_at?: string | null
           notes?: string | null
           paid?: boolean
           phone?: string
