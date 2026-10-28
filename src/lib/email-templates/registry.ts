@@ -32,6 +32,8 @@ import { template as withdrawnFound } from './withdrawn-found'
 import { template as withdrawnFoundInternal } from './withdrawn-found-internal'
 import { template as searchDatesUpdated } from './search-dates-updated'
 import { template as searchDatesUpdatedInternal } from './search-dates-updated-internal'
+import { template as searchDailyStatus } from './search-daily-status'
+import { template as dailyStatusPiInternal } from './daily-status-pi-internal'
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'booking-confirmation': bookingConfirmation,
@@ -57,4 +59,6 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'withdrawn-found-internal': withdrawnFoundInternal,
   'search-dates-updated': searchDatesUpdated,
   'search-dates-updated-internal': searchDatesUpdatedInternal,
+  'search-daily-status': searchDailyStatus,
+  'daily-status-pi-internal': dailyStatusPiInternal,
 }

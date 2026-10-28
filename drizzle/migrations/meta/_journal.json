@@ -50,6 +50,13 @@
       "when": 1792443654798,
       "tag": "0006_online_withdrawal",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793198099163,
+      "tag": "0007_add_last_status_mail_at",
+      "breakpoints": true
     }
   ]
 }
