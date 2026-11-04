@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { getCity, DEFAULT_CITY } from "@/lib/cities";
 
 export const Route = createFileRoute("/api/internal/heartbeat")({
   server: {
@@ -14,11 +15,14 @@ export const Route = createFileRoute("/api/internal/heartbeat")({
           return new Response("Unauthorized", { status: 401 });
         }
 
+        const city = new URL(request.url).searchParams.get("city") ?? DEFAULT_CITY;
+        if (!getCity(city)) return new Response("Unknown city", { status: 400 });
+
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { data, error } = await supabaseAdmin
           .from("script_heartbeat")
           .select("last_poll_at")
-          .eq("city", "koeln")
+          .eq("city", city)
           .maybeSingle();
 
         if (error) {
