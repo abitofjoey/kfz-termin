@@ -1,8 +1,10 @@
 import { Body, Button, Container, Head, Heading, Html, Hr, Link, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
+import { cityOrDefault } from '../cities'
 
 interface Props {
+  city?: string | null
   bookingId?: string
   withdrawToken?: string | null
   salutation?: string
@@ -12,7 +14,7 @@ interface Props {
   deadline?: string
 }
 
-const SearchRebookOfferEmail = ({ bookingId, salutation, firstName, lastName, rebookToken, deadline }: Props) => {
+const SearchRebookOfferEmail = ({ bookingId, salutation, firstName, lastName, rebookToken, deadline, city }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   const url = `${s.SITE_URL}/termine-aendern?t=${rebookToken ?? ''}`
   const refundUrl = `${url}&aktion=erstattung`
