@@ -1,7 +1,7 @@
 import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
-const testimonials = [
+export const testimonials = [
   {
     name: "Mona Liskow",
     service: "Google Rezension",
