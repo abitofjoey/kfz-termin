@@ -62,7 +62,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       // Stripe sendet automatisch eine Zahlungsquittung (sofern in den
       // Stripe Email-Settings "Successful payments" aktiviert).
       payment_intent_data: { receipt_email: booking.email } as any,
-      success_url: `${origin}/buchung-erfolgreich?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/buchung-erfolgreich?session_id={CHECKOUT_SESSION_ID}&city=${encodeURIComponent(booking.city ?? "koeln")}`,
       cancel_url: `${origin}/buchung-abgebrochen?city=${encodeURIComponent(booking.city ?? "koeln")}`,
     });
 
