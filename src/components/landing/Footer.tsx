@@ -1,18 +1,27 @@
 import { Link } from "@tanstack/react-router";
 import { Brand } from "@/components/brand/Brand";
 import { useConsent } from "@/lib/consent";
+import { launchedCities } from "@/lib/cities";
 
-export function Footer() {
+export function Footer({ city }: { city?: string } = {}) {
   const { openSettings } = useConsent();
   return (
     <footer className="border-t border-border bg-primary text-primary-foreground">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <Brand city="Köln" size="sm" asLink={false} onDark />
+          <Brand city={city ?? ""} size="sm" asLink={false} onDark />
           <p className="mt-2 text-sm text-white/90">
             © 2026 KFZ-Termin
           </p>
         </div>
+
+        <nav aria-label="Städte" className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/90">
+          {launchedCities().map((c) => (
+            <a key={c.slug} href={`/${c.slug}`} className="hover:text-white">
+              Zulassungsstelle {c.name}
+            </a>
+          ))}
+        </nav>
 
         <nav aria-label="Rechtliches und Kontakt" className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/90">
           <Link to="/impressum" className="hover:text-white">Impressum</Link>
