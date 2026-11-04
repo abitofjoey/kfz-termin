@@ -202,3 +202,45 @@ export const MORE_SERVICES = SERVICES.filter((s) => !s.popular);
 export const DEFAULT_MAX_VEHICLES = 3;
 export const getMaxVehicles = (id: ServiceId | null | undefined): number =>
   (id && SERVICES.find((s) => s.id === id)?.maxVehicles) || DEFAULT_MAX_VEHICLES;
+
+// ---- Mehrstädtigkeit -------------------------------------------------------
+// Jede Stadt hat ihre eigene Dienstleistungsliste und eigene Script-Nummern.
+// Köln nutzt unverändert die Liste oben.
+import type { ServiceCategory } from "@/lib/cities";
+
+export type CityService = Service & {
+  category: ServiceCategory;
+  /** Mögliche Standorte (IDs aus cities.ts); leer = alle. */
+  locations?: string[];
+};
+
+export const SERVICES_BY_CITY: Record<string, CityService[]> = {
+  koeln: SERVICES.map((s) => ({ ...s, category: "kfz" as const })),
+};
+
+export const getServices = (city: string): CityService[] => SERVICES_BY_CITY[city] ?? [];
+
+/** Script-Nummern pro Stadt, Schlüssel = gespeichertes Label (bookings.service_type). */
+export const SCRIPT_SERVICE_MAP_BY_CITY: Record<string, Record<string, string>> = {
+  koeln: {
+    "Anmeldung Gebrauchtfahrzeug": "1",
+    "Anmeldung Neufahrzeug": "2",
+    "Kennzeichenwechsel": "3",
+    "Technische Änderung": "4",
+    "Wiederzulassung": "5",
+    "H-Kennzeichen": "6",
+    "Saisonkennzeichen": "7",
+    "Kurzzeitkennzeichen": "8",
+    "Ausfuhrkennzeichen": "9",
+    "Ersatz Zulassungsbescheinigung Teil I": "10",
+    "Abmeldung eines Fahrzeugs (Außerbetriebsetzung)": "11",
+    "Anschriftenänderung in den Fahrzeugpapieren": "12",
+    "Feinstaubplakette": "13",
+    "Änderung des Familiennamens in Fahrzeugpapieren": "14",
+    "Neusiegelung von Kennzeichen": "15",
+    "Verlust der Zulassungsbescheinigung Teil II": "16",
+    "Zulassung importierter Fahrzeuge": "17",
+    "Abholung einer neu beantragten Zulassungsbescheinigung Teil II": "18",
+    "Zulassung eines technisch veränderten Neufahrzeugs (§ 13 EG-FGV)": "19",
+  },
+};
