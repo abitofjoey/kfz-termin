@@ -2,11 +2,14 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { SERVICE_IDS, getServiceLabel, getMaxVehicles } from "@/lib/services";
-import { BLOCKED_DATES, computeCalendarBounds } from "@/lib/calendar-rules";
+import { computeCalendarBounds } from "@/lib/calendar-rules";
+import { DEFAULT_CITY, getCity, isBookableCity } from "@/lib/cities";
 
-export const getCalendarBounds = createServerFn({ method: "GET" }).handler(
-  async () => computeCalendarBounds(),
-);
+export const getCalendarBounds = createServerFn({ method: "GET" })
+  .inputValidator((data: unknown) =>
+    z.object({ city: z.string().max(40).optional() }).optional().parse(data),
+  )
+  .handler(async ({ data }) => computeCalendarBounds(new Date(), data?.city ?? DEFAULT_CITY));
 
 const BookingInput = z.object({
   service_type: z.enum(SERVICE_IDS),
@@ -29,6 +32,7 @@ const BookingInput = z.object({
     .optional()
     .or(z.literal("")),
   selected_dates: z.array(z.string()).min(1).max(60),
+  city: z.string().max(40).optional(),
 });
 
 export const createBooking = createServerFn({ method: "POST" })
@@ -36,7 +40,12 @@ export const createBooking = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const supabase = supabaseAdmin;
 
-    const blocked = data.selected_dates.filter((d) => BLOCKED_DATES.includes(d));
+    const city = data.city ?? DEFAULT_CITY;
+    if (!isBookableCity(city)) {
+      return { ok: false as const, error: "Für diese Stadt sind noch keine Buchungen möglich." };
+    }
+    const blockedDates = getCity(city)!.calendar.blockedDates;
+    const blocked = data.selected_dates.filter((d) => blockedDates.includes(d));
     if (blocked.length > 0) {
       return {
         ok: false as const,
@@ -69,6 +78,7 @@ export const createBooking = createServerFn({ method: "POST" })
         selected_dates: data.selected_dates,
         status: "open",
         paid: false,
+        city,
       })
       .select("id")
       .single();

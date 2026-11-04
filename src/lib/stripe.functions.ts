@@ -58,12 +58,12 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
           },
         },
       ],
-      metadata: { booking_id: booking.id },
+      metadata: { booking_id: booking.id, city: booking.city ?? "koeln" },
       // Stripe sendet automatisch eine Zahlungsquittung (sofern in den
       // Stripe Email-Settings "Successful payments" aktiviert).
       payment_intent_data: { receipt_email: booking.email } as any,
       success_url: `${origin}/buchung-erfolgreich?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/buchung-abgebrochen`,
+      cancel_url: `${origin}/buchung-abgebrochen?city=${encodeURIComponent(booking.city ?? "koeln")}`,
     });
 
     await supabaseAdmin
