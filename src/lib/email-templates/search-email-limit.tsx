@@ -37,9 +37,7 @@ const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName
 
           <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={text}>
-            wir hatten bereits einen passenden Termin für dich gefunden, konnten
-            ihn aber nicht buchen: {`Die Zulassungsstelle ${c.name} lässt`} für deine
-            E-Mail-Adresse {email || 'deine Adresse'} aktuell keine weitere Buchung zu. Das passiert,
+            {`wir hatten bereits einen passenden Termin für dich gefunden, konnten ihn aber nicht buchen: Die Zulassungsstelle ${c.name} lässt für deine E-Mail-Adresse `}{email || 'deine Adresse'} aktuell keine weitere Buchung zu. Das passiert,
             wenn mit dieser Adresse bereits ein Termin bei der Zulassungsstelle
             besteht.
           </Text>

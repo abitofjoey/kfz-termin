@@ -17,7 +17,7 @@ export const Route = createFileRoute("/widerrufsbelehrung")({
   }),
   component: () => (
     <LegalPage title="Widerrufsbelehrung">
-      <p><strong>für Verträge über die automatisierte Terminsuche und -buchung bei der Kfz-Zulassungsstelle Köln (kfz-termin.online)</strong></p>
+      <p><strong>für Verträge über die automatisierte Terminsuche und -buchung bei der jeweiligen Kfz-Zulassungsbehörde, derzeit der Kfz-Zulassungsstelle Köln (kfz-termin.online)</strong></p>
       <p><strong>Stand: Oktober 2026</strong></p>
 
       <section>

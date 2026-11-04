@@ -6,7 +6,8 @@ KFZ-Termin Köln ist ein Dienst von Eike Hoffmann (Köln, Deutschland). Kunden g
 
 ## Pages
 
-- [Startseite](/): Leistungsbeschreibung, Ablauf, Preise (9,99 €), FAQ und Buchungsformular.
+- [Startseite](/): Überblick und Auswahl der Stadt.
+- [Köln](/koeln): Leistungsbeschreibung, Ablauf, Preise (9,99 €), FAQ und Buchungsformular für die Zulassungsstelle Köln.
 - [Impressum](/impressum): Anbieterkennzeichnung gemäß § 5 DDG.
 - [Datenschutz](/datenschutz): Datenschutzerklärung nach DSGVO, inkl. Rechtsgrundlagen der Datenverarbeitung.
 - [AGB](/agb): Allgemeine Geschäftsbedingungen, u.a. Leistungsumfang, Vergütung, Widerrufsrecht.

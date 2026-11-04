@@ -75,9 +75,11 @@ type FormValues = z.infer<typeof schema>;
 
 type Props = {
   preselected?: ServiceId | null;
+  /** Stadt der Seite, von der gebucht wird. */
+  city?: string;
 };
 
-export function BookingForm({ preselected }: Props) {
+export function BookingForm({ preselected, city = "koeln" }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [vehicleCount, setVehicleCount] = useState(1);
   const submitBooking = useServerFn(createBooking);
@@ -132,7 +134,7 @@ export function BookingForm({ preselected }: Props) {
   } | null>(null);
   useEffect(() => {
     let cancelled = false;
-    fetchBounds()
+    fetchBounds({ data: { city } })
       .then((b) => {
         if (cancelled) return;
         const parse = (iso: string) => {
@@ -188,6 +190,7 @@ export function BookingForm({ preselected }: Props) {
           fin_2: values.fin_2 || undefined,
           fin_3: values.fin_3 || undefined,
           selected_dates: dateStrings,
+          city,
         },
       });
       if (!result.ok) {

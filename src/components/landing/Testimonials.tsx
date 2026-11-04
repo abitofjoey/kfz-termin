@@ -27,13 +27,13 @@ const testimonials = [
   },
 ];
 
-export function Testimonials() {
+export function Testimonials({ title = "Erfahrungen unserer Kund:innen" }: { title?: string } = {}) {
   return (
     <section aria-labelledby="testimonials-heading" className="py-12">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8">
           <h2 id="testimonials-heading" className="text-2xl font-bold sm:text-3xl">
-            Erfahrungen unserer Kund:innen
+            {title}
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Das sagen Personen, die KFZ-Termin Köln bereits genutzt haben.

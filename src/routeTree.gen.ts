@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CityRouteImport } from './routes/$city'
 import { Route as AgbRouteImport } from './routes/agb'
 import { Route as BuchungAbgebrochenRouteImport } from './routes/buchung-abgebrochen'
 import { Route as BuchungErfolgreichRouteImport } from './routes/buchung-erfolgreich'
@@ -34,6 +35,11 @@ import { Route as ApiInternalPendingBookingsIdAckRouteImport } from './routes/ap
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CityRoute = CityRouteImport.update({
+  id: '/$city',
+  path: '/$city',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgbRoute = AgbRouteImport.update({
@@ -144,6 +150,7 @@ const ApiInternalPendingBookingsIdAckRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$city': typeof CityRoute
   '/agb': typeof AgbRoute
   '/buchung-abgebrochen': typeof BuchungAbgebrochenRoute
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
@@ -167,6 +174,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$city': typeof CityRoute
   '/agb': typeof AgbRoute
   '/buchung-abgebrochen': typeof BuchungAbgebrochenRoute
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
@@ -191,6 +199,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$city': typeof CityRoute
   '/agb': typeof AgbRoute
   '/buchung-abgebrochen': typeof BuchungAbgebrochenRoute
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
@@ -216,6 +225,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$city'
     | '/agb'
     | '/buchung-abgebrochen'
     | '/buchung-erfolgreich'
@@ -239,6 +249,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$city'
     | '/agb'
     | '/buchung-abgebrochen'
     | '/buchung-erfolgreich'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/$city'
     | '/agb'
     | '/buchung-abgebrochen'
     | '/buchung-erfolgreich'
@@ -286,6 +298,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CityRoute: typeof CityRoute
   AgbRoute: typeof AgbRoute
   BuchungAbgebrochenRoute: typeof BuchungAbgebrochenRoute
   BuchungErfolgreichRoute: typeof BuchungErfolgreichRoute
@@ -314,6 +327,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$city': {
+      id: '/$city'
+      path: '/$city'
+      fullPath: '/$city'
+      preLoaderRoute: typeof CityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agb': {
@@ -475,6 +495,7 @@ const ApiInternalPendingBookingsRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CityRoute: CityRoute,
   AgbRoute: AgbRoute,
   BuchungAbgebrochenRoute: BuchungAbgebrochenRoute,
   BuchungErfolgreichRoute: BuchungErfolgreichRoute,

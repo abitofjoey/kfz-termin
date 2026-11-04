@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { XCircle } from "lucide-react";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
+import { cityOrDefault } from "@/lib/cities";
 
 export const Route = createFileRoute("/buchung-abgebrochen")({
   head: () => ({
@@ -14,10 +15,15 @@ export const Route = createFileRoute("/buchung-abgebrochen")({
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    city: typeof search.city === "string" ? search.city : undefined,
+  }),
   component: CancelPage,
 });
 
 function CancelPage() {
+  const { city } = Route.useSearch();
+  const c = cityOrDefault(city);
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -31,10 +37,11 @@ function CancelPage() {
           Du kannst den Vorgang jederzeit erneut starten.
         </p>
         <Link
-          to="/"
+          to="/$city"
+          params={{ city: c.slug }}
           className="mt-8 inline-block rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
         >
-          Zurück zur Startseite
+          Zurück zur Seite für {c.name}
         </Link>
       </main>
       <Footer />

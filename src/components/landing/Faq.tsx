@@ -5,66 +5,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-export const faqItems = [
-  {
-    q: "Lohnt sich der Service für mich?",
-    a: "Ja – besonders wenn du kurzfristig einen Termin brauchst, einen konkreten Wunschzeitraum hast oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots, zum Beispiel wenn du gerade ein Auto gekauft hast, umgezogen bist oder eine Frist läuft. Termine beim Straßenverkehrsamt Köln sind deshalb so schwer zu bekommen, weil die Nachfrage sehr hoch ist und neue Slots meist nur zu bestimmten Zeiten freigegeben werden – oft sind sie innerhalb weniger Minuten vergeben. Die 9,99 € lohnen sich, wenn du nicht jeden Morgen selbst die Seite der Stadt Köln prüfen kannst oder willst. Wer regelmäßig Zeit dafür hat, braucht den Service nicht.",
-  },
-  {
-    q: "Was kostet der Service?",
-    a: "9,99 € einmalig, keine weiteren Kosten. Wird in deinem Zeitraum kein Termin frei, kannst du einmalig neue Wunschtermine wählen oder bekommst den vollen Betrag zurück – ohne Wenn und Aber.",
-  },
-  {
-    q: "Wie schnell bekomme ich einen Termin?",
-    a: "Es ist nicht genau vorhersagbar – es kann wenige Minuten dauern, wenn gerade ein Slot frei wird, aber auch einige Tage. Unser System prüft täglich von 6 bis 20 Uhr und bucht sofort den ersten freien Termin an einem deiner Wunschtage. Je mehr Tage du auswählst, desto höher die Wahrscheinlichkeit und desto schneller geht es.",
-  },
-  {
-    q: "Welche Tage soll ich im Kalender auswählen?",
-    a: "Du wählst Tage, an denen du Zeit hast. Wir buchen dir nur einen einzigen Termin – den ersten freien Slot an einem deiner Wunschtage. Je mehr Tage du wählst, desto höher die Chance und desto schneller geht es.",
-  },
-  {
-    q: "Was ist die FIN und wo finde ich sie?",
-    a: "Die FIN ist die Fahrzeug-Identifizierungsnummer deines Autos. Wir benötigen nur die letzten 4 Zeichen – diese findest du in deinem Fahrzeugschein (Zulassungsbescheinigung Teil I) unter dem Feld „E\". Pro Termin können bis zu 3 Fahrzeuge angemeldet werden (bei einigen Anliegen höchstens 2) – du kannst im Buchungsformular weitere FIN-Felder hinzufügen.",
-  },
-  {
-    q: "Kann ich mehrere Fahrzeuge in einem Termin anmelden?",
-    a: "Ja, du kannst bis zu 3 Fahrzeuge in einem Termin anmelden, bei einigen Anliegen höchstens 2. Im Buchungsformular fügst du über „+ Weiteres Fahrzeug hinzufügen\" einfach die FIN-Endung jedes weiteren Fahrzeugs hinzu. Der Preis bleibt pauschal 9,99 € pro Termin, unabhängig von der Anzahl der Fahrzeuge.",
-  },
-  {
-    q: "Wie werde ich informiert wenn ein Termin gefunden wurde?",
-    a: "Sobald wir einen Termin für dich gebucht haben, bekommst du zwei E-Mails: eine von uns mit Datum und Uhrzeit und eine von der Kölner Zulassungsstelle mit deinem persönlichen Bestätigungslink.",
-  },
-  {
-    q: "Was ist die Bestätigungsmail der Zulassungsstelle?",
-    a: "Nach unserer Buchung schickt die Kölner Zulassungsstelle automatisch eine E-Mail mit einem Bestätigungslink. Diesen musst du innerhalb von 3 Stunden anklicken – sonst verfällt der Termin unwiderruflich. Prüfe regelmäßig nach unserer Buchungsbestätigung dein Postfach – auch den Spam-Ordner.",
-  },
-  {
-    q: "Was passiert wenn ich die Bestätigungsmail verpasse?",
-    a: "In diesem Fall verfällt der Termin und wir können leider keinen neuen garantieren. Halte dein Postfach im Blick sobald du gebucht hast – auch den Spam-Ordner.",
-  },
-  {
-    q: "Was passiert wenn kein Termin gefunden wird?",
-    a: "Wir suchen täglich innerhalb deines gewählten Zeitraums – maximal 14 Tage. Wird kein Termin frei, bekommst du automatisch eine E-Mail: Du kannst einmalig neue Wunschtermine wählen, ohne erneut zu bezahlen, oder dir mit einem Klick den vollen Betrag erstatten lassen. Meldest du dich nicht innerhalb von 48 Stunden, erstatten wir automatisch.",
-  },
-  {
-    q: "Kann ich den Auftrag stornieren?",
-    a: "Ja – solange noch kein Termin gebucht wurde, kannst du jederzeit per Mail an info@kfz-termin.online stornieren. Nach erfolgter Buchung gilt die Leistung als erbracht.",
-  },
-  {
-    q: "Für welche Anliegen gilt der Service?",
-    a: "Wir unterstützen alle 19 auf dieser Seite aufgeführten Anliegen – von der An- und Abmeldung über Kennzeichenwechsel, Anschriften- und Namensänderung, technische Änderungen bis hin zu H-Kennzeichen, Saison-, Kurzzeit- und Ausfuhrkennzeichen, Feinstaubplakette, Ersatz des Fahrzeugscheins und Neusiegelung sowie Verlust und Abholung des Fahrzeugbriefs, Zulassung importierter Fahrzeuge und technisch veränderter Neufahrzeuge (§ 13 EG-FGV). Über die \"Infos Stadt Köln\"-Links bei jedem Service findest du die offiziellen Details direkt auf der Seite der Stadt Köln. Die häufigsten Anliegen sind: KFZ anmelden für Neufahrzeuge und Gebrauchtfahrzeuge, Auto ummelden nach Umzug oder Kauf, Kennzeichenwechsel, Wiederzulassung, H-Kennzeichen und Saisonkennzeichen.",
-  },
-  {
-    q: "Was muss ich zum Termin mitbringen?",
-    a: "Das hängt von deinem Anliegen ab. Über die \"Infos Stadt Köln\"-Links bei jedem Service oben auf dieser Seite findest du die offiziellen Informationen mit den genauen Unterlagen. Wichtig: Bitte erscheine pünktlich – bei Verspätungen von mehr als 30 Minuten verfällt der Termin automatisch.",
-  },
-  {
-    q: "Kann ich eine Uhrzeit wählen?",
-    a: "Nein. Wir buchen den erstmöglichen freien Slot an einem deiner Wunschtage. Eine Uhrzeitauswahl ist aktuell nicht möglich.",
-  },
-];
+export type FaqItem = { q: string; a: string };
 
-export function Faq() {
+// Köln-FAQ liegt in den Stadtinhalten; Re-Export für bestehende Importe.
+export { koelnFaq as faqItems } from "@/content/cities/koeln";
+import { koelnFaq } from "@/content/cities/koeln";
+
+export function Faq({ items = koelnFaq }: { items?: FaqItem[] } = {}) {
   return (
     <section id="faq" aria-labelledby="faq-heading" className="bg-secondary/40 py-20">
       <div className="mx-auto max-w-3xl px-4">
@@ -75,7 +22,7 @@ export function Faq() {
           </p>
         </div>
         <Accordion type="single" collapsible className="mt-10">
-          {faqItems.map((item, i) => (
+          {items.map((item, i) => (
             <AccordionItem key={i} value={`item-${i}`}>
               <AccordionTrigger className="text-left text-base font-semibold">
                 {item.q}
