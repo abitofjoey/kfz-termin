@@ -1,0 +1,12 @@
+# Roadmap – Mehrstädtigkeit Stufe 1
+- [ ] Snapshot alte Startseite + Mails + pending-bookings-Mapping (vorher)
+- [ ] cities.ts (launched/bookable), content/cities/koeln.ts, Dienstleistungen pro Stadt
+- [ ] Kalenderregeln aus Konfiguration
+- [ ] Dynamische Route /$city mit CityLanding, neue Startseite /, Hash-Weiterleitung
+- [ ] Header/Footer/Sitemap/llms, Zurück-Links pro Buchungsstadt
+- [ ] Migration city/locations/booked_location/booking_reference/cancel_url
+- [ ] Formular/Checkout setzen city
+- [ ] pending-bookings/heartbeat/result/health/daily-status/dates städtefähig, [Köln]-Präfix
+- [ ] Mails aus Stadt-Konfiguration
+- [ ] Rechtstexte städteneutral
+- [ ] Vergleich vorher/nachher, Tests, Typprüfung, Build
