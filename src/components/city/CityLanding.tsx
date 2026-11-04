@@ -116,7 +116,16 @@ export function CityLanding({ city, content }: { city: string; content: CityCont
         <Pricing onSelect={handleSelect} />
         <Founder />
         <Testimonials />
-        {showForm ? (
+        {!getCity(city)?.bookable ? (
+          <section id="buchung" className="bg-background py-20">
+            <div className="mx-auto max-w-2xl px-4 text-center">
+              <h2 className="text-3xl font-bold sm:text-4xl">Bald buchbar</h2>
+              <p className="mt-4 text-muted-foreground">
+                Für {getCity(city)?.name} nehmen wir noch keine Buchungen an.
+              </p>
+            </div>
+          </section>
+        ) : showForm ? (
           <Suspense fallback={<BookingFormPlaceholder />}>
             <BookingForm preselected={preselected} city={city} />
           </Suspense>
