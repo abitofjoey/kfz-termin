@@ -102,6 +102,7 @@ export async function refundBooking(
 
   const base = {
     bookingId: booking.id,
+    city: booking.city,
     salutation: booking.salutation,
     firstName: booking.first_name,
     lastName: booking.last_name,

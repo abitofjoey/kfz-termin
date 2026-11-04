@@ -8,6 +8,9 @@ const BodySchema = z.discriminatedUnion("result", [
     result: z.literal("found"),
     appointmentAt: isoDate,
     bookedAt: isoDate,
+    location: z.string().trim().min(1).max(200).optional(),
+    bookingReference: z.string().trim().min(1).max(100).optional(),
+    cancelUrl: z.string().url().max(1000).optional(),
   }),
   z.object({
     result: z.literal("not_found"),
@@ -97,6 +100,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
           const errData = {
             reason: body.reason,
             bookingId: booking.id,
+            city: booking.city,
             salutation: booking.salutation,
             firstName: booking.first_name,
             lastName: booking.last_name,
@@ -185,6 +189,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
           const deadline = new Date(new Date(offeredAt).getTime() + 48 * 3600_000).toISOString();
           const offerData = {
             bookingId: booking.id,
+            city: booking.city,
             salutation: booking.salutation,
             firstName: booking.first_name,
             lastName: booking.last_name,
@@ -228,6 +233,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
           const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
           const wData = {
             bookingId: booking.id,
+            city: booking.city,
             salutation: booking.salutation,
             firstName: booking.first_name,
             lastName: booking.last_name,
@@ -269,6 +275,9 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
             search_result: "found",
             appointment_at: appointmentAt,
             found_at: foundAt,
+            ...(body.location ? { booked_location: body.location } : {}),
+            ...(body.bookingReference ? { booking_reference: body.bookingReference } : {}),
+            ...(body.cancelUrl ? { cancel_url: body.cancelUrl } : {}),
           })
           .eq("id", params.id)
           .is("search_result", null)
@@ -286,6 +295,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
 
         const templateData = {
           bookingId: booking.id,
+            city: booking.city,
           salutation: booking.salutation,
           firstName: booking.first_name,
           lastName: booking.last_name,
