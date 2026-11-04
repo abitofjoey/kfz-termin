@@ -20,6 +20,10 @@ export type Database = {
           appointment_at: string | null
           assigned_to_script: boolean
           assigned_to_script_at: string | null
+          booked_location: string | null
+          booking_reference: string | null
+          cancel_url: string | null
+          city: string
           confirmation_sent_at: string | null
           created_at: string
           email: string
@@ -33,6 +37,7 @@ export type Database = {
           id: string
           last_name: string
           last_status_mail_at: string | null
+          locations: string[] | null
           notes: string | null
           paid: boolean
           phone: string
@@ -60,6 +65,10 @@ export type Database = {
           appointment_at?: string | null
           assigned_to_script?: boolean
           assigned_to_script_at?: string | null
+          booked_location?: string | null
+          booking_reference?: string | null
+          cancel_url?: string | null
+          city?: string
           confirmation_sent_at?: string | null
           created_at?: string
           email: string
@@ -73,6 +82,7 @@ export type Database = {
           id?: string
           last_name: string
           last_status_mail_at?: string | null
+          locations?: string[] | null
           notes?: string | null
           paid?: boolean
           phone: string
@@ -100,6 +110,10 @@ export type Database = {
           appointment_at?: string | null
           assigned_to_script?: boolean
           assigned_to_script_at?: string | null
+          booked_location?: string | null
+          booking_reference?: string | null
+          cancel_url?: string | null
+          city?: string
           confirmation_sent_at?: string | null
           created_at?: string
           email?: string
@@ -113,6 +127,7 @@ export type Database = {
           id?: string
           last_name?: string
           last_status_mail_at?: string | null
+          locations?: string[] | null
           notes?: string | null
           paid?: boolean
           phone?: string

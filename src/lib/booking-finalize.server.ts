@@ -46,6 +46,7 @@ export async function finalizePaidBooking(bookingId: string): Promise<void> {
 
   const templateData = {
     bookingId: booking.id,
+    city: booking.city,
     withdrawToken: booking.withdraw_token,
     salutation: booking.salutation,
     firstName: booking.first_name,

@@ -1,8 +1,10 @@
 import { Body, Button, Container, Head, Heading, Html, Hr, Link, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
+import { cityOrDefault } from '../cities'
 
 interface Props {
+  city?: string | null
   bookingId?: string
   withdrawToken?: string | null
   salutation?: string
@@ -12,7 +14,7 @@ interface Props {
   deadline?: string
 }
 
-const SearchRebookOfferEmail = ({ bookingId, salutation, firstName, lastName, rebookToken, deadline }: Props) => {
+const SearchRebookOfferEmail = ({ bookingId, salutation, firstName, lastName, rebookToken, deadline, city }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   const url = `${s.SITE_URL}/termine-aendern?t=${rebookToken ?? ''}`
   const refundUrl = `${url}&aktion=erstattung`
@@ -30,7 +32,7 @@ const SearchRebookOfferEmail = ({ bookingId, salutation, firstName, lastName, re
           <Text style={s.text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={s.text}>
             leider ist im Zeitraum deiner Wunschtermine keiner der gewünschten
-            Termine bei der Kölner Zulassungsstelle frei geworden. Das tut uns leid.
+            {`Termine ${cityOrDefault(city).mail.atAuthority} frei geworden.`} Das tut uns leid.
             Du hast zwei Möglichkeiten:
           </Text>
 

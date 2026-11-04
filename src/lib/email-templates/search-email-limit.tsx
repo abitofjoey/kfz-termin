@@ -5,11 +5,12 @@ import type { TemplateEntry } from './registry'
 import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
 import { button } from './customer-email-parts'
 
-const SITE_NAME = 'KFZ-Termin Köln'
+import { cityOrDefault } from '../cities'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
 const SITE_URL = 'https://kfz-termin.online'
 
 interface Props {
+  city?: string | null
   bookingId?: string
   withdrawToken?: string | null
   salutation?: string
@@ -19,7 +20,9 @@ interface Props {
   emailChangeToken?: string | null
 }
 
-const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName, lastName, email, emailChangeToken }: Props) => {
+const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName, lastName, email, emailChangeToken, city }: Props) => {
+  const c = cityOrDefault(city)
+  const SITE_NAME = c.siteName
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   return (
     <Html lang="de" dir="ltr">
@@ -35,7 +38,7 @@ const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName
           <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={text}>
             wir hatten bereits einen passenden Termin für dich gefunden, konnten
-            ihn aber nicht buchen: Die Zulassungsstelle Köln lässt für deine
+            ihn aber nicht buchen: {`Die Zulassungsstelle ${c.name} lässt`} für deine
             E-Mail-Adresse {email || 'deine Adresse'} aktuell keine weitere Buchung zu. Das passiert,
             wenn mit dieser Adresse bereits ein Termin bei der Zulassungsstelle
             besteht.

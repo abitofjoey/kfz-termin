@@ -1,8 +1,9 @@
 // Gemeinsame Kalenderregeln (Europe/Berlin) für Buchung und neue Wunschtermine.
+// Die Regeln kommen aus der Stadt-Konfiguration (src/lib/cities.ts).
+import { cityOrDefault, settingsFor, DEFAULT_CITY } from "@/lib/cities";
 
-// Einmalig gesperrte Tage (z.B. Schließtage der Zulassungsstelle).
-// Nach dem Tag einfach wieder entfernen.
-export const BLOCKED_DATES: string[] = [];
+/** Köln-Sperrtage (Abwärtskompatibilität). Pflege in cities.ts. */
+export const BLOCKED_DATES: string[] = cityOrDefault(DEFAULT_CITY).calendar.blockedDates;
 
 function addDaysISO(iso: string, days: number) {
   const [y, m, d] = iso.split("-").map(Number);
@@ -11,7 +12,12 @@ function addDaysISO(iso: string, days: number) {
   return dt.toISOString().slice(0, 10);
 }
 
-export function computeCalendarBounds(now: Date = new Date()) {
+function rulesFor(city: string) {
+  return settingsFor(cityOrDefault(city)).calendar;
+}
+
+export function computeCalendarBounds(now: Date = new Date(), city: string = DEFAULT_CITY) {
+  const rules = rulesFor(city);
   const fmt = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Europe/Berlin",
     year: "numeric",
@@ -24,24 +30,26 @@ export function computeCalendarBounds(now: Date = new Date()) {
   const berlinHour = Number(parts.hour);
   const todayISO = `${parts.year}-${parts.month}-${parts.day}`;
 
-  // Ab 14 Uhr Berlin-Zeit: frühester wählbarer Tag ist übermorgen.
-  // maxDate wird mitverschoben, damit das buchbare Fenster konstant 14 Tage bleibt.
-  const minOffset = berlinHour >= 14 ? 2 : 1;
+  // Ab cutoffHour verschiebt sich der früheste Tag; maxDate wandert mit,
+  // damit das buchbare Fenster konstant bleibt.
+  const minOffset = berlinHour >= rules.cutoffHour ? rules.afterCutoffOffsetDays : rules.minOffsetDays;
   return {
     todayISO,
     minDateISO: addDaysISO(todayISO, minOffset),
-    maxDateISO: addDaysISO(todayISO, 13 + minOffset),
-    blockedDatesISO: BLOCKED_DATES,
+    maxDateISO: addDaysISO(todayISO, rules.windowDays - 1 + minOffset),
+    blockedDatesISO: rules.blockedDates,
   };
 }
 
 /** Prüft YYYY-MM-DD-Daten gegen dieselben Regeln wie der Kalender. */
-export function areDatesAllowed(dates: string[], now: Date = new Date()): boolean {
-  const b = computeCalendarBounds(now);
+export function areDatesAllowed(dates: string[], now: Date = new Date(), city: string = DEFAULT_CITY): boolean {
+  const rules = rulesFor(city);
+  const b = computeCalendarBounds(now, city);
   return dates.every((d) => {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return false;
     if (d < b.minDateISO || d > b.maxDateISO) return false;
-    if (BLOCKED_DATES.includes(d)) return false;
+    if (rules.blockedDates.includes(d)) return false;
+    if (rules.allowWeekends) return true;
     const [y, m, day] = d.split("-").map(Number);
     const wd = new Date(Date.UTC(y, m - 1, day)).getUTCDay();
     return wd !== 0 && wd !== 6;

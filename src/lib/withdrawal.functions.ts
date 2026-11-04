@@ -33,7 +33,7 @@ export const getWithdrawalPrefill = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: b } = await supabaseAdmin
       .from("bookings")
-      .select("id, first_name, last_name, email, service_type, selected_dates, anonymized_at")
+      .select("id, city, first_name, last_name, email, service_type, selected_dates, anonymized_at")
       .eq("withdraw_token", data.token)
       .maybeSingle();
     if (!b || b.anonymized_at) return { valid: false };
@@ -129,6 +129,7 @@ export const submitWithdrawal = createServerFn({ method: "POST" })
         idempotencyKey: `withdrawal-received-${row.id}`,
         templateData: {
           bookingId: tokenBooking?.id ?? null,
+          city: tokenBooking?.city ?? null,
           name: data.name,
           email: data.email,
           contractReference,
@@ -244,6 +245,7 @@ export const submitWithdrawal = createServerFn({ method: "POST" })
           receivedAt,
           bookingNumber: booking ? bookingNumber(booking.id) : null,
           bookingId: booking?.id ?? null,
+          city: booking?.city ?? null,
           serviceType: booking?.service_type ?? null,
           refundStatus,
           candidates,

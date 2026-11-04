@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
+import { launchedCities, DEFAULT_CITY } from "@/lib/cities";
 
 const MIN = 60 * 1000;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -48,28 +49,37 @@ export const Route = createFileRoute("/api/internal/daily-status")({
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
 
-        // Pi check
-        const { data: hb, error: hbErr } = await supabaseAdmin
-          .from("script_heartbeat").select("last_poll_at").eq("city", "koeln").maybeSingle();
-        if (hbErr) console.error("daily status: heartbeat read error", hbErr.code);
-        const lastPoll = hb?.last_poll_at ?? null;
-        if (!lastPoll || Date.now() - new Date(lastPoll).getTime() > 60 * MIN) {
-          if (!dryRun) {
-            try {
-              await sendTemplateEmail("daily-status-pi-internal", "info@kfz-termin.online", {
-                idempotencyKey: `daily-status-pi-${today}`,
-                templateData: { lastPollAt: lastPoll },
-              });
-            } catch (e) {
-              console.error("daily status: pi mail failed", e instanceof Error ? e.message : "unknown");
+        // Pi-Prüfung pro aktiver Stadt. Meldet sich der Pi einer Stadt nicht,
+        // gehen für diese Stadt keine Kundenmails raus.
+        const downCities: string[] = [];
+        for (const c of launchedCities()) {
+          const { data: hb, error: hbErr } = await supabaseAdmin
+            .from("script_heartbeat").select("last_poll_at").eq("city", c.slug).maybeSingle();
+          if (hbErr) console.error("daily status: heartbeat read error", hbErr.code);
+          const lastPoll = hb?.last_poll_at ?? null;
+          if (!lastPoll || Date.now() - new Date(lastPoll).getTime() > 60 * MIN) {
+            downCities.push(c.slug);
+            if (!dryRun) {
+              try {
+                await sendTemplateEmail("daily-status-pi-internal", "info@kfz-termin.online", {
+                  idempotencyKey: `daily-status-pi-${today}${c.slug === DEFAULT_CITY ? "" : `-${c.slug}`}`,
+                  templateData: { lastPollAt: lastPoll, city: c.slug },
+                });
+              } catch (e) {
+                console.error("daily status: pi mail failed", e instanceof Error ? e.message : "unknown");
+              }
             }
           }
+        }
+        const activeSlugs = launchedCities().map((c) => c.slug).filter((s) => !downCities.includes(s));
+        if (activeSlugs.length === 0) {
           return Response.json({ ok: true, date: today, candidates: 0, sent: 0, piDown: true });
         }
 
         const { data: rows, error } = await supabaseAdmin
           .from("bookings")
-          .select("id, email, first_name, service_type, selected_dates, confirmation_sent_at, rebook_used_at, email_changed_at, last_status_mail_at")
+          .select("id, city, email, first_name, service_type, selected_dates, confirmation_sent_at, rebook_used_at, email_changed_at, last_status_mail_at")
+          .in("city", activeSlugs)
           .eq("paid", true).eq("assigned_to_script", true)
           .is("search_result", null).is("search_error", null).is("withdrawn_at", null)
           .is("refund_claimed_at", null).is("refunded_at", null).is("anonymized_at", null)
@@ -111,7 +121,7 @@ export const Route = createFileRoute("/api/internal/daily-status")({
               idempotencyKey: `daily-status-${b.id}-${today}`,
               templateData: {
                 bookingId: b.id, firstName: b.first_name, serviceType: b.service_type,
-                variant, today, remainingDates: remaining,
+                variant, today, remainingDates: remaining, city: b.city,
               },
             });
             if (res.sent) {

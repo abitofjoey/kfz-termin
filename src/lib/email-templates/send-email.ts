@@ -2,6 +2,8 @@ import * as React from 'react'
 import { render } from '@react-email/render'
 import { EmailAPIError, sendLovableEmail } from '@lovable.dev/email-js'
 import { TEMPLATES } from './registry'
+import { cityOrDefault } from '../cities'
+import { finalSubject } from './subject'
 
 // Server-only: reads LOVABLE_API_KEY. Never import from client components.
 
@@ -60,16 +62,18 @@ export async function sendTemplateEmail(
   const element = React.createElement(template.component, templateData)
   const html = await render(element)
   const text = await render(element, { plainText: true })
-  const subject =
+  const baseSubject =
     typeof template.subject === 'function'
       ? template.subject(templateData)
       : template.subject
+  // Interne Mails tragen die Stadt im Betreff, z.B. "[Köln] …".
+  const subject = finalSubject(templateName, baseSubject, templateData.city)
 
   try {
     await sendLovableEmail(
       {
         to: recipient,
-        from: `${SITE_NAME} <buchung@${FROM_DOMAIN}>`,
+        from: `${templateData.city ? cityOrDefault(templateData.city).siteName : SITE_NAME} <buchung@${FROM_DOMAIN}>`,
         sender_domain: SENDER_DOMAIN,
         subject,
         html,

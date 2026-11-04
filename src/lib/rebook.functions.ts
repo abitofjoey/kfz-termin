@@ -79,6 +79,7 @@ export const submitRebookDates = createServerFn({ method: "POST" })
     const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
     const tpl = {
       bookingId: b.id,
+      city: b.city,
       withdrawToken: b.withdraw_token,
       salutation: b.salutation,
       firstName: b.first_name,

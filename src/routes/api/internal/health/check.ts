@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { launchedCities, DEFAULT_CITY } from "@/lib/cities";
 
 const MIN = 60 * 1000;
 const CUTOFF_CREATED = "2026-10-14T00:00:00+02:00";
@@ -41,27 +42,31 @@ export const Route = createFileRoute("/api/internal/health/check")({
           }
         };
 
-        // a/b) Heartbeat
+        // a/b) Heartbeat – pro aktiver Stadt. Köln behält seine bisherigen Mail-Schlüssel.
         let piAlert: "down" | "recovered" | null = null;
-        const { data: hb, error: hbErr } = await supabaseAdmin
-          .from("script_heartbeat").select("*").eq("city", "koeln").maybeSingle();
-        if (hbErr) console.error("health check: heartbeat read error", hbErr.code);
-        if (hb) {
+        const piAlerts: Record<string, "down" | "recovered"> = {};
+        for (const c of launchedCities()) {
+          const sfx = c.slug === DEFAULT_CITY ? "" : `-${c.slug}`;
+          const { data: hb, error: hbErr } = await supabaseAdmin
+            .from("script_heartbeat").select("*").eq("city", c.slug).maybeSingle();
+          if (hbErr) console.error("health check: heartbeat read error", hbErr.code);
+          if (!hb) continue;
           const age = now - new Date(hb.last_poll_at).getTime();
           if (age > 30 * MIN && !hb.alert_sent_at) {
-            const ok = await send("pi-down-internal", `health-pi-down-${hb.last_poll_at}`, { lastPollAt: hb.last_poll_at });
+            const ok = await send("pi-down-internal", `health-pi-down-${hb.last_poll_at}${sfx}`, { lastPollAt: hb.last_poll_at, city: c.slug });
             if (ok) {
-              await supabaseAdmin.from("script_heartbeat").update({ alert_sent_at: new Date().toISOString() }).eq("city", "koeln");
-              piAlert = "down";
+              await supabaseAdmin.from("script_heartbeat").update({ alert_sent_at: new Date().toISOString() }).eq("city", c.slug);
+              piAlerts[c.slug] = "down";
             }
           } else if (age < 5 * MIN && hb.alert_sent_at) {
-            const ok = await send("pi-recovered-internal", `health-pi-recovered-${hb.alert_sent_at}`, { lastPollAt: hb.last_poll_at });
+            const ok = await send("pi-recovered-internal", `health-pi-recovered-${hb.alert_sent_at}${sfx}`, { lastPollAt: hb.last_poll_at, city: c.slug });
             if (ok) {
-              await supabaseAdmin.from("script_heartbeat").update({ alert_sent_at: null }).eq("city", "koeln");
-              piAlert = "recovered";
+              await supabaseAdmin.from("script_heartbeat").update({ alert_sent_at: null }).eq("city", c.slug);
+              piAlerts[c.slug] = "recovered";
             }
           }
         }
+        piAlert = piAlerts[DEFAULT_CITY] ?? null;
 
         const run = (rebookUsedAt: string | null) => rebookUsedAt ?? "erst";
         const hasDates = (d: string[] | null) => Array.isArray(d) && d.length > 0;
@@ -70,7 +75,7 @@ export const Route = createFileRoute("/api/internal/health/check")({
         let notPickedUp = 0;
         const { data: pending, error: pErr } = await supabaseAdmin
           .from("bookings")
-          .select("id, first_name, last_name, service_type, selected_dates, created_at, confirmation_sent_at, rebook_used_at, email_changed_at")
+          .select("id, city, first_name, last_name, service_type, selected_dates, created_at, confirmation_sent_at, rebook_used_at, email_changed_at")
           .eq("paid", true).eq("assigned_to_script", false).is("search_result", null)
           .gte("created_at", CUTOFF_CREATED).limit(100);
         if (pErr) console.error("health check: pending read error", pErr.code);
@@ -81,7 +86,7 @@ export const Route = createFileRoute("/api/internal/health/check")({
           if (now - released <= 30 * MIN) continue;
           const npKey = `health-notpickedup-${b.id}-${run(b.rebook_used_at)}${b.email_changed_at ? `-${b.email_changed_at}` : ""}`;
           const ok = await send("booking-not-picked-up-internal", npKey, {
-            bookingId: b.id, firstName: b.first_name, lastName: b.last_name, serviceType: b.service_type,
+            bookingId: b.id, firstName: b.first_name, lastName: b.last_name, serviceType: b.service_type, city: b.city,
           });
           if (ok) notPickedUp++;
         }
@@ -91,7 +96,7 @@ export const Route = createFileRoute("/api/internal/health/check")({
         const today = berlinToday();
         const { data: assigned, error: aErr } = await supabaseAdmin
           .from("bookings")
-          .select("id, first_name, last_name, service_type, selected_dates, rebook_used_at")
+          .select("id, city, first_name, last_name, service_type, selected_dates, rebook_used_at")
           .eq("paid", true).eq("assigned_to_script", true).is("search_result", null).is("refund_claimed_at", null)
           .gte("created_at", CUTOFF_CREATED).limit(200);
         if (aErr) console.error("health check: assigned read error", aErr.code);
@@ -100,12 +105,12 @@ export const Route = createFileRoute("/api/internal/health/check")({
           const lastDate = [...b.selected_dates].map((d) => d.slice(0, 10)).sort().at(-1)!;
           if (addDays(lastDate, 2) >= today) continue;
           const ok = await send("booking-stuck-internal", `health-stuck-${b.id}-${run(b.rebook_used_at)}`, {
-            bookingId: b.id, firstName: b.first_name, lastName: b.last_name, serviceType: b.service_type, lastDate,
+            bookingId: b.id, firstName: b.first_name, lastName: b.last_name, serviceType: b.service_type, lastDate, city: b.city,
           });
           if (ok) stuck++;
         }
 
-        return Response.json({ ok: true, piAlert, notPickedUp, stuck });
+        return Response.json({ ok: true, piAlert, piAlerts, notPickedUp, stuck });
       },
     },
   },
