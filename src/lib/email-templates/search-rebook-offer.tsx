@@ -31,9 +31,7 @@ const SearchRebookOfferEmail = ({ bookingId, salutation, firstName, lastName, re
 
           <Text style={s.text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={s.text}>
-            leider ist im Zeitraum deiner Wunschtermine keiner der gewünschten
-            {`Termine ${cityOrDefault(city).mail.atAuthority} frei geworden.`} Das tut uns leid.
-            Du hast zwei Möglichkeiten:
+            {`leider ist im Zeitraum deiner Wunschtermine keiner der gewünschten Termine ${cityOrDefault(city).mail.atAuthority} frei geworden. Das tut uns leid. Du hast zwei Möglichkeiten:`}
           </Text>
 
           <Section style={s.card}>
