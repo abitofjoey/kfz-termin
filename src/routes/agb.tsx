@@ -36,10 +36,10 @@ export const Route = createFileRoute("/agb")({
 
       <section>
         <h2 className="text-lg font-semibold">§ 2 Leistungsbeschreibung</h2>
-        <p className="mt-2">(1) Der Anbieter stellt einen Service zur automatisierten Terminsuche bei der Zulassungsstelle der Stadt Köln zur Verfügung. Der Anbieter sucht im Auftrag des Kunden nach einem möglichen freien Termin im vom Kunden gewünschten Zeitraum und bucht diesen mit den vom Kunden bereitgestellten Daten in dessen Namen. Der Anbieter ist von den Terminen des Zulassungsportals abhängig und kann nur solche Termine buchen, die von dem Zulassungsportal auch tatsächlich freigegeben wurden.</p>
+        <p className="mt-2">(1) Der Anbieter stellt einen Service zur automatisierten Terminsuche bei der jeweiligen Zulassungsbehörde (derzeit die Zulassungsstelle der Stadt Köln) zur Verfügung. Der Anbieter sucht im Auftrag des Kunden nach einem möglichen freien Termin im vom Kunden gewünschten Zeitraum und bucht diesen mit den vom Kunden bereitgestellten Daten in dessen Namen. Der Anbieter ist von den Terminen des Zulassungsportals abhängig und kann nur solche Termine buchen, die von dem Zulassungsportal auch tatsächlich freigegeben wurden.</p>
         <p className="mt-2">(2) Nach erfolgreicher Terminbuchung sendet der Anbieter dem Kunden eine Erinnerung per E-Mail an die im Formular angegebene E-Mail-Adresse.</p>
         <p className="mt-2">(3) Sollte die Zulassungsstelle keine Termine freigeben, die vom Kunden ausgewählt wurden, so ist der Anbieter von der Buchungspflicht befreit. Der Anbieter weist ausdrücklich darauf hin, dass insbesondere bei kurzfristigen Terminen die Wahrscheinlichkeit einer Buchung deutlich sinkt und der Anbieter eine Buchung nicht garantieren kann.</p>
-        <p className="mt-2">(4) Die Wahrnehmung des Termins erfolgt durch den Kunden selbst. Der Anbieter ist weder mit der Stadt Köln noch mit der dortigen Zulassungsstelle geschäftlich oder rechtlich verbunden. Die Terminvergabe durch die Stadt Köln ist kostenlos. Das Entgelt nach § 4 wird ausschließlich für die Suche und Buchung des Termins erhoben.</p>
+        <p className="mt-2">(4) Die Wahrnehmung des Termins erfolgt durch den Kunden selbst. Der Anbieter ist weder mit der Stadt Köln oder einer anderen Stadt noch mit der jeweiligen Zulassungsbehörde geschäftlich oder rechtlich verbunden. Die Terminvergabe durch die Stadt Köln ist kostenlos. Das Entgelt nach § 4 wird ausschließlich für die Suche und Buchung des Termins erhoben.</p>
       </section>
 
       <section>

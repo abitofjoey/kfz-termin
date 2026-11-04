@@ -49,12 +49,12 @@ export const Route = createFileRoute("/datenschutz")({
       <section>
         <h2 className="text-lg font-semibold">6. Buchung eines Termins</h2>
         <p className="mt-2">Im Rahmen der Buchung erheben wir die zur Vertragsdurchführung erforderlichen Daten (z. B. Name, E-Mail-Adresse, ggf. Telefonnummer, gewünschter Zeitraum, Anliegen, Fahrzeugdaten). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung). Die Daten werden gelöscht, sobald sie für die Erreichung des Zwecks ihrer Erhebung nicht mehr erforderlich sind, vorbehaltlich gesetzlicher Aufbewahrungspflichten (insb. § 147 AO, § 257 HGB).</p>
-        <p className="mt-2">Die Telefonnummer übermitteln wir an die Stadt Köln (Abschnitt 7), weil das Buchungsportal sie verlangt, und nutzen sie für Rückfragen zu deinem Auftrag. Eine Weitergabe an sonstige Dritte erfolgt nicht. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Zur Speicherdauer siehe Abschnitt 17.</p>
+        <p className="mt-2">Die Telefonnummer übermitteln wir an die jeweilige Zulassungsbehörde, derzeit die Stadt Köln (Abschnitt 7), weil das Buchungsportal sie verlangt, und nutzen sie für Rückfragen zu deinem Auftrag. Eine Weitergabe an sonstige Dritte erfolgt nicht. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Zur Speicherdauer siehe Abschnitt 17.</p>
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold">7. Automatisierte Terminbuchung bei der Kölner Zulassungsstelle</h2>
-        <p className="mt-2">Kern unseres Dienstes ist die automatisierte Suche und Buchung eines freien Termins im Online-Portal der Stadt Köln (Zulassungsstelle) in deinem Namen. Hierzu übermitteln wir Vor- und Nachname, E-Mail-Adresse, Telefonnummer, Anliegen sowie die letzten vier Stellen der Fahrzeug-Identifikationsnummer (FIN) an die Stadt Köln als eigenständig Verantwortliche. Rechtsgrundlage für die Übermittlung ist Art. 6 Abs. 1 lit. b DSGVO. Ohne diese Übermittlung kann der Dienst nicht erbracht werden.</p>
+        <h2 className="text-lg font-semibold">7. Automatisierte Terminbuchung bei der Zulassungsbehörde</h2>
+        <p className="mt-2">Kern unseres Dienstes ist die automatisierte Suche und Buchung eines freien Termins im Online-Portal der jeweiligen Zulassungsbehörde (derzeit die Stadt Köln) in deinem Namen. Hierzu übermitteln wir Vor- und Nachname, E-Mail-Adresse, Telefonnummer, Anliegen sowie die letzten vier Stellen der Fahrzeug-Identifikationsnummer (FIN) an die Stadt Köln als eigenständig Verantwortliche. Rechtsgrundlage für die Übermittlung ist Art. 6 Abs. 1 lit. b DSGVO. Ohne diese Übermittlung kann der Dienst nicht erbracht werden.</p>
       </section>
 
       <section>
