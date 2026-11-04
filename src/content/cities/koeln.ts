@@ -106,6 +106,6 @@ export const koelnContent: CityContent = {
   serviceJsonLd: {
     name: "KFZ-Termin Köln",
     description:
-      "Automatisierte Terminbuchung für die Kfz-Zulassungsstelle Köln. Tägliche Suche nach freien Slots und automatische Buchung, sobald ein Slot passt.",
+      "Automatisierte Terminbuchung für die Kfz-Zulassungsstelle Köln. Tägliche Suche nach freien Slots und automatische Buchung, sobald ein Termin passt.",
   },
 };

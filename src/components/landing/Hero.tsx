@@ -1,6 +1,15 @@
 import { Clock, ShieldCheck, MapPin } from "lucide-react";
 
-export function Hero() {
+export type HeroContent = {
+  badge: string;
+  headline: string;
+  headlineAccent: string;
+  intro: string;
+  searchHoursLabel: string;
+  scopeLabel: string;
+};
+
+export function Hero({ content }: { content: HeroContent }) {
   return (
     <section aria-labelledby="hero-heading" className="relative overflow-hidden bg-primary text-primary-foreground">
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-[oklch(0.18_0.04_258)] opacity-90" />
@@ -8,16 +17,14 @@ export function Hero() {
         <div className="max-w-3xl">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium">
             <MapPin className="h-3.5 w-3.5" />
-            Zulassungsstelle Köln
+            {content.badge}
           </div>
           <h1 id="hero-heading" className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Dein Wunschtermin bei der Kölner Zulassungsstelle –{" "}
-            <span className="text-accent">automatisch gebucht.</span>
+            {content.headline}{" "}
+            <span className="text-accent">{content.headlineAccent}</span>
           </h1>
           <p className="mt-6 text-lg text-white/80 sm:text-xl">
-            Kein freier Termin, keiner der zeitlich passt – oder du brauchst ihn
-            einfach kurzfristig? Wir übernehmen die Suche und buchen automatisch
-            sobald ein Slot frei wird.
+            {content.intro}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
@@ -36,7 +43,7 @@ export function Hero() {
           <div className="mt-10 grid grid-cols-1 gap-4 text-sm text-white/80 sm:grid-cols-3">
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-accent" />
-              Suche täglich von 6 bis 20 Uhr
+              {content.searchHoursLabel}
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-accent" />
@@ -44,7 +51,7 @@ export function Hero() {
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="h-5 w-5 text-accent" />
-              Nur Zulassungsstelle Köln
+              {content.scopeLabel}
             </div>
           </div>
         </div>
