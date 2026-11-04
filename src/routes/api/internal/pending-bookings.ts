@@ -1,90 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-type BookingRow = {
-  id: string;
-  service_type: string;
-  salutation: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  fin_1: string;
-  fin_2: string | null;
-  fin_3: string | null;
-  selected_dates: string[];
-};
-
-const SALUTATION_MAP: Record<string, string> = {
-  Herr: "m",
-  Frau: "w",
-  Divers: "d",
-};
-
-const SERVICE_MAP: Record<string, string> = {
-  "Anmeldung Gebrauchtfahrzeug": "1",
-  "Anmeldung Neufahrzeug": "2",
-  "Kennzeichenwechsel": "3",
-  "Technische Änderung": "4",
-  "Wiederzulassung": "5",
-  "H-Kennzeichen": "6",
-  "Saisonkennzeichen": "7",
-  "Kurzzeitkennzeichen": "8",
-  "Ausfuhrkennzeichen": "9",
-  "Ersatz Zulassungsbescheinigung Teil I": "10",
-  "Abmeldung eines Fahrzeugs (Außerbetriebsetzung)": "11",
-  "Anschriftenänderung in den Fahrzeugpapieren": "12",
-  "Feinstaubplakette": "13",
-  "Änderung des Familiennamens in Fahrzeugpapieren": "14",
-  "Neusiegelung von Kennzeichen": "15",
-  "Verlust der Zulassungsbescheinigung Teil II": "16",
-  "Zulassung importierter Fahrzeuge": "17",
-  "Abholung einer neu beantragten Zulassungsbescheinigung Teil II": "18",
-  "Zulassung eines technisch veränderten Neufahrzeugs (§ 13 EG-FGV)": "19",
-};
-
-function mapSalutation(value: string): string {
-  return SALUTATION_MAP[value] ?? "m";
-}
-
-function countNonEmptyFins(row: BookingRow): string {
-  const fins = [row.fin_1, row.fin_2, row.fin_3].filter(
-    (fin): fin is string => typeof fin === "string" && fin.trim().length > 0,
-  );
-  return String(fins.length);
-}
-
-function mapService(row: BookingRow): { service: string } | { serviceUnklar: true } {
-  const number = SERVICE_MAP[row.service_type];
-  if (number) {
-    return { service: number };
-  }
-  return { serviceUnklar: true };
-}
-
-function formatDate(isoDate: string): string {
-  const [year, month, day] = isoDate.split("-");
-  if (!year || !month || !day) return isoDate;
-  return `${day}.${month}.${year}`;
-}
-
-function mapBooking(row: BookingRow) {
-  return {
-    bookingId: row.id,
-    nutzerdaten: {
-      anrede: mapSalutation(row.salutation),
-      vorname: row.first_name,
-      nachname: row.last_name,
-      email: row.email,
-      telefon: row.phone,
-      fin: row.fin_1,
-      fin2: row.fin_2 ?? "",
-      fin3: row.fin_3 ?? "",
-      anzahl: countNonEmptyFins(row),
-      ...mapService(row),
-    },
-    wunschDaten: row.selected_dates.map(formatDate),
-  };
-}
+import { getCity, DEFAULT_CITY } from "@/lib/cities";
+import { mapBookingForScript, type ScriptBookingRow } from "@/lib/script-mapping";
 
 export const Route = createFileRoute("/api/internal/pending-bookings")({
   server: {
@@ -101,12 +17,18 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
           return new Response("Unauthorized", { status: 401 });
         }
 
+        const cityParam = new URL(request.url).searchParams.get("city");
+        const city = cityParam ?? DEFAULT_CITY;
+        if (!getCity(city)?.bookable) {
+          return new Response("Unknown city", { status: 400 });
+        }
+
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
         try {
           const { error: hbError } = await supabaseAdmin
             .from("script_heartbeat")
-            .upsert({ city: "koeln", last_poll_at: new Date().toISOString() }, { onConflict: "city" });
+            .upsert({ city, last_poll_at: new Date().toISOString() }, { onConflict: "city" });
           if (hbError) console.error("pending-bookings: heartbeat error", hbError.code);
         } catch (e) {
           console.error("pending-bookings: heartbeat failed", e instanceof Error ? e.message : "unknown");
@@ -115,6 +37,7 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
         const { data, error } = await supabaseAdmin
           .from("bookings")
           .select("*")
+          .eq("city", city)
           .eq("paid", true)
           .eq("assigned_to_script", false)
           .is("search_result", null)
@@ -131,6 +54,7 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
           const { data: wd, error: wdError } = await supabaseAdmin
             .from("bookings")
             .select("id")
+            .eq("city", city)
             .gte("withdrawn_at", since);
           if (wdError) console.error("pending-bookings: withdrawn query error", wdError.code);
           else withdrawn = (wd ?? []).map((r) => r.id);
@@ -139,7 +63,7 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
         }
 
         return Response.json({
-          bookings: (data ?? []).map((row) => mapBooking(row as unknown as BookingRow)),
+          bookings: (data ?? []).map((row) => mapBookingForScript(row as unknown as ScriptBookingRow)),
           withdrawn,
         });
       },
