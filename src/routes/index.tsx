@@ -1,75 +1,77 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
+import { MapPin, CalendarCheck, Search, MailCheck, ShieldCheck, ArrowRight } from "lucide-react";
 import { Header } from "@/components/landing/Header";
-import { Hero } from "@/components/landing/Hero";
-import { Steps } from "@/components/landing/Steps";
-import { Pricing } from "@/components/landing/Pricing";
-import { InfoBlock } from "@/components/landing/InfoBlock";
 import { Founder } from "@/components/landing/Founder";
 import { Testimonials } from "@/components/landing/Testimonials";
-import { Faq, faqItems } from "@/components/landing/Faq";
+import { Faq, type FaqItem } from "@/components/landing/Faq";
 import { Footer } from "@/components/landing/Footer";
-import type { ServiceId } from "@/lib/services";
+import { launchedCities, DEFAULT_CITY } from "@/lib/cities";
 
-// Formular und Toaster liegen unter dem Sichtbereich bzw. werden erst nach
-// Interaktion gebraucht – daher erst bei Bedarf nachladen.
-const importBookingForm = () => import("@/components/landing/BookingForm");
-const BookingForm = lazy(() =>
-  importBookingForm().then((m) => ({ default: m.BookingForm })),
-);
-const Toaster = lazy(() =>
-  import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })),
-);
+const SITE = "https://kfz-termin.online";
+const TITLE = "KFZ-Termin – Dein Wunschtermin bei der Zulassungsstelle, automatisch gebucht";
+const DESCRIPTION =
+  "Wir suchen und buchen deinen Termin bei der Kfz-Zulassungsstelle – derzeit in Köln. 9,99 € mit Geld-zurück-Garantie.";
 
+/** Alte Köln-Anker von der Startseite (z.B. /#buchung) wandern nach /koeln. */
+export const LEGACY_HASHES = ["buchung", "preise", "ablauf", "faq"];
+
+const homeFaq: FaqItem[] = [
+  {
+    q: "Für welche Städte gibt es den Service?",
+    a: "Aktuell für die Kfz-Zulassungsstelle Köln. Weitere Städte folgen.",
+  },
+  {
+    q: "Was kostet der Service?",
+    a: "9,99 € einmalig. Wird in deinem Zeitraum kein Termin frei, kannst du einmalig neue Wunschtermine wählen oder bekommst den vollen Betrag zurück.",
+  },
+  {
+    q: "Wie läuft die Buchung ab?",
+    a: "Du wählst deine Stadt, dein Anliegen und die Tage, an denen du Zeit hast. Wir suchen täglich nach freien Terminen und buchen automatisch den ersten passenden.",
+  },
+  {
+    q: "Wie erfahre ich, dass ein Termin gefunden wurde?",
+    a: "Du bekommst von uns eine E-Mail mit Datum und Uhrzeit. Je nach Stadt kommt zusätzlich eine E-Mail der Zulassungsstelle, die du bestätigen musst.",
+  },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht" },
-      {
-        name: "description",
-        content:
-          "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht. Für KFZ-Zulassung, Auto anmelden, Ummeldung & Abmeldung. 9,99 € mit Geld-zurück-Garantie.",
-      },
-      { property: "og:title", content: "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht" },
-      {
-        property: "og:description",
-        content:
-          "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht. Für KFZ-Zulassung, Auto anmelden, Ummeldung & Abmeldung. 9,99 € mit Geld-zurück-Garantie.",
-      },
-      { property: "og:url", content: "https://kfz-termin.online/" },
-      { property: "og:image", content: "https://kfz-termin.online/og-image.jpg" },
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:url", content: `${SITE}/` },
+      { property: "og:image", content: `${SITE}/og-image.jpg` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "KFZ-Termin Köln – Logo" },
-      { name: "twitter:image", content: "https://kfz-termin.online/og-image.jpg" },
+      { property: "og:image:alt", content: "KFZ-Termin – Logo" },
+      { name: "twitter:image", content: `${SITE}/og-image.jpg` },
     ],
-    links: [{ rel: "canonical", href: "https://kfz-termin.online/" }],
+    links: [{ rel: "canonical", href: `${SITE}/` }],
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "KFZ-Termin",
+          url: SITE,
+          email: "info@kfz-termin.online",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
           "@type": "Service",
-          name: "KFZ-Termin Köln",
-          url: "https://kfz-termin.online",
-          description:
-            "Automatisierte Terminbuchung für die Kfz-Zulassungsstelle Köln. Tägliche Suche nach freien Slots und automatische Buchung, sobald ein Termin passt.",
-          provider: {
-            "@type": "Organization",
-            name: "KFZ-Termin Köln",
-            email: "info@kfz-termin.online",
-            url: "https://kfz-termin.online",
-          },
-          areaServed: {
-            "@type": "City",
-            name: "Köln",
-          },
-          offers: {
-            "@type": "Offer",
-            price: "9.99",
-            priceCurrency: "EUR",
-          },
+          name: "KFZ-Termin",
+          url: SITE,
+          description: "Automatisierte Terminsuche und -buchung bei der Kfz-Zulassungsstelle.",
+          provider: { "@type": "Organization", name: "KFZ-Termin", url: SITE },
+          areaServed: launchedCities().map((c) => ({ "@type": "City", name: c.name })),
+          offers: { "@type": "Offer", price: "9.99", priceCurrency: "EUR" },
         }),
       },
       {
@@ -77,97 +79,26 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          mainEntity: faqItems.map((item) => ({
+          mainEntity: homeFaq.map((i) => ({
             "@type": "Question",
-            name: item.q,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: item.a,
-            },
+            name: i.q,
+            acceptedAnswer: { "@type": "Answer", text: i.a },
           })),
         }),
       },
     ],
   }),
-  component: Index,
+  component: Home,
 });
 
-function BookingFormPlaceholder() {
-  return (
-    <section
-      id="buchung"
-      aria-labelledby="buchung-heading"
-      className="bg-background py-20"
-    >
-      <div className="mx-auto max-w-3xl px-4">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 id="buchung-heading" className="text-3xl font-bold sm:text-4xl">
-            Jetzt Termin buchen
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Fülle das Formular aus – wir kümmern uns um den Rest.
-          </p>
-        </div>
-        <div
-          className="mt-10 h-[900px] rounded-2xl border border-border bg-card shadow-sm"
-          aria-hidden="true"
-        />
-      </div>
-    </section>
-  );
-}
-
-function Index() {
-  const [preselected, setPreselected] = useState<ServiceId | null>(null);
-  const [showForm, setShowForm] = useState(false);
-  const [showToaster, setShowToaster] = useState(false);
-  const pendingScroll = useRef(false);
-
-  const activate = useCallback(() => {
-    setShowForm(true);
-    setShowToaster(true);
+function Home() {
+  // Alte Links wie /#buchung führen zur Kölner Seite mit demselben Anker.
+  useEffect(() => {
+    const h = window.location.hash.replace(/^#/, "");
+    if (LEGACY_HASHES.includes(h)) window.location.replace(`/${DEFAULT_CITY}#${h}`);
   }, []);
 
-  // Erste Nutzerinteraktion (Scroll/Pointer/Tastatur) oder Leerlauf lädt das
-  // Formular nach, damit es beim Erreichen des Abschnitts schon bereit ist.
-  useEffect(() => {
-    if (showForm) return;
-    const onFirst = () => activate();
-    const opts = { once: true, passive: true } as const;
-    window.addEventListener("scroll", onFirst, opts);
-    window.addEventListener("pointerdown", onFirst, opts);
-    window.addEventListener("keydown", onFirst, opts);
-    const timer = window.setTimeout(onFirst, 2500);
-    return () => {
-      window.removeEventListener("scroll", onFirst);
-      window.removeEventListener("pointerdown", onFirst);
-      window.removeEventListener("keydown", onFirst);
-      clearTimeout(timer);
-    };
-
-  }, [showForm, activate]);
-
-  // Nach dem Laden des Formulars zum Abschnitt scrollen, falls angefordert.
-  useEffect(() => {
-    if (!showForm || !pendingScroll.current) return;
-    pendingScroll.current = false;
-    requestAnimationFrame(() => {
-      document.getElementById("buchung")?.scrollIntoView({ behavior: "smooth" });
-    });
-  }, [showForm, preselected]);
-
-  const handleSelect = (service: ServiceId) => {
-    setPreselected(service);
-    pendingScroll.current = true;
-    activate();
-    if (showForm) {
-      pendingScroll.current = false;
-      requestAnimationFrame(() => {
-        document.getElementById("buchung")?.scrollIntoView({ behavior: "smooth" });
-      });
-    }
-  };
-
+  const cities = launchedCities();
   return (
     <div className="min-h-screen bg-background">
       <a
@@ -178,28 +109,84 @@ function Index() {
       </a>
       <Header />
       <main id="inhalt">
-        <Hero />
-        <Steps />
-        <Pricing onSelect={handleSelect} />
+        <section aria-labelledby="home-hero" className="bg-primary text-primary-foreground">
+          <div className="mx-auto max-w-6xl px-4 py-20 sm:py-24">
+            <h1 id="home-hero" className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl">
+              Dein Wunschtermin bei der Zulassungsstelle –{" "}
+              <span className="text-accent">automatisch gebucht</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg text-white/80">
+              Wir suchen täglich nach freien Terminen bei der Kfz-Zulassungsstelle und buchen
+              automatisch, sobald einer an deinen Wunschtagen frei wird – derzeit für die
+              Zulassungsstelle Köln.
+            </p>
+          </div>
+        </section>
+
+        <section id="staedte" aria-labelledby="staedte-heading" className="py-16">
+          <div className="mx-auto max-w-6xl px-4">
+            <h2 id="staedte-heading" className="text-3xl font-bold">Wähle deine Stadt</h2>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {cities.map((c) => (
+                <a
+                  key={c.slug}
+                  href={`/${c.slug}`}
+                  className="group flex items-center justify-between rounded-2xl border-2 border-border bg-card p-6 shadow-sm transition hover:border-primary"
+                >
+                  <span className="flex items-center gap-3">
+                    <MapPin className="h-6 w-6 text-accent" />
+                    <span>
+                      <span className="block text-xl font-bold">{c.name}</span>
+                      <span className="block text-sm text-muted-foreground">
+                        Termin bei der Zulassungsstelle {c.name}
+                      </span>
+                    </span>
+                  </span>
+                  <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
+                </a>
+              ))}
+            </div>
+            <p className="mt-4 text-sm text-muted-foreground">Weitere Städte folgen.</p>
+          </div>
+        </section>
+
+        <section id="so-funktionierts" aria-labelledby="sf-heading" className="bg-secondary/40 py-16">
+          <div className="mx-auto max-w-6xl px-4">
+            <h2 id="sf-heading" className="text-3xl font-bold">So funktioniert's</h2>
+            <ol className="mt-8 grid gap-6 sm:grid-cols-3">
+              {[
+                { icon: CalendarCheck, t: "Wunschtage wählen", d: "Stadt, Anliegen und die Tage, an denen du Zeit hast." },
+                { icon: Search, t: "Wir suchen", d: "Unser System prüft täglich die freien Termine der Zulassungsstelle." },
+                { icon: MailCheck, t: "Termin per E-Mail", d: "Sobald ein Termin passt, buchen wir ihn und informieren dich." },
+              ].map((s, i) => (
+                <li key={s.t} className="rounded-2xl border border-border bg-card p-6">
+                  <s.icon className="h-6 w-6 text-accent" />
+                  <p className="mt-3 font-semibold">{i + 1}. {s.t}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{s.d}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section id="preis" aria-labelledby="preis-heading" className="py-16">
+          <div className="mx-auto max-w-3xl px-4 text-center">
+            <h2 id="preis-heading" className="text-3xl font-bold">9,99 € pro Termin</h2>
+            <p className="mt-4 flex items-center justify-center gap-2 text-muted-foreground">
+              <ShieldCheck className="h-5 w-5 text-accent" />
+              Geld-zurück-Garantie, wenn kein Termin gefunden wird.
+            </p>
+          </div>
+        </section>
+
         <Founder />
-        <Testimonials />
-        {showForm ? (
-          <Suspense fallback={<BookingFormPlaceholder />}>
-            <BookingForm preselected={preselected} />
-          </Suspense>
-        ) : (
-          <BookingFormPlaceholder />
-        )}
-        <InfoBlock />
-        <Faq />
+        <Testimonials title="Kundenstimmen aus Köln" />
+
+        <div id="haeufige-fragen">
+          <Faq items={homeFaq} />
+        </div>
       </main>
       <Footer />
-      {showToaster ? (
-        <Suspense fallback={null}>
-          <Toaster />
-        </Suspense>
-      ) : null}
     </div>
   );
-
 }
