@@ -3,10 +3,11 @@ import { Brand } from "@/components/brand/Brand";
 import { launchedCities, getCity } from "@/lib/cities";
 
 /** Kopfzeile. Mit `city` zusätzlich die Anker der Stadtseite. */
-export function Header({ city }: { city?: string } = {}) {
+export function Header({ city, home }: { city?: string; home?: boolean } = {}) {
   const c = getCity(city);
   const base = c ? `/${c.slug}` : "";
-  const cta = c ? `${base}#buchung` : "/#staedte";
+  const cta = c ? `${base}#buchung` : home ? "#stadt-waehlen" : "/#staedte";
+  const ctaLabel = home ? "Stadt wählen" : "Jetzt buchen";
   const linkCls = "hover:text-foreground";
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur">
@@ -29,7 +30,7 @@ export function Header({ city }: { city?: string } = {}) {
           href={cta}
           className="hidden rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 md:inline-block"
         >
-          Jetzt buchen
+          {ctaLabel}
         </a>
         <details className="relative md:hidden">
           <summary className="cursor-pointer list-none rounded-md border border-border px-3 py-2 text-sm font-medium">
@@ -51,7 +52,7 @@ export function Header({ city }: { city?: string } = {}) {
               </>
             ) : null}
             <a href={cta} className="mt-1 rounded bg-primary px-2 py-1.5 text-center font-semibold text-primary-foreground">
-              Jetzt buchen
+              {ctaLabel}
             </a>
           </nav>
         </details>
