@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { cityOrDefault } from "@/lib/cities";
 import { useEffect, useState } from "react";
 import { CheckCircle2, AlertTriangle, Loader2, XCircle } from "lucide-react";
 import { Header } from "@/components/landing/Header";
@@ -19,6 +20,7 @@ export const Route = createFileRoute("/buchung-erfolgreich")({
   }),
   validateSearch: (search: Record<string, unknown>) => ({
     session_id: typeof search.session_id === "string" ? search.session_id : undefined,
+    city: typeof search.city === "string" ? search.city : undefined,
   }),
   component: SuccessPage,
 });
@@ -80,7 +82,7 @@ function SuccessPage() {
             </a>
           </p>
           <Link
-            to="/"
+            to="/$city" params={{ city: cityOrDefault(Route.useSearch().city).slug }}
             className="mt-8 inline-block rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
           >
             Zurück zur Startseite
@@ -103,7 +105,7 @@ function SuccessPage() {
             es erneut oder kontaktiere uns.
           </p>
           <Link
-            to="/"
+            to="/$city" params={{ city: cityOrDefault(Route.useSearch().city).slug }}
             className="mt-8 inline-block rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
           >
             Zurück zur Startseite
@@ -146,7 +148,7 @@ function SuccessPage() {
           Zahlungsquittung erhältst du separat per E-Mail von Stripe.
         </p>
 
-        <Link to="/" className="mt-8 inline-block text-sm text-accent underline">
+        <Link to="/$city" params={{ city: cityOrDefault(Route.useSearch().city).slug }} className="mt-8 inline-block text-sm text-accent underline">
           ← Zurück zur Startseite
         </Link>
       </main>

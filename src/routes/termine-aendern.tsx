@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { cityOrDefault } from "@/lib/cities";
 import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { de } from "date-fns/locale";
@@ -120,7 +121,7 @@ function RebookPage() {
           ) : state.state === "refunded" ? (
             <p>
               Die Rückerstattung wurde bereits beantragt. Du kannst jederzeit neu buchen auf{" "}
-              <Link to="/" className="text-accent underline">kfz-termin.online</Link>.
+              <Link to="/$city" params={{ city: cityOrDefault((state as { city?: string } | null)?.city).slug }} className="text-accent underline">kfz-termin.online</Link>.
             </p>
           ) : state.state === "expired" ? (
             <p>Das Angebot ist abgelaufen, die Rückerstattung wird automatisch veranlasst.</p>
