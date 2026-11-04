@@ -6,7 +6,7 @@ import type { TemplateEntry } from './registry'
 import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
 import { formatDayLong } from './customer-email-parts'
 
-const SITE_NAME = 'KFZ-Termin Köln'
+import { cityOrDefault } from '../cities'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
 
 interface BookingConfirmationProps {
@@ -22,6 +22,7 @@ interface BookingConfirmationProps {
   finEndings?: string[]
   notes?: string
   selectedDates?: string[]
+  city?: string | null
 }
 
 const BookingConfirmationEmail = ({ bookingId, withdrawToken,
@@ -35,7 +36,11 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
   finEndings,
   notes,
   selectedDates = [],
+  city,
 }: BookingConfirmationProps) => {
+  const c = cityOrDefault(city)
+  const SITE_NAME = c.siteName
+  const hours = c.customerConfirmationHours
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   const fins = (finEndings && finEndings.length > 0)
     ? finEndings
@@ -61,7 +66,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
           <Text style={text}>
             vielen Dank für deine Buchung. Deine Zahlung ist eingegangen und
             wir haben deinen Auftrag erhalten. Wir beginnen ab sofort mit der
-            Terminsuche bei der Kölner Zulassungsstelle.
+            Terminsuche {c.mail.atAuthority}.
           </Text>
 
           <Section style={infoBox}>
@@ -70,11 +75,17 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
               Sobald wir einen passenden Termin gefunden haben, bekommst du
               zwei E-Mails: eine von uns mit Datum und Uhrzeit und eine von
               der Zulassungsstelle mit einem Bestätigungslink.{" "}
-              <strong>
-                Du hast dann 3 Stunden Zeit, den Termin über diesen Link
-                zu bestätigen
-              </strong>{" "}
-              – andernfalls verfällt er unwiderruflich.
+              {hours != null ? (
+                <>
+                  <strong>
+                    Du hast dann {hours} Stunden Zeit, den Termin über diesen Link
+                    zu bestätigen
+                  </strong>{" "}
+                  – andernfalls verfällt er unwiderruflich.
+                </>
+              ) : (
+                <strong>Der Termin ist dann sofort verbindlich gebucht.</strong>
+              )}
             </Text>
             <Text style={infoText}>
               <strong>Wichtig:</strong> Schau in dieser Zeit bitte auch in
@@ -222,7 +233,7 @@ const DataRow = ({
 
 export const template = {
   component: BookingConfirmationEmail,
-  subject: 'Deine Buchung bei KFZ-Termin Köln ist bestätigt',
+  subject: (d: Record<string, any>) => `Deine Buchung bei ${cityOrDefault(d.city).siteName} ist bestätigt`,
   displayName: 'Buchungsbestätigung (Kunde)',
   previewData: {
     salutation: 'Herr',
