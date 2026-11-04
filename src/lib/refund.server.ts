@@ -9,6 +9,7 @@ export const REBOOK_WINDOW_MS = 48 * 3600_000;
 
 type BookingRow = {
   id: string;
+  city?: string | null;
   salutation: string;
   first_name: string;
   last_name: string;
