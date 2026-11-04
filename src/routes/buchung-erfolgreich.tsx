@@ -26,7 +26,8 @@ export const Route = createFileRoute("/buchung-erfolgreich")({
 });
 
 function SuccessPage() {
-  const { session_id } = Route.useSearch();
+  const { session_id, city } = Route.useSearch();
+  const citySlug = cityOrDefault(city).slug;
   const confirm = useServerFn(confirmCheckoutSession);
   const [state, setState] = useState<"loading" | "paid" | "unpaid" | "error">(
     session_id ? "loading" : "paid",
@@ -82,7 +83,7 @@ function SuccessPage() {
             </a>
           </p>
           <Link
-            to="/$city" params={{ city: cityOrDefault(Route.useSearch().city).slug }}
+            to="/$city" params={{ city: citySlug }}
             className="mt-8 inline-block rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
           >
             Zurück zur Startseite
@@ -105,7 +106,7 @@ function SuccessPage() {
             es erneut oder kontaktiere uns.
           </p>
           <Link
-            to="/$city" params={{ city: cityOrDefault(Route.useSearch().city).slug }}
+            to="/$city" params={{ city: citySlug }}
             className="mt-8 inline-block rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
           >
             Zurück zur Startseite
@@ -148,7 +149,7 @@ function SuccessPage() {
           Zahlungsquittung erhältst du separat per E-Mail von Stripe.
         </p>
 
-        <Link to="/$city" params={{ city: cityOrDefault(Route.useSearch().city).slug }} className="mt-8 inline-block text-sm text-accent underline">
+        <Link to="/$city" params={{ city: citySlug }} className="mt-8 inline-block text-sm text-accent underline">
           ← Zurück zur Startseite
         </Link>
       </main>
