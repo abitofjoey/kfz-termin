@@ -49,7 +49,7 @@ const AppointmentFoundEmail = ({ bookingId,
 
           <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={text}>
-            gute Nachrichten: Wir haben einen Termin {c.mail.atAuthority} für dich gefunden und auf deinen Namen reserviert.
+            {`gute Nachrichten: Wir haben einen Termin ${c.mail.atAuthority} für dich gefunden und auf deinen Namen reserviert.`}
           </Text>
 
           <Section style={card}>
@@ -67,8 +67,7 @@ const AppointmentFoundEmail = ({ bookingId,
             <Text style={warnTitle}>⚠️ Jetzt noch bestätigen – sonst verfällt der Termin</Text>
             <Text style={warnText}>
               Die Zulassungsstelle hat dir eine E-Mail mit einem
-              Bestätigungslink geschickt. <strong>Bitte klicke innerhalb von
-              {hours} Stunden auf diesen Link, also spätestens bis ca. {deadline} Uhr.</strong>{' '}
+              Bestätigungslink geschickt. <strong>{`Bitte klicke innerhalb von ${hours} Stunden auf diesen Link, also spätestens bis ca. `}{deadline} Uhr.</strong>{' '}
               Ohne Bestätigung verfällt der Termin unwiderruflich, und wir
               können ihn nicht wiederherstellen.
             </Text>
@@ -92,7 +91,7 @@ const AppointmentFoundEmail = ({ bookingId,
               Die Gebühren zahlst du vor Ort mit Karte.
               Welche Unterlagen du für dein Anliegen mitbringen musst, findest
               du auf der{' '}
-              <Link href={CITY_URL} style={infoLink}>Seite der {c.authorityName}</Link>.
+              <Link href={CITY_URL} style={infoLink}>{`Seite der ${c.authorityName}`}</Link>.
             </Text>
           </Section>
 

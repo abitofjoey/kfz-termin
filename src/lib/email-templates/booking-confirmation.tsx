@@ -64,9 +64,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             {firstName ? `Hallo ${firstName},` : 'Hallo,'}
           </Text>
           <Text style={text}>
-            vielen Dank für deine Buchung. Deine Zahlung ist eingegangen und
-            wir haben deinen Auftrag erhalten. Wir beginnen ab sofort mit der
-            Terminsuche {c.mail.atAuthority}.
+            {`vielen Dank für deine Buchung. Deine Zahlung ist eingegangen und wir haben deinen Auftrag erhalten. Wir beginnen ab sofort mit der Terminsuche ${c.mail.atAuthority}.`}
           </Text>
 
           <Section style={infoBox}>
@@ -78,8 +76,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
               {hours != null ? (
                 <>
                   <strong>
-                    Du hast dann {hours} Stunden Zeit, den Termin über diesen Link
-                    zu bestätigen
+                    {`Du hast dann ${hours} Stunden Zeit, den Termin über diesen Link zu bestätigen`}
                   </strong>{" "}
                   – andernfalls verfällt er unwiderruflich.
                 </>
