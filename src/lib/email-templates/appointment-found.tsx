@@ -5,11 +5,9 @@ import {
 import type { TemplateEntry } from './registry'
 import { BookingNumberLine } from './customer-email-parts'
 import { formatBerlinLong, formatBerlinTime } from './format-berlin'
+import { cityOrDefault } from '../cities'
 
-const SITE_NAME = 'KFZ-Termin Köln'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
-const LOCATION = 'Kfz-Zulassungsstelle, Max-Glomsda-Str. 4, 51105 Köln'
-const CITY_URL = 'https://www.stadt-koeln.de/service/adressen/00205/index.html'
 const REVIEW_URL = 'https://g.page/r/CQtnwHapR1yhEBM/review'
 
 interface AppointmentFoundProps {
@@ -21,13 +19,23 @@ interface AppointmentFoundProps {
   serviceType?: string
   appointmentAt?: string
   foundAt?: string
+  city?: string | null
+  bookedLocation?: string | null
+  bookingReference?: string | null
+  cancelUrl?: string | null
 }
 
 const AppointmentFoundEmail = ({ bookingId,
   salutation, firstName, lastName, serviceType, appointmentAt, foundAt,
+  city, bookedLocation, bookingReference, cancelUrl,
 }: AppointmentFoundProps) => {
+  const c = cityOrDefault(city)
+  const SITE_NAME = c.siteName
+  const LOCATION = bookedLocation || c.appointmentLocation
+  const CITY_URL = c.infoUrl
+  const hours = c.customerConfirmationHours
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
-  const deadline = formatBerlinTime(foundAt, 3)
+  const deadline = formatBerlinTime(foundAt, hours ?? 0)
   return (
     <Html lang="de" dir="ltr">
       <Head />
@@ -41,23 +49,26 @@ const AppointmentFoundEmail = ({ bookingId,
 
           <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={text}>
-            gute Nachrichten: Wir haben einen Termin bei der Kölner
-            Zulassungsstelle für dich gefunden und auf deinen Namen reserviert.
+            gute Nachrichten: Wir haben einen Termin {c.mail.atAuthority} für dich gefunden und auf deinen Namen reserviert.
           </Text>
 
           <Section style={card}>
             <Text style={cardTitle}>Dein Termin</Text>
             <DataRow label="Datum und Uhrzeit" value={formatBerlinLong(appointmentAt)} />
             <DataRow label="Service" value={serviceType || '—'} />
-            <DataRow label="Ort" value={LOCATION} last />
+            <DataRow label="Ort" value={LOCATION} last={!(c.mail.showBookingReference && bookingReference)} />
+            {c.mail.showBookingReference && bookingReference ? (
+              <DataRow label="Aufrufnummer" value={bookingReference} last />
+            ) : null}
           </Section>
 
+          {hours != null ? (
           <Section style={warnBox}>
             <Text style={warnTitle}>⚠️ Jetzt noch bestätigen – sonst verfällt der Termin</Text>
             <Text style={warnText}>
               Die Zulassungsstelle hat dir eine E-Mail mit einem
               Bestätigungslink geschickt. <strong>Bitte klicke innerhalb von
-              3 Stunden auf diesen Link, also spätestens bis ca. {deadline} Uhr.</strong>{' '}
+              {hours} Stunden auf diesen Link, also spätestens bis ca. {deadline} Uhr.</strong>{' '}
               Ohne Bestätigung verfällt der Termin unwiderruflich, und wir
               können ihn nicht wiederherstellen.
             </Text>
@@ -65,6 +76,12 @@ const AppointmentFoundEmail = ({ bookingId,
               Keine E-Mail erhalten? Schau bitte auch in deinem Spam- oder Werbeordner nach.
             </Text>
           </Section>
+          ) : null}
+          {c.mail.showCancelUrl && cancelUrl ? (
+            <Text style={text}>
+              Termin absagen: <Link href={cancelUrl} style={link}>Stornolink der Stadt</Link>
+            </Text>
+          ) : null}
 
           <Section style={infoBox}>
             <Text style={infoTitle}>Zum Termin</Text>
@@ -75,7 +92,7 @@ const AppointmentFoundEmail = ({ bookingId,
               Die Gebühren zahlst du vor Ort mit Karte.
               Welche Unterlagen du für dein Anliegen mitbringen musst, findest
               du auf der{' '}
-              <Link href={CITY_URL} style={infoLink}>Seite der Kfz-Zulassungsstelle Köln</Link>.
+              <Link href={CITY_URL} style={infoLink}>Seite der {c.authorityName}</Link>.
             </Text>
           </Section>
 
@@ -121,7 +138,10 @@ const DataRow = ({ label, value, last }: { label: string; value: string; last?: 
 
 export const template = {
   component: AppointmentFoundEmail,
-  subject: 'Termin gefunden – bitte innerhalb von 3 Stunden bestätigen',
+  subject: (d: Record<string, any>) => {
+    const h = cityOrDefault(d.city).customerConfirmationHours
+    return h != null ? `Termin gefunden – bitte innerhalb von ${h} Stunden bestätigen` : 'Termin gefunden'
+  },
   displayName: 'Termin gefunden (Kunde)',
   previewData: {
     salutation: 'Herr',
