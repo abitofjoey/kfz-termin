@@ -24,7 +24,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { data: booking, error } = await supabaseAdmin
       .from("bookings")
-      .select("id, email, service_type, paid")
+      .select("id, email, service_type, paid, city")
       .eq("id", data.bookingId)
       .single();
 
