@@ -73,7 +73,7 @@ export const CITIES: Record<string, CityConfig> = {
     ],
     portalUrl:
       "https://termine.stadt-koeln.de/m/kfz-zulassung/extern/calendar/?uid=67523a04-37af-4131-9495-0a3566e0eb8b",
-    infoUrl: "https://www.stadt-koeln.de/leben-in-koeln/verkehr/kfz-zulassung/",
+    infoUrl: "https://www.stadt-koeln.de/service/adressen/00205/index.html",
     siteName: "KFZ-Termin Köln",
     calendar: {
       minOffsetDays: 1,
