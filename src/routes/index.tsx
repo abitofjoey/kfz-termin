@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { HomeHero, HomeTimeline, HomeReasons, HomeReviews, HomeFounder, HomeMissingCity, HomeFaq, HomeClosing, homeFaqItems } from "@/components/home/HomeSections";
-import { launchedCities, DEFAULT_CITY } from "@/lib/cities";
+import { launchedCities, DEFAULT_CITY, cityOrDefault } from "@/lib/cities";
 
 const SITE = "https://kfz-termin.online";
 const TITLE = "KFZ-Termin – Wunschtermin bei der Zulassungsstelle, automatisch gebucht";

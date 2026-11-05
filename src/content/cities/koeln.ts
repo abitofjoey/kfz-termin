@@ -38,7 +38,7 @@ export const koelnFaq: FaqItem[] = [
   },
   {
     q: "Kann ich mehrere Fahrzeuge in einem Termin anmelden?",
-    a: "Ja, du kannst bis zu 3 Fahrzeuge in einem Termin anmelden, bei einigen Anliegen höchstens 2. Im Buchungsformular fügst du über „+ Weiteres Fahrzeug hinzufügen\` einfach die FIN-Endung jedes weiteren Fahrzeugs hinzu. Der Preis bleibt pauschal ${PRICE} pro Termin, unabhängig von der Anzahl der Fahrzeuge.`,
+    a: ``Ja, du kannst bis zu 3 Fahrzeuge in einem Termin anmelden, bei einigen Anliegen höchstens 2. Im Buchungsformular fügst du über „+ Weiteres Fahrzeug hinzufügen\` einfach die FIN-Endung jedes weiteren Fahrzeugs hinzu. Der Preis bleibt pauschal ${PRICE} pro Termin, unabhängig von der Anzahl der Fahrzeuge.`,
   },
   {
     q: "Wie werde ich informiert wenn ein Termin gefunden wurde?",
