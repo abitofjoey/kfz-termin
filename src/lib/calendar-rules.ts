@@ -1,6 +1,6 @@
 // Gemeinsame Kalenderregeln (Europe/Berlin) für Buchung und neue Wunschtermine.
 // Die Regeln kommen aus der Stadt-Konfiguration (src/lib/cities.ts).
-import { cityOrDefault, settingsFor, DEFAULT_CITY } from "@/lib/cities";
+import { cityOrDefault, settingsFor, DEFAULT_CITY, type ServiceCategory } from "@/lib/cities";
 
 /** Köln-Sperrtage (Abwärtskompatibilität). Pflege in cities.ts. */
 export const BLOCKED_DATES: string[] = cityOrDefault(DEFAULT_CITY).calendar.blockedDates;
@@ -12,12 +12,16 @@ function addDaysISO(iso: string, days: number) {
   return dt.toISOString().slice(0, 10);
 }
 
-function rulesFor(city: string) {
-  return settingsFor(cityOrDefault(city)).calendar;
+function rulesFor(city: string, category: ServiceCategory = "kfz") {
+  return settingsFor(cityOrDefault(city), category).calendar;
 }
 
-export function computeCalendarBounds(now: Date = new Date(), city: string = DEFAULT_CITY) {
-  const rules = rulesFor(city);
+export function computeCalendarBounds(
+  now: Date = new Date(),
+  city: string = DEFAULT_CITY,
+  category: ServiceCategory = "kfz",
+) {
+  const rules = rulesFor(city, category);
   const fmt = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Europe/Berlin",
     year: "numeric",
@@ -42,9 +46,14 @@ export function computeCalendarBounds(now: Date = new Date(), city: string = DEF
 }
 
 /** Prüft YYYY-MM-DD-Daten gegen dieselben Regeln wie der Kalender. */
-export function areDatesAllowed(dates: string[], now: Date = new Date(), city: string = DEFAULT_CITY): boolean {
-  const rules = rulesFor(city);
-  const b = computeCalendarBounds(now, city);
+export function areDatesAllowed(
+  dates: string[],
+  now: Date = new Date(),
+  city: string = DEFAULT_CITY,
+  category: ServiceCategory = "kfz",
+): boolean {
+  const rules = rulesFor(city, category);
+  const b = computeCalendarBounds(now, city, category);
   return dates.every((d) => {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return false;
     if (d < b.minDateISO || d > b.maxDateISO) return false;
