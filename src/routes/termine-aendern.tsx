@@ -58,15 +58,26 @@ function RebookPage() {
   const [confirmRefund, setConfirmRefund] = useState(aktion === "erstattung");
 
   useEffect(() => {
-    loadState({ data: { token: t ?? "" } }).then(setState).catch(() => setState({ state: "invalid" }));
-    fetchBounds().then((b) =>
+    loadState({ data: { token: t ?? "" } })
+      .then((st) => {
+        setState(st);
+        // Kalendergrenzen nach Stadt und Kategorie der Buchung (Altbuchungen: Köln).
+        const scope = st.state === "choose" ? { city: st.city, category: st.category } : undefined;
+        return fetchBounds({ data: scope });
+      })
+      .catch(() => {
+        setState({ state: "invalid" });
+        return null;
+      })
+      .then((b) => {
+        if (!b) return;
       setBounds({
         today: parseISO(b.todayISO),
         min: parseISO(b.minDateISO),
         max: parseISO(b.maxDateISO),
         blocked: (b.blockedDatesISO ?? []).map(parseISO),
-      }),
-    );
+      });
+      });
   }, [t, loadState, fetchBounds]);
 
   const onConfirmDates = async () => {
