@@ -251,16 +251,19 @@ export type Database = {
       script_heartbeat: {
         Row: {
           alert_sent_at: string | null
+          api_status: string | null
           city: string
           last_poll_at: string
         }
         Insert: {
           alert_sent_at?: string | null
+          api_status?: string | null
           city: string
           last_poll_at: string
         }
         Update: {
           alert_sent_at?: string | null
+          api_status?: string | null
           city?: string
           last_poll_at?: string
         }

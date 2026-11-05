@@ -1,0 +1,1 @@
+ALTER TABLE public.script_heartbeat ADD COLUMN IF NOT EXISTS api_status text NULL;
