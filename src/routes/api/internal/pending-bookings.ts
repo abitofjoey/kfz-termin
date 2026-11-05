@@ -25,11 +25,39 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
+        // Optionaler Schnittstellen-Status (nur "ok" | "notbetrieb", sonst ignoriert).
+        const apiParam = new URL(request.url).searchParams.get("schnittstelle");
+        const apiStatus = apiParam === "ok" || apiParam === "notbetrieb" ? apiParam : null;
+
         try {
+          let prevStatus: string | null = null;
+          if (apiStatus) {
+            const { data: prev } = await supabaseAdmin
+              .from("script_heartbeat")
+              .select("api_status")
+              .eq("city", city)
+              .maybeSingle();
+            prevStatus = prev?.api_status ?? null;
+          }
+          const nowIso = new Date().toISOString();
           const { error: hbError } = await supabaseAdmin
             .from("script_heartbeat")
-            .upsert({ city, last_poll_at: new Date().toISOString() }, { onConflict: "city" });
+            .upsert(
+              apiStatus ? { city, last_poll_at: nowIso, api_status: apiStatus } : { city, last_poll_at: nowIso },
+              { onConflict: "city" },
+            );
           if (hbError) console.error("pending-bookings: heartbeat error", hbError.code);
+          else if (apiStatus && prevStatus !== apiStatus && (apiStatus === "notbetrieb" || prevStatus === "notbetrieb")) {
+            try {
+              const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+              await sendTemplateEmail("api-status-internal", "info@kfz-termin.online", {
+                idempotencyKey: `api-status-${city}-${apiStatus}-${nowIso}`,
+                templateData: { status: apiStatus, changedAt: nowIso, city },
+              });
+            } catch (e) {
+              console.error("pending-bookings: api status mail failed", e instanceof Error ? e.message : "unknown");
+            }
+          }
         } catch (e) {
           console.error("pending-bookings: heartbeat failed", e instanceof Error ? e.message : "unknown");
         }
