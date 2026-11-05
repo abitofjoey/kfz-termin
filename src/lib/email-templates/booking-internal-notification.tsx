@@ -2,6 +2,8 @@ import {
   Body, Container, Head, Heading, Html, Preview, Section, Text, Hr,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { cityOrDefault } from '../cities'
+import { locationsText } from './customer-email-parts'
 
 interface BookingInternalProps {
   bookingId?: string
@@ -16,6 +18,10 @@ interface BookingInternalProps {
   notes?: string
   selectedDates?: string[]
   stripeSessionId?: string
+  city?: string | null
+  locations?: string[] | null
+  financed?: boolean | null
+  vehicleCount?: number | null
 }
 
 const BookingInternalNotificationEmail = ({
@@ -31,6 +37,10 @@ const BookingInternalNotificationEmail = ({
   notes,
   selectedDates = [],
   stripeSessionId,
+  city,
+  locations,
+  financed,
+  vehicleCount,
 }: BookingInternalProps) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   const fins = (finEndings && finEndings.length > 0)
@@ -52,10 +62,20 @@ const BookingInternalNotificationEmail = ({
             <Row label="E-Mail" value={email} />
             <Row label="Telefon" value={phone} />
             <Hr style={hr} />
+            {cityOrDefault(city).form.locationChoice ? (
+              <>
+                <Row label="Standorte" value={locationsText(cityOrDefault(city), locations)} />
+                <Row label="Finanziert/geleast" value={financed ? 'ja' : 'nein'} />
+                <Row label="Anzahl" value={String(vehicleCount ?? 1)} />
+              </>
+            ) : (
+              <>
             <Text style={label}>FIN (letzte Ziffern){fins.length > 1 ? ` – ${fins.length} Fahrzeuge` : ''}</Text>
             {fins.length > 0
               ? fins.map((f, i) => <Text key={`${f}-${i}`} style={value}>• {f}</Text>)
               : <Text style={value}>—</Text>}
+              </>
+            )}
             <Text style={label}>Gewünschte Termine</Text>
             {selectedDates.length > 0
               ? selectedDates.map((d) => <Text key={d} style={value}>• {d}</Text>)

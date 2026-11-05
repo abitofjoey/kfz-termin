@@ -62,6 +62,9 @@ export async function finalizePaidBooking(bookingId: string): Promise<void> {
     stripeSessionId: booking.stripe_session_id ?? undefined,
     amountCents: booking.amount_cents ?? undefined,
     createdAt: booking.created_at,
+    locations: booking.locations ?? null,
+    financed: booking.financed,
+    vehicleCount: booking.vehicle_count ?? null,
   };
 
   try {
