@@ -15,10 +15,10 @@ export const Route = createFileRoute("/widerruf")({
   validateSearch: z.object({ token: z.string().optional() }),
   head: () => ({
     meta: [
-      { title: "Vertrag widerrufen – KFZ-Termin Köln" },
-      { name: "description", content: "Widerrufe deine Buchung bei KFZ-Termin Köln online – ohne Login." },
-      { property: "og:title", content: "Vertrag widerrufen – KFZ-Termin Köln" },
-      { property: "og:description", content: "Widerrufe deine Buchung bei KFZ-Termin Köln online – ohne Login." },
+      { title: "Vertrag widerrufen – KFZ-Termin" },
+      { name: "description", content: "Widerrufe deine Buchung bei KFZ-Termin online – ohne Login." },
+      { property: "og:title", content: "Vertrag widerrufen – KFZ-Termin" },
+      { property: "og:description", content: "Widerrufe deine Buchung bei KFZ-Termin online – ohne Login." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, nofollow" },

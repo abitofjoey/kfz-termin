@@ -9,7 +9,7 @@ type State =
   | { state: "found" }
   | { state: "done"; email: string }
   | { state: "expired" }
-  | { state: "form"; firstName: string; maskedEmail: string };
+  | { state: "form"; firstName: string; maskedEmail: string; city: string | null };
 
 function maskEmail(email: string): string {
   const [local, domain] = email.split("@");
@@ -48,7 +48,7 @@ export const getEmailChangeState = createServerFn({ method: "POST" })
     if (b.search_result === "not_found" || dates.length === 0 || dates.every((d) => d < today)) {
       return { state: "expired" };
     }
-    return { state: "form", firstName: b.first_name, maskedEmail: maskEmail(b.email) };
+    return { state: "form", firstName: b.first_name, maskedEmail: maskEmail(b.email), city: b.city ?? null };
   });
 
 const SubmitInput = z.union([

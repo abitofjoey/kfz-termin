@@ -20,9 +20,9 @@ export const Route = createFileRoute("/termine-aendern")({
   validateSearch: z.object({ t: z.string().optional(), aktion: z.string().optional() }),
   head: () => ({
     meta: [
-      { title: "Neue Wunschtermine wählen – KFZ-Termin Köln" },
+      { title: "Neue Wunschtermine wählen – KFZ-Termin" },
       { name: "description", content: "Wähle neue Wunschtermine für deine Terminsuche oder lass dir den Betrag erstatten." },
-      { property: "og:title", content: "Neue Wunschtermine wählen – KFZ-Termin Köln" },
+      { property: "og:title", content: "Neue Wunschtermine wählen – KFZ-Termin" },
       { property: "og:description", content: "Wähle neue Wunschtermine für deine Terminsuche oder lass dir den Betrag erstatten." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
