@@ -3,7 +3,7 @@ import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
 import Stripe from "stripe";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
-import { resolveCheckoutAmount } from "@/lib/checkout-amount";
+import { resolveCheckoutAmount, checkoutDescription } from "@/lib/checkout-amount";
 
 
 function getStripe() {
@@ -59,7 +59,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
             unit_amount: amountCents,
             product_data: {
               name: booking.service_type,
-              description: "KFZ-Termin Köln – Terminservice bei der Zulassungsstelle",
+              description: checkoutDescription(booking.city),
             },
           },
         },
