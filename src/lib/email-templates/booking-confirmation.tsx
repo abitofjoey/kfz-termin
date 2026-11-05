@@ -4,7 +4,7 @@ import {
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
-import { formatDayLong } from './customer-email-parts'
+import { formatDayLong, locationsText } from './customer-email-parts'
 
 import { cityOrDefault } from '../cities'
 import { formatPrice, vatMailValue } from '../price'

@@ -3,6 +3,8 @@ import {
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import { formatBerlinShort } from './format-berlin'
+import { cityOrDefault } from '../cities'
+import { locationText } from './customer-email-parts'
 
 interface Props {
   bookingId?: string
@@ -14,10 +16,15 @@ interface Props {
   serviceType?: string
   appointmentAt?: string
   foundAt?: string
+  city?: string | null
+  bookedLocation?: string | null
+  bookingReference?: string | null
+  cancelUrl?: string | null
 }
 
 const AppointmentFoundInternalEmail = ({
   bookingId, salutation, firstName, lastName, email, phone, serviceType, appointmentAt, foundAt,
+  city, bookedLocation, bookingReference, cancelUrl,
 }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   return (
@@ -35,6 +42,13 @@ const AppointmentFoundInternalEmail = ({
             <Hr style={hr} />
             <Row label="Gebuchter Termin" value={formatBerlinShort(appointmentAt)} />
             <Row label="Gebucht um" value={formatBerlinShort(foundAt)} />
+            {cityOrDefault(city).form.locationChoice ? (
+              <>
+                <Row label="Standort" value={locationText(cityOrDefault(city), bookedLocation)} />
+                <Row label="Aufrufnummer" value={bookingReference ?? undefined} />
+                <Row label="Stornolink" value={cancelUrl ?? undefined} />
+              </>
+            ) : null}
             <Hr style={hr} />
             <Row label="Buchungs-ID" value={bookingId} mono />
           </Section>
