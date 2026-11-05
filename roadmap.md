@@ -11,3 +11,7 @@
 - [x] Rechtstexte städteneutral
 - [x] Vergleich vorher/nachher, Tests, Typprüfung, Build
 - [ ] Stufe 2: Standortwahl/Finanziert-Feld im Formular, Bonn-Inhalte, Stadt in Zustand von termine-aendern/email-aendern
+
+# Roadmap – Preis 12,99 €
+- [x] Zentrale Preisquelle, amount_cents pro Buchung, USt-Umschaltung ab VAT_FROM, Tests
+- [ ] Anfang 2027: Impressum und llms.txt (USt) manuell anpassen – macht der Nutzer
