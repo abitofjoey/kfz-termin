@@ -42,6 +42,7 @@ function SuccessPage() {
         if (r.paid && typeof window !== "undefined" && Array.isArray(window.dataLayer)) {
           window.dataLayer.push({
             event: "purchase",
+            city: r.city,
             ecommerce: {
               transaction_id: session_id,
               value: (r.amountCents ?? cityOrDefault(city).priceCents) / 100,

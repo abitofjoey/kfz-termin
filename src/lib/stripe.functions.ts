@@ -97,14 +97,16 @@ export const confirmCheckoutSession = createServerFn({ method: "POST" })
     }
 
     let amountCents: number | null = null;
+    let city: string | null = session.metadata?.city ?? null;
     if (bookingId) {
       const { data: b } = await supabaseAdmin
         .from("bookings")
-        .select("amount_cents")
+        .select("amount_cents, city")
         .eq("id", bookingId)
         .maybeSingle();
       amountCents = b?.amount_cents ?? null;
+      city = b?.city ?? city;
     }
 
-    return { ok: true as const, paid: isPaid, amountCents };
+    return { ok: true as const, paid: isPaid, amountCents, city: city ?? "koeln" };
   });
