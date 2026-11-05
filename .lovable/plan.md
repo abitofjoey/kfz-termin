@@ -1,39 +1,69 @@
-# Preis 12,99 € aus zentraler Quelle, bezahlter Betrag pro Buchung, USt ab 2027
+# Stufe 2: Bonn als zweite Stadt (gebaut, aber versteckt)
 
-## 1. Zentrale Quelle
-- `src/lib/cities.ts`: `priceCents` für koeln und bonn auf 1299.
-- Neue Datei `src/lib/price.ts`: `formatPrice(cents)` → "12,99 €" (de-DE, immer zwei Nachkommastellen), `VAT_FROM = "2027-01-01"`, `isVatActive(now)` (Berliner Kalendertag ≥ VAT_FROM), `vatNote()` / `priceTaxSuffix()` für die Texte.
-- Fest eingetragene Preise ersetzen durch `formatPrice(city.priceCents)` (bzw. Köln-Konfiguration auf der neutralen Startseite):
-  - `Pricing.tsx` (große Preisangabe)
-  - `BookingForm.tsx` (Dienstleistungs-Liste, Hinweis unter dem Button)
-  - `components/home/HomeSections.tsx` (Vertrauenszeile, Schritt 1, Kachel Geld-zurück, zwei FAQ)
-  - `content/cities/koeln.ts` (drei FAQ-Antworten, SEO-Titel/Beschreibung) – Texte werden mit dem Preis aus der Konfiguration zusammengesetzt
-  - `routes/index.tsx` (Description, JSON-LD `offers.price`)
-  - `agb.tsx` §(1)
-  - `public/llms.txt` (statische Datei, kann nicht rechnen) → Text auf 12,99 € anpassen
-- Abschluss: Suche nach "9,99", "9.99", "999" in `src` und `public` – Treffer nur noch dort, wo der historische Wert gewollt ist (Migration-Backfill, Test).
+Bonn wird komplett auf der bestehenden Stadt-Struktur gebaut und bleibt `launched: false` und `bookable: false`. Köln bleibt Wort für Wort und Byte für Byte gleich (Seite, Mails, Pi-Antwort, Kalender).
 
-## 2. Bezahlter Betrag pro Buchung
-- Migration: `bookings.amount_cents integer`, bestehende Zeilen per Backfill 999 (additiv, nullable).
-- `stripe.functions.ts`: Betrag serverseitig aus der Stadt der Buchung, in `amount_cents` speichern, als `unit_amount` an Stripe.
-- Mails mit Betrag: heute nennt nur die Bestätigungsmail einen Betrag ("Betrag 9,99 €"). Rückerstattungsangebot, Erstattung und Widerruf sagen nur „den vollen Betrag“ – ohne Zahl. Vorschlag: dort unverändert lassen (Mailvergleich bleibt identisch). Bestätigung zeigt `formatPrice(booking.amount_cents)` (Fallback 999 falls leer).
-- Rückerstattung (`refund.server.ts`) erstattet bereits ohne Betragsangabe über den payment_intent → Stripe erstattet automatisch den tatsächlich bezahlten Betrag. Keine Änderung nötig.
-- `buchung-erfolgreich.tsx`: Conversion-Wert = `amount_cents / 100` der Buchung (wird mit dem bestehenden Statusabruf mitgeladen; Fallback 12,99 aus Stadt).
+## 1. Stadt-Konfiguration Bonn
+- Name, Adjektiv, Behörde "Stadt Bonn – Kfz-Zulassung und Führerscheinstelle", Portal-URL wie angegeben.
+- Vier Standorte: `dlz`, `hardtberg`, `beuel`, `godesberg` mit Adressen.
+- Formular: keine FIN, keine Anrede, Standortwahl an, Checkbox "finanziert" an.
+- Sofort verbindlich (keine 3-Stunden-Frist), Suche 0–24 Uhr.
+- Kalender: frühestens morgen, kein 14-Uhr-Cutoff, keine Wochenenden; Fenster Kfz 35 Tage, Führerschein 70 Tage (über die Kategorie-Überschreibung).
+- Preis aus der zentralen Preisangabe (12,99 €).
+- Mails: Aufrufnummer und Stornolink an.
+- Pi-Wächter (Health-Check und abendliche Zwischenmail) laufen künftig für alle buchbaren Städte statt nur veröffentlichte. Für Köln ändert sich dadurch nichts.
 
-## 3. Umsatzsteuer ab 2027
-Heutige Kleinunternehmer-/„keine USt.“-Hinweise:
-- `BookingForm.tsx` – Hinweis unter dem Button „(keine USt.)“
-- `booking-confirmation.tsx` – Zeile „Umsatzsteuer: Keine USt. gem. § 19 UStG“
-- `agb.tsx` §(1) – „Gemäß § 19 UStG wird keine Umsatzsteuer ausgewiesen.“
-- `impressum.tsx` – Abschnitt „Umsatzsteuer … Kleinunternehmerregelung“
-- `public/llms.txt` – „keine Umsatzsteuer (§ 19 UStG)“
-- Preis-Sektion `Pricing.tsx`: aktuell kein Steuerhinweis
+## 2. Dienstleistungen Bonn
+- Eigene Bonner Liste mit den 35 Anliegen und Script-Nummern 1–35, je mit Kategorie (`kfz`/`fuehrerschein`), möglichen Standorten und Höchstzahl Fahrzeuge (Standard 5; Nr. 11, 12 = 1; Nr. 14 = 3; Führerschein immer 1 Person).
+- Kölner Liste und Nummern 1–19 bleiben unverändert.
 
-Ab VAT_FROM automatisch: Formular „inkl. 19 % USt.“, Preis-Sektion „inkl. 19 % USt.“ (vorher kein Zusatz, wie heute), Bestätigungsmail Zeile „Umsatzsteuer: inkl. 19 % USt.“, AGB „Der Preis versteht sich inklusive der gesetzlichen Umsatzsteuer.“
-- Bei der Bestätigungsmail zählt das Buchungsdatum, nicht das Versanddatum.
-- Impressum und `llms.txt` stelle ich nicht automatisch um (Impressum braucht ab dann eine USt-IdNr., `llms.txt` ist statisch) – bitte Anfang 2027 manuell anpassen. Sag Bescheid, falls das Impressum trotzdem automatisch umschalten soll.
+## 3. Formular auf /bonn
+- Oben Wahl "Kfz-Zulassung" oder "Führerschein"; danach nur passende Anliegen, Kalenderfenster je Kategorie.
+- Felder: Vorname, Nachname, E-Mail, Telefon. Anzahl Fahrzeuge nur bei Kfz.
+- Standort: "Egal wo – Hauptsache Wunschtermin (höchste Chance)" (Standard) oder "Nur bestimmte Standorte" mit Checkboxen, nur die fürs Anliegen möglichen. Nur DLZ möglich → stattdessen Hinweis "Dieses Anliegen bearbeitet Bonn nur im Dienstleistungszentrum (Berliner Platz 2)."
+- Checkbox (nur Kfz) "Fahrzeug ist finanziert oder geleast" mit Hinweis; angehakt → nur DLZ.
+- Hinweis über dem Absenden-Button wie vorgegeben.
+- Solange nicht buchbar: Formular sichtbar mit Hinweis "Buchungen für Bonn starten in Kürze", Absenden gesperrt (zusätzlich serverseitig abgelehnt).
+- Gespeichert: Stadt `bonn`, gewählte Standorte (bei "Egal wo" alle möglichen), neues Feld "finanziert". Kategorie folgt aus dem Anliegen. Server prüft alles nach (Standorte gegen Anliegen, finanziert → nur DLZ, Kalenderfenster).
+- Das Kölner Formular sieht und verhält sich exakt wie bisher.
 
-## 4. Absicherung
-- Mail-Snapshot vorher/nachher für alle Templates: Unterschied nur in der Betragszeile (bei amount_cents 1299).
-- Tests (vitest): Checkout-Betrag für Köln = 1299; Bestätigungsmail mit amount_cents 999 zeigt „9,99 €“; formatPrice(1299) = „12,99 €“; USt-Text am 31.12.2026 vs. 01.01.2027 (Berliner Zeit).
-- Typprüfung und Build, nicht veröffentlichen.
+## 4. Schnittstelle für das Pi-Script
+- `pending-bookings?city=bonn`: bekanntes Format, zusätzlich in `nutzerdaten`: `standorte`, `finanziert`, `kategorie`; `service` = Bonner Nummer; Anrede/FIN leer; `anzahl` bei Führerschein "1", bei Kfz die gewählte Fahrzeugzahl.
+- Kölner Antwort bleibt identisch (keine neuen Felder für Köln).
+- Ergebnis-Route speichert Standort, Aufrufnummer, Stornolink wie bisher; die Mails nutzen sie.
+
+## 5. Mails für Bonn
+- Alle Unterschiede laufen über die Stadt-Konfiguration; Köln-Mails bleiben Zeichen für Zeichen gleich (Vorher/Nachher-Vergleich).
+- Bestätigung: statt 3-Stunden-Hinweis der vorgegebene Rund-um-die-Uhr-Text.
+- Termin gefunden: Betreff "Dein Termin in Bonn ist gebucht"; Datum, Uhrzeit, Standort mit Adresse, Aufrufnummer mit Check-in-Hinweis, "Die Buchung ist verbindlich – du musst nichts mehr bestätigen", Stornolink mit vorgegebenem Text.
+- Übrige Mails (nicht gefunden, Zwischenstand, Widerruf, Wunschtermine geändert, E-Mail-Limit) mit Bonner Ort und Behörde.
+- Widerruf nach erfolgter Buchung: Kundenmail enthält den Stornolink.
+- Interne Mails mit `[Bonn]`, plus Standort, Aufrufnummer und "finanziert".
+
+## 6. Inhalt /bonn
+- Eigener sachlicher Text, nichts von Köln kopiert, keine erfundenen Zahlen.
+- Hero wie vorgegeben; Standortblock mit vier Adressen und Hinweis auf DLZ-only-Anliegen; ehrlicher Hinweis zu mehreren Wochen Vorlauf.
+- FAQ: die sechs vorgegebenen Fragen plus Preis/Geld-zurück (Preis aus Konfiguration); FAQ-Strukturdaten.
+- Keine Kundenstimmen.
+- Meta-Titel wie vorgegeben, eigene Beschreibung, Service-Strukturdaten mit "Bonn". Seite bleibt `noindex`, nicht in Sitemap, Kopfzeile, Fußzeile oder Startseite.
+
+## 7. Ergänzungen
+- Stripe-Produktbeschreibung aus der Stadt der Buchung; Köln behält "KFZ-Termin Köln – Terminservice bei der Zulassungsstelle", Bonn "KFZ-Termin Bonn – Terminservice bei der Stadt Bonn".
+- Kaufmeldung auf /buchung-erfolgreich: zusätzlich `city: "<slug>"` auf oberster Ebene, sonst unverändert.
+
+## 8. Absicherung
+- Köln-Vergleich wie in Stufe 1: /koeln Text und Struktur, alle Mails, pending-bookings-Antwort, Kalender.
+- Neue Tests: Kalenderfenster Kfz 35 / Führerschein 70 und kein Cutoff; Standort-Filter je Anliegen; finanziert → nur DLZ; Format `pending-bookings?city=bonn`; Bonn nicht buchbar → Server lehnt ab; Stripe-Text je Stadt.
+- Typprüfung, Build, Klicktest von /bonn. Nicht veröffentlichen.
+
+## Hinweis zur Testphase
+Die Pi-Überwachung greift für "buchbare" Städte. Mit `bookable: false` wird Bonn also erst überwacht, wenn du Bonn buchbar schaltest (z. B. versteckte Testphase: `launched: false`, `bookable: true`). Das ist so umgesetzt, wie du es beschrieben hast.
+
+## Technische Details
+- Migration (additiv): `bookings.financed boolean not null default false`. Kategorie wird nicht gespeichert, sondern aus dem Anliegen abgeleitet.
+- `services.ts`: Bonner Dienstleistungs-IDs in eigener Liste, Typ wird von Köln-Union auf städtespezifisch erweitert; Felder `category`, `locations`, `maxVehicles`. `SCRIPT_SERVICE_MAP_BY_CITY.bonn` 1–35.
+- Fahrzeuganzahl Bonn: neue Spalte `vehicle_count smallint` (nullable) in derselben Migration, da Bonn keine FINs hat und `anzahl` sonst nicht ableitbar ist; Köln zählt weiter über FINs.
+- `script-mapping.ts`: Zusatzfelder nur bei `locationChoice`-Städten, Köln-Ausgabe unverändert.
+- `health/check.ts`, `daily-status.ts`: `launchedCities()` → `bookableCities()`.
+- `calendar-rules.ts`: Kategorie-Parameter; Bonn `cutoffHour` so gesetzt, dass `afterCutoffOffsetDays = minOffsetDays = 1`.
+- `BookingForm` erhält stadtabhängige Abschnitte (Kategorie, Standort, finanziert) hinter `city.form`-Schaltern; Köln-Pfad unverändert.
+- Inhalte in `src/content/cities/bonn.ts`, Registrierung in `content/cities/index.ts`.
