@@ -7,6 +7,7 @@ import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
 import { formatDayLong } from './customer-email-parts'
 
 import { cityOrDefault } from '../cities'
+import { formatPrice, vatMailValue } from '../price'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
 
 interface BookingConfirmationProps {
@@ -23,6 +24,10 @@ interface BookingConfirmationProps {
   notes?: string
   selectedDates?: string[]
   city?: string | null
+  /** Tatsächlich berechneter Betrag dieser Buchung (Cent). */
+  amountCents?: number | null
+  /** Buchungszeitpunkt – bestimmt den USt-Hinweis. */
+  createdAt?: string | null
 }
 
 const BookingConfirmationEmail = ({ bookingId, withdrawToken,
@@ -37,6 +42,8 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
   notes,
   selectedDates = [],
   city,
+  amountCents,
+  createdAt,
 }: BookingConfirmationProps) => {
   const c = cityOrDefault(city)
   const SITE_NAME = c.siteName
@@ -119,10 +126,10 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
 
           <Section style={card}>
             <Text style={cardTitle}>Zahlung</Text>
-            <DataRow label="Betrag" value="9,99 €" />
+            <DataRow label="Betrag" value={formatPrice(amountCents ?? 999)} />
             <DataRow
               label="Umsatzsteuer"
-              value="Keine USt. gem. § 19 UStG"
+              value={vatMailValue(createdAt ? new Date(createdAt) : new Date())}
               last
             />
             <Text style={cardFootnote}>

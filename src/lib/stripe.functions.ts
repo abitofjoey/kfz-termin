@@ -3,6 +3,7 @@ import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
 import Stripe from "stripe";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { resolveCheckoutAmount } from "@/lib/checkout-amount";
 
 
 function getStripe() {
@@ -24,7 +25,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { data: booking, error } = await supabaseAdmin
       .from("bookings")
-      .select("id, email, service_type, paid, city")
+      .select("id, email, service_type, paid, city, amount_cents")
       .eq("id", data.bookingId)
       .single();
 
@@ -33,6 +34,11 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     }
     if (booking.paid) {
       return { ok: false as const, error: "Buchung wurde bereits bezahlt." };
+    }
+
+    const { amountCents, needsBackfill } = resolveCheckoutAmount(booking);
+    if (needsBackfill) {
+      await supabaseAdmin.from("bookings").update({ amount_cents: amountCents }).eq("id", booking.id);
     }
 
     const origin = getOrigin();
@@ -50,7 +56,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
           quantity: 1,
           price_data: {
             currency: "eur",
-            unit_amount: 999,
+            unit_amount: amountCents,
             product_data: {
               name: booking.service_type,
               description: "KFZ-Termin Köln – Terminservice bei der Zulassungsstelle",
