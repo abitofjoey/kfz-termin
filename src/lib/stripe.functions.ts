@@ -1,5 +1,4 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
 import Stripe from "stripe";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
@@ -12,7 +11,9 @@ function getStripe() {
   return new Stripe(key);
 }
 
-function getOrigin() {
+async function getOrigin() {
+  // Nur serverseitig laden, damit der Client-Bundle den Server-Import nicht sieht.
+  const { getRequest } = await import("@tanstack/react-start/server");
   const req = getRequest();
   const url = new URL(req.url);
   return `${url.protocol}//${url.host}`;
@@ -41,7 +42,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       await supabaseAdmin.from("bookings").update({ amount_cents: amountCents }).eq("id", booking.id);
     }
 
-    const origin = getOrigin();
+    const origin = await getOrigin();
     const stripe = getStripe();
 
     const session = await stripe.checkout.sessions.create({
