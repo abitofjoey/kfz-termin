@@ -1,3 +1,5 @@
+import { formatPrice, vatShortNote } from "@/lib/price";
+import { cityOrDefault } from "@/lib/cities";
 import { useState, useMemo, useEffect, useId, lazy, Suspense } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -253,7 +255,7 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
                     <SelectContent>
                       {SERVICES.map((s) => (
                         <SelectItem key={s.id} value={s.id}>
-                          {s.label} – 9,99 €
+                          {s.label} – {formatPrice(cityOrDefault(city).priceCents)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -504,7 +506,7 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
           </Button>
 
           <p className="text-center text-xs text-muted-foreground">
-            9,99 € inkl. aller Gebühren (keine USt.) · Sichere Zahlung über Stripe · Bestätigungs-E-Mail direkt nach der Buchung
+            {formatPrice(cityOrDefault(city).priceCents)} inkl. aller Gebühren ({vatShortNote()}) · Sichere Zahlung über Stripe · Bestätigungs-E-Mail direkt nach der Buchung
           </p>
         </form>
       </div>

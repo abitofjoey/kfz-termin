@@ -1,7 +1,10 @@
 import { Check, RefreshCw, CalendarCheck, ShieldCheck, Star, MessageCircle, Mail } from "lucide-react";
 import { CityCards } from "./CityCards";
 import { testimonials } from "@/components/landing/Testimonials";
-import { launchedCities } from "@/lib/cities";
+import { launchedCities, cityOrDefault } from "@/lib/cities";
+import { formatPrice } from "@/lib/price";
+
+const PRICE = formatPrice(cityOrDefault(undefined).priceCents);
 import eikeUrl from "@/assets/brand/eike.webp";
 import eikeSmallUrl from "@/assets/brand/eike-120.webp";
 
@@ -22,7 +25,7 @@ export function HomeHero() {
           <p className="mt-3 text-sm text-muted-foreground">Weitere Städte folgen.</p>
         </div>
         <ul className="mt-8 flex flex-col gap-2 text-sm font-medium sm:flex-row sm:flex-wrap sm:gap-6">
-          {["9,99 € pro Auftrag", "Geld zurück, wenn kein Termin frei wird", "Kein Konto nötig"].map((t) => (
+          {[`${PRICE} pro Auftrag`, "Geld zurück, wenn kein Termin frei wird", "Kein Konto nötig"].map((t) => (
             <li key={t} className="flex items-center gap-2">
               <Check className="h-4 w-4 text-accent" aria-hidden="true" />
               {t}
@@ -36,7 +39,7 @@ export function HomeHero() {
 
 const steps = [
   { t: "Stadt wählen", d: "Wähle die Stadt, in der du deinen Termin brauchst." },
-  { t: "Formular ausfüllen", d: "Anliegen, deine Daten und die Tage, an denen du Zeit hast. Danach bezahlst du einmalig 9,99 €." },
+  { t: "Formular ausfüllen", d: `Anliegen, deine Daten und die Tage, an denen du Zeit hast. Danach bezahlst du einmalig ${PRICE}.` },
   { t: "Termin per E-Mail", d: "Wir suchen automatisch, bis an einem deiner Wunschtage ein Termin frei wird. Dann buchen wir ihn, und du bekommst die Bestätigung per E-Mail." },
 ];
 
@@ -67,7 +70,7 @@ export function HomeTimeline() {
 const reasons = [
   { icon: RefreshCw, t: "Kein ständiges Neuladen", d: "Freie Termine tauchen oft nur kurz auf, zum Beispiel durch Absagen. Unser System schaut laufend nach, damit du es nicht musst." },
   { icon: CalendarCheck, t: "Nur deine Wunschtage", d: "Wir buchen ausschließlich an Tagen, die du vorher ausgewählt hast." },
-  { icon: ShieldCheck, t: "Geld-zurück-Garantie", d: "Wird an keinem deiner Wunschtage ein Termin frei, bekommst du die 9,99 € zurück." },
+  { icon: ShieldCheck, t: "Geld-zurück-Garantie", d: `Wird an keinem deiner Wunschtage ein Termin frei, bekommst du die ${PRICE} zurück.` },
 ];
 
 export function HomeReasons() {
@@ -180,10 +183,10 @@ export function homeFaqItems(): HomeFaqItem[] {
   const names = launchedCities().map((c) => c.name).join(", ");
   return [
     { q: "Für welche Städte gibt es den Service?", a: `${names}. Weitere Städte folgen.` },
-    { q: "Was kostet der Service?", a: "Einmalig 9,99 € pro Auftrag. Wird an keinem deiner Wunschtage ein Termin frei, bekommst du dein Geld zurück." },
+    { q: "Was kostet der Service?", a: `Einmalig ${PRICE} pro Auftrag. Wird an keinem deiner Wunschtage ein Termin frei, bekommst du dein Geld zurück.` },
     { q: "Wie bucht ihr den Termin?", a: "Über das offizielle Terminportal der jeweiligen Stadt, mit deinen Angaben – so, als würdest du selbst buchen." },
     { q: "Muss ich den Termin noch bestätigen?", a: "Das hängt von der Stadt ab. Was genau gilt, steht auf der jeweiligen Stadtseite und in unserer E-Mail." },
-    { q: "Was passiert, wenn kein Termin frei wird?", a: "Du kannst neue Wunschtage wählen oder bekommst die 9,99 € zurück." },
+    { q: "Was passiert, wenn kein Termin frei wird?", a: `Du kannst neue Wunschtage wählen oder bekommst die ${PRICE} zurück.` },
     { q: "Was passiert mit meinen Daten?", a: "Wir nutzen sie nur für deine Terminbuchung und löschen sie danach. Details stehen in der Datenschutzerklärung.", link: { href: "/datenschutz", label: "Zur Datenschutzerklärung" } },
   ];
 }

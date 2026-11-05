@@ -1,3 +1,7 @@
+import { formatPrice } from "@/lib/price";
+import { KOELN_PRICE_CENTS } from "@/lib/cities";
+
+const PRICE = formatPrice(KOELN_PRICE_CENTS);
 import type { FaqItem } from "@/components/landing/Faq";
 import type { HeroContent } from "@/components/landing/Hero";
 import type { InfoContent } from "@/components/landing/InfoBlock";
@@ -14,11 +18,11 @@ export type CityContent = {
 export const koelnFaq: FaqItem[] = [
   {
     q: "Lohnt sich der Service für mich?",
-    a: "Ja – besonders wenn du kurzfristig einen Termin brauchst, einen konkreten Wunschzeitraum hast oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots, zum Beispiel wenn du gerade ein Auto gekauft hast, umgezogen bist oder eine Frist läuft. Termine beim Straßenverkehrsamt Köln sind deshalb so schwer zu bekommen, weil die Nachfrage sehr hoch ist und neue Slots meist nur zu bestimmten Zeiten freigegeben werden – oft sind sie innerhalb weniger Minuten vergeben. Die 9,99 € lohnen sich, wenn du nicht jeden Morgen selbst die Seite der Stadt Köln prüfen kannst oder willst. Wer regelmäßig Zeit dafür hat, braucht den Service nicht.",
+    a: `Ja – besonders wenn du kurzfristig einen Termin brauchst, einen konkreten Wunschzeitraum hast oder keine Zeit hast täglich selbst nachzuschauen. Die direkte Online-Buchung der Zulassungsstelle ist oft wochenlang ausgebucht – unser Service findet auch kurzfristig freie Slots, zum Beispiel wenn du gerade ein Auto gekauft hast, umgezogen bist oder eine Frist läuft. Termine beim Straßenverkehrsamt Köln sind deshalb so schwer zu bekommen, weil die Nachfrage sehr hoch ist und neue Slots meist nur zu bestimmten Zeiten freigegeben werden – oft sind sie innerhalb weniger Minuten vergeben. Die ${PRICE} lohnen sich, wenn du nicht jeden Morgen selbst die Seite der Stadt Köln prüfen kannst oder willst. Wer regelmäßig Zeit dafür hat, braucht den Service nicht.`,
   },
   {
     q: "Was kostet der Service?",
-    a: "9,99 € einmalig, keine weiteren Kosten. Wird in deinem Zeitraum kein Termin frei, kannst du einmalig neue Wunschtermine wählen oder bekommst den vollen Betrag zurück – ohne Wenn und Aber.",
+    a: `${PRICE} einmalig, keine weiteren Kosten. Wird in deinem Zeitraum kein Termin frei, kannst du einmalig neue Wunschtermine wählen oder bekommst den vollen Betrag zurück – ohne Wenn und Aber.`,
   },
   {
     q: "Wie schnell bekomme ich einen Termin?",
@@ -34,7 +38,7 @@ export const koelnFaq: FaqItem[] = [
   },
   {
     q: "Kann ich mehrere Fahrzeuge in einem Termin anmelden?",
-    a: "Ja, du kannst bis zu 3 Fahrzeuge in einem Termin anmelden, bei einigen Anliegen höchstens 2. Im Buchungsformular fügst du über „+ Weiteres Fahrzeug hinzufügen\" einfach die FIN-Endung jedes weiteren Fahrzeugs hinzu. Der Preis bleibt pauschal 9,99 € pro Termin, unabhängig von der Anzahl der Fahrzeuge.",
+    a: "Ja, du kannst bis zu 3 Fahrzeuge in einem Termin anmelden, bei einigen Anliegen höchstens 2. Im Buchungsformular fügst du über „+ Weiteres Fahrzeug hinzufügen\` einfach die FIN-Endung jedes weiteren Fahrzeugs hinzu. Der Preis bleibt pauschal ${PRICE} pro Termin, unabhängig von der Anzahl der Fahrzeuge.`,
   },
   {
     q: "Wie werde ich informiert wenn ein Termin gefunden wurde?",
@@ -74,10 +78,10 @@ export const koelnContent: CityContent = {
   meta: {
     title: "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht",
     description:
-      "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht. Für KFZ-Zulassung, Auto anmelden, Ummeldung & Abmeldung. 9,99 € mit Geld-zurück-Garantie.",
+      `Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht. Für KFZ-Zulassung, Auto anmelden, Ummeldung & Abmeldung. ${PRICE} mit Geld-zurück-Garantie.`,
     ogTitle: "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht",
     ogDescription:
-      "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht. Für KFZ-Zulassung, Auto anmelden, Ummeldung & Abmeldung. 9,99 € mit Geld-zurück-Garantie.",
+      `Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht. Für KFZ-Zulassung, Auto anmelden, Ummeldung & Abmeldung. ${PRICE} mit Geld-zurück-Garantie.`,
     ogImage: "https://kfz-termin.online/og-image.jpg",
     ogImageAlt: "KFZ-Termin Köln – Logo",
   },

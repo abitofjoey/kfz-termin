@@ -1,3 +1,5 @@
+import { formatPrice, vatAgbSentence } from "@/lib/price";
+import { cityOrDefault } from "@/lib/cities";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LegalPage } from "@/components/landing/LegalPage";
 
@@ -52,7 +54,7 @@ export const Route = createFileRoute("/agb")({
 
       <section>
         <h2 className="text-lg font-semibold">§ 4 Preise und Zahlung</h2>
-        <p className="mt-2">(1) Der Preis für die Terminbuchung beträgt 9,99 € pro Auftrag (Pauschalpreis). Der Preis ist ein Endpreis. Gemäß § 19 UStG wird keine Umsatzsteuer ausgewiesen.</p>
+        <p className="mt-2">(1) Der Preis für die Terminbuchung beträgt {formatPrice(cityOrDefault(undefined).priceCents)} pro Auftrag (Pauschalpreis). Der Preis ist ein Endpreis. {vatAgbSentence()}</p>
         <p className="mt-2">(2) Der Preis ist mit Vertragsschluss sofort fällig. Die Zahlung erfolgt über die angebotenen Zahlungsarten über Stripe.</p>
       </section>
 
