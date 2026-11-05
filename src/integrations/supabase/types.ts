@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       bookings: {
         Row: {
+          amount_cents: number | null
           anonymized_at: string | null
           appointment_at: string | null
           assigned_to_script: boolean
@@ -61,6 +62,7 @@ export type Database = {
           withdrawn_at: string | null
         }
         Insert: {
+          amount_cents?: number | null
           anonymized_at?: string | null
           appointment_at?: string | null
           assigned_to_script?: boolean
@@ -106,6 +108,7 @@ export type Database = {
           withdrawn_at?: string | null
         }
         Update: {
+          amount_cents?: number | null
           anonymized_at?: string | null
           appointment_at?: string | null
           assigned_to_script?: boolean
