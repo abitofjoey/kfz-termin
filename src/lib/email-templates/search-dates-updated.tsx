@@ -1,6 +1,7 @@
 import { Body, Container, Head, Heading, Html, Hr, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
+import { cityOrDefault } from '../cities'
 
 interface Props {
   bookingId?: string
@@ -8,9 +9,10 @@ interface Props {
   firstName?: string
   serviceType?: string
   selectedDates?: string[]
+  city?: string | null
 }
 
-const SearchDatesUpdatedEmail = ({ bookingId, withdrawToken, firstName, serviceType, selectedDates }: Props) => (
+const SearchDatesUpdatedEmail = ({ bookingId, withdrawToken, firstName, serviceType, selectedDates, city }: Props) => (
   <Html lang="de" dir="ltr">
     <Head />
     <Preview>Deine Wunschtermine wurden aktualisiert</Preview>
