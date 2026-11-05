@@ -243,6 +243,9 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
             appointmentAt,
             foundAt,
             withdrawnAt: booking.withdrawn_at,
+            bookedLocation: body.location ?? null,
+            bookingReference: body.bookingReference ?? null,
+            cancelUrl: body.cancelUrl ?? null,
           };
           let wSent = false;
           try {
@@ -304,6 +307,9 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
           serviceType: booking.service_type,
           appointmentAt,
           foundAt,
+          bookedLocation: body.location ?? null,
+          bookingReference: body.bookingReference ?? null,
+          cancelUrl: body.cancelUrl ?? null,
         };
 
         let emailSent = false;
