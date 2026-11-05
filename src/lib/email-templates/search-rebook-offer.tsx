@@ -24,7 +24,7 @@ const SearchRebookOfferEmail = ({ bookingId, salutation, firstName, lastName, re
       <Preview>Wähle neue Wunschtermine oder lass dir dein Geld erstatten</Preview>
       <Body style={s.main}>
         <Container style={s.container}>
-          <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
+          <Text style={s.eyebrow}>{cityOrDefault(city).siteName}</Text>
           <Heading style={s.h1}>Leider kein Termin frei geworden</Heading>
           <Hr style={s.topRule} />
           <s.BookingNumberLine bookingId={bookingId} />
@@ -61,7 +61,7 @@ const SearchRebookOfferEmail = ({ bookingId, salutation, firstName, lastName, re
           </Section>
 
           <s.ContactCard />
-          <s.MailFooter />
+          <s.MailFooter siteName={cityOrDefault(city).siteName} />
         </Container>
       </Body>
     </Html>

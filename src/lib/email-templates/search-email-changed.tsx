@@ -1,6 +1,7 @@
 import { Body, Container, Head, Heading, Html, Hr, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
+import { cityOrDefault } from '../cities'
 
 interface Props {
   bookingId?: string
@@ -9,15 +10,16 @@ interface Props {
   serviceType?: string
   selectedDates?: string[]
   newEmail?: string
+  city?: string | null
 }
 
-const SearchEmailChangedEmail = ({ bookingId, withdrawToken, firstName, serviceType, selectedDates, newEmail }: Props) => (
+const SearchEmailChangedEmail = ({ bookingId, withdrawToken, firstName, serviceType, selectedDates, newEmail, city }: Props) => (
   <Html lang="de" dir="ltr">
     <Head />
     <Preview>Danke, wir suchen weiter</Preview>
     <Body style={s.main}>
       <Container style={s.container}>
-        <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
+        <Text style={s.eyebrow}>{cityOrDefault(city).siteName}</Text>
         <Heading style={s.h1}>Danke, wir suchen weiter</Heading>
         <Hr style={s.topRule} />
         <s.BookingNumberLine bookingId={bookingId} />
@@ -36,17 +38,21 @@ const SearchEmailChangedEmail = ({ bookingId, withdrawToken, firstName, serviceT
         </Section>
 
         <Section style={s.infoBox}>
+          {s.isInstant(city) ? (
+            <Text style={s.infoText}>{s.INSTANT_INFO}</Text>
+          ) : (
           <Text style={s.infoText}>
             Sobald wir einen Termin gefunden haben, bekommst du wie gewohnt eine E-Mail von uns und
             eine von der Zulassungsstelle an diese Adresse. Den Bestätigungslink der Zulassungsstelle
             musst du dann innerhalb von 3 Stunden anklicken. Bitte schau dann auch in deine Ordner Spam und Werbung.
           </Text>
+          )}
         </Section>
 
         <s.WithdrawLinkLine withdrawToken={withdrawToken} />
 
         <s.ContactCard />
-        <s.MailFooter />
+        <s.MailFooter siteName={cityOrDefault(city).siteName} />
       </Container>
     </Body>
   </Html>

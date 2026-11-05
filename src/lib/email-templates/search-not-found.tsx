@@ -1,6 +1,7 @@
 import { Body, Container, Head, Heading, Html, Hr, Link, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
+import { cityOrDefault } from '../cities'
 
 interface Props {
   bookingId?: string
@@ -13,6 +14,7 @@ interface Props {
   refundOk?: boolean
   anlass?: 'direkt' | 'gewaehlt' | 'frist' | 'widerruf'
   searchError?: string | null
+  city?: string | null
 }
 
 function intro(anlass: Props['anlass'], searchError: Props['searchError']): string {
@@ -30,7 +32,7 @@ function intro(anlass: Props['anlass'], searchError: Props['searchError']): stri
 }
 
 const SearchNotFoundEmail = ({ bookingId,
-  salutation, firstName, lastName, serviceType, selectedDates, refundOk, anlass, searchError,
+  salutation, firstName, lastName, serviceType, selectedDates, refundOk, anlass, searchError, city,
 }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   return (
@@ -39,13 +41,13 @@ const SearchNotFoundEmail = ({ bookingId,
       <Preview>Wir erstatten dir den vollen Betrag</Preview>
       <Body style={s.main}>
         <Container style={s.container}>
-          <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
+          <Text style={s.eyebrow}>{cityOrDefault(city).siteName}</Text>
           <Heading style={s.h1}>Deine Rückerstattung</Heading>
           <Hr style={s.topRule} />
           <s.BookingNumberLine bookingId={bookingId} />
 
           <Text style={s.text}>
-            {firstName ? `Hallo ${firstName},` : 'Hallo,'} {intro(anlass, searchError)}
+            {firstName ? `Hallo ${firstName},` : 'Hallo,'} {s.isInstant(city) && searchError === 'email_limit' && anlass !== 'frist' && anlass !== 'widerruf' && anlass !== 'gewaehlt' ? `leider konnten wir im Zeitraum deiner Wunschtermine keinen Termin für dich buchen, da die Stadt ${cityOrDefault(city).name} für deine E-Mail-Adresse keine weitere Buchung zugelassen hat. Das tut uns leid.` : intro(anlass, searchError)}
           </Text>
 
           <Section style={s.card}>
@@ -68,8 +70,8 @@ const SearchNotFoundEmail = ({ bookingId,
           <Section style={s.card}>
             <Text style={s.cardTitle}>Neuer Versuch?</Text>
             <Text style={s.contactLine}>
-              Du kannst auch an anderen Tagen zur Zulassungsstelle? Dann buche einfach erneut auf{' '}
-              <Link href={s.SITE_URL} style={s.link}>kfz-termin.online</Link>.
+              {s.isInstant(city) ? `Du kannst auch an anderen Tagen zur Stadt ${cityOrDefault(city).name}?` : 'Du kannst auch an anderen Tagen zur Zulassungsstelle?'} Dann buche einfach erneut auf{' '}
+              <Link href={s.isInstant(city) ? `${s.SITE_URL}/${cityOrDefault(city).slug}` : s.SITE_URL} style={s.link}>kfz-termin.online</Link>.
             </Text>
             <Text style={s.highlight}>
               Tipp: Wähle möglichst mehrere Wunschtermine aus. Je mehr Tage du angibst, desto höher ist die Chance, dass einer davon frei wird.
@@ -77,7 +79,7 @@ const SearchNotFoundEmail = ({ bookingId,
           </Section>
 
           <s.ContactCard />
-          <s.MailFooter />
+          <s.MailFooter siteName={cityOrDefault(city).siteName} />
         </Container>
       </Body>
     </Html>

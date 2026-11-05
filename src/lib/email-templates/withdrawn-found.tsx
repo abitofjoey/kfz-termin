@@ -1,35 +1,46 @@
-import { Body, Container, Head, Heading, Html, Hr, Preview, Section, Text } from '@react-email/components'
+import { Body, Container, Head, Heading, Html, Hr, Link, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
+import { cityOrDefault } from '../cities'
 import { formatBerlinLong } from './format-berlin'
 
 interface Props {
   bookingId?: string
   firstName?: string
   appointmentAt?: string
+  city?: string | null
+  cancelUrl?: string | null
 }
 
-const WithdrawnFoundEmail = ({ bookingId, firstName, appointmentAt }: Props) => (
+const WithdrawnFoundEmail = ({ bookingId, firstName, appointmentAt, city, cancelUrl }: Props) => (
   <Html lang="de" dir="ltr">
     <Head />
     <Preview>Du musst nichts tun</Preview>
     <Body style={s.main}>
       <Container style={s.container}>
-        <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
+        <Text style={s.eyebrow}>{cityOrDefault(city).siteName}</Text>
         <Heading style={s.h1}>Termin kurz vor deinem Widerruf</Heading>
         <Hr style={s.topRule} />
         <s.BookingNumberLine bookingId={bookingId} />
         <Text style={s.text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
+        {s.isInstant(city) ? (
+          <Text style={s.text}>
+            Wir hatten kurz vor deinem Widerruf noch einen Termin gebucht. Bitte storniere ihn über diesen
+            Link, damit der Termin wieder frei wird:{' '}
+            {cancelUrl ? <Link href={cancelUrl} style={s.link}>Termin stornieren</Link> : 'Den Stornolink findest du in der Bestätigung der Stadt.'}
+          </Text>
+        ) : (
         <Text style={s.text}>
           Wir hatten kurz vor deinem Widerruf noch einen Termin gefunden. Du musst nichts tun – klicke den
           Bestätigungslink der Zulassungsstelle einfach nicht an, dann verfällt der Termin nach 3 Stunden.
         </Text>
+        )}
         <Section style={s.card}>
           <Text style={s.cardTitle}>Betroffener Termin</Text>
           <Text style={s.value1}>{formatBerlinLong(appointmentAt)}</Text>
         </Section>
         <s.ContactCard />
-        <s.MailFooter />
+        <s.MailFooter siteName={cityOrDefault(city).siteName} />
       </Container>
     </Body>
   </Html>

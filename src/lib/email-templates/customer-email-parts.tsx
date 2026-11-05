@@ -1,5 +1,6 @@
 // Gemeinsame Bausteine der Kundenmails – Werte identisch mit appointment-found.tsx.
 import { Link, Section, Text } from '@react-email/components'
+import { cityOrDefault, type CityConfig } from '../cities'
 
 export const SITE_NAME = 'KFZ-Termin Köln'
 export const CONTACT_EMAIL = 'info@kfz-termin.online'
@@ -43,12 +44,29 @@ export const ContactCard = () => (
   </Section>
 )
 
-export const MailFooter = () => (
+/** Stadt bucht sofort verbindlich (keine Bestätigung beim Amt nötig). */
+export const isInstant = (city?: string | null) => cityOrDefault(city).customerConfirmationHours == null
+
+/** Standort-ID oder Freitext aus dem Pi-Ergebnis als "Name, Adresse". */
+export function locationText(c: CityConfig, value?: string | null): string {
+  const l = c.locations.find((x) => x.id === value || x.name === value)
+  return l ? `${l.name}, ${l.address}` : value || c.appointmentLocation
+}
+
+/** Standortliste einer Buchung als lesbarer Text. */
+export function locationsText(c: CityConfig, ids?: string[] | null): string {
+  return (ids ?? []).map((id) => c.locations.find((l) => l.id === id)?.name ?? id).join(', ') || '—'
+}
+
+export const INSTANT_INFO =
+  'Sobald wir einen Termin gebucht haben, bekommst du eine E-Mail von uns mit allen Daten. Die Buchung ist sofort verbindlich, du musst nichts bestätigen. Bitte schau dann auch in deine Ordner Spam und Werbung.'
+
+export const MailFooter = ({ siteName = SITE_NAME }: { siteName?: string }) => (
   <>
     <Text style={footerHint}>Bei Fragen antworte einfach auf diese E-Mail.</Text>
     <Text style={footerEmail}>{CONTACT_EMAIL}</Text>
     <Text style={footer}>
-      Herzliche Grüße<br />Dein Team von {SITE_NAME}
+      Herzliche Grüße<br />Dein Team von {siteName}
     </Text>
   </>
 )
