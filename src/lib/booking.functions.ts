@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { CityBookingInput, prepareCityBooking } from "@/lib/city-booking";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { SERVICE_IDS, getServiceLabel, getMaxVehicles } from "@/lib/services";
@@ -101,7 +102,6 @@ export const createBooking = createServerFn({ method: "POST" })
     return { ok: true as const, bookingId: row.id };
   });
 
-import { CityBookingInput, prepareCityBooking } from "@/lib/city-booking";
 
 export const createCityBooking = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => CityBookingInput.parse(data))
