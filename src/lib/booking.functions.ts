@@ -1,15 +1,30 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
-import { SERVICE_IDS, getServiceLabel, getMaxVehicles } from "@/lib/services";
-import { computeCalendarBounds } from "@/lib/calendar-rules";
-import { DEFAULT_CITY, getCity, isBookableCity } from "@/lib/cities";
+import {
+  SERVICE_IDS,
+  getServiceLabel,
+  getMaxVehicles,
+  getCityService,
+  possibleLocations,
+  resolveLocations,
+} from "@/lib/services";
+import { computeCalendarBounds, areDatesAllowed } from "@/lib/calendar-rules";
+import { DEFAULT_CITY, getCity, isBookableCity, BONN_MAIN_LOCATION } from "@/lib/cities";
 
 export const getCalendarBounds = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) =>
-    z.object({ city: z.string().max(40).optional() }).optional().parse(data),
+    z
+      .object({
+        city: z.string().max(40).optional(),
+        category: z.enum(["kfz", "fuehrerschein"]).optional(),
+      })
+      .optional()
+      .parse(data),
   )
-  .handler(async ({ data }) => computeCalendarBounds(new Date(), data?.city ?? DEFAULT_CITY));
+  .handler(async ({ data }) =>
+    computeCalendarBounds(new Date(), data?.city ?? DEFAULT_CITY, data?.category ?? "kfz"),
+  );
 
 const BookingInput = z.object({
   service_type: z.enum(SERVICE_IDS),
@@ -90,5 +105,90 @@ export const createBooking = createServerFn({ method: "POST" })
       return { ok: false as const, error: "Buchung konnte nicht gespeichert werden." };
     }
 
+    return { ok: true as const, bookingId: row.id };
+  });
+
+// ---- Städte mit Standortwahl (z.B. Bonn) ----------------------------------
+// Eigener Pfad, damit der Kölner Ablauf oben unverändert bleibt.
+const CityBookingInput = z.object({
+  city: z.string().max(40),
+  service_id: z.string().max(60),
+  first_name: z.string().trim().min(1).max(100),
+  last_name: z.string().trim().min(1).max(100),
+  email: z.string().trim().email().max(255),
+  phone: z.string().trim().min(4).max(40),
+  vehicle_count: z.number().int().min(1).max(10).optional(),
+  /** null = "Egal wo". */
+  locations: z.array(z.string().max(40)).max(10).nullable(),
+  financed: z.boolean().optional(),
+  selected_dates: z.array(z.string()).min(1).max(60),
+});
+
+export type CityBookingData = z.infer<typeof CityBookingInput>;
+
+/** Reine Prüfung + Aufbereitung, testbar ohne Datenbank. */
+export function prepareCityBooking(data: CityBookingData, now: Date = new Date()) {
+  const city = getCity(data.city);
+  if (!city || !city.bookable) {
+    return { ok: false as const, error: "Für diese Stadt sind noch keine Buchungen möglich." };
+  }
+  const service = getCityService(city.slug, data.service_id);
+  if (!service) return { ok: false as const, error: "Bitte Dienstleistung wählen." };
+  if (!areDatesAllowed(data.selected_dates, now, city.slug, service.category)) {
+    return { ok: false as const, error: "Bitte wähle nur Tage aus, die im Kalender freigegeben sind." };
+  }
+  const isKfz = service.category === "kfz";
+  const max = service.maxVehicles ?? 1;
+  const vehicles = isKfz ? data.vehicle_count ?? 1 : 1;
+  if (vehicles > max) {
+    return { ok: false as const, error: `Für dieses Anliegen sind höchstens ${max} Fahrzeuge pro Termin möglich.` };
+  }
+  const financed = isKfz && city.form.financedCheckbox ? !!data.financed : false;
+  const possible = possibleLocations(service, city.locations.map((l) => l.id));
+  const locations = resolveLocations({
+    possible,
+    chosen: data.locations,
+    financed,
+    mainLocation: BONN_MAIN_LOCATION,
+  });
+  if (!locations) return { ok: false as const, error: "Bitte wähle mindestens einen möglichen Standort." };
+  return {
+    ok: true as const,
+    row: {
+      service_type: service.label,
+      salutation: "",
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      phone: data.phone,
+      fin_1: "",
+      fin_2: null,
+      fin_3: null,
+      selected_dates: Array.from(new Set(data.selected_dates)).sort(),
+      status: "open",
+      paid: false,
+      city: city.slug,
+      locations,
+      financed,
+      vehicle_count: vehicles,
+      amount_cents: city.priceCents,
+    },
+  };
+}
+
+export const createCityBooking = createServerFn({ method: "POST" })
+  .inputValidator((data: unknown) => CityBookingInput.parse(data))
+  .handler(async ({ data }) => {
+    const prepared = prepareCityBooking(data);
+    if (!prepared.ok) return prepared;
+    const { data: row, error } = await supabaseAdmin
+      .from("bookings")
+      .insert(prepared.row)
+      .select("id")
+      .single();
+    if (error) {
+      console.error("City booking insert error:", error.code);
+      return { ok: false as const, error: "Buchung konnte nicht gespeichert werden." };
+    }
     return { ok: true as const, bookingId: row.id };
   });
