@@ -55,6 +55,15 @@ export type CityConfig = CategorySettings & {
     showBookingReference: boolean;
     showCancelUrl: boolean;
   };
+  /** Texte der Kundenseiten nach der Buchung. */
+  pages: {
+    /** Behörde im Fließtext, z.B. "Zulassungsstelle Köln". */
+    authorityShort: string;
+    /** Einleitung auf /buchung-erfolgreich; null = Standardtext mit mail.atAuthority-Adjektiv. */
+    successIntro: string | null;
+    /** Hinweisbox auf /buchung-erfolgreich; null = Standard-Box mit Bestätigungsfrist. */
+    successNotice: string | null;
+  };
   launched: boolean;
   bookable: boolean;
 };
@@ -102,6 +111,7 @@ export const CITIES: Record<string, CityConfig> = {
     customerConfirmationHours: 3,
     form: { finRequired: true, salutationRequired: true, locationChoice: false, financedCheckbox: false },
     mail: { atAuthority: "bei der Kölner Zulassungsstelle", showBookingReference: false, showCancelUrl: false },
+    pages: { authorityShort: "Zulassungsstelle Köln", successIntro: null, successNotice: null },
     launched: true,
     bookable: true,
   },
@@ -142,6 +152,13 @@ export const CITIES: Record<string, CityConfig> = {
       },
     },
     mail: { atAuthority: "bei der Stadt Bonn", showBookingReference: true, showCancelUrl: true },
+    pages: {
+      authorityShort: "Stadt Bonn",
+      successIntro:
+        "Wir haben deine Zahlung erhalten und suchen ab sofort rund um die Uhr nach einem freien Termin bei der Stadt Bonn. Du erhältst in Kürze eine Bestätigungsmail.",
+      successNotice:
+        "Sobald wir einen Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum, Uhrzeit, Standort und deiner Aufrufnummer. Die Buchung ist sofort verbindlich – du musst nichts mehr bestätigen. Zusätzlich schickt dir die Stadt Bonn eine eigene Bestätigung, die sich etwas verzögern kann. Bitte schau auch in deinen Ordnern Spam und Werbung nach.",
+    },
     launched: false,
     bookable: true,
   },

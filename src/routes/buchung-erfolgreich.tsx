@@ -10,10 +10,10 @@ import { confirmCheckoutSession } from "@/lib/stripe.functions";
 export const Route = createFileRoute("/buchung-erfolgreich")({
   head: () => ({
     meta: [
-      { title: "Buchung erfolgreich – KFZ-Termin Köln" },
-      { name: "description", content: "Deine Buchung bei KFZ-Termin Köln war erfolgreich. Wir beginnen sofort mit der automatischen Terminsuche." },
-      { property: "og:title", content: "Buchung erfolgreich – KFZ-Termin Köln" },
-      { property: "og:description", content: "Vielen Dank! Deine Zahlung wurde bestätigt und unsere automatische Terminsuche bei der Kölner Zulassungsstelle läuft bereits." },
+      { title: "Buchung erfolgreich – KFZ-Termin" },
+      { name: "description", content: "Deine Buchung bei KFZ-Termin war erfolgreich. Wir beginnen sofort mit der automatischen Terminsuche." },
+      { property: "og:title", content: "Buchung erfolgreich – KFZ-Termin" },
+      { property: "og:description", content: "Vielen Dank! Deine Zahlung wurde bestätigt und unsere automatische Terminsuche läuft bereits." },
       { property: "og:url", content: "https://kfz-termin.online/buchung-erfolgreich" },
       { name: "robots", content: "noindex, nofollow" },
     ],
@@ -27,7 +27,9 @@ export const Route = createFileRoute("/buchung-erfolgreich")({
 
 function SuccessPage() {
   const { session_id, city } = Route.useSearch();
-  const citySlug = cityOrDefault(city).slug;
+  const [confirmedCity, setConfirmedCity] = useState<string | null>(null);
+  const cityConfig = cityOrDefault(confirmedCity ?? city);
+  const citySlug = cityConfig.slug;
   const confirm = useServerFn(confirmCheckoutSession);
   const [state, setState] = useState<"loading" | "paid" | "unpaid" | "error">(
     session_id ? "loading" : "paid",
@@ -37,6 +39,7 @@ function SuccessPage() {
     if (!session_id) return;
     confirm({ data: { sessionId: session_id } })
       .then((r) => {
+        if (r.city) setConfirmedCity(r.city);
         setState(r.paid ? "paid" : "unpaid");
 
         if (r.paid && typeof window !== "undefined" && Array.isArray(window.dataLayer)) {
@@ -126,14 +129,23 @@ function SuccessPage() {
         <h1 className="mt-6 text-3xl font-bold sm:text-4xl">
           Vielen Dank für deine Buchung!
         </h1>
+        {cityConfig.pages.successIntro ? (
+          <p className="mt-4 text-muted-foreground">{cityConfig.pages.successIntro}</p>
+        ) : (
         <p className="mt-4 text-muted-foreground">
           Wir haben deine Zahlung erhalten und beginnen sofort mit der Suche
           nach einem freien Termin bei der Kölner Zulassungsstelle. Du
           erhältst in Kürze eine Bestätigungsmail.
         </p>
+        )}
 
         <div className="mt-8 flex items-start gap-3 rounded-md border border-warning-border bg-warning p-4 text-left text-sm text-warning-foreground">
           <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0" />
+          {cityConfig.pages.successNotice ? (
+            <p>
+              <strong>Wichtig:</strong> {cityConfig.pages.successNotice}
+            </p>
+          ) : (
           <p>
             <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben,
             bekommst du zwei E-Mails: eine von uns mit Datum und Uhrzeit und
@@ -144,6 +156,7 @@ function SuccessPage() {
             <strong>Werbung</strong> nach, automatische E-Mails landen dort
             manchmal.
           </p>
+          )}
         </div>
 
         <p className="mt-6 text-xs text-muted-foreground">

@@ -15,9 +15,9 @@ export const Route = createFileRoute("/email-aendern")({
   validateSearch: z.object({ token: z.string().optional(), aktion: z.string().optional() }),
   head: () => ({
     meta: [
-      { title: "Andere E-Mail-Adresse eintragen – KFZ-Termin Köln" },
+      { title: "Andere E-Mail-Adresse eintragen – KFZ-Termin" },
       { name: "description", content: "Trage eine andere E-Mail-Adresse ein, damit wir deine Terminsuche fortsetzen können." },
-      { property: "og:title", content: "Andere E-Mail-Adresse eintragen – KFZ-Termin Köln" },
+      { property: "og:title", content: "Andere E-Mail-Adresse eintragen – KFZ-Termin" },
       { property: "og:description", content: "Trage eine andere E-Mail-Adresse ein, damit wir deine Terminsuche fortsetzen können." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -96,7 +96,7 @@ function EmailChangePage() {
           ) : (
             <>
               <p>
-                Hallo {state.firstName}, die Zulassungsstelle Köln lässt für deine bisherige Adresse{" "}
+                Hallo {state.firstName}, die {cityOrDefault(state.city).pages.authorityShort} lässt für deine bisherige Adresse{" "}
                 <strong>{state.maskedEmail}</strong> aktuell keine weitere Buchung zu.
               </p>
               <div className="space-y-4">
@@ -110,7 +110,7 @@ function EmailChangePage() {
                 </div>
                 <p className="text-muted-foreground">
                   An diese Adresse schickt die Zulassungsstelle später den Bestätigungslink. Bitte nimm eine
-                  Adresse, mit der noch kein Termin bei der Zulassungsstelle Köln besteht.
+                  Adresse, mit der noch kein Termin bei der {cityOrDefault(state.city).pages.authorityShort} besteht.
                 </p>
               </div>
               {error ? <p className="text-destructive" role="alert">{error}</p> : null}
