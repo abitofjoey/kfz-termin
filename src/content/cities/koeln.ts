@@ -9,7 +9,16 @@ import type { InfoContent } from "@/components/landing/InfoBlock";
 export type CityContent = {
   meta: { title: string; description: string; ogTitle: string; ogDescription: string; ogImage?: string; ogImageAlt?: string };
   hero: HeroContent;
-  info: InfoContent;
+  /** Infokasten mit einem Standort (Köln). */
+  info?: InfoContent;
+  /** Zusatzinhalte für Städte mit mehreren Standorten (z.B. Bonn). */
+  multi?: {
+    steps: { title: string; text: string }[];
+    locationsTitle: string;
+    locationsNote: string;
+    honestNote: string;
+    bookingNotice: string;
+  };
   faq: FaqItem[];
   /** Zusätzliche Felder für das Service-JSON-LD. */
   serviceJsonLd: { name: string; description: string };
