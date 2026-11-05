@@ -1,6 +1,8 @@
 import type { TemplateEntry } from './registry'
 import { HealthLayout, Row } from './health-internal-parts'
 import { formatBerlinShort } from './format-berlin'
+import { cityOrDefault } from '../cities'
+import { locationText } from './customer-email-parts'
 
 interface Props {
   bookingId?: string
@@ -12,6 +14,10 @@ interface Props {
   appointmentAt?: string
   foundAt?: string
   withdrawnAt?: string | null
+  city?: string | null
+  bookedLocation?: string | null
+  bookingReference?: string | null
+  cancelUrl?: string | null
 }
 
 const WithdrawnFoundInternalEmail = (p: Props) => (
@@ -25,6 +31,13 @@ const WithdrawnFoundInternalEmail = (p: Props) => (
     <Row label="Gebuchter Termin" value={formatBerlinShort(p.appointmentAt)} />
     <Row label="Gebucht um" value={formatBerlinShort(p.foundAt)} />
     <Row label="Widerrufen am" value={formatBerlinShort(p.withdrawnAt ?? undefined)} />
+    {cityOrDefault(p.city).form.locationChoice ? (
+      <>
+        <Row label="Standort" value={locationText(cityOrDefault(p.city), p.bookedLocation)} />
+        <Row label="Aufrufnummer" value={p.bookingReference ?? undefined} />
+        <Row label="Stornolink" value={p.cancelUrl ?? undefined} />
+      </>
+    ) : null}
     <Row label="Buchungs-ID" value={p.bookingId} mono />
   </HealthLayout>
 )
