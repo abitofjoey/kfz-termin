@@ -70,8 +70,17 @@ const SearchNotFoundEmail = ({ bookingId,
           <Section style={s.card}>
             <Text style={s.cardTitle}>Neuer Versuch?</Text>
             <Text style={s.contactLine}>
-              {s.isInstant(city) ? `Du kannst auch an anderen Tagen zur Stadt ${cityOrDefault(city).name}?` : 'Du kannst auch an anderen Tagen zur Zulassungsstelle?'} Dann buche einfach erneut auf{' '}
-              <Link href={s.isInstant(city) ? `${s.SITE_URL}/${cityOrDefault(city).slug}` : s.SITE_URL} style={s.link}>kfz-termin.online</Link>.
+              {s.isInstant(city) ? (
+                <>
+                  {`Du kannst auch an anderen Tagen zur Stadt ${cityOrDefault(city).name}? Dann buche einfach erneut auf `}
+                  <Link href={`${s.SITE_URL}/${cityOrDefault(city).slug}`} style={s.link}>kfz-termin.online</Link>.
+                </>
+              ) : (
+                <>
+              Du kannst auch an anderen Tagen zur Zulassungsstelle? Dann buche einfach erneut auf{' '}
+              <Link href={s.SITE_URL} style={s.link}>kfz-termin.online</Link>.
+                </>
+              )}
             </Text>
             <Text style={s.highlight}>
               Tipp: Wähle möglichst mehrere Wunschtermine aus. Je mehr Tage du angibst, desto höher ist die Chance, dass einer davon frei wird.
