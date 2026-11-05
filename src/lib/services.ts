@@ -222,29 +222,29 @@ export type CityService = {
   locations?: string[];
 };
 
-type BonnRow = { id: string; label: string; category: ServiceCategory; script: string; locations?: string[]; maxVehicles?: number };
+type BonnRow = { id: string; label: string; category: ServiceCategory; script: string; locations?: string[]; maxVehicles?: number; infoUrl?: string };
 /** Bonner Dienstleistungen in Script-Reihenfolge 1–35. */
 const BONN_ROWS: BonnRow[] = [
-  { id: "umschreibung", label: "Umschreibung (Halterwechsel)", category: "kfz", script: "1" },
-  { id: "umschreibung-abmeldung", label: "Umschreibung inkl. Abmeldung", category: "kfz", script: "2" },
-  { id: "neuzulassung", label: "Neuzulassung (fabrikneu, deutsche Papiere)", category: "kfz", script: "3", locations: ["dlz"] },
-  { id: "neuzulassung-abmeldung", label: "Neuzulassung inkl. Abmeldung", category: "kfz", script: "4", locations: ["dlz"] },
+  { id: "umschreibung", label: "Umschreibung (Halterwechsel)", category: "kfz", script: "1", infoUrl: "https://www.bonn.de/vv/produkte/Kfz-Umschreibung-innerhalb-Bonns.php" },
+  { id: "umschreibung-abmeldung", label: "Umschreibung inkl. Abmeldung", category: "kfz", script: "2", infoUrl: "https://www.bonn.de/vv/produkte/Kfz-Umschreibung-innerhalb-Bonns.php" },
+  { id: "neuzulassung", label: "Neuzulassung (fabrikneu, deutsche Papiere)", category: "kfz", script: "3", infoUrl: "https://www.bonn.de/vv/produkte/Kfz-Neuzulassung-fabrikneues-Fahrzeug.php", locations: ["dlz"] },
+  { id: "neuzulassung-abmeldung", label: "Neuzulassung inkl. Abmeldung", category: "kfz", script: "4", infoUrl: "https://www.bonn.de/vv/produkte/Kfz-Neuzulassung-fabrikneues-Fahrzeug.php", locations: ["dlz"] },
   { id: "neuzulassung-13-eg-fgv", label: "Neuzulassung mit §13 EG-FGV / Gutachten", category: "kfz", script: "5", locations: ["dlz"] },
   { id: "auslaendische-papiere", label: "Umschreibung/Neuzulassung mit ausländischen Papieren", category: "kfz", script: "6", locations: ["dlz"] },
-  { id: "wiederzulassung", label: "Wiederzulassung auf bisherige Halter", category: "kfz", script: "7", locations: ["dlz"] },
+  { id: "wiederzulassung", label: "Wiederzulassung auf bisherige Halter", category: "kfz", script: "7", infoUrl: "https://www.bonn.de/vv/produkte/Kfz-Wiederzulassung-auf-bisherige-Halterin-oder-Halter-in-Bonn.php", locations: ["dlz"] },
   { id: "umkennzeichnung", label: "Umkennzeichnung (Kennzeichenwechsel)", category: "kfz", script: "8" },
   { id: "technische-aenderung", label: "Technische Änderung", category: "kfz", script: "9", locations: ["dlz"] },
   { id: "sonderkennzeichen", label: "Historische, elektrische und Saisonkennzeichen", category: "kfz", script: "10", locations: ["dlz"] },
   { id: "kurzzeitkennzeichen", label: "Kurzzeitkennzeichen", category: "kfz", script: "11", locations: ["dlz"], maxVehicles: 1 },
   { id: "ausfuhrkennzeichen", label: "Ausfuhrkennzeichen (deutsche Papiere)", category: "kfz", script: "12", locations: ["dlz"], maxVehicles: 1 },
-  { id: "abmeldung", label: "Abmeldung", category: "kfz", script: "13" },
-  { id: "abmeldung-verlust", label: "Abmeldung inkl. Verlustmeldung", category: "kfz", script: "14", locations: ["dlz"], maxVehicles: 3 },
+  { id: "abmeldung", label: "Abmeldung", category: "kfz", script: "13", infoUrl: "https://www.bonn.de/vv/produkte/fahrzeug-abmelden-kfz-ausserbetriebsetzung-verlust-zb-i.php" },
+  { id: "abmeldung-verlust", label: "Abmeldung inkl. Verlustmeldung", category: "kfz", script: "14", infoUrl: "https://www.bonn.de/vv/produkte/fahrzeug-abmelden-kfz-ausserbetriebsetzung-verlust-zb-i.php", locations: ["dlz"], maxVehicles: 3 },
   { id: "anschriftenaenderung", label: "Anschriftenänderung", category: "kfz", script: "15" },
   { id: "namensaenderung", label: "Namensänderung in den Fahrzeugpapieren", category: "kfz", script: "16" },
   { id: "verlust-zb1", label: "Verlust Zulassungsbescheinigung Teil I", category: "kfz", script: "17" },
   { id: "verlust-zb2", label: "Verlust Zulassungsbescheinigung Teil II", category: "kfz", script: "18", locations: ["dlz"] },
   { id: "verlust-kennzeichen", label: "Verlust/Austausch Kennzeichen", category: "kfz", script: "19", locations: ["dlz"] },
-  { id: "diebstahl", label: "Diebstahl Fahrzeug", category: "kfz", script: "20", locations: ["dlz"] },
+  { id: "diebstahl", label: "Diebstahl Fahrzeug", category: "kfz", script: "20", infoUrl: "https://www.bonn.de/vv/produkte/Kfz-Diebstahl-Fahrzeug.php", locations: ["dlz"] },
   { id: "feinstaubplakette", label: "Feinstaubplakette / Neusiegelung", category: "kfz", script: "21" },
   { id: "fs-umtausch", label: "Umtausch Karten-/Papierführerschein", category: "fuehrerschein", script: "22", maxVehicles: 1 },
   { id: "fs-ersterteilung", label: "Ersterteilung Fahrerlaubnis", category: "fuehrerschein", script: "23", maxVehicles: 1 },
@@ -254,7 +254,7 @@ const BONN_ROWS: BonnRow[] = [
   { id: "fs-neu-verlust", label: "Neuer Führerschein wegen Verlust/Diebstahl", category: "fuehrerschein", script: "27", maxVehicles: 1 },
   { id: "fs-international", label: "Internationaler Führerschein", category: "fuehrerschein", script: "28", maxVehicles: 1 },
   { id: "fs-auflage", label: "Auflage/Schlüsselzahl, Begleitperson nachbenennen", category: "fuehrerschein", script: "29", maxVehicles: 1 },
-  { id: "fs-ausland", label: "Umschreibung ausländischer Führerschein", category: "fuehrerschein", script: "30", locations: ["dlz"], maxVehicles: 1 },
+  { id: "fs-ausland", label: "Umschreibung ausländischer Führerschein", category: "fuehrerschein", script: "30", infoUrl: "https://www.bonn.de/vv/produkte/Fuehrerschein-Umschreibung-auslaendischer-Fuehrerscheine.php", locations: ["dlz"], maxVehicles: 1 },
   { id: "fs-cd-erweiterung", label: "Erweiterung Klassen C/D", category: "fuehrerschein", script: "31", locations: ["dlz"], maxVehicles: 1 },
   { id: "fs-cd-verlaengerung", label: "Verlängerung Klassen C/D", category: "fuehrerschein", script: "32", locations: ["dlz"], maxVehicles: 1 },
   { id: "fs-fahrgast", label: "Fahrerlaubnis zur Fahrgastbeförderung", category: "fuehrerschein", script: "33", locations: ["dlz"], maxVehicles: 1 },
@@ -273,6 +273,7 @@ export const SERVICES_BY_CITY: Record<string, CityService[]> = {
     category: r.category,
     locations: r.locations,
     maxVehicles: r.maxVehicles ?? BONN_DEFAULT_MAX_VEHICLES,
+    ...(r.infoUrl ? { infoUrl: r.infoUrl } : {}),
   })),
 };
 
