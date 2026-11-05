@@ -33,6 +33,7 @@ export type Database = {
           fin_1: string
           fin_2: string | null
           fin_3: string | null
+          financed: boolean
           first_name: string
           found_at: string | null
           id: string
@@ -58,6 +59,7 @@ export type Database = {
           status: string
           stripe_refund_id: string | null
           stripe_session_id: string | null
+          vehicle_count: number | null
           withdraw_token: string | null
           withdrawn_at: string | null
         }
@@ -79,6 +81,7 @@ export type Database = {
           fin_1: string
           fin_2?: string | null
           fin_3?: string | null
+          financed?: boolean
           first_name: string
           found_at?: string | null
           id?: string
@@ -104,6 +107,7 @@ export type Database = {
           status?: string
           stripe_refund_id?: string | null
           stripe_session_id?: string | null
+          vehicle_count?: number | null
           withdraw_token?: string | null
           withdrawn_at?: string | null
         }
@@ -125,6 +129,7 @@ export type Database = {
           fin_1?: string
           fin_2?: string | null
           fin_3?: string | null
+          financed?: boolean
           first_name?: string
           found_at?: string | null
           id?: string
@@ -150,6 +155,7 @@ export type Database = {
           status?: string
           stripe_refund_id?: string | null
           stripe_session_id?: string | null
+          vehicle_count?: number | null
           withdraw_token?: string | null
           withdrawn_at?: string | null
         }

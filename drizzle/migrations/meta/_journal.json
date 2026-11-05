@@ -71,6 +71,13 @@
       "when": 1793891078606,
       "tag": "0009_add_amount_cents",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1793894915477,
+      "tag": "0010_bonn_financed_vehicle_count",
+      "breakpoints": true
     }
   ]
 }

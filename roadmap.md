@@ -10,8 +10,20 @@
 - [x] Mails aus Stadt-Konfiguration
 - [x] Rechtstexte städteneutral
 - [x] Vergleich vorher/nachher, Tests, Typprüfung, Build
-- [ ] Stufe 2: Standortwahl/Finanziert-Feld im Formular, Bonn-Inhalte, Stadt in Zustand von termine-aendern/email-aendern
+- [x] Stufe 1 Rest → in Stufe 2 übernommen
 
 # Roadmap – Preis 12,99 €
 - [x] Zentrale Preisquelle, amount_cents pro Buchung, USt-Umschaltung ab VAT_FROM, Tests
 - [ ] Anfang 2027: Impressum und llms.txt (USt) manuell anpassen – macht der Nutzer
+
+# Roadmap – Stufe 2 Bonn (versteckt)
+- [x] Migration financed/vehicle_count
+- [ ] cities.ts Bonn, Dienstleistungen Bonn 1–35
+- [ ] Kalender je Kategorie, auch /termine-aendern
+- [ ] Bonner Formular, createBooking-Prüfungen, finanziert → ["dlz"]
+- [ ] pending-bookings Bonn-Format
+- [ ] Mails Bonn (Köln identisch)
+- [ ] /bonn Inhalt, Sichtbarkeit nur über launched
+- [ ] Stripe-Beschreibung, dataLayer city
+- [ ] Health/Daily-Status für bookable
+- [ ] Tests, Vergleich, Typprüfung, Build
