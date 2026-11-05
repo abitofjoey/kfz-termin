@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { launchedCities, DEFAULT_CITY } from "@/lib/cities";
+import { monitoredCities, DEFAULT_CITY } from "@/lib/cities";
 
 const MIN = 60 * 1000;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -52,7 +52,7 @@ export const Route = createFileRoute("/api/internal/daily-status")({
         // Pi-Prüfung pro aktiver Stadt. Meldet sich der Pi einer Stadt nicht,
         // gehen für diese Stadt keine Kundenmails raus.
         const downCities: string[] = [];
-        for (const c of launchedCities()) {
+        for (const c of monitoredCities()) {
           const { data: hb, error: hbErr } = await supabaseAdmin
             .from("script_heartbeat").select("last_poll_at").eq("city", c.slug).maybeSingle();
           if (hbErr) console.error("daily status: heartbeat read error", hbErr.code);
@@ -71,7 +71,7 @@ export const Route = createFileRoute("/api/internal/daily-status")({
             }
           }
         }
-        const activeSlugs = launchedCities().map((c) => c.slug).filter((s) => !downCities.includes(s));
+        const activeSlugs = monitoredCities().map((c) => c.slug).filter((s) => !downCities.includes(s));
         if (activeSlugs.length === 0) {
           return Response.json({ ok: true, date: today, candidates: 0, sent: 0, piDown: true });
         }

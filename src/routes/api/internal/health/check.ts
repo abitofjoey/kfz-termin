@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { launchedCities, DEFAULT_CITY } from "@/lib/cities";
+import { monitoredCities, DEFAULT_CITY } from "@/lib/cities";
 
 const MIN = 60 * 1000;
 const CUTOFF_CREATED = "2026-10-14T00:00:00+02:00";
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/api/internal/health/check")({
         // a/b) Heartbeat – pro aktiver Stadt. Köln behält seine bisherigen Mail-Schlüssel.
         let piAlert: "down" | "recovered" | null = null;
         const piAlerts: Record<string, "down" | "recovered"> = {};
-        for (const c of launchedCities()) {
+        for (const c of monitoredCities()) {
           const sfx = c.slug === DEFAULT_CITY ? "" : `-${c.slug}`;
           const { data: hb, error: hbErr } = await supabaseAdmin
             .from("script_heartbeat").select("*").eq("city", c.slug).maybeSingle();

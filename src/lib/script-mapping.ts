@@ -1,6 +1,6 @@
 // Abbildung einer Buchung auf das Format, das das Pi-Script erwartet.
 // Für Köln muss die Ausgabe exakt dem bisherigen Format entsprechen.
-import { SCRIPT_SERVICE_MAP_BY_CITY } from "@/lib/services";
+import { SCRIPT_SERVICE_MAP_BY_CITY, categoryForLabel } from "@/lib/services";
 import { cityOrDefault } from "@/lib/cities";
 
 export type ScriptBookingRow = {
@@ -17,6 +17,8 @@ export type ScriptBookingRow = {
   selected_dates: string[];
   city?: string | null;
   locations?: string[] | null;
+  financed?: boolean | null;
+  vehicle_count?: number | null;
 };
 
 const SALUTATION_MAP: Record<string, string> = { Herr: "m", Frau: "w", Divers: "d" };
@@ -39,6 +41,29 @@ export function mapBookingForScript(row: ScriptBookingRow) {
   const map = SCRIPT_SERVICE_MAP_BY_CITY[city.slug] ?? {};
   const number = map[row.service_type];
   const service = number ? { service: number } : { serviceUnklar: true as const };
+  if (city.form.locationChoice) {
+    // Städte mit Standortwahl (z.B. Bonn): keine Anrede/FIN, Zusatzfelder.
+    const kategorie = categoryForLabel(city.slug, row.service_type);
+    return {
+      bookingId: row.id,
+      nutzerdaten: {
+        anrede: row.salutation ? SALUTATION_MAP[row.salutation] ?? "" : "",
+        vorname: row.first_name,
+        nachname: row.last_name,
+        email: row.email,
+        telefon: row.phone,
+        fin: row.fin_1 ?? "",
+        fin2: row.fin_2 ?? "",
+        fin3: row.fin_3 ?? "",
+        anzahl: kategorie === "fuehrerschein" ? "1" : String(row.vehicle_count ?? 1),
+        ...service,
+        standorte: row.locations ?? [],
+        finanziert: !!row.financed,
+        kategorie,
+      },
+      wunschDaten: row.selected_dates.map(formatDate),
+    };
+  }
   return {
     bookingId: row.id,
     nutzerdaten: {
@@ -52,7 +77,6 @@ export function mapBookingForScript(row: ScriptBookingRow) {
       fin3: row.fin_3 ?? "",
       anzahl: countNonEmptyFins(row),
       ...service,
-      ...(city.form.locationChoice ? { standorte: row.locations ?? [] } : {}),
     },
     wunschDaten: row.selected_dates.map(formatDate),
   };
