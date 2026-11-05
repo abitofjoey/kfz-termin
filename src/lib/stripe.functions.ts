@@ -1,9 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
 import Stripe from "stripe";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
-import { resolveCheckoutAmount } from "@/lib/checkout-amount";
+import { resolveCheckoutAmount, checkoutDescription } from "@/lib/checkout-amount";
 
 
 function getStripe() {
@@ -12,7 +11,9 @@ function getStripe() {
   return new Stripe(key);
 }
 
-function getOrigin() {
+async function getOrigin() {
+  // Nur serverseitig laden, damit der Client-Bundle den Server-Import nicht sieht.
+  const { getRequest } = await import("@tanstack/react-start/server");
   const req = getRequest();
   const url = new URL(req.url);
   return `${url.protocol}//${url.host}`;
@@ -41,7 +42,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       await supabaseAdmin.from("bookings").update({ amount_cents: amountCents }).eq("id", booking.id);
     }
 
-    const origin = getOrigin();
+    const origin = await getOrigin();
     const stripe = getStripe();
 
     const session = await stripe.checkout.sessions.create({
@@ -59,7 +60,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
             unit_amount: amountCents,
             product_data: {
               name: booking.service_type,
-              description: "KFZ-Termin Köln – Terminservice bei der Zulassungsstelle",
+              description: checkoutDescription(booking.city),
             },
           },
         },
@@ -97,14 +98,16 @@ export const confirmCheckoutSession = createServerFn({ method: "POST" })
     }
 
     let amountCents: number | null = null;
+    let city: string | null = session.metadata?.city ?? null;
     if (bookingId) {
       const { data: b } = await supabaseAdmin
         .from("bookings")
-        .select("amount_cents")
+        .select("amount_cents, city")
         .eq("id", bookingId)
         .maybeSingle();
       amountCents = b?.amount_cents ?? null;
+      city = b?.city ?? city;
     }
 
-    return { ok: true as const, paid: isPaid, amountCents };
+    return { ok: true as const, paid: isPaid, amountCents, city: city ?? "koeln" };
   });

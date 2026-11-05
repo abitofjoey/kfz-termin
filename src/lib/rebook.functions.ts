@@ -1,5 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { cityOrDefault, type ServiceCategory } from "@/lib/cities";
+import { categoryForLabel } from "@/lib/services";
+
+/** Stadt und Kategorie einer Buchung (Altbuchungen: Köln/Kfz). */
+export function rebookScope(b: { city: string | null; service_type: string }) {
+  const city = cityOrDefault(b.city).slug;
+  return { city, category: categoryForLabel(city, b.service_type) };
+}
 
 const TokenInput = z.object({ token: z.string().uuid() });
 const WINDOW_MS = 48 * 3600_000;
@@ -10,7 +18,7 @@ type State =
   | { state: "refunded" }
   | { state: "found" }
   | { state: "expired" }
-  | { state: "choose"; firstName: string; serviceType: string; selectedDates: string[] };
+  | { state: "choose"; firstName: string; serviceType: string; selectedDates: string[]; city: string; category: ServiceCategory };
 
 async function loadByToken(token: string) {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -36,7 +44,7 @@ export const getRebookState = createServerFn({ method: "POST" })
     if (b.search_result === "found") return { state: "found" };
     if (b.rebook_used_at) return { state: "used", ...info };
     if (Date.now() - new Date(b.rebook_offered_at).getTime() > WINDOW_MS) return { state: "expired" };
-    return { state: "choose", ...info };
+    return { state: "choose", ...info, ...rebookScope(b) };
   });
 
 export const submitRebookDates = createServerFn({ method: "POST" })
@@ -45,11 +53,12 @@ export const submitRebookDates = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     const { areDatesAllowed } = await import("@/lib/calendar-rules");
-    if (!areDatesAllowed(data.dates)) {
-      return { ok: false as const, error: "Bitte wähle nur Tage aus, die im Kalender freigegeben sind." };
-    }
     const b = await loadByToken(data.token);
     if (!b) return { ok: false as const, error: "Dieser Link ist ungültig." };
+    const scope = rebookScope(b);
+    if (!areDatesAllowed(data.dates, new Date(), scope.city, scope.category)) {
+      return { ok: false as const, error: "Bitte wähle nur Tage aus, die im Kalender freigegeben sind." };
+    }
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const dates = Array.from(new Set(data.dates)).sort();

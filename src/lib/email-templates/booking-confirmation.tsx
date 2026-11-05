@@ -4,7 +4,7 @@ import {
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
-import { formatDayLong } from './customer-email-parts'
+import { formatDayLong, locationsText } from './customer-email-parts'
 
 import { cityOrDefault } from '../cities'
 import { formatPrice, vatMailValue } from '../price'
@@ -24,6 +24,9 @@ interface BookingConfirmationProps {
   notes?: string
   selectedDates?: string[]
   city?: string | null
+  locations?: string[] | null
+  financed?: boolean | null
+  vehicleCount?: number | null
   /** Tatsächlich berechneter Betrag dieser Buchung (Cent). */
   amountCents?: number | null
   /** Buchungszeitpunkt – bestimmt den USt-Hinweis. */
@@ -42,6 +45,8 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
   notes,
   selectedDates = [],
   city,
+  locations,
+  vehicleCount,
   amountCents,
   createdAt,
 }: BookingConfirmationProps) => {
@@ -74,6 +79,24 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             {`vielen Dank für deine Buchung. Deine Zahlung ist eingegangen und wir haben deinen Auftrag erhalten. Wir beginnen ab sofort mit der Terminsuche ${c.mail.atAuthority}.`}
           </Text>
 
+          {hours == null ? (
+          <Section style={infoBox}>
+            <Text style={infoTitle}>🕐 So läuft es ab</Text>
+            <Text style={infoText}>
+              Sobald wir einen passenden Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum,
+              Uhrzeit, Standort und Aufrufnummer. <strong>Die Buchung ist sofort verbindlich.</strong>
+            </Text>
+            <Text style={infoText}>
+              Wir suchen rund um die Uhr. Auch Termine am Wunschtag selbst buchen wir – oft schon ab 7 Uhr
+              morgens. Behalte an deinen Wunschtagen dein E-Mail-Postfach im Blick.
+            </Text>
+            <Text style={infoText}>
+              Wird an deinen Wunschtagen kein Termin frei, bekommst du von uns
+              eine E-Mail: Du kannst dann einmalig neue Wunschtermine wählen
+              oder dir den vollen Betrag erstatten lassen.
+            </Text>
+          </Section>
+          ) : (
           <Section style={infoBox}>
             <Text style={infoTitle}>🕐 So läuft es ab</Text>
             <Text style={infoText}>
@@ -102,6 +125,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
               oder dir den vollen Betrag erstatten lassen.
             </Text>
           </Section>
+          )}
 
           <Section style={card}>
             <Text style={cardTitle}>Deine Angaben</Text>
@@ -109,7 +133,14 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             <DataRow label="E-Mail" value={email || '—'} />
             <DataRow label="Telefon" value={phone || '—'} />
             <DataRow label="Service" value={serviceType || '—'} />
-            <DataRow label={finLabel} value={finValue} />
+            {c.form.finRequired ? (
+              <DataRow label={finLabel} value={finValue} />
+            ) : (
+              <>
+                {vehicleCount && vehicleCount > 1 ? <DataRow label="Fahrzeuge" value={String(vehicleCount)} /> : null}
+                <DataRow label="Standorte" value={locationsText(c, locations)} />
+              </>
+            )}
             {notes ? <DataRow label="Anmerkungen" value={notes} last /> : null}
           </Section>
 

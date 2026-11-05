@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { CityBookingInput, prepareCityBooking } from "@/lib/city-booking";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { SERVICE_IDS, getServiceLabel, getMaxVehicles } from "@/lib/services";
@@ -7,9 +8,17 @@ import { DEFAULT_CITY, getCity, isBookableCity } from "@/lib/cities";
 
 export const getCalendarBounds = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) =>
-    z.object({ city: z.string().max(40).optional() }).optional().parse(data),
+    z
+      .object({
+        city: z.string().max(40).optional(),
+        category: z.enum(["kfz", "fuehrerschein"]).optional(),
+      })
+      .optional()
+      .parse(data),
   )
-  .handler(async ({ data }) => computeCalendarBounds(new Date(), data?.city ?? DEFAULT_CITY));
+  .handler(async ({ data }) =>
+    computeCalendarBounds(new Date(), data?.city ?? DEFAULT_CITY, data?.category ?? "kfz"),
+  );
 
 const BookingInput = z.object({
   service_type: z.enum(SERVICE_IDS),
@@ -90,5 +99,23 @@ export const createBooking = createServerFn({ method: "POST" })
       return { ok: false as const, error: "Buchung konnte nicht gespeichert werden." };
     }
 
+    return { ok: true as const, bookingId: row.id };
+  });
+
+
+export const createCityBooking = createServerFn({ method: "POST" })
+  .inputValidator((data: unknown) => CityBookingInput.parse(data))
+  .handler(async ({ data }) => {
+    const prepared = prepareCityBooking(data);
+    if (!prepared.ok) return prepared;
+    const { data: row, error } = await supabaseAdmin
+      .from("bookings")
+      .insert(prepared.row)
+      .select("id")
+      .single();
+    if (error) {
+      console.error("City booking insert error:", error.code);
+      return { ok: false as const, error: "Buchung konnte nicht gespeichert werden." };
+    }
     return { ok: true as const, bookingId: row.id };
   });

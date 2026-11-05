@@ -18,12 +18,12 @@
 
 # Roadmap – Stufe 2 Bonn (versteckt)
 - [x] Migration financed/vehicle_count
-- [ ] cities.ts Bonn, Dienstleistungen Bonn 1–35
-- [ ] Kalender je Kategorie, auch /termine-aendern
-- [ ] Bonner Formular, createBooking-Prüfungen, finanziert → ["dlz"]
-- [ ] pending-bookings Bonn-Format
-- [ ] Mails Bonn (Köln identisch)
-- [ ] /bonn Inhalt, Sichtbarkeit nur über launched
-- [ ] Stripe-Beschreibung, dataLayer city
-- [ ] Health/Daily-Status für bookable
-- [ ] Tests, Vergleich, Typprüfung, Build
+- [x] cities.ts Bonn, Dienstleistungen Bonn 1–35
+- [x] Kalender je Kategorie, auch /termine-aendern
+- [x] Bonner Formular, createBooking-Prüfungen, finanziert → ["dlz"]
+- [x] pending-bookings Bonn-Format
+- [x] Mails Bonn (Köln identisch)
+- [x] /bonn Inhalt, Sichtbarkeit nur über launched
+- [x] Stripe-Beschreibung, dataLayer city
+- [x] Health/Daily-Status für bookable
+- [x] Tests, Vergleich, Typprüfung, Build

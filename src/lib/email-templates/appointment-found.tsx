@@ -3,7 +3,7 @@ import {
   Row, Column, Link,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
-import { BookingNumberLine } from './customer-email-parts'
+import { BookingNumberLine, locationText } from './customer-email-parts'
 import { formatBerlinLong, formatBerlinTime } from './format-berlin'
 import { cityOrDefault } from '../cities'
 
@@ -36,6 +36,69 @@ const AppointmentFoundEmail = ({ bookingId,
   const hours = c.customerConfirmationHours
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   const deadline = formatBerlinTime(foundAt, hours ?? 0)
+  if (hours == null) {
+    return (
+      <Html lang="de" dir="ltr">
+        <Head />
+        <Preview>{`Dein Termin in ${c.name} ist gebucht`}</Preview>
+        <Body style={main}>
+          <Container style={container}>
+            <Text style={eyebrow}>{SITE_NAME}</Text>
+            <Heading style={h1}>Termin gebucht!</Heading>
+            <Hr style={topRule} />
+            <BookingNumberLine bookingId={bookingId} />
+
+            <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
+            <Text style={text}>
+              {`gute Nachrichten: Wir haben einen Termin ${c.mail.atAuthority} für dich gebucht.`}
+            </Text>
+
+            <Section style={card}>
+              <Text style={cardTitle}>Dein Termin</Text>
+              <DataRow label="Datum und Uhrzeit" value={formatBerlinLong(appointmentAt)} />
+              <DataRow label="Service" value={serviceType || '—'} />
+              <DataRow label="Standort" value={locationText(c, bookedLocation)} last={!bookingReference} />
+              {bookingReference ? <DataRow label="Aufrufnummer" value={bookingReference} last /> : null}
+            </Section>
+
+            {bookingReference ? (
+              <Text style={text}>
+                <strong>Aufrufnummer {bookingReference}:</strong> Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.
+              </Text>
+            ) : null}
+
+            <Section style={infoBox}>
+              <Text style={infoText}>
+                <strong>Die Buchung ist verbindlich – du musst nichts mehr bestätigen.</strong>{' '}
+                Welche Unterlagen du für dein Anliegen mitbringen musst, findest du auf der{' '}
+                <Link href={CITY_URL} style={infoLink}>{`Seite der Stadt ${c.name}`}</Link>.
+              </Text>
+            </Section>
+
+            {cancelUrl ? (
+              <Text style={text}>
+                Falls du doch nicht kannst, storniere bitte über diesen Link, damit der Termin wieder frei wird:{' '}
+                <Link href={cancelUrl} style={link}>Termin stornieren</Link>
+              </Text>
+            ) : null}
+
+            <Text style={text}>
+              Wir freuen uns über deine Bewertung bei Google:{' '}
+              <Link href={REVIEW_URL} style={link}>Jetzt bewerten</Link>
+            </Text>
+
+            <ContactBlock />
+
+            <Text style={footerHint}>Bei Fragen antworte einfach auf diese E-Mail.</Text>
+            <Text style={footerEmail}>{CONTACT_EMAIL}</Text>
+            <Text style={footer}>
+              Herzliche Grüße<br />Dein Team von {SITE_NAME}
+            </Text>
+          </Container>
+        </Body>
+      </Html>
+    )
+  }
   return (
     <Html lang="de" dir="ltr">
       <Head />
@@ -125,6 +188,22 @@ const AppointmentFoundEmail = ({ bookingId,
   )
 }
 
+const ContactBlock = () => (
+  <Section style={card}>
+    <Text style={cardTitle}>Fragen?</Text>
+    <Text style={contactLine}>
+      E-Mail: <Link href={`mailto:${CONTACT_EMAIL}`} style={link}>{CONTACT_EMAIL}</Link>
+    </Text>
+    <Text style={contactLine}>
+      WhatsApp: <Link href="https://wa.me/4915153461798" style={link}>+49 151 53461798</Link>
+    </Text>
+    <Text style={contactLine}>
+      Telefon: <Link href="tel:+4915153461798" style={link}>+49 151 53461798</Link>
+    </Text>
+    <Text style={cardFootnote}>Oder antworte einfach auf diese E-Mail.</Text>
+  </Section>
+)
+
 const DataRow = ({ label, value, last }: { label: string; value: string; last?: boolean }) => (
   <>
     <Row>
@@ -138,8 +217,9 @@ const DataRow = ({ label, value, last }: { label: string; value: string; last?: 
 export const template = {
   component: AppointmentFoundEmail,
   subject: (d: Record<string, any>) => {
-    const h = cityOrDefault(d.city).customerConfirmationHours
-    return h != null ? `Termin gefunden – bitte innerhalb von ${h} Stunden bestätigen` : 'Termin gefunden'
+    const c = cityOrDefault(d.city)
+    const h = c.customerConfirmationHours
+    return h != null ? `Termin gefunden – bitte innerhalb von ${h} Stunden bestätigen` : `Dein Termin in ${c.name} ist gebucht`
   },
   displayName: 'Termin gefunden (Kunde)',
   previewData: {

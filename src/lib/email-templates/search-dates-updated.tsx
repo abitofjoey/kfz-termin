@@ -1,6 +1,7 @@
 import { Body, Container, Head, Heading, Html, Hr, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
+import { cityOrDefault } from '../cities'
 
 interface Props {
   bookingId?: string
@@ -8,15 +9,16 @@ interface Props {
   firstName?: string
   serviceType?: string
   selectedDates?: string[]
+  city?: string | null
 }
 
-const SearchDatesUpdatedEmail = ({ bookingId, withdrawToken, firstName, serviceType, selectedDates }: Props) => (
+const SearchDatesUpdatedEmail = ({ bookingId, withdrawToken, firstName, serviceType, selectedDates, city }: Props) => (
   <Html lang="de" dir="ltr">
     <Head />
     <Preview>Deine Wunschtermine wurden aktualisiert</Preview>
     <Body style={s.main}>
       <Container style={s.container}>
-        <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
+        <Text style={s.eyebrow}>{cityOrDefault(city).siteName}</Text>
         <Heading style={s.h1}>Deine Wunschtermine wurden aktualisiert</Heading>
         <Hr style={s.topRule} />
         <s.BookingNumberLine bookingId={bookingId} />
@@ -37,7 +39,7 @@ const SearchDatesUpdatedEmail = ({ bookingId, withdrawToken, firstName, serviceT
         <s.WithdrawLinkLine withdrawToken={withdrawToken} />
 
         <s.ContactCard />
-        <s.MailFooter />
+        <s.MailFooter siteName={cityOrDefault(city).siteName} />
       </Container>
     </Body>
   </Html>

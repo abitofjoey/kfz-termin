@@ -1,6 +1,7 @@
 import { Body, Container, Head, Heading, Html, Hr, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
+import { cityOrDefault } from '../cities'
 import { formatBerlinLong } from './format-berlin'
 
 interface Props {
@@ -10,15 +11,16 @@ interface Props {
   contractReference?: string | null
   bookingSummary?: string | null
   receivedAt?: string
+  city?: string | null
 }
 
-const WithdrawalReceivedEmail = ({ bookingId, name, email, contractReference, bookingSummary, receivedAt }: Props) => (
+const WithdrawalReceivedEmail = ({ bookingId, name, email, contractReference, bookingSummary, receivedAt, city }: Props) => (
   <Html lang="de" dir="ltr">
     <Head />
     <Preview>Wir haben deinen Widerruf erhalten</Preview>
     <Body style={s.main}>
       <Container style={s.container}>
-        <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
+        <Text style={s.eyebrow}>{cityOrDefault(city).siteName}</Text>
         <Heading style={s.h1}>Eingangsbestätigung deines Widerrufs</Heading>
         <Hr style={s.topRule} />
         <s.BookingNumberLine bookingId={bookingId} />
@@ -40,7 +42,7 @@ const WithdrawalReceivedEmail = ({ bookingId, name, email, contractReference, bo
         </Section>
 
         <s.ContactCard />
-        <s.MailFooter />
+        <s.MailFooter siteName={cityOrDefault(city).siteName} />
       </Container>
     </Body>
   </Html>

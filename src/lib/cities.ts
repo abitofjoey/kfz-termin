@@ -63,6 +63,17 @@ export const DEFAULT_CITY = "koeln";
 
 /** Aktueller Preis in Köln (Cent). Einzige Stelle für den Kölner Preis. */
 export const KOELN_PRICE_CENTS = 1299;
+/** Zentraler Standardpreis für weitere Städte (Cent). */
+export const CITY_PRICE_CENTS = KOELN_PRICE_CENTS;
+
+/** Hauptstandort Bonn: einziger Standort für finanzierte/geleaste Fahrzeuge. */
+export const BONN_MAIN_LOCATION = "dlz";
+const BONN_LOCATIONS: CityLocation[] = [
+  { id: "dlz", name: "Dienstleistungszentrum im Stadthaus", address: "Berliner Platz 2, 53111 Bonn" },
+  { id: "hardtberg", name: "Bürgeramt Hardtberg", address: "Villemombler Str. 1, 53123 Bonn" },
+  { id: "beuel", name: "Bürgeramt Beuel", address: "Friedrich-Breuer-Str. 65, 53225 Bonn" },
+  { id: "godesberg", name: "Bürgeramt Bad Godesberg", address: "Kurfürstenallee 2-3, 53177 Bonn" },
+];
 
 export const CITIES: Record<string, CityConfig> = {
   koeln: {
@@ -98,25 +109,39 @@ export const CITIES: Record<string, CityConfig> = {
     slug: "bonn",
     name: "Bonn",
     adjective: "Bonner",
-    authorityName: "Kfz-Zulassungsstelle Bonn",
-    appointmentLocation: "Kfz-Zulassungsstelle Bonn",
-    locations: [],
-    portalUrl: "",
-    infoUrl: "",
+    authorityName: "Stadt Bonn – Kfz-Zulassung und Führerscheinstelle",
+    appointmentLocation: "Dienstleistungszentrum im Stadthaus, Berliner Platz 2, 53111 Bonn",
+    locations: BONN_LOCATIONS,
+    portalUrl:
+      "https://termine.bonn.de/m/dlz/extern/calendar/?uid=b91bb67b-15cf-44df-ab0b-96ebe25c1ae3&lang=de",
+    infoUrl: "https://www.bonn.de",
     siteName: "KFZ-Termin Bonn",
+    // Ab morgen, kein 14-Uhr-Cutoff (cutoffHour 24 wird nie erreicht).
     calendar: {
       minOffsetDays: 1,
-      afterCutoffOffsetDays: 2,
-      cutoffHour: 14,
-      windowDays: 14,
+      afterCutoffOffsetDays: 1,
+      cutoffHour: 24,
+      windowDays: 35,
       allowWeekends: false,
       blockedDates: [],
     },
-    searchHours: { from: 6, to: 20 },
-    priceCents: 1299,
+    searchHours: { from: 0, to: 24 },
+    priceCents: CITY_PRICE_CENTS,
     customerConfirmationHours: null,
     form: { finRequired: false, salutationRequired: false, locationChoice: true, financedCheckbox: true },
-    mail: { atAuthority: "bei der Bonner Zulassungsstelle", showBookingReference: true, showCancelUrl: true },
+    categories: {
+      fuehrerschein: {
+        calendar: {
+          minOffsetDays: 1,
+          afterCutoffOffsetDays: 1,
+          cutoffHour: 24,
+          windowDays: 70,
+          allowWeekends: false,
+          blockedDates: [],
+        },
+      },
+    },
+    mail: { atAuthority: "bei der Stadt Bonn", showBookingReference: true, showCancelUrl: true },
     launched: false,
     bookable: false,
   },
@@ -133,6 +158,8 @@ export function cityOrDefault(slug: string | null | undefined): CityConfig {
 
 export const launchedCities = () => Object.values(CITIES).filter((c) => c.launched);
 export const bookableCities = () => Object.values(CITIES).filter((c) => c.bookable);
+/** Städte, deren Pi-Script überwacht wird (auch versteckt, sobald buchbar). */
+export const monitoredCities = bookableCities;
 export const isBookableCity = (slug: string) => !!getCity(slug)?.bookable;
 
 /** Einstellungen für eine Kategorie, mit Stadt-Standard als Rückfall. */

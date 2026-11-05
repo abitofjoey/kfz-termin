@@ -1,6 +1,7 @@
 import { Body, Container, Head, Heading, Html, Hr, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
+import { cityOrDefault } from '../cities'
 
 interface Props {
   bookingId?: string
@@ -10,9 +11,10 @@ interface Props {
   lastName?: string
   serviceType?: string
   selectedDates?: string[]
+  city?: string | null
 }
 
-const SearchRebookConfirmedEmail = ({ bookingId, withdrawToken, salutation, firstName, lastName, serviceType, selectedDates }: Props) => {
+const SearchRebookConfirmedEmail = ({ bookingId, withdrawToken, salutation, firstName, lastName, serviceType, selectedDates, city }: Props) => {
   const fullName = [salutation, firstName, lastName].filter(Boolean).join(' ')
   return (
     <Html lang="de" dir="ltr">
@@ -20,7 +22,7 @@ const SearchRebookConfirmedEmail = ({ bookingId, withdrawToken, salutation, firs
       <Preview>Wir suchen ab sofort für deine neuen Wunschtermine weiter</Preview>
       <Body style={s.main}>
         <Container style={s.container}>
-          <Text style={s.eyebrow}>{s.SITE_NAME}</Text>
+          <Text style={s.eyebrow}>{cityOrDefault(city).siteName}</Text>
           <Heading style={s.h1}>Deine neuen Wunschtermine sind gespeichert</Heading>
           <Hr style={s.topRule} />
           <s.BookingNumberLine bookingId={bookingId} />
@@ -38,17 +40,21 @@ const SearchRebookConfirmedEmail = ({ bookingId, withdrawToken, salutation, firs
           </Section>
 
           <Section style={s.infoBox}>
+            {s.isInstant(city) ? (
+              <Text style={s.infoText}>{s.INSTANT_INFO}</Text>
+            ) : (
             <Text style={s.infoText}>
               Sobald wir einen Termin gefunden haben, bekommst du wie gewohnt eine E-Mail von uns und
               eine von der Zulassungsstelle. Den Bestätigungslink der Zulassungsstelle musst du dann
               innerhalb von 3 Stunden anklicken. Bitte schau dann auch in deine Ordner Spam und Werbung.
             </Text>
+            )}
           </Section>
 
           <s.WithdrawLinkLine withdrawToken={withdrawToken} />
 
           <s.ContactCard />
-          <s.MailFooter />
+          <s.MailFooter siteName={cityOrDefault(city).siteName} />
         </Container>
       </Body>
     </Html>

@@ -11,6 +11,7 @@ import { Footer } from "@/components/landing/Footer";
 import type { ServiceId } from "@/lib/services";
 import { getCity } from "@/lib/cities";
 import type { CityContent } from "@/content/cities";
+import { MultiLocationLanding } from "@/components/city/MultiLocationLanding";
 
 // Gemeinsame Vorlage für alle Stadtseiten. Inhalte kommen aus
 // src/content/cities/<stadt>.ts, Regeln aus src/lib/cities.ts.
@@ -51,6 +52,13 @@ function BookingFormPlaceholder() {
 }
 
 export function CityLanding({ city, content }: { city: string; content: CityContent }) {
+  // Städte mit mehreren Standorten (z.B. Bonn) nutzen eine eigene Vorlage,
+  // damit die Kölner Seite unverändert bleibt.
+  if (content.multi) return <MultiLocationLanding city={city} content={content} />;
+  return <SingleLocationLanding city={city} content={content} />;
+}
+
+function SingleLocationLanding({ city, content }: { city: string; content: CityContent }) {
   const [preselected, setPreselected] = useState<ServiceId | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [showToaster, setShowToaster] = useState(false);
@@ -132,7 +140,7 @@ export function CityLanding({ city, content }: { city: string; content: CityCont
         ) : (
           <BookingFormPlaceholder />
         )}
-        <InfoBlock content={content.info} />
+        {content.info ? <InfoBlock content={content.info} /> : null}
         <Faq items={content.faq} />
       </main>
       <Footer city={getCity(city)?.name} />
