@@ -68,6 +68,23 @@ const AppointmentFoundEmail = ({ bookingId,
               </Text>
             ) : null}
 
+            <Section style={card}>
+              <Text style={cardTitle}>So läuft dein Termin ab</Text>
+              <Text style={text}>• <strong>Sei pünktlich:</strong> Der Termin verfällt, wenn du nicht rechtzeitig da bist.</Text>
+              <Text style={text}>
+                {`• Melde dich vor Ort am Check-in-Terminal an: frühestens 15 Minuten vor und spätestens 5 Minuten nach Beginn. Dafür scannst du den QR-Code aus der Mail der Stadt oder gibst deine Aufrufnummer${bookingReference ? ` ${bookingReference}` : ''} ein. Ohne Anmeldung am Terminal wirst du nicht aufgerufen.`}
+              </Text>
+              <Text style={text}>• Danach im Wartebereich warten, bis deine Nummer auf der Anzeigetafel erscheint, und zum angezeigten Schalter gehen.</Text>
+              <Text style={text}>• Es wird nur das gebuchte Anliegen bearbeitet.</Text>
+              <Text style={text}>• Gebühren kannst du mit EC- oder Kreditkarte zahlen, auch Apple Pay und Google Pay.</Text>
+              {getServices(c.slug).find((s) => s.label === serviceType)?.category === 'fuehrerschein' ? (
+                <Text style={text}>• Fotos kannst du vor Ort an den Selbsterfassungsgeräten machen oder ein ausgedrucktes Foto von einem zertifizierten Fotografen mitbringen. Für den internationalen Führerschein und die Fahrerkarte werden nur ausgedruckte Fotos angenommen.</Text>
+              ) : null}
+              <Text style={text}>
+                <strong>Hinweis:</strong> Die Stadt {c.name} schickt dir zusätzlich eine eigene Bestätigung mit QR-Code. Sie kann sich etwas verzögern – deine Aufrufnummer aus dieser Mail reicht für den Check-in.
+              </Text>
+            </Section>
+
             <Section style={infoBox}>
               <Text style={infoText}>
                 <strong>Die Buchung ist verbindlich – du musst nichts mehr bestätigen.</strong>{' '}

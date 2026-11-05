@@ -15,6 +15,18 @@ export const bonnFaq: FaqItem[] = [
     a: "Die steht in unserer E-Mail. Vor Ort meldest du dich damit am Check-in-Terminal an.",
   },
   {
+    q: "Wie läuft der Termin vor Ort ab?",
+    a: "Sei pünktlich, sonst verfällt der Termin. Melde dich am Check-in-Terminal an – frühestens 15 Minuten vorher, spätestens 5 Minuten nach Beginn – per QR-Code aus der Mail der Stadt oder mit deiner Aufrufnummer. Danach wirst du über die Anzeigetafel zum Schalter aufgerufen.",
+  },
+  {
+    q: "Was brauche ich für Fotos beim Führerschein?",
+    a: "Fotos kannst du vor Ort an den Selbsterfassungsgeräten machen oder ein ausgedrucktes Foto von einem zertifizierten Fotografen mitbringen. Für den internationalen Führerschein und die Fahrerkarte werden nur ausgedruckte Fotos angenommen.",
+  },
+  {
+    q: "Kann ich vor Ort mit Karte zahlen?",
+    a: "Ja, mit EC- oder Kreditkarte sowie Apple Pay und Google Pay.",
+  },
+  {
     q: "An welchem Standort bekomme ich den Termin?",
     a: "Du wählst im Formular, ob dir der Standort egal ist oder welche Standorte infrage kommen. Manche Anliegen und finanzierte oder geleaste Fahrzeuge bearbeitet Bonn nur im Dienstleistungszentrum.",
   },
