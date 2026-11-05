@@ -44,7 +44,7 @@ function SuccessPage() {
             event: "purchase",
             ecommerce: {
               transaction_id: session_id,
-              value: 9.99,
+              value: (r.amountCents ?? cityOrDefault(city).priceCents) / 100,
               currency: "EUR",
             },
           });

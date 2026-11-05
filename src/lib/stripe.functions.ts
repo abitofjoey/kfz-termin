@@ -96,5 +96,15 @@ export const confirmCheckoutSession = createServerFn({ method: "POST" })
       await finalizePaidBooking(bookingId);
     }
 
-    return { ok: true as const, paid: isPaid };
+    let amountCents: number | null = null;
+    if (bookingId) {
+      const { data: b } = await supabaseAdmin
+        .from("bookings")
+        .select("amount_cents")
+        .eq("id", bookingId)
+        .maybeSingle();
+      amountCents = b?.amount_cents ?? null;
+    }
+
+    return { ok: true as const, paid: isPaid, amountCents };
   });
