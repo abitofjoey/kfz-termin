@@ -78,6 +78,13 @@
       "when": 1793894915477,
       "tag": "0010_bonn_financed_vehicle_count",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1793909962139,
+      "tag": "0011_add_api_status_to_heartbeat",
+      "breakpoints": true
     }
   ]
 }
