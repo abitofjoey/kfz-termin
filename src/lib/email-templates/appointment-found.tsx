@@ -6,6 +6,7 @@ import type { TemplateEntry } from './registry'
 import { BookingNumberLine, locationText } from './customer-email-parts'
 import { formatBerlinLong, formatBerlinTime } from './format-berlin'
 import { cityOrDefault } from '../cities'
+import { getServices } from '../services'
 
 const CONTACT_EMAIL = 'info@kfz-termin.online'
 const REVIEW_URL = 'https://g.page/r/CQtnwHapR1yhEBM/review'
@@ -71,7 +72,7 @@ const AppointmentFoundEmail = ({ bookingId,
               <Text style={infoText}>
                 <strong>Die Buchung ist verbindlich – du musst nichts mehr bestätigen.</strong>{' '}
                 Welche Unterlagen du für dein Anliegen mitbringen musst, findest du auf der{' '}
-                <Link href={CITY_URL} style={infoLink}>{`Seite der Stadt ${c.name}`}</Link>.
+                <Link href={getServices(c.slug).find((s) => s.label === serviceType)?.infoUrl || CITY_URL} style={infoLink}>{`Seite der Stadt ${c.name}`}</Link>.
               </Text>
             </Section>
 
