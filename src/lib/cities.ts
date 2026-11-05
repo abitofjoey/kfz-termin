@@ -61,6 +61,9 @@ export type CityConfig = CategorySettings & {
 
 export const DEFAULT_CITY = "koeln";
 
+/** Aktueller Preis in Köln (Cent). Einzige Stelle für den Kölner Preis. */
+export const KOELN_PRICE_CENTS = 1299;
+
 export const CITIES: Record<string, CityConfig> = {
   koeln: {
     slug: "koeln",
@@ -84,7 +87,7 @@ export const CITIES: Record<string, CityConfig> = {
       blockedDates: [],
     },
     searchHours: { from: 6, to: 20 },
-    priceCents: 999,
+    priceCents: KOELN_PRICE_CENTS,
     customerConfirmationHours: 3,
     form: { finRequired: true, salutationRequired: true, locationChoice: false, financedCheckbox: false },
     mail: { atAuthority: "bei der Kölner Zulassungsstelle", showBookingReference: false, showCancelUrl: false },
@@ -110,7 +113,7 @@ export const CITIES: Record<string, CityConfig> = {
       blockedDates: [],
     },
     searchHours: { from: 6, to: 20 },
-    priceCents: 999,
+    priceCents: 1299,
     customerConfirmationHours: null,
     form: { finRequired: false, salutationRequired: false, locationChoice: true, financedCheckbox: true },
     mail: { atAuthority: "bei der Bonner Zulassungsstelle", showBookingReference: true, showCancelUrl: true },

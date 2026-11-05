@@ -1,3 +1,5 @@
+import { formatPrice, isVatActive } from "@/lib/price";
+import { cityOrDefault } from "@/lib/cities";
 import { useState, useRef } from "react";
 import { Check, ChevronDown, ExternalLink } from "lucide-react";
 import {
@@ -7,6 +9,8 @@ import {
   type ServiceId,
   getService,
 } from "@/lib/services";
+
+const PRICE = formatPrice(cityOrDefault(undefined).priceCents);
 
 type Props = {
   onSelect: (service: ServiceId) => void;
@@ -131,8 +135,8 @@ export function Pricing({ onSelect }: Props) {
             ) : null}
 
             <div className="mt-6 flex items-baseline gap-1">
-              <span className="text-5xl font-bold text-primary">9,99 €</span>
-              <span className="text-sm text-muted-foreground">einmalig</span>
+              <span className="text-5xl font-bold text-primary">{PRICE}</span>
+              <span className="text-sm text-muted-foreground">einmalig{isVatActive() ? " · inkl. 19 % USt." : ""}</span>
             </div>
 
             <ul className="mt-6 space-y-2">

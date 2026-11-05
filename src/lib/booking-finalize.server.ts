@@ -60,6 +60,8 @@ export async function finalizePaidBooking(bookingId: string): Promise<void> {
     notes: booking.notes ?? undefined,
     selectedDates: booking.selected_dates ?? [],
     stripeSessionId: booking.stripe_session_id ?? undefined,
+    amountCents: booking.amount_cents ?? undefined,
+    createdAt: booking.created_at,
   };
 
   try {

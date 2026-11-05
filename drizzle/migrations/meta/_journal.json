@@ -64,6 +64,13 @@
       "when": 1793829233875,
       "tag": "0008_multi_city",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1793891078606,
+      "tag": "0009_add_amount_cents",
+      "breakpoints": true
     }
   ]
 }

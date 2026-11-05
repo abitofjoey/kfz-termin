@@ -1,13 +1,14 @@
+import { formatPrice } from "@/lib/price";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { HomeHero, HomeTimeline, HomeReasons, HomeReviews, HomeFounder, HomeMissingCity, HomeFaq, HomeClosing, homeFaqItems } from "@/components/home/HomeSections";
-import { launchedCities, DEFAULT_CITY } from "@/lib/cities";
+import { launchedCities, DEFAULT_CITY, cityOrDefault } from "@/lib/cities";
 
 const SITE = "https://kfz-termin.online";
 const TITLE = "KFZ-Termin – Wunschtermin bei der Zulassungsstelle, automatisch gebucht";
-const DESCRIPTION = `Wir suchen laufend freie Termine bei der Zulassungsstelle und buchen automatisch an deinen Wunschtagen. 9,99 € mit Geld-zurück-Garantie. Derzeit für: ${launchedCities().map((c) => c.name).join(", ")}.`;
+const DESCRIPTION = `Wir suchen laufend freie Termine bei der Zulassungsstelle und buchen automatisch an deinen Wunschtagen. ${formatPrice(cityOrDefault(undefined).priceCents)} mit Geld-zurück-Garantie. Derzeit für: ${launchedCities().map((c) => c.name).join(", ")}.`;
 
 /** Alte Köln-Anker von der Startseite (z.B. /#buchung) wandern nach /koeln. */
 export const LEGACY_HASHES = ["buchung", "preise", "ablauf", "faq"];
@@ -50,7 +51,7 @@ export const Route = createFileRoute("/")({
           description: "Automatisierte Terminsuche und -buchung bei der Kfz-Zulassungsstelle.",
           provider: { "@type": "Organization", name: "KFZ-Termin", url: SITE },
           areaServed: launchedCities().map((c) => ({ "@type": "City", name: c.name })),
-          offers: { "@type": "Offer", price: "9.99", priceCurrency: "EUR" },
+          offers: { "@type": "Offer", price: (cityOrDefault(undefined).priceCents / 100).toFixed(2), priceCurrency: "EUR" },
         }),
       },
       {

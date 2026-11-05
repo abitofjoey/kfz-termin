@@ -79,6 +79,8 @@ export const createBooking = createServerFn({ method: "POST" })
         status: "open",
         paid: false,
         city,
+        // Preis serverseitig aus der Stadt-Konfiguration, nie vom Client.
+        amount_cents: getCity(city)!.priceCents,
       })
       .select("id")
       .single();
