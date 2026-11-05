@@ -143,7 +143,7 @@ export const CITIES: Record<string, CityConfig> = {
     },
     mail: { atAuthority: "bei der Stadt Bonn", showBookingReference: true, showCancelUrl: true },
     launched: false,
-    bookable: false,
+    bookable: true,
   },
 };
 

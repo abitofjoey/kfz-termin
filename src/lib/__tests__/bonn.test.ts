@@ -15,6 +15,11 @@ const bonnBookable = () => {
   CITIES.bonn.bookable = true;
   return () => (CITIES.bonn.bookable = prev);
 };
+const bonnNotBookable = () => {
+  const prev = CITIES.bonn.bookable;
+  CITIES.bonn.bookable = false;
+  return () => (CITIES.bonn.bookable = prev);
+};
 const base: CityBookingData = {
   city: "bonn", service_id: "umschreibung", first_name: "A", last_name: "B", email: "a@b.de",
   phone: "01511", vehicle_count: 1, locations: null, financed: false, selected_dates: ["2026-11-06"],
@@ -76,7 +81,9 @@ describe("Bonn Dienstleistungen und Standorte", () => {
 
 describe("Bonn Buchung speichern", () => {
   it("nicht buchbar → abgelehnt", () => {
+    const restore = bonnNotBookable();
     expect(prepareCityBooking(base, AFTER_CUTOFF).ok).toBe(false);
+    restore();
   });
   it("Egal wo → alle möglichen Standorte", () => {
     const restore = bonnBookable();
@@ -131,9 +138,9 @@ describe("pending-bookings?city=bonn", () => {
 });
 
 describe("Sichtbarkeit und Ergänzungen", () => {
-  it("Bonn versteckt und nicht überwacht, solange nicht buchbar", () => {
+  it("Bonn versteckt, aber überwacht, weil buchbar", () => {
     expect(launchedCities().map((c) => c.slug)).toEqual(["koeln"]);
-    expect(monitoredCities().map((c) => c.slug)).toEqual(["koeln"]);
+    expect(monitoredCities().map((c) => c.slug)).toEqual(["koeln", "bonn"]);
   });
   it("Stripe-Beschreibung je Stadt", () => {
     expect(checkoutDescription("koeln")).toBe("KFZ-Termin Köln – Terminservice bei der Zulassungsstelle");
