@@ -114,7 +114,7 @@ export const CITIES: Record<string, CityConfig> = {
     locations: BONN_LOCATIONS,
     portalUrl:
       "https://termine.bonn.de/m/dlz/extern/calendar/?uid=b91bb67b-15cf-44df-ab0b-96ebe25c1ae3&lang=de",
-    infoUrl: "https://www.bonn.de/themen-entdecken/verkehr-mobilitaet/kfz-zulassung.php",
+    infoUrl: "https://www.bonn.de",
     siteName: "KFZ-Termin Bonn",
     // Ab morgen, kein 14-Uhr-Cutoff (cutoffHour 24 wird nie erreicht).
     calendar: {
