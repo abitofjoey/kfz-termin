@@ -45,11 +45,12 @@ describe("Köln bleibt unverändert", () => {
 });
 
 describe("Schalter", () => {
-  it("Köln sichtbar und buchbar, Bonn weder noch", () => {
+  it("Köln sichtbar und buchbar, Bonn versteckt aber buchbar", () => {
     expect(CITIES.koeln.launched && CITIES.koeln.bookable).toBe(true);
-    expect(CITIES.bonn.launched || CITIES.bonn.bookable).toBe(false);
+    expect(CITIES.bonn.launched).toBe(false);
+    expect(CITIES.bonn.bookable).toBe(true);
     expect(launchedCities().map((c) => c.slug)).toEqual(["koeln"]);
-    expect(isBookableCity("bonn")).toBe(false);
+    expect(isBookableCity("bonn")).toBe(true);
   });
   it("interne Mails mit [Köln], Kundenmails ohne", () => {
     expect(finalSubject("pi-down-internal", "Pi meldet sich nicht")).toBe("[Köln] Pi meldet sich nicht");
