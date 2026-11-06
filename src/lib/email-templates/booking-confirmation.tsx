@@ -199,7 +199,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             <Text style={text}>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</Text>
             <Text style={text}>Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsschlusses.</Text>
             <Text style={text}>Um Ihr Widerrufsrecht auszuüben, müssen Sie uns</Text>
-            <Text style={text}>Eike Hoffmann<br />KFZ-Termin Köln<br />Longericher Str. 31<br />50739 Köln<br />Telefon: 0151 53461798<br />E-Mail: <Link href={`mailto:${CONTACT_EMAIL}`} style={emailLink}>{CONTACT_EMAIL}</Link></Text>
+            <Text style={text}>Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />Telefon: 0151 53461798<br />E-Mail: <Link href={`mailto:${CONTACT_EMAIL}`} style={emailLink}>{CONTACT_EMAIL}</Link></Text>
             <Text style={text}>mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder eine E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</Text>
             <Text style={text}>Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.</Text>
             <Text style={legalHeading}>Folgen des Widerrufs</Text>
@@ -212,7 +212,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             <Section style={withdrawalForm}>
               <Text style={legalHeading}>Muster-Widerrufsformular</Text>
               <Text style={formText}>(Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.)</Text>
-              <Text style={formText}>An:<br />Eike Hoffmann<br />KFZ-Termin Köln<br />Longericher Str. 31<br />50739 Köln<br />E-Mail: {CONTACT_EMAIL}</Text>
+              <Text style={formText}>An:<br />Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />E-Mail: {CONTACT_EMAIL}</Text>
               <Text style={formText}>Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über die Erbringung der folgenden Dienstleistung:</Text>
               <Text style={formLine}>________________________________________</Text>
               <Text style={formText}>Bestellt am (*) / erhalten am (*):</Text>

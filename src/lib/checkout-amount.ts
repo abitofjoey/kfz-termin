@@ -12,6 +12,6 @@ export function resolveCheckoutAmount(booking: { amount_cents: number | null; ci
 /** Produktbeschreibung im Stripe-Checkout, abhängig von der Stadt der Buchung. */
 export function checkoutDescription(citySlug: string | null | undefined): string {
   const c = cityOrDefault(citySlug);
-  if (c.slug === "koeln") return "KFZ-Termin Köln – Terminservice bei der Zulassungsstelle";
+  if (c.slug === "koeln") return "KFZ-Termin – Terminservice bei der Zulassungsstelle Köln";
   return `${c.siteName} – Terminservice bei der Stadt ${c.name}`;
 }

@@ -4,10 +4,10 @@ import { LegalPage } from "@/components/landing/LegalPage";
 export const Route = createFileRoute("/datenschutz")({
   head: () => ({
     meta: [
-      { title: "Datenschutz – KFZ-Termin Köln" },
-      { name: "description", content: "Datenschutzerklärung von KFZ-Termin Köln." },
-      { property: "og:title", content: "Datenschutz – KFZ-Termin Köln" },
-      { property: "og:description", content: "Datenschutzerklärung von KFZ-Termin Köln." },
+      { title: "Datenschutz – KFZ-Termin" },
+      { name: "description", content: "Datenschutzerklärung von KFZ-Termin." },
+      { property: "og:title", content: "Datenschutz – KFZ-Termin" },
+      { property: "og:description", content: "Datenschutzerklärung von KFZ-Termin." },
       { property: "og:url", content: "https://kfz-termin.online/datenschutz" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -17,12 +17,12 @@ export const Route = createFileRoute("/datenschutz")({
   }),
   component: () => (
     <LegalPage title="Datenschutzerklärung">
-      <p><strong>KFZ-Termin Köln · kfz-termin.online und Anzeigen auf Kleinanzeigen · Stand: Oktober 2026</strong></p>
+      <p><strong>KFZ-Termin · kfz-termin.online und Anzeigen auf Kleinanzeigen · Stand: November 2026</strong></p>
 
       <section>
         <h2 className="text-lg font-semibold">1. Verantwortlicher</h2>
         <p className="mt-2">Verantwortlich im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:</p>
-        <p className="mt-2">Eike Hoffmann<br />KFZ-Termin Köln<br />Longericher Str. 31<br />50739 Köln<br />E-Mail: <a className="text-accent underline" href="mailto:info@kfz-termin.online">info@kfz-termin.online</a><br />Telefon: 0151 53461798</p>
+        <p className="mt-2">Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />E-Mail: <a className="text-accent underline" href="mailto:info@kfz-termin.online">info@kfz-termin.online</a><br />Telefon: 0151 53461798</p>
       </section>
 
       <section>
@@ -49,12 +49,12 @@ export const Route = createFileRoute("/datenschutz")({
       <section>
         <h2 className="text-lg font-semibold">6. Buchung eines Termins</h2>
         <p className="mt-2">Im Rahmen der Buchung erheben wir die zur Vertragsdurchführung erforderlichen Daten (z. B. Name, E-Mail-Adresse, ggf. Telefonnummer, gewünschter Zeitraum, Anliegen, Fahrzeugdaten). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung). Die Daten werden gelöscht, sobald sie für die Erreichung des Zwecks ihrer Erhebung nicht mehr erforderlich sind, vorbehaltlich gesetzlicher Aufbewahrungspflichten (insb. § 147 AO, § 257 HGB).</p>
-        <p className="mt-2">Die Telefonnummer übermitteln wir an die jeweilige Zulassungsbehörde, derzeit die Stadt Köln (Abschnitt 7), weil das Buchungsportal sie verlangt, und nutzen sie für Rückfragen zu deinem Auftrag. Eine Weitergabe an sonstige Dritte erfolgt nicht. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Zur Speicherdauer siehe Abschnitt 17.</p>
+        <p className="mt-2">Die Telefonnummer übermitteln wir an die jeweilige Zulassungsbehörde, derzeit die Stadt Köln und die Stadt Bonn (Abschnitt 7), weil das Buchungsportal sie verlangt, und nutzen sie für Rückfragen zu deinem Auftrag. Eine Weitergabe an sonstige Dritte erfolgt nicht. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Zur Speicherdauer siehe Abschnitt 17.</p>
       </section>
 
       <section>
         <h2 className="text-lg font-semibold">7. Automatisierte Terminbuchung bei der Zulassungsbehörde</h2>
-        <p className="mt-2">Kern unseres Dienstes ist die automatisierte Suche und Buchung eines freien Termins im Online-Portal der jeweiligen Zulassungsbehörde (derzeit die Stadt Köln) in deinem Namen. Hierzu übermitteln wir Vor- und Nachname, E-Mail-Adresse, Telefonnummer, Anliegen sowie die letzten vier Stellen der Fahrzeug-Identifikationsnummer (FIN) an die Stadt Köln als eigenständig Verantwortliche. Rechtsgrundlage für die Übermittlung ist Art. 6 Abs. 1 lit. b DSGVO. Ohne diese Übermittlung kann der Dienst nicht erbracht werden.</p>
+        <p className="mt-2">Kern unseres Dienstes ist die automatisierte Suche und Buchung eines freien Termins im Online-Portal der jeweiligen Zulassungsbehörde (derzeit die Stadt Köln und die Stadt Bonn) in deinem Namen. Hierzu übermitteln wir Vor- und Nachname, E-Mail-Adresse, Telefonnummer, Anliegen sowie die letzten vier Stellen der Fahrzeug-Identifikationsnummer (FIN) an die Stadt Köln als eigenständig Verantwortliche. Rechtsgrundlage für die Übermittlung ist Art. 6 Abs. 1 lit. b DSGVO. Ohne diese Übermittlung kann der Dienst nicht erbracht werden.</p>
       </section>
 
       <section>

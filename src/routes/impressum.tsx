@@ -4,10 +4,10 @@ import { LegalPage } from "@/components/landing/LegalPage";
 export const Route = createFileRoute("/impressum")({
   head: () => ({
     meta: [
-      { title: "Impressum – KFZ-Termin Köln" },
-      { name: "description", content: "Impressum von KFZ-Termin Köln." },
-      { property: "og:title", content: "Impressum – KFZ-Termin Köln" },
-      { property: "og:description", content: "Impressum von KFZ-Termin Köln." },
+      { title: "Impressum – KFZ-Termin" },
+      { name: "description", content: "Impressum von KFZ-Termin." },
+      { property: "og:title", content: "Impressum – KFZ-Termin" },
+      { property: "og:description", content: "Impressum von KFZ-Termin." },
       { property: "og:url", content: "https://kfz-termin.online/impressum" },
       { name: "robots", content: "noindex, follow" },
     ],

@@ -2,7 +2,7 @@
 import { Link, Section, Text } from '@react-email/components'
 import { cityOrDefault, type CityConfig } from '../cities'
 
-export const SITE_NAME = 'KFZ-Termin Köln'
+export const SITE_NAME = 'KFZ-Termin'
 export const CONTACT_EMAIL = 'info@kfz-termin.online'
 export const SITE_URL = 'https://kfz-termin.online'
 
