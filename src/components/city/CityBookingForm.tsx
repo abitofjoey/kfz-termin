@@ -29,7 +29,7 @@ const parseISO = (iso: string) => {
 };
 
 /** Buchungsformular für Städte mit Standortwahl (z.B. Bonn). */
-export function CityBookingForm({ city: slug, bookingNotice }: { city: string; bookingNotice: string }) {
+export function CityBookingForm({ city: slug }: { city: string }) {
   const city = getCity(slug)!;
   const bookable = city.bookable;
   const submitBooking = useServerFn(createCityBooking);
@@ -330,11 +330,6 @@ export function CityBookingForm({ city: slug, bookingNotice }: { city: string; b
             <CheckRow checked={agreeWaiver} onChange={setAgreeWaiver} error={errors.waiver}>
               Ich verlange ausdrücklich den sofortigen Beginn der Terminsuche vor Ablauf der Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger Erbringung der Leistung erlischt (§ 356 Abs. 4 BGB).
             </CheckRow>
-          </div>
-
-          <div className="flex items-start gap-2 rounded-md bg-secondary p-3 text-sm">
-            <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" />
-            <p>{bookingNotice}</p>
           </div>
 
           <Button type="submit" disabled={submitting || !bookable} className="w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
