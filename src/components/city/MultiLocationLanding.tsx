@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { MapPin, Info } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
 import { Faq } from "@/components/landing/Faq";
@@ -44,10 +44,6 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
                 </li>
               ))}
             </ol>
-            <div className="mx-auto mt-8 flex max-w-3xl items-start gap-2 rounded-md border border-border bg-muted/50 p-4 text-sm">
-              <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" />
-              <p>{multi.honestNote}</p>
-            </div>
           </div>
         </section>
 
@@ -63,7 +59,7 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
 
         {ready ? (
           <Suspense fallback={<div className="h-[900px]" aria-hidden="true" />}>
-            <CityBookingForm city={slug} bookingNotice={multi.bookingNotice} />
+            <CityBookingForm city={slug} />
           </Suspense>
         ) : (
           <section id="buchung" className="py-20"><div className="mx-auto h-[900px] max-w-3xl" aria-hidden="true" /></section>
