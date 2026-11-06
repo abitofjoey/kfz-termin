@@ -36,7 +36,7 @@ export function Testimonials({ title = "Erfahrungen unserer Kund:innen" }: { tit
             {title}
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Das sagen Personen, die KFZ-Termin Köln bereits genutzt haben.
+            Das sagen Personen, die KFZ-Termin bereits genutzt haben.
           </p>
         </div>
 

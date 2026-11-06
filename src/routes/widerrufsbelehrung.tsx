@@ -5,10 +5,10 @@ import { LegalPage } from "@/components/landing/LegalPage";
 export const Route = createFileRoute("/widerrufsbelehrung")({
   head: () => ({
     meta: [
-      { title: "Widerrufsbelehrung – KFZ-Termin Köln" },
-      { name: "description", content: "Widerrufsbelehrung und Muster-Widerrufsformular von KFZ-Termin Köln." },
-      { property: "og:title", content: "Widerrufsbelehrung – KFZ-Termin Köln" },
-      { property: "og:description", content: "Widerrufsbelehrung und Muster-Widerrufsformular von KFZ-Termin Köln." },
+      { title: "Widerrufsbelehrung – KFZ-Termin" },
+      { name: "description", content: "Widerrufsbelehrung und Muster-Widerrufsformular von KFZ-Termin." },
+      { property: "og:title", content: "Widerrufsbelehrung – KFZ-Termin" },
+      { property: "og:description", content: "Widerrufsbelehrung und Muster-Widerrufsformular von KFZ-Termin." },
       { property: "og:url", content: "https://kfz-termin.online/widerrufsbelehrung" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/widerrufsbelehrung")({
         <p className="mt-2">Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
         <p className="mt-2">Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsschlusses.</p>
         <p className="mt-2">Um Ihr Widerrufsrecht auszuüben, müssen Sie uns</p>
-        <p className="mt-2 pl-4">Eike Hoffmann<br />KFZ-Termin Köln<br />Longericher Str. 31<br />50739 Köln<br />Telefon: 0151 53461798<br />E-Mail: <a className="text-accent underline" href="mailto:info@kfz-termin.online">info@kfz-termin.online</a></p>
+        <p className="mt-2 pl-4">Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />Telefon: 0151 53461798<br />E-Mail: <a className="text-accent underline" href="mailto:info@kfz-termin.online">info@kfz-termin.online</a></p>
         <p className="mt-2">mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder eine E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</p>
         <p className="mt-2">Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.</p>
       </section>
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/widerrufsbelehrung")({
       <section className="rounded-md border border-border bg-muted p-5 sm:p-6">
         <h2 className="text-lg font-semibold">Muster-Widerrufsformular</h2>
         <p className="mt-2">(Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.)</p>
-        <p className="mt-4">An:<br />Eike Hoffmann<br />KFZ-Termin Köln<br />Longericher Str. 31<br />50739 Köln<br />E-Mail: <a className="text-accent underline" href="mailto:info@kfz-termin.online">info@kfz-termin.online</a></p>
+        <p className="mt-4">An:<br />Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />E-Mail: <a className="text-accent underline" href="mailto:info@kfz-termin.online">info@kfz-termin.online</a></p>
         <p className="mt-4">Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über die Erbringung der folgenden Dienstleistung:</p>
         <p className="mt-3 break-all">____________________________________________________________</p>
         <p className="mt-4">Bestellt am (*) / erhalten am (*):</p>

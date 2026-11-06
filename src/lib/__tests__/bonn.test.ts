@@ -143,8 +143,8 @@ describe("Sichtbarkeit und Ergänzungen", () => {
     expect(monitoredCities().map((c) => c.slug)).toEqual(["koeln", "bonn"]);
   });
   it("Stripe-Beschreibung je Stadt", () => {
-    expect(checkoutDescription("koeln")).toBe("KFZ-Termin Köln – Terminservice bei der Zulassungsstelle");
-    expect(checkoutDescription(null)).toBe("KFZ-Termin Köln – Terminservice bei der Zulassungsstelle");
+    expect(checkoutDescription("koeln")).toBe("KFZ-Termin – Terminservice bei der Zulassungsstelle Köln");
+    expect(checkoutDescription(null)).toBe("KFZ-Termin – Terminservice bei der Zulassungsstelle Köln");
     expect(checkoutDescription("bonn")).toBe("KFZ-Termin Bonn – Terminservice bei der Stadt Bonn");
   });
 });

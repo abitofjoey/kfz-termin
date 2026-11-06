@@ -6,10 +6,10 @@ import { LegalPage } from "@/components/landing/LegalPage";
 export const Route = createFileRoute("/agb")({
   head: () => ({
     meta: [
-      { title: "AGB – KFZ-Termin Köln" },
-      { name: "description", content: "Allgemeine Geschäftsbedingungen von KFZ-Termin Köln." },
-      { property: "og:title", content: "AGB – KFZ-Termin Köln" },
-      { property: "og:description", content: "Allgemeine Geschäftsbedingungen von KFZ-Termin Köln." },
+      { title: "AGB – KFZ-Termin" },
+      { name: "description", content: "Allgemeine Geschäftsbedingungen von KFZ-Termin." },
+      { property: "og:title", content: "AGB – KFZ-Termin" },
+      { property: "og:description", content: "Allgemeine Geschäftsbedingungen von KFZ-Termin." },
       { property: "og:url", content: "https://kfz-termin.online/agb" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -19,12 +19,12 @@ export const Route = createFileRoute("/agb")({
   }),
   component: () => (
     <LegalPage title="Allgemeine Geschäftsbedingungen">
-      <p><strong>KFZ-Termin Köln · kfz-termin.online · Stand: November 2026</strong></p>
+      <p><strong>KFZ-Termin · kfz-termin.online · Stand: November 2026</strong></p>
 
       <section>
         <h2 className="text-lg font-semibold">Anbieter</h2>
         <p className="mt-2">
-          Eike Hoffmann<br />KFZ-Termin Köln<br />Longericher Str. 31<br />50739 Köln<br />
+          Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />
           E-Mail: <a className="text-accent underline" href="mailto:info@kfz-termin.online">info@kfz-termin.online</a><br />
           Telefon/WhatsApp: 0151 53461798
         </p>
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/agb")({
 
       <section>
         <h2 className="text-lg font-semibold">§ 1 Geltungsbereich</h2>
-        <p className="mt-2">(1) Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge zwischen Eike Hoffmann (nachfolgend „Anbieter“) und dem Kunden über die Nutzung des Dienstes „KFZ-Termin Köln“ unter kfz-termin.online. Sie gelten auch, wenn der Kunde über eine Anzeige auf Kleinanzeigen auf den Dienst aufmerksam geworden ist.</p>
+        <p className="mt-2">(1) Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge zwischen Eike Hoffmann (nachfolgend „Anbieter“) und dem Kunden über die Nutzung des Dienstes „KFZ-Termin“ unter kfz-termin.online. Sie gelten auch, wenn der Kunde über eine Anzeige auf Kleinanzeigen auf den Dienst aufmerksam geworden ist.</p>
         <p className="mt-2">(2) Abweichende Bedingungen des Kunden werden nicht Vertragsbestandteil.</p>
       </section>
 

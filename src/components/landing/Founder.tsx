@@ -9,7 +9,7 @@ export function Founder() {
           <img
             src={eikeSmallUrl}
             srcSet={`${eikeSmallUrl} 1x, ${eikeUrl} 2x`}
-            alt="Eike Hoffmann, Gründer von KFZ-Termin Köln"
+            alt="Eike Hoffmann, Gründer von KFZ-Termin"
             width={120}
             height={120}
             loading="lazy"
@@ -19,7 +19,7 @@ export function Founder() {
           />
 
           <div className="text-center sm:text-left">
-            <h2 id="founder-heading" className="text-xl font-bold">Wer steckt hinter KFZ-Termin Köln?</h2>
+            <h2 id="founder-heading" className="text-xl font-bold">Wer steckt hinter KFZ-Termin?</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Hallo, ich bin Eike – Freelancer aus Köln im Bereich Online-Marketing und Digitales.
               Als wir kurzfristig ein Wohnmobil gekauft hatten und zwei Wochen später in den Urlaub
@@ -27,7 +27,7 @@ export function Founder() {
               passenden Termin. Neue Termine werden morgens freigeschaltet oder kommen tagsüber durch
               Absagen rein – und sind oft innerhalb von Minuten wieder weg. Ständig selbst
               nachzuschauen war keine Option. Also habe ich eine Lösung gebaut, die mir innerhalb
-              weniger Tage einen Termin verschafft hat. Genau das steckt hinter KFZ-Termin Köln.
+              weniger Tage einen Termin verschafft hat. Genau das steckt hinter KFZ-Termin.
             </p>
             <p className="mt-3 text-xs text-muted-foreground">
               Eike Hoffmann · Freelancer ·{" "}

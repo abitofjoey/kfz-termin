@@ -103,7 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "KFZ-Termin Köln",
+          name: "KFZ-Termin",
           url: "https://kfz-termin.online",
           logo: "https://kfz-termin.online/icon-512.png",
           email: "info@kfz-termin.online",
@@ -121,7 +121,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebSite",
-          name: "KFZ-Termin Köln",
+          name: "KFZ-Termin",
           url: "https://kfz-termin.online",
           inLanguage: "de-DE",
         }),

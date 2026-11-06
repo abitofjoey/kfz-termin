@@ -1,3 +1,6 @@
+/** Firmenname – für alle Städte gleich. */
+export const BRAND_NAME = "KFZ-Termin";
+
 // Zentrale Stadt-Konfiguration. Eine neue Stadt entsteht durch einen Eintrag
 // hier, eine Inhaltsdatei unter src/content/cities/ und eine Dienstleistungsliste
 // in src/lib/services.ts – ohne neuen Seiten- oder Schnittstellen-Code.
@@ -38,7 +41,7 @@ export type CityConfig = CategorySettings & {
   portalUrl: string;
   /** Infoseite der Stadt zur Zulassung (Mails). */
   infoUrl: string;
-  /** Anzeigename der Marke, z.B. "KFZ-Termin Köln". */
+  /** Anzeigename der Marke (für alle Städte gleich). */
   siteName: string;
   form: {
     finRequired: boolean;
@@ -97,7 +100,7 @@ export const CITIES: Record<string, CityConfig> = {
     portalUrl:
       "https://termine.stadt-koeln.de/m/kfz-zulassung/extern/calendar/?uid=67523a04-37af-4131-9495-0a3566e0eb8b",
     infoUrl: "https://www.stadt-koeln.de/service/adressen/00205/index.html",
-    siteName: "KFZ-Termin Köln",
+    siteName: BRAND_NAME,
     calendar: {
       minOffsetDays: 1,
       afterCutoffOffsetDays: 2,
@@ -125,7 +128,7 @@ export const CITIES: Record<string, CityConfig> = {
     portalUrl:
       "https://termine.bonn.de/m/dlz/extern/calendar/?uid=b91bb67b-15cf-44df-ab0b-96ebe25c1ae3&lang=de",
     infoUrl: "https://www.bonn.de",
-    siteName: "KFZ-Termin Bonn",
+    siteName: BRAND_NAME,
     // Ab morgen, kein 14-Uhr-Cutoff (cutoffHour 24 wird nie erreicht).
     calendar: {
       minOffsetDays: 1,
