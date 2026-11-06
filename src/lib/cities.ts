@@ -162,7 +162,7 @@ export const CITIES: Record<string, CityConfig> = {
       successNotice:
         "Sobald wir einen Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum, Uhrzeit, Standort und deiner Aufrufnummer. Die Buchung ist sofort verbindlich – du musst nichts mehr bestätigen. Zusätzlich schickt dir die Stadt Bonn eine eigene Bestätigung, die sich etwas verzögern kann. Bitte schau auch in deinen Ordnern Spam und Werbung nach.",
     },
-    launched: false,
+    launched: true,
     bookable: true,
   },
 };
