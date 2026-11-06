@@ -85,7 +85,7 @@ export const bonnContent: CityContent = {
   },
   faq: bonnFaq,
   serviceJsonLd: {
-    name: "KFZ-Termin Bonn",
+    name: "KFZ-Termin – Stadt Bonn",
     description:
       "Automatisierte Terminbuchung bei der Stadt Bonn für Kfz-Zulassung und Führerschein. Suche rund um die Uhr und automatische Buchung, sobald ein Termin an einem Wunschtag frei wird.",
   },

@@ -145,6 +145,6 @@ describe("Sichtbarkeit und Ergänzungen", () => {
   it("Stripe-Beschreibung je Stadt", () => {
     expect(checkoutDescription("koeln")).toBe("KFZ-Termin – Terminservice bei der Zulassungsstelle Köln");
     expect(checkoutDescription(null)).toBe("KFZ-Termin – Terminservice bei der Zulassungsstelle Köln");
-    expect(checkoutDescription("bonn")).toBe("KFZ-Termin Bonn – Terminservice bei der Stadt Bonn");
+    expect(checkoutDescription("bonn")).toBe("KFZ-Termin – Terminservice bei der Stadt Bonn");
   });
 });
