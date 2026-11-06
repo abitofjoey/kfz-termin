@@ -7,6 +7,7 @@ import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
 import { formatDayLong, locationsText } from './customer-email-parts'
 
 import { cityOrDefault } from '../cities'
+import { WITHDRAWAL_SCOPE, WITHDRAWAL_STAND, WITHDRAWAL_COMPLETED } from '../../content/legal/withdrawal'
 import { formatPrice, vatMailValue } from '../price'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
 
@@ -171,9 +172,13 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
           <Section style={warnBox}>
             <Text style={warnTitle}>⚠️ Bitte prüfe deine Angaben</Text>
             <Text style={warnText}>
+              {c.form.finRequired ? (<>
               Sollten Name, E-Mail oder eine der FIN nicht korrekt sein, kann die
               Bestätigung der Zulassungsstelle dich nicht erreichen. Antworte
-              in diesem Fall einfach auf diese E-Mail.
+              in diesem Fall einfach auf diese E-Mail.</>) : (<>
+              Sollten Name oder E-Mail nicht korrekt sein, erreicht dich die
+              Bestätigung der Stadt nicht. Antworte in diesem Fall einfach auf
+              diese E-Mail.</>)}
             </Text>
           </Section>
 
@@ -188,8 +193,8 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
               erklären.
             </Text>
             <Text style={legalTitle}>Widerrufsbelehrung</Text>
-            <Text style={text}>für Verträge über die automatisierte Terminsuche und -buchung bei der Kfz-Zulassungsstelle Köln (kfz-termin.online)</Text>
-            <Text style={text}><strong>Stand: Oktober 2026</strong></Text>
+            <Text style={text}>{WITHDRAWAL_SCOPE}</Text>
+            <Text style={text}><strong>{WITHDRAWAL_STAND}</strong></Text>
             <Text style={legalHeading}>Widerrufsrecht</Text>
             <Text style={text}>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</Text>
             <Text style={text}>Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsschlusses.</Text>
@@ -202,7 +207,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             <Text style={text}>Haben Sie verlangt, dass die Dienstleistung während der Widerrufsfrist beginnen soll, so haben Sie uns einen angemessenen Betrag zu zahlen, der dem Anteil der bis zu dem Zeitpunkt, zu dem Sie uns von der Ausübung des Widerrufsrechts hinsichtlich dieses Vertrags unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.</Text>
             <Text style={legalHeading}>Besondere Hinweise</Text>
             <Text style={text}>Ihr Widerrufsrecht erlischt vorzeitig, wenn wir die Dienstleistung vollständig erbracht haben und mit der Ausführung der Dienstleistung erst begonnen haben, nachdem Sie dazu Ihre ausdrückliche Zustimmung gegeben und gleichzeitig Ihre Kenntnis davon bestätigt haben, dass Sie Ihr Widerrufsrecht bei vollständiger Vertragserfüllung durch uns verlieren (§ 356 Abs. 4 BGB).</Text>
-            <Text style={text}>Die Dienstleistung ist vollständig erbracht, sobald wir in Ihrem Namen einen Termin bei der Kfz-Zulassungsstelle gebucht haben und Sie die Buchungs- bzw. Bestätigungs-E-Mail der Zulassungsstelle erhalten haben.</Text>
+            <Text style={text}>{WITHDRAWAL_COMPLETED}</Text>
 
             <Section style={withdrawalForm}>
               <Text style={legalHeading}>Muster-Widerrufsformular</Text>

@@ -19,7 +19,7 @@ export const Route = createFileRoute("/agb")({
   }),
   component: () => (
     <LegalPage title="Allgemeine Geschäftsbedingungen">
-      <p><strong>KFZ-Termin Köln · kfz-termin.online · Stand: Oktober 2026</strong></p>
+      <p><strong>KFZ-Termin Köln · kfz-termin.online · Stand: November 2026</strong></p>
 
       <section>
         <h2 className="text-lg font-semibold">Anbieter</h2>
@@ -38,10 +38,11 @@ export const Route = createFileRoute("/agb")({
 
       <section>
         <h2 className="text-lg font-semibold">§ 2 Leistungsbeschreibung</h2>
-        <p className="mt-2">(1) Der Anbieter stellt einen Service zur automatisierten Terminsuche bei der jeweiligen Zulassungsbehörde (derzeit die Zulassungsstelle der Stadt Köln) zur Verfügung. Der Anbieter sucht im Auftrag des Kunden nach einem möglichen freien Termin im vom Kunden gewünschten Zeitraum und bucht diesen mit den vom Kunden bereitgestellten Daten in dessen Namen. Der Anbieter ist von den Terminen des Zulassungsportals abhängig und kann nur solche Termine buchen, die von dem Zulassungsportal auch tatsächlich freigegeben wurden.</p>
+        <p className="mt-2">(1) Der Anbieter stellt einen Service zur automatisierten Terminsuche bei der jeweiligen Zulassungsbehörde (derzeit die Kfz-Zulassungsstelle der Stadt Köln sowie die Kfz-Zulassung und Führerscheinstelle der Stadt Bonn) zur Verfügung. Der Anbieter sucht im Auftrag des Kunden nach einem möglichen freien Termin im vom Kunden gewünschten Zeitraum und bucht diesen mit den vom Kunden bereitgestellten Daten in dessen Namen. Der Anbieter ist von den Terminen des Zulassungsportals abhängig und kann nur solche Termine buchen, die von dem Zulassungsportal auch tatsächlich freigegeben wurden.</p>
         <p className="mt-2">(2) Nach erfolgreicher Terminbuchung sendet der Anbieter dem Kunden eine Erinnerung per E-Mail an die im Formular angegebene E-Mail-Adresse.</p>
-        <p className="mt-2">(3) Sollte die Zulassungsstelle keine Termine freigeben, die vom Kunden ausgewählt wurden, so ist der Anbieter von der Buchungspflicht befreit. Der Anbieter weist ausdrücklich darauf hin, dass insbesondere bei kurzfristigen Terminen die Wahrscheinlichkeit einer Buchung deutlich sinkt und der Anbieter eine Buchung nicht garantieren kann.</p>
-        <p className="mt-2">(4) Die Wahrnehmung des Termins erfolgt durch den Kunden selbst. Der Anbieter ist weder mit der Stadt Köln oder einer anderen Stadt noch mit der jeweiligen Zulassungsbehörde geschäftlich oder rechtlich verbunden. Die Terminvergabe durch die Stadt Köln ist kostenlos. Das Entgelt nach § 4 wird ausschließlich für die Suche und Buchung des Termins erhoben.</p>
+        <p className="mt-2">(3) Sollte die zuständige Behörde keine Termine freigeben, die vom Kunden ausgewählt wurden, so ist der Anbieter von der Buchungspflicht befreit. Der Anbieter weist ausdrücklich darauf hin, dass insbesondere bei kurzfristigen Terminen die Wahrscheinlichkeit einer Buchung deutlich sinkt und der Anbieter eine Buchung nicht garantieren kann.</p>
+        <p className="mt-2">(4) Die Wahrnehmung des Termins erfolgt durch den Kunden selbst. Der Anbieter ist weder mit der Stadt Köln, der Stadt Bonn oder einer anderen Stadt noch mit der jeweiligen Behörde geschäftlich oder rechtlich verbunden. Die Terminvergabe durch die Behörde ist kostenlos. Das Entgelt nach § 4 wird ausschließlich für die Suche und Buchung des Termins erhoben.</p>
+        <p className="mt-2">(5) Je nach Behörde muss der Kunde die Buchung innerhalb einer von der Behörde gesetzten Frist selbst bestätigen (z. B. Köln), oder sie ist mit der Buchung sofort verbindlich (z. B. Bonn). Die jeweilige Regel steht auf der Seite der Stadt und in unseren E-Mails.</p>
       </section>
 
       <section>
@@ -61,13 +62,13 @@ export const Route = createFileRoute("/agb")({
       <section>
         <h2 className="text-lg font-semibold">§ 5 Mitwirkungspflichten des Kunden</h2>
         <p className="mt-2">(1) Der Kunde verpflichtet sich, alle für die Terminbuchung erforderlichen Daten vollständig und korrekt anzugeben.</p>
-        <p className="mt-2">(2) Die Zulassungsstelle verlangt, dass ein gebuchter Termin innerhalb einer Frist bestätigt wird. Diese Frist beträgt derzeit drei Stunden. Der Kunde ist dafür verantwortlich, die Bestätigung rechtzeitig vorzunehmen.</p>
+        <p className="mt-2">(2) Verlangt die zuständige Behörde, dass ein gebuchter Termin innerhalb einer Frist bestätigt wird (in Köln derzeit drei Stunden), so ist der Kunde dafür verantwortlich, die Bestätigung rechtzeitig vorzunehmen.</p>
       </section>
 
       <section>
         <h2 className="text-lg font-semibold">§ 6 Leistungsumfang, keine Erfolgsgarantie</h2>
         <p className="mt-2">(1) Der Anbieter schuldet die sorgfältige Bemühung, einen Termin im vom Kunden angegebenen Zeitraum zu finden, nicht jedoch einen bestimmten Erfolg. Eine Garantie für die Verfügbarkeit eines Termins wird nicht übernommen. Sollte innerhalb des vom Kunden gewählten Zeitraums kein Termin gefunden werden können, kann der Kunde einmalig neue Wunschtermine wählen oder erhält den gezahlten Betrag vollständig zurückerstattet (Geld-zurück-Garantie). Wählt der Kunde innerhalb von 48 Stunden keine neuen Wunschtermine, erfolgt die Rückerstattung automatisch.</p>
-        <p className="mt-2">(2) Die Dienstleistung gilt als vollständig erbracht, sobald der Anbieter im Namen des Kunden einen Termin bei der Kfz-Zulassungsstelle gebucht und der Kunde eine Buchungs- bzw. Bestätigungs-E-Mail der Zulassungsstelle erhalten hat. Ob der Kunde den gebuchten Termin anschließend wahrnimmt oder eine zusätzliche Bestätigung innerhalb der Wahrnehmungsfrist abgibt, ist für die Leistungserbringung unerheblich.</p>
+        <p className="mt-2">(2) Die Dienstleistung gilt als vollständig erbracht, sobald der Anbieter im Namen des Kunden einen Termin bei der zuständigen Behörde gebucht und der Kunde eine Buchungs- bzw. Bestätigungs-E-Mail der Behörde erhalten hat. Ob der Kunde den gebuchten Termin anschließend wahrnimmt oder eine zusätzliche Bestätigung innerhalb der Wahrnehmungsfrist abgibt, ist für die Leistungserbringung unerheblich.</p>
       </section>
 
       <section>

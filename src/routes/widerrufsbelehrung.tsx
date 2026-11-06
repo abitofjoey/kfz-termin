@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { WITHDRAWAL_SCOPE, WITHDRAWAL_STAND, WITHDRAWAL_COMPLETED } from "@/content/legal/withdrawal";
 import { LegalPage } from "@/components/landing/LegalPage";
 
 export const Route = createFileRoute("/widerrufsbelehrung")({
@@ -17,8 +18,8 @@ export const Route = createFileRoute("/widerrufsbelehrung")({
   }),
   component: () => (
     <LegalPage title="Widerrufsbelehrung">
-      <p><strong>für Verträge über die automatisierte Terminsuche und -buchung bei der jeweiligen Kfz-Zulassungsbehörde, derzeit der Kfz-Zulassungsstelle Köln (kfz-termin.online)</strong></p>
-      <p><strong>Stand: Oktober 2026</strong></p>
+      <p><strong>{WITHDRAWAL_SCOPE}</strong></p>
+      <p><strong>{WITHDRAWAL_STAND}</strong></p>
 
       <section>
         <h2 className="text-lg font-semibold">Widerrufsrecht</h2>
@@ -44,7 +45,7 @@ export const Route = createFileRoute("/widerrufsbelehrung")({
       <section>
         <h2 className="text-lg font-semibold">Besondere Hinweise</h2>
         <p className="mt-2">Ihr Widerrufsrecht erlischt vorzeitig, wenn wir die Dienstleistung vollständig erbracht haben und mit der Ausführung der Dienstleistung erst begonnen haben, nachdem Sie dazu Ihre ausdrückliche Zustimmung gegeben und gleichzeitig Ihre Kenntnis davon bestätigt haben, dass Sie Ihr Widerrufsrecht bei vollständiger Vertragserfüllung durch uns verlieren (§ 356 Abs. 4 BGB).</p>
-        <p className="mt-2">Die Dienstleistung ist vollständig erbracht, sobald wir in Ihrem Namen einen Termin bei der Kfz-Zulassungsstelle gebucht haben und Sie die Buchungs- bzw. Bestätigungs-E-Mail der Zulassungsstelle erhalten haben.</p>
+        <p className="mt-2">{WITHDRAWAL_COMPLETED}</p>
       </section>
 
       <section className="rounded-md border border-border bg-muted p-5 sm:p-6">
