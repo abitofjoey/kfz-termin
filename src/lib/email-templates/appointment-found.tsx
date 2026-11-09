@@ -70,13 +70,13 @@ const AppointmentFoundEmail = ({ bookingId,
               {bookingReference ? <DataRow label="Aufrufnummer" value={bookingReference} last /> : null}
             </Section>
 
-            {cal}
-
             {bookingReference ? (
               <Text style={text}>
                 Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.
               </Text>
             ) : null}
+
+            {cal}
 
             <Section style={card}>
               <Text style={cardTitle}>So läuft dein Termin ab</Text>
