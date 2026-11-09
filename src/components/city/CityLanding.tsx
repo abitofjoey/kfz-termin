@@ -119,7 +119,7 @@ function SingleLocationLanding({ city, content }: { city: string; content: CityC
       </a>
       <Header city={city} />
       <main id="inhalt">
-        <Hero content={content.hero} />
+        <Hero content={content.hero} city={getCity(city)} />
         {content.single ? <Steps intro={content.single.stepsIntro} steps={content.single.steps} /> : null}
         <Pricing city={city} onSelect={handleSelect} />
         <Founder />

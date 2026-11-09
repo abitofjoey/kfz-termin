@@ -25,6 +25,8 @@ export const Route = createFileRoute("/$city")({
       { name: "description", content: m.description },
       { property: "og:title", content: m.ogTitle },
       { property: "og:description", content: m.ogDescription },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: url },
     ];
     if (m.ogImage) {

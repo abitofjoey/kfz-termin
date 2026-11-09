@@ -52,7 +52,7 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
       </a>
       <Header city={slug} />
       <main id="inhalt">
-        <Hero content={content.hero} />
+        <Hero content={content.hero} city={city} />
 
         <section id="ablauf" aria-labelledby="ablauf-heading" className="py-20">
           <div className="mx-auto max-w-5xl px-4">

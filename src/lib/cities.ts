@@ -1,3 +1,7 @@
+import type { ComponentType } from "react";
+import { KoelnLandmark } from "@/assets/landmarks/koeln";
+import { BonnLandmark } from "@/assets/landmarks/bonn";
+
 /** Firmenname – für alle Städte gleich. */
 export const BRAND_NAME = "KFZ-Termin";
 
@@ -33,6 +37,8 @@ export type CityLocation = { id: string; name: string; address: string };
 export type CityConfig = CategorySettings & {
   slug: string;
   name: string;
+  /** Optional SVG component for currentColor rendering. */
+  landmarkIcon?: ComponentType;
   adjective: string;
   authorityName: string;
   /** Kurzer Ortsname für Mails/Seiten, z.B. "Kfz-Zulassungsstelle, Max-Glomsda-Str. 4, 51105 Köln". */
@@ -95,6 +101,7 @@ export const CITIES: Record<string, CityConfig> = {
   koeln: {
     slug: "koeln",
     name: "Köln",
+    landmarkIcon: KoelnLandmark,
     adjective: "Kölner",
     authorityName: "Kfz-Zulassungsstelle Köln",
     appointmentLocation: "Kfz-Zulassungsstelle, Max-Glomsda-Str. 4, 51105 Köln",
@@ -126,6 +133,7 @@ export const CITIES: Record<string, CityConfig> = {
   bonn: {
     slug: "bonn",
     name: "Bonn",
+    landmarkIcon: BonnLandmark,
     adjective: "Bonner",
     authorityName: "Stadt Bonn – Kfz-Zulassung und Führerscheinstelle",
     appointmentLocation: "Dienstleistungszentrum im Stadthaus, Berliner Platz 2, 53111 Bonn",

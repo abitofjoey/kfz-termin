@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronDown } from "lucide-react";
 import { Brand } from "@/components/brand/Brand";
+import { LandmarkIcon } from "@/components/brand/LandmarkIcon";
 import { launchedCities, getCity } from "@/lib/cities";
 
 /** Alle freigeschalteten Städte, alphabetisch. */
@@ -39,8 +40,9 @@ export function Header({ city, home }: { city?: string; home?: boolean } = {}) {
                       <a
                         href={`/${x.slug}`}
                         aria-current={current ? "page" : undefined}
-                        className={`block rounded px-3 py-1.5 hover:bg-muted ${current ? "font-semibold text-accent" : "text-foreground"}`}
+                        className={`flex items-center gap-2 rounded px-3 py-1.5 hover:bg-muted ${current ? "font-semibold text-accent" : "text-foreground"}`}
                       >
+                        <LandmarkIcon icon={x.landmarkIcon} className="landmark-icon-menu h-[18px] w-[18px]" />
                         {x.name}
                       </a>
                     </li>
@@ -84,8 +86,9 @@ export function Header({ city, home }: { city?: string; home?: boolean } = {}) {
                       key={x.slug}
                       href={`/${x.slug}`}
                       aria-current={current ? "page" : undefined}
-                      className={`rounded px-2 py-1.5 hover:bg-muted ${current ? "font-semibold text-accent" : ""}`}
+                      className={`flex items-center gap-2 rounded px-2 py-1.5 hover:bg-muted ${current ? "font-semibold text-accent" : ""}`}
                     >
+                      <LandmarkIcon icon={x.landmarkIcon} className="landmark-icon-menu h-[18px] w-[18px]" />
                       {x.name}
                     </a>
                   );

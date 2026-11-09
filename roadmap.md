@@ -44,3 +44,8 @@
 
 # Roadmap – Kalender-Links in Terminmail
 - [x] calendar_token, calendar.ts (Google + .ics, Erinnerungen 1 Tag + 2 Std.), Route, Mail, Tests, Vorschau – nicht veröffentlichen
+
+# Roadmap – Wahrzeichen je Stadt
+- [ ] Original-SVGs, optionales Konfigurationsfeld, Stadtkarten, Hero und Städte-Menüs
+- [ ] Anleitung, Tests und Desktop-/Handy-Screenshots für /, /koeln, /bonn
+- [ ] Screenshots zeigen und veröffentlichen
