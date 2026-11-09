@@ -27,3 +27,10 @@
 - [x] Stripe-Beschreibung, dataLayer city
 - [x] Health/Daily-Status für bookable
 - [x] Tests, Vergleich, Typprüfung, Build
+
+## Bonn-Seite wie Köln
+- [ ] Reihenfolge, Steps, Services (Umschalter, Kacheln, Karte), Founder
+- [ ] Umschalten wählt erste Kachel der Kategorie
+- [ ] "Jetzt buchen" wählt im Formular vor
+- [ ] Texte entschärfen (Formular, FAQ, Mails)
+- [ ] Prüfung inkl. Handy-Screenshots, Köln-Vergleich
