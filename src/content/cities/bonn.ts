@@ -21,7 +21,7 @@ const PRICE = formatPrice(CITIES.bonn.priceCents);
 export const bonnFaq: FaqItem[] = [
   {
     q: "Muss ich den Termin noch bestätigen?",
-    a: "Nein. In Bonn ist die Buchung sofort verbindlich. Du bekommst unsere E-Mail mit allen Daten und zusätzlich die Bestätigung der Stadt.",
+    a: "Nein. Du bekommst unsere E-Mail mit allen Daten und zusätzlich die Bestätigung der Stadt.",
   },
   {
     q: "Was ist die Aufrufnummer?",

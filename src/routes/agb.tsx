@@ -42,7 +42,7 @@ export const Route = createFileRoute("/agb")({
         <p className="mt-2">(2) Nach erfolgreicher Terminbuchung sendet der Anbieter dem Kunden eine Erinnerung per E-Mail an die im Formular angegebene E-Mail-Adresse.</p>
         <p className="mt-2">(3) Sollte die zuständige Behörde keine Termine freigeben, die vom Kunden ausgewählt wurden, so ist der Anbieter von der Buchungspflicht befreit. Der Anbieter weist ausdrücklich darauf hin, dass insbesondere bei kurzfristigen Terminen die Wahrscheinlichkeit einer Buchung deutlich sinkt und der Anbieter eine Buchung nicht garantieren kann.</p>
         <p className="mt-2">(4) Die Wahrnehmung des Termins erfolgt durch den Kunden selbst. Der Anbieter ist weder mit der Stadt Köln, der Stadt Bonn oder einer anderen Stadt noch mit der jeweiligen Behörde geschäftlich oder rechtlich verbunden. Die Terminvergabe durch die Behörde ist kostenlos. Das Entgelt nach § 4 wird ausschließlich für die Suche und Buchung des Termins erhoben.</p>
-        <p className="mt-2">(5) Je nach Behörde muss der Kunde die Buchung innerhalb einer von der Behörde gesetzten Frist selbst bestätigen (z. B. Köln), oder sie ist mit der Buchung sofort verbindlich (z. B. Bonn). Die jeweilige Regel steht auf der Seite der Stadt und in unseren E-Mails.</p>
+        <p className="mt-2">(5) Ob und bis wann die Buchung bei der Behörde selbst bestätigt werden muss, ergibt sich aus den Regeln der jeweiligen Behörde. Die jeweilige Regel steht auf der Seite der Stadt und in unseren E-Mails.</p>
       </section>
 
       <section>

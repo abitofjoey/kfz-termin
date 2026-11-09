@@ -87,7 +87,7 @@ const AppointmentFoundEmail = ({ bookingId,
 
             <Section style={infoBox}>
               <Text style={infoText}>
-                <strong>Die Buchung ist verbindlich – du musst nichts mehr bestätigen.</strong>{' '}
+                <strong>Du musst nichts mehr bestätigen.</strong>{' '}
                 Welche Unterlagen du für dein Anliegen mitbringen musst, findest du auf der{' '}
                 <Link href={getServices(c.slug).find((s) => s.label === serviceType)?.infoUrl || CITY_URL} style={infoLink}>{`Seite der Stadt ${c.name}`}</Link>.
               </Text>
