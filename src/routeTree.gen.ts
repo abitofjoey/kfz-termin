@@ -22,6 +22,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermineAendernRouteImport } from './routes/termine-aendern'
 import { Route as WiderrufRouteImport } from './routes/widerruf'
 import { Route as WiderrufsbelehrungRouteImport } from './routes/widerrufsbelehrung'
+import { Route as KalenderChar123tokenChar125DoticsRouteImport } from './routes/kalender/{$token}[.]ics'
 import { Route as ApiInternalDailyStatusRouteImport } from './routes/api/internal/daily-status'
 import { Route as ApiInternalHeartbeatRouteImport } from './routes/api/internal/heartbeat'
 import { Route as ApiInternalPendingBookingsRouteImport } from './routes/api/internal/pending-bookings'
@@ -99,6 +100,12 @@ const WiderrufsbelehrungRoute = WiderrufsbelehrungRouteImport.update({
   path: '/widerrufsbelehrung',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KalenderChar123tokenChar125DoticsRoute =
+  KalenderChar123tokenChar125DoticsRouteImport.update({
+    id: '/kalender/{$token}.ics',
+    path: '/kalender/{$token}.ics',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiInternalDailyStatusRoute = ApiInternalDailyStatusRouteImport.update({
   id: '/api/internal/daily-status',
   path: '/api/internal/daily-status',
@@ -174,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/termine-aendern': typeof TermineAendernRoute
   '/widerruf': typeof WiderrufRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
+  '/kalender/{$token}.ics': typeof KalenderChar123tokenChar125DoticsRoute
   '/api/internal/daily-status': typeof ApiInternalDailyStatusRoute
   '/api/internal/heartbeat': typeof ApiInternalHeartbeatRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
@@ -200,6 +208,7 @@ export interface FileRoutesByTo {
   '/termine-aendern': typeof TermineAendernRoute
   '/widerruf': typeof WiderrufRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
+  '/kalender/{$token}.ics': typeof KalenderChar123tokenChar125DoticsRoute
   '/api/internal/daily-status': typeof ApiInternalDailyStatusRoute
   '/api/internal/heartbeat': typeof ApiInternalHeartbeatRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
@@ -227,6 +236,7 @@ export interface FileRoutesById {
   '/termine-aendern': typeof TermineAendernRoute
   '/widerruf': typeof WiderrufRoute
   '/widerrufsbelehrung': typeof WiderrufsbelehrungRoute
+  '/kalender/{$token}.ics': typeof KalenderChar123tokenChar125DoticsRoute
   '/api/internal/daily-status': typeof ApiInternalDailyStatusRoute
   '/api/internal/heartbeat': typeof ApiInternalHeartbeatRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/termine-aendern'
     | '/widerruf'
     | '/widerrufsbelehrung'
+    | '/kalender/{$token}.ics'
     | '/api/internal/daily-status'
     | '/api/internal/heartbeat'
     | '/api/internal/pending-bookings'
@@ -281,6 +292,7 @@ export interface FileRouteTypes {
     | '/termine-aendern'
     | '/widerruf'
     | '/widerrufsbelehrung'
+    | '/kalender/{$token}.ics'
     | '/api/internal/daily-status'
     | '/api/internal/heartbeat'
     | '/api/internal/pending-bookings'
@@ -307,6 +319,7 @@ export interface FileRouteTypes {
     | '/termine-aendern'
     | '/widerruf'
     | '/widerrufsbelehrung'
+    | '/kalender/{$token}.ics'
     | '/api/internal/daily-status'
     | '/api/internal/heartbeat'
     | '/api/internal/pending-bookings'
@@ -334,6 +347,7 @@ export interface RootRouteChildren {
   TermineAendernRoute: typeof TermineAendernRoute
   WiderrufRoute: typeof WiderrufRoute
   WiderrufsbelehrungRoute: typeof WiderrufsbelehrungRoute
+  KalenderChar123tokenChar125DoticsRoute: typeof KalenderChar123tokenChar125DoticsRoute
   ApiInternalDailyStatusRoute: typeof ApiInternalDailyStatusRoute
   ApiInternalHeartbeatRoute: typeof ApiInternalHeartbeatRoute
   ApiInternalPendingBookingsRoute: typeof ApiInternalPendingBookingsRouteWithChildren
@@ -437,6 +451,13 @@ declare module '@tanstack/react-router' {
       path: '/widerrufsbelehrung'
       fullPath: '/widerrufsbelehrung'
       preLoaderRoute: typeof WiderrufsbelehrungRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kalender/{$token}.ics': {
+      id: '/kalender/{$token}.ics'
+      path: '/kalender/{$token}.ics'
+      fullPath: '/kalender/{$token}.ics'
+      preLoaderRoute: typeof KalenderChar123tokenChar125DoticsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/internal/daily-status': {
@@ -547,6 +568,8 @@ const rootRouteChildren: RootRouteChildren = {
   TermineAendernRoute: TermineAendernRoute,
   WiderrufRoute: WiderrufRoute,
   WiderrufsbelehrungRoute: WiderrufsbelehrungRoute,
+  KalenderChar123tokenChar125DoticsRoute:
+    KalenderChar123tokenChar125DoticsRoute,
   ApiInternalDailyStatusRoute: ApiInternalDailyStatusRoute,
   ApiInternalHeartbeatRoute: ApiInternalHeartbeatRoute,
   ApiInternalPendingBookingsRoute: ApiInternalPendingBookingsRouteWithChildren,

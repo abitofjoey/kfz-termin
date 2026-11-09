@@ -7,6 +7,7 @@ import { BookingNumberLine, locationText } from './customer-email-parts'
 import { formatBerlinLong, formatBerlinTime } from './format-berlin'
 import { cityOrDefault } from '../cities'
 import { getServices } from '../services'
+import { buildCalendarEvent, calendarIcsUrl, googleCalendarUrl } from '../calendar'
 
 const CONTACT_EMAIL = 'info@kfz-termin.online'
 const REVIEW_URL = 'https://g.page/r/CQtnwHapR1yhEBM/review'
@@ -24,12 +25,19 @@ interface AppointmentFoundProps {
   bookedLocation?: string | null
   bookingReference?: string | null
   cancelUrl?: string | null
+  calendarToken?: string | null
 }
 
 const AppointmentFoundEmail = ({ bookingId,
   salutation, firstName, lastName, serviceType, appointmentAt, foundAt,
-  city, bookedLocation, bookingReference, cancelUrl,
+  city, bookedLocation, bookingReference, cancelUrl, calendarToken,
 }: AppointmentFoundProps) => {
+  const cal = appointmentAt ? (
+    <CalendarLinks
+      googleUrl={googleCalendarUrl(buildCalendarEvent({ id: bookingId ?? '', city, serviceType, appointmentAt, bookedLocation, bookingReference, cancelUrl }))}
+      icsUrl={calendarToken ? calendarIcsUrl(calendarToken) : null}
+    />
+  ) : null
   const c = cityOrDefault(city)
   const SITE_NAME = c.siteName
   const LOCATION = bookedLocation || c.appointmentLocation
@@ -67,6 +75,8 @@ const AppointmentFoundEmail = ({ bookingId,
                 Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.
               </Text>
             ) : null}
+
+            {cal}
 
             <Section style={card}>
               <Text style={cardTitle}>So läuft dein Termin ab</Text>
@@ -142,6 +152,8 @@ const AppointmentFoundEmail = ({ bookingId,
               <DataRow label="Aufrufnummer" value={bookingReference} last />
             ) : null}
           </Section>
+
+          {cal}
 
           {hours != null ? (
           <Section style={warnBox}>
@@ -229,6 +241,22 @@ const DataRow = ({ label, value, last }: { label: string; value: string; last?: 
     {!last ? <Hr style={hr} /> : null}
   </>
 )
+
+const CalendarLinks = ({ googleUrl, icsUrl }: { googleUrl: string; icsUrl: string | null }) => (
+  <Section style={{ margin: '0 0 24px' }}>
+    <Link href={googleUrl} style={calButton}>In Google Kalender eintragen</Link>
+    {icsUrl ? (
+      <Text style={{ fontSize: '14px', color: '#374151', margin: '12px 0 0' }}>
+        <Link href={icsUrl} style={link}>Für Apple-Kalender/Outlook (.ics)</Link>
+      </Text>
+    ) : null}
+  </Section>
+)
+
+const calButton = {
+  display: 'inline-block', backgroundColor: '#1a2540', color: '#ffffff', fontSize: '14px',
+  fontWeight: 600 as const, padding: '10px 18px', borderRadius: '8px', textDecoration: 'none',
+}
 
 export const template = {
   component: AppointmentFoundEmail,
