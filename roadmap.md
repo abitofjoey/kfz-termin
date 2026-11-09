@@ -34,3 +34,10 @@
 - [x] "Jetzt buchen" wählt im Formular vor
 - [x] Texte entschärfen (Formular, FAQ, Mails)
 - [x] Prüfung inkl. Handy-Screenshots, Köln-Vergleich
+
+# Roadmap – Mehrstädte-Aufräumen
+- [x] A1–A7 Stadttexte in Konfiguration, Rechtstexte-Konstante, /llms.txt generiert
+- [x] B8–B11 Prüfungen (Mails, interne Mails, Admin, Kundenseiten)
+- [x] Befund Erstattungswege / Stripe-Dashboard-Erstattung
+- [x] C12 docs/neue-stadt.md + AGENTS.md
+- [ ] Veröffentlichen – wartet auf Freigabe des Nutzers
