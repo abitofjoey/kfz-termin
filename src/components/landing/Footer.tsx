@@ -10,7 +10,7 @@ export function Footer({ city }: { city?: string } = {}) {
   const linkCls = "hover:text-white";
   return (
     <footer className="border-t border-border bg-primary text-primary-foreground">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 pt-10 pb-28 sm:flex-row sm:items-start sm:justify-between md:pb-32">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 pt-10 pb-28 sm:flex-row sm:items-start sm:justify-between md:pb-32 lg:gap-8">
         <div>
           <Brand city={city ?? ""} size="sm" asLink={false} onDark invertIcon />
           <nav aria-label="Städte" className="mt-3 text-sm text-white/90">
