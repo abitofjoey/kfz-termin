@@ -29,8 +29,8 @@
 - [x] Tests, Vergleich, Typprüfung, Build
 
 ## Bonn-Seite wie Köln
-- [ ] Reihenfolge, Steps, Services (Umschalter, Kacheln, Karte), Founder
-- [ ] Umschalten wählt erste Kachel der Kategorie
-- [ ] "Jetzt buchen" wählt im Formular vor
-- [ ] Texte entschärfen (Formular, FAQ, Mails)
-- [ ] Prüfung inkl. Handy-Screenshots, Köln-Vergleich
+- [x] Reihenfolge, Steps, Services (Umschalter, Kacheln, Karte), Founder
+- [x] Umschalten wählt erste Kachel der Kategorie
+- [x] "Jetzt buchen" wählt im Formular vor
+- [x] Texte entschärfen (Formular, FAQ, Mails)
+- [x] Prüfung inkl. Handy-Screenshots, Köln-Vergleich
