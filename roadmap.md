@@ -41,3 +41,6 @@
 - [x] Befund Erstattungswege / Stripe-Dashboard-Erstattung
 - [x] C12 docs/neue-stadt.md + AGENTS.md
 - [ ] Veröffentlichen – wartet auf Freigabe des Nutzers
+
+# Roadmap – Kalender-Links in Terminmail
+- [ ] calendar_token, calendar.ts (Google + .ics, Erinnerungen 1 Tag + 2 Std.), Route, Mail, Tests, Vorschau – nicht veröffentlichen
