@@ -64,7 +64,7 @@ const AppointmentFoundEmail = ({ bookingId,
 
             {bookingReference ? (
               <Text style={text}>
-                <strong>Aufrufnummer {bookingReference}:</strong> Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.
+                Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.
               </Text>
             ) : null}
 
@@ -192,7 +192,6 @@ const AppointmentFoundEmail = ({ bookingId,
             <Text style={contactLine}>
               Telefon: <Link href="tel:+4915153461798" style={link}>+49 151 53461798</Link>
             </Text>
-            <Text style={cardFootnote}>Oder antworte einfach auf diese E-Mail.</Text>
           </Section>
 
           <Text style={footerHint}>Bei Fragen antworte einfach auf diese E-Mail.</Text>
@@ -218,7 +217,6 @@ const ContactBlock = () => (
     <Text style={contactLine}>
       Telefon: <Link href="tel:+4915153461798" style={link}>+49 151 53461798</Link>
     </Text>
-    <Text style={cardFootnote}>Oder antworte einfach auf diese E-Mail.</Text>
   </Section>
 )
 
