@@ -9,7 +9,6 @@ export function bonnPricingFeatures(service: CityService): string[] {
   const dlzOnly = service.locations?.length === 1 && service.locations[0] === "dlz";
   return [
     "Suche rund um die Uhr",
-    service.category === "fuehrerschein" ? "Bis zu 10 Wochen Suchzeitraum" : "Bis zu 5 Wochen Suchzeitraum",
     dlzOnly ? "Standort: nur im Dienstleistungszentrum (Berliner Platz 2)" : "Standort: alle vier Bonner Standorte",
     "Geld-zurück-Garantie",
     "Persönlicher Support",
