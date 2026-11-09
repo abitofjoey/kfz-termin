@@ -27,7 +27,7 @@ const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName
   return (
     <Html lang="de" dir="ltr">
       <Head />
-      <Preview>{`Die ${c.mail.authority} lässt`} für deine Adresse  keine weitere Buchung zu</Preview>
+      <Preview>{`Die ${c.mail.authority} lässt für deine Adresse keine weitere Buchung zu`}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Text style={eyebrow}>{SITE_NAME}</Text>
