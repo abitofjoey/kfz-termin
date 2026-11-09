@@ -91,7 +91,6 @@ const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName
             <Text style={contactLine}>
               Telefon: <Link href="tel:+4915153461798" style={link}>+49 151 53461798</Link>
             </Text>
-            <Text style={cardFootnote}>Oder antworte einfach auf diese E-Mail.</Text>
           </Section>
 
           <Text style={footerHint}>Bei Fragen antworte einfach auf diese E-Mail.</Text>
