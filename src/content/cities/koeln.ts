@@ -1,3 +1,4 @@
+import type { CityService } from "@/lib/services";
 import { formatPrice } from "@/lib/price";
 import { KOELN_PRICE_CENTS } from "@/lib/cities";
 
@@ -18,6 +19,10 @@ export type CityContent = {
     locationsNote: string;
     honestNote: string;
     bookingNotice: string;
+    /** Untertitel des Abschnitts "Unsere Services". */
+    servicesSubtitle?: string;
+    /** Häkchen-Liste der Service-Karte je Anliegen. */
+    pricingFeatures?: (service: CityService) => string[];
   };
   faq: FaqItem[];
   /** Zusätzliche Felder für das Service-JSON-LD. */

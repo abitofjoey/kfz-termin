@@ -29,7 +29,9 @@ const parseISO = (iso: string) => {
 };
 
 /** Buchungsformular für Städte mit Standortwahl (z.B. Bonn). */
-export function CityBookingForm({ city: slug }: { city: string }) {
+export type FormPreselect = { category: ServiceCategory; serviceId: string; nonce: number };
+
+export function CityBookingForm({ city: slug, preselect, submitNotice }: { city: string; preselect?: FormPreselect | null; submitNotice?: string }) {
   const city = getCity(slug)!;
   const bookable = city.bookable;
   const submitBooking = useServerFn(createCityBooking);
@@ -84,6 +86,13 @@ export function CityBookingForm({ city: slug }: { city: string }) {
       cancelled = true;
     };
   }, [fetchBounds, city.slug, category]);
+
+  // Vorauswahl aus "Unsere Services" → Bereich und Anliegen übernehmen.
+  useEffect(() => {
+    if (!preselect) return;
+    setCategory(preselect.category);
+    setServiceId(preselect.serviceId);
+  }, [preselect]);
 
   // Anliegen gehört nicht mehr zur Kategorie → zurücksetzen.
   useEffect(() => {
@@ -331,6 +340,13 @@ export function CityBookingForm({ city: slug }: { city: string }) {
               Ich verlange ausdrücklich den sofortigen Beginn der Terminsuche vor Ablauf der Widerrufsfrist und erkenne an, dass mein Widerrufsrecht mit vollständiger Erbringung der Leistung erlischt (§ 356 Abs. 4 BGB).
             </CheckRow>
           </div>
+
+          {submitNotice ? (
+            <p className="flex gap-2 rounded-md bg-secondary/60 p-3 text-sm text-muted-foreground">
+              <Info className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+              {submitNotice}
+            </p>
+          ) : null}
 
           <Button type="submit" disabled={submitting || !bookable} className="w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
             {submitting ? (

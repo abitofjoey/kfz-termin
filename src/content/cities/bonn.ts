@@ -2,6 +2,19 @@ import { formatPrice } from "@/lib/price";
 import { CITIES } from "@/lib/cities";
 import type { CityContent } from "./koeln";
 import type { FaqItem } from "@/components/landing/Faq";
+import type { CityService } from "@/lib/services";
+
+/** Häkchen-Liste der Bonner Service-Karte. */
+export function bonnPricingFeatures(service: CityService): string[] {
+  const dlzOnly = service.locations?.length === 1 && service.locations[0] === "dlz";
+  return [
+    "Suche rund um die Uhr",
+    service.category === "fuehrerschein" ? "Bis zu 10 Wochen Suchzeitraum" : "Bis zu 5 Wochen Suchzeitraum",
+    dlzOnly ? "Standort: nur im Dienstleistungszentrum (Berliner Platz 2)" : "Standort: alle vier Bonner Standorte",
+    "Geld-zurück-Garantie",
+    "Persönlicher Support",
+  ];
+}
 
 const PRICE = formatPrice(CITIES.bonn.priceCents);
 
@@ -32,7 +45,7 @@ export const bonnFaq: FaqItem[] = [
   },
   {
     q: "Wann sucht ihr?",
-    a: "Rund um die Uhr. Auch am Wunschtag selbst: Viele Termine werden morgens ab 7 Uhr für denselben Tag frei.",
+    a: "Rund um die Uhr – an allen deinen Wunschtagen und Standorten.",
   },
   {
     q: "Ich kann den Termin doch nicht wahrnehmen – was nun?",
@@ -70,10 +83,10 @@ export const bonnContent: CityContent = {
   },
   multi: {
     steps: [
-      { title: "Anliegen wählen", text: "Kfz-Zulassung oder Führerschein – und dann dein konkretes Anliegen." },
-      { title: "Wunschtage und Standorte", text: "Wähle die Tage, an denen du kannst, und ob dir der Standort egal ist." },
-      { title: "Wir suchen rund um die Uhr", text: "Auch Termine, die am Wunschtag selbst frei werden – oft schon ab 7 Uhr morgens." },
-      { title: "Termin ist gebucht", text: "Du bekommst eine E-Mail mit Datum, Uhrzeit, Standort und Aufrufnummer. Die Buchung ist sofort verbindlich." },
+      { title: "Anliegen wählen", text: "Wähle Kfz-Zulassung oder Führerschein und dann dein Anliegen." },
+      { title: "Wunschtage und Standort", text: "Wähle die Tage, an denen du kannst, und den Standort, der für dich passt." },
+      { title: "Wir suchen für dich", text: "Wir suchen rund um die Uhr nach freien Terminen an deinen Wunschtagen und Standorten." },
+      { title: "Termin erhalten", text: "Du bekommst eine E-Mail von uns mit allen Infos zu deinem Termin und eine Bestätigung von der Stadt Bonn." },
     ],
     locationsTitle: "Die vier Bonner Standorte",
     locationsNote:
@@ -81,7 +94,9 @@ export const bonnContent: CityContent = {
     honestNote:
       "Reguläre Termine gibt es in Bonn oft erst mehrere Wochen im Voraus. Unser Service lohnt sich, wenn du früher einen Termin brauchst – wir buchen Termine, die durch Absagen frei werden.",
     bookingNotice:
-      "Wir suchen rund um die Uhr und buchen auch Termine, die am Wunschtag selbst frei werden – oft schon ab 7 Uhr morgens. Die Buchung ist sofort verbindlich, eine Bestätigung bei der Stadt ist nicht nötig.",
+      "Wir suchen rund um die Uhr nach freien Terminen. Sobald wir einen gefunden haben, buchen wir ihn für dich – alle Infos bekommst du per E-Mail von uns und von der Stadt Bonn.",
+    servicesSubtitle: "Wähle dein Anliegen – einheitlicher Preis, keine versteckten Kosten.",
+    pricingFeatures: bonnPricingFeatures,
   },
   faq: bonnFaq,
   serviceJsonLd: {
