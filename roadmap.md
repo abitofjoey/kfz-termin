@@ -40,12 +40,12 @@
 - [x] B8–B11 Prüfungen (Mails, interne Mails, Admin, Kundenseiten)
 - [x] Befund Erstattungswege / Stripe-Dashboard-Erstattung
 - [x] C12 docs/neue-stadt.md + AGENTS.md
-- [ ] Veröffentlichen – wartet auf Freigabe des Nutzers
+- [x] Veröffentlichung zusammen mit Wahrzeichen beauftragt
 
 # Roadmap – Kalender-Links in Terminmail
 - [x] calendar_token, calendar.ts (Google + .ics, Erinnerungen 1 Tag + 2 Std.), Route, Mail, Tests, Vorschau – nicht veröffentlichen
 
 # Roadmap – Wahrzeichen je Stadt
-- [ ] Original-SVGs, optionales Konfigurationsfeld, Stadtkarten, Hero und Städte-Menüs
-- [ ] Anleitung, Tests und Desktop-/Handy-Screenshots für /, /koeln, /bonn
-- [ ] Screenshots zeigen und veröffentlichen
+- [x] Original-SVGs, optionales Konfigurationsfeld, Stadtkarten, Hero und Städte-Menüs
+- [x] Anleitung, Tests und Desktop-/Handy-Screenshots für /, /koeln, /bonn
+- [x] Screenshots gezeigt und Veröffentlichung beauftragt
