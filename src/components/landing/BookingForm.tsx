@@ -1,5 +1,6 @@
 import { formatPrice, vatShortNote } from "@/lib/price";
 import { cityOrDefault } from "@/lib/cities";
+import { CITY_CONTENT } from "@/content/cities";
 import { useState, useMemo, useEffect, useId, lazy, Suspense } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -231,7 +232,7 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
         <div className="mx-auto mt-6 flex max-w-2xl items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground">
           <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
           <p>
-            <strong>Wichtig:</strong> Bitte gib die Daten der <strong>künftigen Halterin / des künftigen Halters</strong> des Fahrzeugs an (Anrede, Vor- und Nachname, E-Mail, Telefonnummer). Diese Angaben werden bei der Zulassungsstelle für die Terminbuchung verwendet. Mehrfachbuchungen über dieselbe Email-Adresse sind nicht möglich.&nbsp;
+            <strong>Wichtig:</strong> Bitte gib die Daten der <strong>künftigen Halterin / des künftigen Halters</strong> des Fahrzeugs an (Anrede, Vor- und Nachname, E-Mail, Telefonnummer). {CITY_CONTENT[city]?.single?.holderNotice}&nbsp;
           </p>
         </div>
 
@@ -296,7 +297,7 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
           </div>
 
           <div className="space-y-1.5">
-            <Field label="E-Mail" error={errors.email?.message} hint="Sobald wir einen Termin gefunden haben, schickt dir die Kölner Zulassungsstelle eine Bestätigungsmail – bitte klicke den Link darin innerhalb von 3 Stunden an.">
+            <Field label="E-Mail" error={errors.email?.message} hint={CITY_CONTENT[city]?.single?.emailHint}>
               {(id, aria) => <Input id={id} {...aria} type="email" {...register("email")} autoComplete="email" />}
             </Field>
             <p className="text-xs text-muted-foreground">

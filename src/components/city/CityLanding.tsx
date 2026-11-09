@@ -120,8 +120,8 @@ function SingleLocationLanding({ city, content }: { city: string; content: CityC
       <Header city={city} />
       <main id="inhalt">
         <Hero content={content.hero} />
-        <Steps />
-        <Pricing onSelect={handleSelect} />
+        {content.single ? <Steps intro={content.single.stepsIntro} steps={content.single.steps} /> : null}
+        <Pricing city={city} onSelect={handleSelect} />
         <Founder />
         <Testimonials />
         {!getCity(city)?.bookable ? (

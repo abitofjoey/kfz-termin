@@ -8,7 +8,6 @@ import {
   type ServiceId,
 } from "@/lib/services";
 
-const PRICE = formatPrice(cityOrDefault(undefined).priceCents);
 
 /** Minimal-Form eines Anliegens für Kacheln und Karte (Köln-Service oder Stadt-Service). */
 export type PricingItem = {
@@ -54,12 +53,13 @@ const KOELN_GROUPS: PricingGroup[] = [
 ];
 
 /** Köln: unverändert. */
-export function Pricing({ onSelect }: KoelnProps) {
+export function Pricing({ onSelect, city }: KoelnProps & { city?: string }) {
+  const c = cityOrDefault(city);
   return (
     <ServicePricing
       groups={KOELN_GROUPS}
-      cityName="Köln"
-      price={PRICE}
+      cityName={c.name}
+      price={formatPrice(c.priceCents)}
       subtitle="Wähle deine Dienstleistung – einheitlicher Preis, keine versteckten Kosten."
       features={() => features}
       onSelect={(id) => onSelect(id as ServiceId)}

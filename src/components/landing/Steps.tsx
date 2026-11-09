@@ -1,52 +1,20 @@
 import { FileText, CreditCard, Search, Mail, CheckCircle2 } from "lucide-react";
 
-const steps = [
-  {
-    n: 1,
-    icon: FileText,
-    title: "Daten eingeben",
-    text: "Formular in rund 2 Minuten ausfüllen und Wunschtage auswählen.",
-  },
-  {
-    n: 2,
-    icon: CreditCard,
-    title: "Sicher bezahlen",
-    text: "Sichere Zahlung per Kreditkarte oder PayPal über Stripe.",
-  },
-  {
-    n: 3,
-    icon: Search,
-    title: "Wir suchen für dich",
-    text: "Unser System prüft täglich von 6–20 Uhr auf einen freien Slot an einem deiner Wunschtage – du musst nichts tun.",
-  },
-  {
-    n: 4,
-    icon: Mail,
-    title: "Bestätigungs-E-Mail erhalten",
-    text: "Sobald ein Termin reserviert ist, bekommst du eine E-Mail von uns und eine von der Zulassungsstelle Köln mit dem Bestätigungslink.",
-  },
-  {
-    n: 5,
-    icon: CheckCircle2,
-    title: "Termin bestätigen",
-    text: "Bitte bestätige den Termin innerhalb von 3 Stunden per Klick in der E-Mail – andernfalls verfällt die Reservierung.",
-  },
-];
+const ICONS = [FileText, CreditCard, Search, Mail, CheckCircle2];
 
-export function Steps() {
+export function Steps({ intro, steps }: { intro: string; steps: { title: string; text: string }[] }) {
   return (
     <section id="ablauf" aria-labelledby="ablauf-heading" className="bg-secondary/40 py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mx-auto max-w-2xl text-center">
           <h2 id="ablauf-heading" className="text-3xl font-bold sm:text-4xl">So funktioniert's</h2>
           <p className="mt-4 text-muted-foreground">
-            In fünf einfachen Schritten zu deinem Termin bei der Kölner
-            Zulassungsstelle.
+            {intro}
           </p>
         </div>
 
         <ol className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          {steps.map(({ n, icon: Icon, title, text }) => (
+          {steps.map(({ title, text }, i) => { const n = i + 1; const Icon = ICONS[i % ICONS.length]; return (
             <li
               key={n}
               className="relative flex flex-col rounded-xl border border-border bg-card p-6 shadow-sm"
@@ -60,7 +28,7 @@ export function Steps() {
               <h3 className="mt-1 text-base font-semibold">{title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{text}</p>
             </li>
-          ))}
+          ); })}
         </ol>
 
       </div>
