@@ -71,6 +71,8 @@ export const bonnContent: CityContent = {
     description: `Wunschtermin bei der Stadt Bonn für Kfz-Zulassung und Führerschein: Wir suchen rund um die Uhr und buchen automatisch – an allen vier Standorten. ${PRICE} mit Geld-zurück-Garantie.`,
     ogTitle: "Termin Zulassungsstelle & Führerscheinstelle Bonn – automatisch gebucht",
     ogDescription: `Wir suchen rund um die Uhr nach freien Terminen bei der Stadt Bonn und buchen automatisch. ${PRICE} mit Geld-zurück-Garantie.`,
+    ogImage: "https://kfz-termin.online/og-image-bonn.jpg",
+    ogImageAlt: "KFZ-Termin Bonn – Logo",
   },
   hero: {
     badge: "Stadt Bonn",
@@ -111,8 +113,8 @@ export const bonnContent: CityContent = {
   },
   faq: bonnFaq,
   serviceJsonLd: {
-    name: "KFZ-Termin – Stadt Bonn",
+    name: "KFZ-Termin Bonn – automatische Terminbuchung",
     description:
-      "Automatisierte Terminbuchung bei der Stadt Bonn für Kfz-Zulassung und Führerschein. Suche rund um die Uhr und automatische Buchung, sobald ein Termin an einem Wunschtag frei wird.",
+      "Automatische Terminbuchung bei der Kfz-Zulassung und Führerscheinstelle der Stadt Bonn. Privater Dienst, nicht mit der Stadt verbunden. Suche rund um die Uhr und automatische Buchung, sobald ein Termin an einem Wunschtag frei wird.",
   },
 };

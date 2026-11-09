@@ -47,16 +47,34 @@ export const Route = createFileRoute("/$city")({
             "@context": "https://schema.org",
             "@type": "Service",
             name: content.serviceJsonLd.name,
-            url: SITE,
+            url,
             description: content.serviceJsonLd.description,
             provider: {
               "@type": "Organization",
-              name: content.serviceJsonLd.name,
+              name: "KFZ-Termin",
               email: "info@kfz-termin.online",
               url: SITE,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Longericher Str. 31",
+                postalCode: "50739",
+                addressLocality: "Köln",
+                addressCountry: "DE",
+              },
             },
             areaServed: { "@type": "City", name: city.name },
             offers: { "@type": "Offer", price: (city.priceCents / 100).toFixed(2), priceCurrency: "EUR" },
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Start", item: `${SITE}/` },
+              { "@type": "ListItem", position: 2, name: city.name, item: url },
+            ],
           }),
         },
         {
