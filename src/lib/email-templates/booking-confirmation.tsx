@@ -335,11 +335,6 @@ const warnTitle = { fontSize: '14px', fontWeight: 700 as const, color: '#78350f'
 const warnText = { fontSize: '14px', color: '#78350f', lineHeight: '1.6', margin: 0 }
 
 const contactLine = { fontSize: '14px', color: '#1a2540', margin: '8px 0 0' }
-const legalTitle = { fontSize: '18px', fontWeight: 700 as const, color: '#1a2540', margin: '24px 0 8px' }
-const legalHeading = { fontSize: '15px', fontWeight: 700 as const, color: '#1a2540', margin: '18px 0 8px' }
-const withdrawalForm = { backgroundColor: '#ffffff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '16px', margin: '20px 0' }
-const formText = { fontSize: '13px', color: '#374151', lineHeight: '1.55', margin: '0 0 12px' }
-const formLine = { fontSize: '13px', color: '#374151', lineHeight: '1.4', margin: '0 0 12px', wordBreak: 'break-all' as const }
 const emailLink = { color: '#1a4fa3', textDecoration: 'underline' }
 
 const footerHint = { fontSize: '14px', color: '#374151', margin: '24px 0 4px' }
