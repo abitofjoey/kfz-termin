@@ -32,7 +32,7 @@ const WithdrawnFoundEmail = ({ bookingId, firstName, appointmentAt, city, cancel
         ) : (
         <Text style={s.text}>
           Wir hatten kurz vor deinem Widerruf noch einen Termin gefunden. Du musst nichts tun – klicke den
-          Bestätigungslink der Zulassungsstelle einfach nicht an, dann verfällt der Termin nach 3 Stunden.
+          Bestätigungslink der {s.authority(city)} einfach nicht an, dann verfällt der Termin nach {s.confirmHours(city)} Stunden.
         </Text>
         )}
         <Section style={s.card}>

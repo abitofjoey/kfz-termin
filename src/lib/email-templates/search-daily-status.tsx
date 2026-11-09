@@ -38,8 +38,8 @@ const SearchDailyStatusEmail = ({ bookingId, firstName, serviceType, variant, to
                 ? `für heute, ${today ? s.formatDayLong(today) : 'deinen Wunschtag'}, ist ${cityOrDefault(city).mail.atAuthority} leider kein passender Termin frei geworden. Wir suchen rund um die Uhr automatisch weiter – für deine übrigen Wunschtermine:`
                 : 'kurzer Zwischenstand: Bisher ist für deine Wunschtermine leider noch kein passender Termin frei geworden. Wir suchen rund um die Uhr automatisch weiter – für diese Tage:'
               : isDay
-              ? `für heute, ${today ? s.formatDayLong(today) : 'deinen Wunschtag'}, ist bei der Zulassungsstelle leider kein passender Termin frei geworden. Wir suchen morgen ab 6:00 Uhr automatisch weiter – für deine übrigen Wunschtermine:`
-              : 'kurzer Zwischenstand: Bisher ist für deine Wunschtermine leider noch kein passender Termin frei geworden. Wir suchen täglich von 6:00 bis 20:00 Uhr automatisch weiter – für diese Tage:'}
+              ? `für heute, ${today ? s.formatDayLong(today) : 'deinen Wunschtag'}, ist bei der ${s.authority(city)} leider kein passender Termin frei geworden. Wir suchen morgen ab ${cityOrDefault(city).searchHours.from}:00 Uhr automatisch weiter – für deine übrigen Wunschtermine:`
+              : `kurzer Zwischenstand: Bisher ist für deine Wunschtermine leider noch kein passender Termin frei geworden. Wir suchen täglich von ${cityOrDefault(city).searchHours.from}:00 bis ${cityOrDefault(city).searchHours.to}:00 Uhr automatisch weiter – für diese Tage:`}
           </Text>
 
           <Section style={s.card}>
@@ -56,7 +56,7 @@ const SearchDailyStatusEmail = ({ bookingId, firstName, serviceType, variant, to
             ) : (
             <Text style={s.infoText}>
               Sobald wir einen Termin gebucht haben, bekommst du sofort eine E-Mail von uns und den
-              Bestätigungslink der Zulassungsstelle. Bitte schau dann auch in deinen Spam-Ordner.
+              Bestätigungslink der {s.authority(city)}. Bitte schau dann auch in deinen Spam-Ordner.
             </Text>
             )}
           </Section>

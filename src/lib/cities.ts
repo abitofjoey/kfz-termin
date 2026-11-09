@@ -56,6 +56,8 @@ export type CityConfig = CategorySettings & {
   mail: {
     /** Text "bei der Kölner Zulassungsstelle". */
     atAuthority: string;
+    /** Behörde im Fließtext von Kundenmails, z.B. "Zulassungsstelle" (nach "der"/"die"). */
+    authority: string;
     /** Pflicht, Aufrufnummer und Stornolink in Mails anzeigen. */
     showBookingReference: boolean;
     showCancelUrl: boolean;
@@ -116,7 +118,7 @@ export const CITIES: Record<string, CityConfig> = {
     priceCents: KOELN_PRICE_CENTS,
     customerConfirmationHours: 3,
     form: { finRequired: true, salutationRequired: true, locationChoice: false, financedCheckbox: false },
-    mail: { atAuthority: "bei der Kölner Zulassungsstelle", showBookingReference: false, showCancelUrl: false },
+    mail: { atAuthority: "bei der Kölner Zulassungsstelle", authority: "Zulassungsstelle", showBookingReference: false, showCancelUrl: false },
     pages: { authorityShort: "Zulassungsstelle Köln", successIntro: null, successNotice: null },
     launched: true,
     bookable: true,
@@ -158,7 +160,7 @@ export const CITIES: Record<string, CityConfig> = {
         },
       },
     },
-    mail: { atAuthority: "bei der Stadt Bonn", showBookingReference: true, showCancelUrl: true },
+    mail: { atAuthority: "bei der Stadt Bonn", authority: "Stadt Bonn", showBookingReference: true, showCancelUrl: true },
     pages: {
       authorityShort: "Stadt Bonn",
       successIntro:

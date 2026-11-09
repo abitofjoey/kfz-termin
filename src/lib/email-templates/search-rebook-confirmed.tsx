@@ -45,8 +45,8 @@ const SearchRebookConfirmedEmail = ({ bookingId, withdrawToken, salutation, firs
             ) : (
             <Text style={s.infoText}>
               Sobald wir einen Termin gefunden haben, bekommst du wie gewohnt eine E-Mail von uns und
-              eine von der Zulassungsstelle. Den Bestätigungslink der Zulassungsstelle musst du dann
-              innerhalb von 3 Stunden anklicken. Bitte schau dann auch in deine Ordner Spam und Werbung.
+              eine von der {s.authority(city)}. Den Bestätigungslink der {s.authority(city)} musst du dann
+              innerhalb von {s.confirmHours(city)} Stunden anklicken. Bitte schau dann auch in deine Ordner Spam und Werbung.
             </Text>
             )}
           </Section>
