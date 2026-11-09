@@ -218,6 +218,10 @@ export type CityService = {
   popular?: boolean;
   maxVehicles?: number;
   category: ServiceCategory;
+  /** Überschrift der Service-Karte (sonst label). */
+  cardTitle?: string;
+  /** Position im sichtbaren Kachel-Raster (1–9); fehlt = "Weitere Anliegen". */
+  popularRank?: number;
   /** Mögliche Standorte (IDs aus cities.ts); leer = alle. */
   locations?: string[];
 };
@@ -261,20 +265,67 @@ const BONN_ROWS: BonnRow[] = [
   { id: "fs-95", label: "Fahrerqualifizierungsnachweis (Schlüsselzahl 95)", category: "fuehrerschein", script: "34", locations: ["dlz"], maxVehicles: 1 },
   { id: "fs-fahrerkarte", label: "Fahrerkarte", category: "fuehrerschein", script: "35", locations: ["dlz"], maxVehicles: 1 },
 ];
+/** Texte für Kacheln und Service-Karte je Script-Nummer: [Kachel, Titel, Untertitel, Hinweis]. */
+const BONN_TEXTS: Record<string, [string, string, string, string]> = {
+  "1": ["Umschreibung", "Umschreibung auf neue Halter:in", "Halterwechsel nach Kauf oder Verkauf eines in Deutschland zugelassenen Fahrzeugs", "In den Bürgerämtern bitte das Kennzeichen mitbringen. Finanzierte Fahrzeuge nur im Dienstleistungszentrum."],
+  "2": ["Umschreibung + Abmeldung", "Umschreibung inklusive Abmeldung", "Halterwechsel und gleichzeitig ein anderes Fahrzeug abmelden", "Die neuen Schilder bitte zum Termin mitbringen."],
+  "3": ["Neuzulassung", "Neuzulassung (fabrikneu)", "Erstzulassung eines fabrikneuen Fahrzeugs mit deutschen Papieren", "Nur im Dienstleistungszentrum möglich."],
+  "4": ["Neuzulassung + Abmeldung", "Neuzulassung inklusive Abmeldung", "Neues Fahrzeug zulassen und das bisherige abmelden", "Nur im Dienstleistungszentrum möglich."],
+  "5": ["Neuzulassung mit Gutachten", "Neuzulassung mit § 13 EG-FGV / Gutachten", "Zulassung mit Einzelgenehmigung bzw. Gutachten", "Fertige Kennzeichen bitte mitbringen. Nur im Dienstleistungszentrum."],
+  "6": ["Ausländische Papiere", "Fahrzeug mit ausländischen Papieren", "Umschreibung, Neuzulassung oder Ausfuhrkennzeichen für Fahrzeuge aus dem Ausland", "Nur im Dienstleistungszentrum möglich."],
+  "7": ["Wiederzulassung", "Wiederzulassung", "Ein abgemeldetes Fahrzeug wieder auf dieselbe Person zulassen", "Nur im Dienstleistungszentrum möglich."],
+  "8": ["Kennzeichenwechsel", "Umkennzeichnung", "Neues (Wunsch-)Kennzeichen für dein Fahrzeug", "Alte und neue Schilder bitte zum Termin mitbringen."],
+  "9": ["Technische Änderung", "Technische Änderung", "Eintragung z. B. anderer Reifen/Felgen, Gasanlage, Partikelfilter oder Tempo 100", "Nur im Dienstleistungszentrum möglich."],
+  "10": ["H-, E- und Saisonkennzeichen", "Historische, elektrische und Saisonkennzeichen", "Zulassung mit H-, E- oder Saisonkennzeichen", "Nur im Dienstleistungszentrum möglich."],
+  "11": ["Kurzzeitkennzeichen", "Kurzzeitkennzeichen", "Für Prüfungs-, Probe- oder Überführungsfahrten", "Nur im Dienstleistungszentrum, ein Fahrzeug pro Termin."],
+  "12": ["Ausfuhrkennzeichen", "Ausfuhrkennzeichen", "Für den Export eines Fahrzeugs mit deutschen Papieren", "Nur im Dienstleistungszentrum, ein Fahrzeug pro Termin."],
+  "13": ["Abmeldung", "Abmeldung", "Außerbetriebsetzung deines Fahrzeugs", "Bitte nur buchen, wenn du die Schilder und die Zulassungsbescheinigung Teil I dabeihast."],
+  "14": ["Abmeldung bei Verlust", "Abmeldung inkl. Verlustmeldung", "Abmeldung, wenn Fahrzeugschein oder Kennzeichen verloren gegangen sind", "Nur im Dienstleistungszentrum, bis zu 3 Fahrzeuge."],
+  "15": ["Anschriftenänderung", "Anschriftenänderung", "Neue Adresse im Fahrzeugschein eintragen lassen", ""],
+  "16": ["Namensänderung", "Namensänderung in den Fahrzeugpapieren", "Neuen Namen eintragen lassen, z. B. nach Heirat", "Finanzierte Fahrzeuge nur im Dienstleistungszentrum."],
+  "17": ["Ersatz Fahrzeugschein", "Ersatz Zulassungsbescheinigung Teil I", "Bei Diebstahl oder Verlust des Fahrzeugscheins", ""],
+  "18": ["Ersatz Fahrzeugbrief", "Ersatz Zulassungsbescheinigung Teil II", "Bei Diebstahl oder Verlust des Fahrzeugbriefs", "Nur im Dienstleistungszentrum möglich."],
+  "19": ["Kennzeichen verloren", "Verlust oder Austausch von Kennzeichen", "Bei Diebstahl, Verlust oder Austausch deiner Kennzeichen", "Nur im Dienstleistungszentrum möglich."],
+  "20": ["Fahrzeug gestohlen", "Diebstahl Fahrzeug", "Abmeldung nach dem Diebstahl deines Fahrzeugs", "Nur im Dienstleistungszentrum möglich."],
+  "21": ["Feinstaubplakette", "Feinstaubplakette / Neusiegelung", "Umweltplakette oder Siegel für neu geprägte Kennzeichen", "Die neuen Schilder bitte zum Termin mitbringen."],
+  "22": ["Umtausch", "Umtausch in den Kartenführerschein", "Alten Papier- oder Kartenführerschein in den neuen EU-Führerschein umtauschen", "Biometrisches Foto kannst du vor Ort am Selbstbedienungsterminal machen – am besten 15 Min. vor dem Termin da sein."],
+  "23": ["Ersterteilung", "Ersterteilung einer Fahrerlaubnis", "Antrag auf deinen ersten Führerschein", "Bei ausländischem Führerschein bitte „Ausländischer Führerschein“ wählen."],
+  "24": ["Begleitetes Fahren ab 17", "Begleitetes Fahren ab 17 (BF17)", "Antrag auf den Führerschein mit 17", "Biometrisches Foto kannst du vor Ort am Selbstbedienungsterminal machen."],
+  "25": ["Erweiterung A/B", "Erweiterung Klassen A1, A2, A, B, BE, T, L", "Zusätzliche Führerscheinklasse beantragen", "Für Schlüsselzahlen wie B96 oder B196 bitte „Auflage/Schlüsselzahl“ wählen."],
+  "26": ["Neuer Führerschein", "Neuer Führerschein", "Nach Namensänderung oder bei beschädigtem Führerschein", "Biometrisches Foto kannst du vor Ort am Selbstbedienungsterminal machen."],
+  "27": ["Führerschein verloren", "Ersatz nach Verlust oder Diebstahl", "Neuer Führerschein, wenn deiner verloren oder gestohlen wurde", "Biometrisches Foto kannst du vor Ort am Selbstbedienungsterminal machen."],
+  "28": ["Internationaler Führerschein", "Internationaler Führerschein", "Für Fahrten in Ländern außerhalb der EU", "Bitte ein Passbild in Papierform mitbringen."],
+  "29": ["Auflage / Schlüsselzahl", "Auflage oder Schlüsselzahl eintragen", "Z. B. Sehhilfe, Automatik, B96, B196 – oder eine Begleitperson nachbenennen", ""],
+  "30": ["Ausländischer Führerschein", "Umschreibung eines ausländischen Führerscheins", "Führerschein aus dem Ausland in einen deutschen umschreiben", "Nur im Dienstleistungszentrum möglich."],
+  "31": ["Erweiterung C/D", "Erweiterung Klassen C/D", "Lkw- und Busklassen C1 bis DE beantragen", "Nur im Dienstleistungszentrum möglich."],
+  "32": ["Verlängerung C/D", "Verlängerung Klassen C/D", "Befristete Lkw- und Busklassen verlängern", "Nur im Dienstleistungszentrum möglich."],
+  "33": ["Fahrgastbeförderung", "Fahrerlaubnis zur Fahrgastbeförderung", "Personenbeförderungsschein: Antrag, Verlängerung oder Ersatz", "Nur im Dienstleistungszentrum möglich."],
+  "34": ["Schlüsselzahl 95", "Fahrerqualifizierungsnachweis", "Berufskraftfahrerqualifikation (Schlüsselzahl 95)", "Nur im Dienstleistungszentrum möglich."],
+  "35": ["Fahrerkarte", "Fahrerkarte", "Fahrerkarte für den digitalen Tachografen", "Passbild in Papierform mitbringen. Nur im Dienstleistungszentrum."],
+};
+/** Sichtbare Kacheln je Bereich, in Anzeige-Reihenfolge (Script-Nummern). */
+const BONN_POPULAR = ["1", "3", "13", "7", "8", "15", "11", "12", "9", "22", "23", "24", "25", "28", "27", "30", "26", "29"];
 export const BONN_DEFAULT_MAX_VEHICLES = 5;
 
 export const SERVICES_BY_CITY: Record<string, CityService[]> = {
   koeln: SERVICES.map((s) => ({ ...s, category: "kfz" as const })),
-  bonn: BONN_ROWS.map((r) => ({
+  bonn: BONN_ROWS.map((r) => {
+    const [tile, title, subtitle, hint] = BONN_TEXTS[r.script];
+    const rank = BONN_POPULAR.indexOf(r.script);
+    return {
     id: r.id,
     label: r.label,
-    shortLabel: r.label,
-    subtitle: "",
+    shortLabel: tile,
+    cardTitle: title,
+    subtitle,
+    ...(hint ? { note: hint } : {}),
+    ...(rank >= 0 ? { popular: true, popularRank: (rank % 9) + 1 } : {}),
     category: r.category,
     locations: r.locations,
     maxVehicles: r.maxVehicles ?? BONN_DEFAULT_MAX_VEHICLES,
     ...(r.infoUrl ? { infoUrl: r.infoUrl } : {}),
-  })),
+    };
+  }),
 };
 
 export const getServices = (city: string): CityService[] => SERVICES_BY_CITY[city] ?? [];

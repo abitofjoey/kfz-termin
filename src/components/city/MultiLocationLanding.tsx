@@ -3,9 +3,14 @@ import { MapPin } from "lucide-react";
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
 import { Faq } from "@/components/landing/Faq";
+import { Founder } from "@/components/landing/Founder";
+import { ServicePricing, type PricingGroup } from "@/components/landing/Pricing";
+import type { FormPreselect } from "@/components/city/CityBookingForm";
+import { getServices, type CityService } from "@/lib/services";
+import type { ServiceCategory } from "@/lib/cities";
 import { Footer } from "@/components/landing/Footer";
 import { getCity } from "@/lib/cities";
-import { formatPrice, vatShortNote } from "@/lib/price";
+import { formatPrice } from "@/lib/price";
 import type { CityContent } from "@/content/cities";
 
 const CityBookingForm = lazy(() =>
@@ -19,6 +24,23 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
   const multi = content.multi!;
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
+  const [preselect, setPreselect] = useState<FormPreselect | null>(null);
+
+  const all = getServices(slug);
+  const groups: PricingGroup[] = (["kfz", "fuehrerschein"] as const).map((k) => {
+    const list = all.filter((s) => s.category === k);
+    return {
+      key: k,
+      label: k === "kfz" ? "Kfz-Zulassung" : "Führerschein",
+      popular: list.filter((s) => s.popularRank).sort((a, b) => a.popularRank! - b.popularRank!),
+      more: list.filter((s) => !s.popularRank),
+    };
+  });
+  const byId = new Map(all.map((s) => [s.id, s] as const));
+  const handleSelect = (id: string, groupKey: string) => {
+    setPreselect({ category: groupKey as ServiceCategory, serviceId: id, nonce: Date.now() });
+    document.getElementById("buchung")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -44,22 +66,24 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
                 </li>
               ))}
             </ol>
+            <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-muted-foreground">{multi.honestNote}</p>
           </div>
         </section>
 
-        <section id="preise" aria-labelledby="preise-heading" className="bg-secondary/40 py-16">
-          <div className="mx-auto max-w-2xl px-4 text-center">
-            <h2 id="preise-heading" className="text-3xl font-bold sm:text-4xl">Preis</h2>
-            <p className="mt-4 text-4xl font-bold text-primary">{formatPrice(city.priceCents)}</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Pro Termin, einmalig ({vatShortNote()}). Geld-zurück-Garantie, wenn an deinen Wunschtagen kein Termin frei wird.
-            </p>
-          </div>
-        </section>
+        <ServicePricing
+          groups={groups}
+          cityName={city.name}
+          price={formatPrice(city.priceCents)}
+          subtitle={multi.servicesSubtitle ?? ""}
+          features={(item) => multi.pricingFeatures?.(byId.get(item.id) as CityService) ?? []}
+          onSelect={handleSelect}
+        />
+
+        <Founder />
 
         {ready ? (
           <Suspense fallback={<div className="h-[900px]" aria-hidden="true" />}>
-            <CityBookingForm city={slug} />
+            <CityBookingForm city={slug} preselect={preselect} submitNotice={multi.bookingNotice} />
           </Suspense>
         ) : (
           <section id="buchung" className="py-20"><div className="mx-auto h-[900px] max-w-3xl" aria-hidden="true" /></section>

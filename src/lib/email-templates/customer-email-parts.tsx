@@ -58,7 +58,7 @@ export function locationsText(c: CityConfig, ids?: string[] | null): string {
 }
 
 export const INSTANT_INFO =
-  'Sobald wir einen Termin gebucht haben, bekommst du eine E-Mail von uns mit allen Daten. Die Buchung ist sofort verbindlich, du musst nichts bestätigen. Bitte schau dann auch in deine Ordner Spam und Werbung.'
+  'Sobald wir einen Termin gebucht haben, bekommst du eine E-Mail von uns mit allen Daten. Du musst nichts mehr bestätigen. Bitte schau dann auch in deine Ordner Spam und Werbung.'
 
 export const MailFooter = ({ siteName = SITE_NAME }: { siteName?: string }) => (
   <>

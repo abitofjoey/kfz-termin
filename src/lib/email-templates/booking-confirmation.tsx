@@ -85,11 +85,10 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             <Text style={infoTitle}>🕐 So läuft es ab</Text>
             <Text style={infoText}>
               Sobald wir einen passenden Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum,
-              Uhrzeit, Standort und Aufrufnummer. <strong>Die Buchung ist sofort verbindlich.</strong>
+              Uhrzeit, Standort und Aufrufnummer. Du musst den Termin nicht mehr bestätigen.
             </Text>
             <Text style={infoText}>
-              Wir suchen rund um die Uhr. Auch Termine am Wunschtag selbst buchen wir – oft schon ab 7 Uhr
-              morgens. Behalte an deinen Wunschtagen dein E-Mail-Postfach im Blick.
+              Wir suchen rund um die Uhr. Behalte an deinen Wunschtagen dein E-Mail-Postfach im Blick.
             </Text>
             <Text style={infoText}>
               Wird an deinen Wunschtagen kein Termin frei, bekommst du von uns
