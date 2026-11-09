@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CityRouteImport } from './routes/$city'
+import { Route as AdsGrafikenRouteImport } from './routes/ads-grafiken'
 import { Route as AgbRouteImport } from './routes/agb'
 import { Route as BuchungAbgebrochenRouteImport } from './routes/buchung-abgebrochen'
 import { Route as BuchungErfolgreichRouteImport } from './routes/buchung-erfolgreich'
@@ -43,6 +44,11 @@ const IndexRoute = IndexRouteImport.update({
 const CityRoute = CityRouteImport.update({
   id: '/$city',
   path: '/$city',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdsGrafikenRoute = AdsGrafikenRouteImport.update({
+  id: '/ads-grafiken',
+  path: '/ads-grafiken',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgbRoute = AgbRouteImport.update({
@@ -170,6 +176,7 @@ const ApiInternalPendingBookingsIdAckRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$city': typeof CityRoute
+  '/ads-grafiken': typeof AdsGrafikenRoute
   '/agb': typeof AgbRoute
   '/buchung-abgebrochen': typeof BuchungAbgebrochenRoute
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
@@ -197,6 +204,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$city': typeof CityRoute
+  '/ads-grafiken': typeof AdsGrafikenRoute
   '/agb': typeof AgbRoute
   '/buchung-abgebrochen': typeof BuchungAbgebrochenRoute
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
@@ -225,6 +233,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$city': typeof CityRoute
+  '/ads-grafiken': typeof AdsGrafikenRoute
   '/agb': typeof AgbRoute
   '/buchung-abgebrochen': typeof BuchungAbgebrochenRoute
   '/buchung-erfolgreich': typeof BuchungErfolgreichRoute
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$city'
+    | '/ads-grafiken'
     | '/agb'
     | '/buchung-abgebrochen'
     | '/buchung-erfolgreich'
@@ -281,6 +291,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$city'
+    | '/ads-grafiken'
     | '/agb'
     | '/buchung-abgebrochen'
     | '/buchung-erfolgreich'
@@ -308,6 +319,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$city'
+    | '/ads-grafiken'
     | '/agb'
     | '/buchung-abgebrochen'
     | '/buchung-erfolgreich'
@@ -336,6 +348,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CityRoute: typeof CityRoute
+  AdsGrafikenRoute: typeof AdsGrafikenRoute
   AgbRoute: typeof AgbRoute
   BuchungAbgebrochenRoute: typeof BuchungAbgebrochenRoute
   BuchungErfolgreichRoute: typeof BuchungErfolgreichRoute
@@ -374,6 +387,13 @@ declare module '@tanstack/react-router' {
       path: '/$city'
       fullPath: '/$city'
       preLoaderRoute: typeof CityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ads-grafiken': {
+      id: '/ads-grafiken'
+      path: '/ads-grafiken'
+      fullPath: '/ads-grafiken'
+      preLoaderRoute: typeof AdsGrafikenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agb': {
@@ -557,6 +577,7 @@ const ApiInternalPendingBookingsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CityRoute: CityRoute,
+  AdsGrafikenRoute: AdsGrafikenRoute,
   AgbRoute: AgbRoute,
   BuchungAbgebrochenRoute: BuchungAbgebrochenRoute,
   BuchungErfolgreichRoute: BuchungErfolgreichRoute,
