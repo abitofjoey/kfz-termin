@@ -9,6 +9,7 @@ Köln (eine Stelle, Kunde bestätigt selbst) und Bonn (mehrere Standorte, sofort
 |---|---|
 | `slug` | URL-Teil (`/bonn`) und Schlüssel in der Datenbank (`bookings.city`). Nie mehr ändern. |
 | `name` / `adjective` | „Bonn“ / „Bonner“ – für Überschriften, Texte, `[Bonn]`-Präfix interner Mails. |
+| `landmarkIcon` | Optionaler SVG-Import aus `src/assets/landmarks/<slug>.svg?raw`. Ohne Feld wird kein Icon angezeigt; Stadtkarten, Hero und Städte-Menüs nutzen denselben Import. |
 | `authorityName` | Vollständige Behördenbezeichnung (Seiten, llms.txt). |
 | `appointmentLocation` | Ort in Terminmails, falls kein Standort gewählt wird. |
 | `locations` | Standorte (`id`, `name`, `address`); bei einer Stelle nur ein Eintrag. |
@@ -27,6 +28,8 @@ Köln (eine Stelle, Kunde bestätigt selbst) und Bonn (mehrere Standorte, sofort
 | `bookable` | Buchungen möglich und Pi-Überwachung (Health-Check, Tagesstatus) aktiv. |
 
 ## 2. Inhalte `src/content/cities/<slug>.ts`
+Wahrzeichen-Icon: SVG 64×64, Linienstil wie koeln.svg/bonn.svg (stroke 2, runde Enden, nur Silhouette, keine Wappen/Logos).
+
 Meta-Texte, Hero, FAQ, Service-JSON-LD; Einzelstandort: `single` (Ablauf, Formularhinweise) und `info`; Mehrstandort: `multi`. In `src/content/cities/index.ts` eintragen.
 
 ## 3. Anliegen in `src/lib/services.ts`

@@ -1,4 +1,5 @@
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { LandmarkIcon } from "@/components/brand/LandmarkIcon";
 import { launchedCities } from "@/lib/cities";
 
 /** Große Stadt-Karten; bei einer Stadt eine breite Karte, sonst Raster. */
@@ -13,10 +14,8 @@ export function CityCards() {
           href={`/${c.slug}`}
           className="group flex min-h-24 items-center justify-between gap-4 rounded-2xl border-2 border-border bg-card p-6 shadow-sm transition hover:border-primary focus-visible:border-primary"
         >
-          <span className="flex items-center gap-4">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary">
-              <MapPin className="h-6 w-6 text-accent" aria-hidden="true" />
-            </span>
+          <span className="flex min-w-0 flex-col gap-3">
+            <LandmarkIcon icon={c.landmarkIcon} className="h-14 w-14 text-accent" />
             <span>
               <span className="block text-2xl font-bold sm:text-3xl">{c.name}</span>
               <span className="block text-sm text-muted-foreground">

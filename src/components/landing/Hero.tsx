@@ -1,4 +1,6 @@
 import { Clock, ShieldCheck, MapPin } from "lucide-react";
+import { LandmarkIcon } from "@/components/brand/LandmarkIcon";
+import type { CityConfig } from "@/lib/cities";
 
 export type HeroContent = {
   badge: string;
@@ -9,10 +11,13 @@ export type HeroContent = {
   scopeLabel: string;
 };
 
-export function Hero({ content }: { content: HeroContent }) {
+export function Hero({ content, city }: { content: HeroContent; city?: CityConfig }) {
   return (
     <section aria-labelledby="hero-heading" className="relative overflow-hidden bg-primary text-primary-foreground">
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-[oklch(0.18_0.04_258)] opacity-90" />
+      <div className="pointer-events-none absolute inset-0 mx-auto hidden max-w-6xl md:block" aria-hidden="true">
+        <LandmarkIcon icon={city?.landmarkIcon} className="absolute right-4 top-1/2 h-80 w-80 -translate-y-1/2 text-primary-foreground opacity-[0.16]" />
+      </div>
       <div className="relative mx-auto max-w-6xl px-4 py-20 sm:py-28">
         <div className="max-w-3xl">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium">
