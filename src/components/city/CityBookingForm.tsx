@@ -196,7 +196,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
 
           <Field label="Dienstleistung" error={errors.service}>
             {(id) => (
-              <Select value={serviceId} onValueChange={setServiceId}>
+              <Select key={category} value={serviceId} onValueChange={setServiceId}>
                 <SelectTrigger id={id} aria-invalid={!!errors.service}>
                   <SelectValue placeholder="Bitte auswählen" />
                 </SelectTrigger>
