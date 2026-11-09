@@ -102,7 +102,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             <Text style={infoText}>
               Sobald wir einen passenden Termin gefunden haben, bekommst du
               zwei E-Mails: eine von uns mit Datum und Uhrzeit und eine von
-              der Zulassungsstelle mit einem Bestätigungslink.{" "}
+              der {c.mail.authority} mit einem Bestätigungslink.{" "}
               {hours != null ? (
                 <>
                   <strong>
@@ -173,7 +173,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
             <Text style={warnText}>
               {c.form.finRequired ? (<>
               Sollten Name, E-Mail oder eine der FIN nicht korrekt sein, kann die
-              Bestätigung der Zulassungsstelle dich nicht erreichen. Antworte
+              Bestätigung der {c.mail.authority} dich nicht erreichen. Antworte
               in diesem Fall einfach auf diese E-Mail.</>) : (<>
               Sollten Name oder E-Mail nicht korrekt sein, erreicht dich die
               Bestätigung der Stadt nicht. Antworte in diesem Fall einfach auf

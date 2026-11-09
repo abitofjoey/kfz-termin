@@ -147,7 +147,7 @@ const AppointmentFoundEmail = ({ bookingId,
           <Section style={warnBox}>
             <Text style={warnTitle}>⚠️ Jetzt noch bestätigen – sonst verfällt der Termin</Text>
             <Text style={warnText}>
-              Die Zulassungsstelle hat dir eine E-Mail mit einem
+              Die {c.mail.authority} hat dir eine E-Mail mit einem
               Bestätigungslink geschickt. <strong>{`Bitte klicke innerhalb von ${hours} Stunden auf diesen Link, also spätestens bis ca. `}{deadline} Uhr.</strong>{' '}
               Ohne Bestätigung verfällt der Termin unwiderruflich, und wir
               können ihn nicht wiederherstellen.
