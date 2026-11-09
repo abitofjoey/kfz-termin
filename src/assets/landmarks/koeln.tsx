@@ -1,0 +1,4 @@
+/** Exact geometry from the supplied koeln.svg. */
+export function KoelnLandmark() {
+  return (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" role="img" aria-label="Kölner Dom"><path d="M6 60H58"/><path d="M10 60V30L12 28V22L17 4L22 22V28L24 30V60"/><path d="M17 4V1.5M15.6 2.6H18.4"/><path d="M13.7 16H20.3M15.3 10.5H18.7"/><path d="M14.8 52V43L17 39.5L19.2 43V52"/><path d="M54 60V30L52 28V22L47 4L42 22V28L40 30V60"/><path d="M47 4V1.5M45.6 2.6H48.4"/><path d="M43.7 16H50.3M45.3 10.5H48.7"/><path d="M44.8 52V43L47 39.5L49.2 43V52"/><path d="M24 38L32 30L40 38"/><circle cx="32" cy="37.5" r="2.4"/><path d="M28 60V50L32 44.5L36 50V60"/></svg>);
+}
