@@ -232,7 +232,7 @@ export function ServicePricing({
             <ul className="mt-6 space-y-2">
               {featuresFor(active, group.key).map((f) => (
                 <li key={f} className="flex items-center gap-2 text-sm">
-                  <Check className="h-4 w-4 shrink-0 text-accent" />
+                  <Check className="h-4 w-4 text-accent" />
                   {f}
                 </li>
               ))}
