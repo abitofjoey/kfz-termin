@@ -17,6 +17,7 @@ import { Route as BuchungErfolgreichRouteImport } from './routes/buchung-erfolgr
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as EmailAendernRouteImport } from './routes/email-aendern'
 import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermineAendernRouteImport } from './routes/termine-aendern'
 import { Route as WiderrufRouteImport } from './routes/widerruf'
@@ -71,6 +72,11 @@ const EmailAendernRoute = EmailAendernRouteImport.update({
 const ImpressumRoute = ImpressumRouteImport.update({
   id: '/impressum',
   path: '/impressum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/datenschutz': typeof DatenschutzRoute
   '/email-aendern': typeof EmailAendernRoute
   '/impressum': typeof ImpressumRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/termine-aendern': typeof TermineAendernRoute
   '/widerruf': typeof WiderrufRoute
@@ -188,6 +195,7 @@ export interface FileRoutesByTo {
   '/datenschutz': typeof DatenschutzRoute
   '/email-aendern': typeof EmailAendernRoute
   '/impressum': typeof ImpressumRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/termine-aendern': typeof TermineAendernRoute
   '/widerruf': typeof WiderrufRoute
@@ -214,6 +222,7 @@ export interface FileRoutesById {
   '/datenschutz': typeof DatenschutzRoute
   '/email-aendern': typeof EmailAendernRoute
   '/impressum': typeof ImpressumRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/termine-aendern': typeof TermineAendernRoute
   '/widerruf': typeof WiderrufRoute
@@ -241,6 +250,7 @@ export interface FileRouteTypes {
     | '/datenschutz'
     | '/email-aendern'
     | '/impressum'
+    | '/llms.txt'
     | '/sitemap.xml'
     | '/termine-aendern'
     | '/widerruf'
@@ -266,6 +276,7 @@ export interface FileRouteTypes {
     | '/datenschutz'
     | '/email-aendern'
     | '/impressum'
+    | '/llms.txt'
     | '/sitemap.xml'
     | '/termine-aendern'
     | '/widerruf'
@@ -291,6 +302,7 @@ export interface FileRouteTypes {
     | '/datenschutz'
     | '/email-aendern'
     | '/impressum'
+    | '/llms.txt'
     | '/sitemap.xml'
     | '/termine-aendern'
     | '/widerruf'
@@ -317,6 +329,7 @@ export interface RootRouteChildren {
   DatenschutzRoute: typeof DatenschutzRoute
   EmailAendernRoute: typeof EmailAendernRoute
   ImpressumRoute: typeof ImpressumRoute
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermineAendernRoute: typeof TermineAendernRoute
   WiderrufRoute: typeof WiderrufRoute
@@ -389,6 +402,13 @@ declare module '@tanstack/react-router' {
       path: '/impressum'
       fullPath: '/impressum'
       preLoaderRoute: typeof ImpressumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -522,6 +542,7 @@ const rootRouteChildren: RootRouteChildren = {
   DatenschutzRoute: DatenschutzRoute,
   EmailAendernRoute: EmailAendernRoute,
   ImpressumRoute: ImpressumRoute,
+  LlmsDottxtRoute: LlmsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermineAendernRoute: TermineAendernRoute,
   WiderrufRoute: WiderrufRoute,
