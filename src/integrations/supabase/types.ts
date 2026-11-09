@@ -23,6 +23,7 @@ export type Database = {
           assigned_to_script_at: string | null
           booked_location: string | null
           booking_reference: string | null
+          calendar_token: string
           cancel_url: string | null
           city: string
           confirmation_sent_at: string | null
@@ -71,6 +72,7 @@ export type Database = {
           assigned_to_script_at?: string | null
           booked_location?: string | null
           booking_reference?: string | null
+          calendar_token?: string
           cancel_url?: string | null
           city?: string
           confirmation_sent_at?: string | null
@@ -119,6 +121,7 @@ export type Database = {
           assigned_to_script_at?: string | null
           booked_location?: string | null
           booking_reference?: string | null
+          calendar_token?: string
           cancel_url?: string | null
           city?: string
           confirmation_sent_at?: string | null
