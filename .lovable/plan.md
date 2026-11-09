@@ -1,29 +1,46 @@
-# SEO/GEO-Check der Mehrstädte-Seiten
+# Versteckte Seite /ads-grafiken – Werbegrafiken zum Herunterladen
 
-## Befund (heute geprüft)
+Reine Hilfsseite. An der bestehenden Website wird nichts geändert (keine Seiten, Texte, Preise, Formulare, Navigation, Meta-Tags).
 
-Schon gut:
-- Sitemap live mit Start, /koeln, /bonn und Rechtsseiten; neue Städte kommen automatisch dazu.
-- robots.txt erlaubt alles Öffentliche, sperrt Danke-/Abbruchseiten, verweist auf die Sitemap.
-- /llms.txt live (200) und wird automatisch aus den gestarteten Städten erzeugt.
-- Jede Stadtseite hat eigenen Titel, Beschreibung, og-Tags, Canonical sowie Service- und FAQ-Daten für Google.
-- Nicht gestartete Städte sind automatisch auf "nicht indexieren" gestellt.
-- www leitet auf die Hauptadresse um.
+## Neue Dateien
 
-Verbesserungswürdig:
-1. Firmen-Daten (Organization) stehen doppelt: einmal sitewide, einmal auf der Startseite.
-2. Bonn hat kein eigenes Vorschaubild für WhatsApp/Social (nur Köln).
-3. Keine "Brotkrumen"-Daten (Start > Bonn) auf den Stadtseiten.
-4. Service-Daten der Städte ohne Angabe der Behörde/Standorte (für KI-Suche hilfreich: Ort, Adresse).
-5. Sitemap ohne Änderungsdatum (lastmod) – optional.
-6. www-Umleitung ist vorübergehend (302) statt dauerhaft (301) – Einstellung der Domain, nicht im Code.
-7. Unklar ohne Search Console: ob die Sitemap eingereicht ist und /bonn indexiert wird.
+1. **`src/routes/ads-grafiken.tsx`** – versteckte Seite:
+   - `head()` mit `robots: noindex, nofollow`, eigener Titel, kein og:image.
+   - Nicht verlinkt, nicht in der Sitemap (Sitemap nutzt `launchedCities()` + feste Routen, die Seite wird dort nicht ergänzt).
+   - Zusätzlich `Disallow: /ads-grafiken` in `public/robots.txt`.
+   - Rendert alle Grafiken als Vorschau (SVG live im DOM) mit Button „Als PNG laden" pro Grafik.
+   - Städte aus `launchedCities()` (cities.ts) – neue Städte bekommen automatisch eine Zeile, sofern ein Motiv hinterlegt ist.
 
-## Umsetzung
-- Doppelte Organization auf der Startseite entfernen (sitewide bleibt).
-- BreadcrumbList auf /koeln und /bonn.
-- Service-Daten je Stadt um Behörde/Standorte (Name, Adresse aus Stadt-Konfiguration) ergänzen.
-- Bonn: Vorschaubild 1200x630 "KFZ-Termin Bonn" erzeugen und als og:image/twitter:image setzen (nur nach deinem OK).
-- llms.txt: pro Stadt Standorte und Suchzeiten ergänzen (weiter automatisch).
-- Search Console prüfen (Indexierung, Sitemap-Status); falls nicht verbunden, sage ich, wie du die Sitemap einreichst.
-- Köln-Texte bleiben wortgleich; danach Typprüfung, Tests, Prüfung des ausgelieferten HTML. Nicht veröffentlichen ohne OK.
+2. **`src/lib/ads-graphics.tsx`** – SVG-Bausteine (kein neues Design, exakt die bestehende Logo-Optik):
+   - Farben aus dem bestehenden Logo: Hintergrund dunkles Blau `#111729`, Kachel weiß mit dunklem Haken `#1c2233` (Pfad aus `src/assets/brand/mark.svg`: `M16 33 L28 44 L48 22`), Schrift Inter, „KFZ-Termin" weiß, Stadtname Orange `#ff6200`, Untertitel hellblau-weiß.
+   - `LogoSquare(city)`: 1200×1200, Symbol oben mittig, darunter „KFZ-Termin <Stadt>", darunter klein „Wunschtermin bei der Zulassungsstelle", Inhalt mittig mit Rand, deckender Hintergrund.
+   - `LogoWide(city)`: 1200×300 (4:1), Symbol links, Schriftzug rechts daneben, ohne Untertitel, deckend.
+   - `LandmarkArt(city, format)`: Strichgrafik in Orange `#ff6200` auf `#111729`, eine durchgehende Linienführung, einheitliche Strichstärke, runde Enden (`stroke-linecap/join=round`), keine Füllung. Motiv ≥ 60 % der Höhe, Wichtiges im mittleren 80-%-Bereich. Kein Text, kein Logo.
+     - Köln = Kölner Dom: zwei hohe Türme mit Spitzen, Dach dazwischen – selbst gezeichnet aus einfachen Linien.
+     - Bonn = Bonner Münster: hoher Mittelturm mit Nebentürmen – selbst gezeichnet.
+     - Je Format (1:1 und 1,91:1) eigene Anordnung (eigene viewBox-Pfade/Transform), kein simples Beschneiden.
+   - Motiv-Zuordnung pro Stadt in einer kleinen Map (`koeln → dom`, `bonn → muenster`); Stadt ohne Motiv zeigt einen Hinweis statt einer Grafik.
+
+3. **PNG-Export** (in der Seite, Client-seitig):
+   - SVG wird serialisiert → `Image` über Blob-URL → `<canvas>` in exakter Zielgröße → `canvas.toBlob("image/png")` → Download per `deliverFile`-Pattern (Blob, `a.download`, verzögertes `revokeObjectURL`).
+   - Font-Einbettung: Inter Variable WOFF2 wird als data-URL in das SVG eingebettet (`@font-face` im SVG-`<style>`), damit der Canvas-Export die gleiche Schrift nutzt (für Canvas-Text kein CORS-/Taint-Problem, da alles same-origin/data-URL).
+   - sRGB durch Canvas-Standard; PNGs liegen weit unter 5 MB (flächige Grafiken).
+
+## Dateinamen (je Stadt, 8 Dateien gesamt)
+
+- `logo-koeln-1200x1200.png`, `logo-koeln-1200x300.png`
+- `bild-koeln-1200x1200.png`, `bild-koeln-1200x628.png`
+- analog für Bonn.
+
+## Nicht tun
+
+- Kein Stadtwappen, keine Behörden-Optik, keine Fotos, keine Personen, keine Marken Dritter.
+- Köln und Bonn gleicher Stil, nur Motiv und Stadtname unterscheiden sich.
+- Keine Änderung an bestehenden Seiten/Komponenten.
+
+## Prüfung
+
+- Typecheck + Build.
+- Playwright: /ads-grafiken öffnen, Screenshots der Vorschau (Desktop), einen Download-Button klicken und prüfen, dass die PNG die exakte Pixelgröße hat und nicht leer ist.
+- Prüfen, dass /ads-grafiken nicht in der Sitemap steht und robots.txt den Eintrag hat.
+- Nicht veröffentlichen. Vorschau-Link nennen.
