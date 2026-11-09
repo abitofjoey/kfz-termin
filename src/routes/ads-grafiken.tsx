@@ -11,6 +11,11 @@ export const Route = createFileRoute("/ads-grafiken")({
   head: () => ({
     meta: [
       { title: "Werbegrafiken – KFZ-Termin" },
+      { name: "description", content: "Logo- und Wahrzeichen-Grafiken für KFZ-Termin herunterladen." },
+      { property: "og:title", content: "Werbegrafiken – KFZ-Termin" },
+      { property: "og:description", content: "Logo- und Wahrzeichen-Grafiken für KFZ-Termin herunterladen." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

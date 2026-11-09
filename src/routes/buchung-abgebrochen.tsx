@@ -12,6 +12,8 @@ export const Route = createFileRoute("/buchung-abgebrochen")({
       { property: "og:title", content: "Buchung abgebrochen – KFZ-Termin" },
       { property: "og:description", content: "Der Bezahlvorgang wurde abgebrochen und es wurde nichts berechnet. Du kannst die Terminsuche jederzeit erneut starten." },
       { property: "og:url", content: "https://kfz-termin.online/buchung-abgebrochen" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

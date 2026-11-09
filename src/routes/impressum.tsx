@@ -8,6 +8,8 @@ export const Route = createFileRoute("/impressum")({
       { name: "description", content: "Impressum von KFZ-Termin." },
       { property: "og:title", content: "Impressum – KFZ-Termin" },
       { property: "og:description", content: "Impressum von KFZ-Termin." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { property: "og:url", content: "https://kfz-termin.online/impressum" },
       { name: "robots", content: "noindex, follow" },
     ],

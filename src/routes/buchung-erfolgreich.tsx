@@ -15,6 +15,8 @@ export const Route = createFileRoute("/buchung-erfolgreich")({
       { property: "og:title", content: "Buchung erfolgreich – KFZ-Termin" },
       { property: "og:description", content: "Vielen Dank! Deine Zahlung wurde bestätigt und unsere automatische Terminsuche läuft bereits." },
       { property: "og:url", content: "https://kfz-termin.online/buchung-erfolgreich" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
