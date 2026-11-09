@@ -310,6 +310,7 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
           bookedLocation: body.location ?? null,
           bookingReference: body.bookingReference ?? null,
           cancelUrl: body.cancelUrl ?? null,
+          calendarToken: booking.calendar_token,
         };
 
         let emailSent = false;
