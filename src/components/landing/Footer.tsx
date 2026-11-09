@@ -27,14 +27,20 @@ export function Footer({ city }: { city?: string } = {}) {
           <p className="mt-2 text-sm text-white/90">© 2026 KFZ-Termin</p>
         </div>
 
-        <nav aria-label="Rechtliches und Kontakt" className="flex flex-col items-start gap-2 text-sm text-white/90">
-          <Link to="/impressum" className={linkCls}>Impressum</Link>
-          <Link to="/datenschutz" className={linkCls}>Datenschutz</Link>
-          <Link to="/agb" className={linkCls}>AGB</Link>
-          <Link to="/widerrufsbelehrung" className={linkCls}>Widerrufsbelehrung</Link>
-          <button type="button" onClick={openSettings} className={`text-left ${linkCls}`}>
-            Cookie-Einstellungen
-          </button>
+        <nav aria-label="Rechtliches und Kontakt" className="flex min-w-0 flex-col items-start gap-2 text-sm text-white/90">
+          <div className="flex flex-col items-start gap-2 md:flex-row md:flex-wrap md:items-center md:gap-x-2 md:gap-y-1">
+            <Link to="/impressum" className={linkCls}>Impressum</Link>
+            <span aria-hidden="true" className="hidden text-white/60 md:inline">·</span>
+            <Link to="/datenschutz" className={linkCls}>Datenschutz</Link>
+            <span aria-hidden="true" className="hidden text-white/60 md:inline">·</span>
+            <Link to="/agb" className={linkCls}>AGB</Link>
+            <span aria-hidden="true" className="hidden text-white/60 md:inline">·</span>
+            <Link to="/widerrufsbelehrung" className={linkCls}>Widerrufsbelehrung</Link>
+            <span aria-hidden="true" className="hidden text-white/60 md:inline">·</span>
+            <button type="button" onClick={openSettings} className={`text-left ${linkCls}`}>
+              Cookie-Einstellungen
+            </button>
+          </div>
           <a href="mailto:info@kfz-termin.online" className={linkCls}>
             Kontakt: info@kfz-termin.online
           </a>
