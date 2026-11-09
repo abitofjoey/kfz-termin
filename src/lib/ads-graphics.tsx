@@ -32,11 +32,11 @@ export function LogoSquare({ city }: { city: string }) {
   return (
     <svg viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={`KFZ-Termin ${city}`}>
       <rect width="1200" height="1200" fill={ADS_BG} />
-      <CheckTile x={452} y={180} box={296} />
-      <text x="600" y={652} textAnchor="middle" fontFamily={FONT_STACK} fontWeight={800} fontSize={118} fill="#ffffff">
+      <CheckTile x={452} y={319} box={296} />
+      <text x="600" y={791} textAnchor="middle" fontFamily={FONT_STACK} fontWeight={800} fontSize={118} fill="#ffffff">
         KFZ-Termin <tspan fill={ADS_ORANGE}>{city}</tspan>
       </text>
-      <text x="600" y={742} textAnchor="middle" fontFamily={FONT_STACK} fontWeight={400} fontSize={46} fill={ADS_SUBTLE}>
+      <text x="600" y={881} textAnchor="middle" fontFamily={FONT_STACK} fontWeight={400} fontSize={46} fill={ADS_SUBTLE}>
         Wunschtermin bei der Zulassungsstelle
       </text>
     </svg>
