@@ -43,6 +43,8 @@ export type CityConfig = CategorySettings & {
   infoUrl: string;
   /** Anzeigename der Marke (für alle Städte gleich). */
   siteName: string;
+  /** Produktbeschreibung im Stripe-Checkout. */
+  checkoutDescription: string;
   form: {
     finRequired: boolean;
     salutationRequired: boolean;
@@ -54,6 +56,8 @@ export type CityConfig = CategorySettings & {
   mail: {
     /** Text "bei der Kölner Zulassungsstelle". */
     atAuthority: string;
+    /** Behörde im Fließtext von Kundenmails, z.B. "Zulassungsstelle" (nach "der"/"die"). */
+    authority: string;
     /** Pflicht, Aufrufnummer und Stornolink in Mails anzeigen. */
     showBookingReference: boolean;
     showCancelUrl: boolean;
@@ -101,6 +105,7 @@ export const CITIES: Record<string, CityConfig> = {
       "https://termine.stadt-koeln.de/m/kfz-zulassung/extern/calendar/?uid=67523a04-37af-4131-9495-0a3566e0eb8b",
     infoUrl: "https://www.stadt-koeln.de/service/adressen/00205/index.html",
     siteName: BRAND_NAME,
+    checkoutDescription: "KFZ-Termin – Terminservice bei der Zulassungsstelle Köln",
     calendar: {
       minOffsetDays: 1,
       afterCutoffOffsetDays: 2,
@@ -113,7 +118,7 @@ export const CITIES: Record<string, CityConfig> = {
     priceCents: KOELN_PRICE_CENTS,
     customerConfirmationHours: 3,
     form: { finRequired: true, salutationRequired: true, locationChoice: false, financedCheckbox: false },
-    mail: { atAuthority: "bei der Kölner Zulassungsstelle", showBookingReference: false, showCancelUrl: false },
+    mail: { atAuthority: "bei der Kölner Zulassungsstelle", authority: "Zulassungsstelle", showBookingReference: false, showCancelUrl: false },
     pages: { authorityShort: "Zulassungsstelle Köln", successIntro: null, successNotice: null },
     launched: true,
     bookable: true,
@@ -129,6 +134,7 @@ export const CITIES: Record<string, CityConfig> = {
       "https://termine.bonn.de/m/dlz/extern/calendar/?uid=b91bb67b-15cf-44df-ab0b-96ebe25c1ae3&lang=de",
     infoUrl: "https://www.bonn.de",
     siteName: BRAND_NAME,
+    checkoutDescription: `${BRAND_NAME} – Terminservice bei der Stadt Bonn`,
     // Ab morgen, kein 14-Uhr-Cutoff (cutoffHour 24 wird nie erreicht).
     calendar: {
       minOffsetDays: 1,
@@ -154,7 +160,7 @@ export const CITIES: Record<string, CityConfig> = {
         },
       },
     },
-    mail: { atAuthority: "bei der Stadt Bonn", showBookingReference: true, showCancelUrl: true },
+    mail: { atAuthority: "bei der Stadt Bonn", authority: "Stadt Bonn", showBookingReference: true, showCancelUrl: true },
     pages: {
       authorityShort: "Stadt Bonn",
       successIntro:

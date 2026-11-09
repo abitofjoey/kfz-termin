@@ -27,7 +27,7 @@ const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName
   return (
     <Html lang="de" dir="ltr">
       <Head />
-      <Preview>Die Zulassungsstelle lässt für deine Adresse keine weitere Buchung zu</Preview>
+      <Preview>{`Die ${c.mail.authority} lässt für deine Adresse keine weitere Buchung zu`}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Text style={eyebrow}>{SITE_NAME}</Text>
@@ -37,8 +37,8 @@ const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName
 
           <Text style={text}>{firstName ? `Hallo ${firstName},` : 'Hallo,'}</Text>
           <Text style={text}>
-            {`wir hatten bereits einen passenden Termin für dich gefunden, konnten ihn aber nicht buchen: Die Zulassungsstelle ${c.name} lässt für deine E-Mail-Adresse `}{email || 'deine Adresse'} aktuell keine weitere Buchung zu. Das passiert,
-            wenn mit dieser Adresse bereits ein Termin bei der Zulassungsstelle
+            {`wir hatten bereits einen passenden Termin für dich gefunden, konnten ihn aber nicht buchen: Die ${c.pages.authorityShort} lässt für deine E-Mail-Adresse `}{email || 'deine Adresse'} aktuell keine weitere Buchung zu. Das passiert,
+            wenn mit dieser Adresse bereits ein Termin bei der {c.mail.authority}{' '}
             besteht.
           </Text>
 
@@ -46,12 +46,12 @@ const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName
             <Text style={warnTitle}>So geht es weiter</Text>
             <Text style={warnText}>
               Antworte einfach auf diese E-Mail mit einer anderen E-Mail-Adresse,
-              auf die du Zugriff hast. An diese Adresse schickt die Zulassungsstelle
-              später auch den Bestätigungslink.
+              auf die du Zugriff hast. An diese Adresse schickt die {c.mail.authority}{' '}
+              später auch {c.customerConfirmationHours == null ? 'die Terminbestätigung' : 'den Bestätigungslink'}.
             </Text>
             <Text style={{ ...warnText, marginTop: '10px' }}>
-              Alternativ kannst du deinen bestehenden Termin bei der
-              Zulassungsstelle stornieren und uns kurz Bescheid geben.
+              Alternativ kannst du deinen bestehenden Termin bei der{' '}
+              {c.mail.authority} stornieren und uns kurz Bescheid geben.
             </Text>
             <Text style={{ ...warnText, marginTop: '10px' }}>
               Sobald wir von dir hören, suchen wir sofort weiter.
@@ -65,7 +65,7 @@ const SearchEmailLimitEmail = ({ bookingId, withdrawToken, salutation, firstName
               </Button>
               <Text style={{ ...text, fontSize: '13px', margin: '16px 0 0' }}>
                 <Link href={`${SITE_URL}/email-aendern?token=${emailChangeToken}&aktion=storniert`} style={link}>
-                  Ich habe meinen bestehenden Termin bei der Zulassungsstelle storniert – mit dieser Adresse weitersuchen
+                  Ich habe meinen bestehenden Termin bei der {c.mail.authority} storniert – mit dieser Adresse weitersuchen
                 </Link>
               </Text>
             </Section>

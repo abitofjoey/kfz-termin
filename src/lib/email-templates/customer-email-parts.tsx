@@ -44,6 +44,10 @@ export const ContactCard = () => (
 )
 
 /** Stadt bucht sofort verbindlich (keine Bestätigung beim Amt nötig). */
+/** Bestätigungsfrist der Stadt in Stunden (nur für Städte mit Kundenbestätigung). */
+export const confirmHours = (city?: string | null) => cityOrDefault(city).customerConfirmationHours ?? 0
+/** Behördenbezeichnung im Fließtext von Kundenmails. */
+export const authority = (city?: string | null) => cityOrDefault(city).mail.authority
 export const isInstant = (city?: string | null) => cityOrDefault(city).customerConfirmationHours == null
 
 /** Standort-ID oder Freitext aus dem Pi-Ergebnis als "Name, Adresse". */

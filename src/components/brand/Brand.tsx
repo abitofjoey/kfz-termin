@@ -12,7 +12,7 @@ interface BrandProps {
   invertIcon?: boolean;
 }
 
-export function Brand({ city = "Köln", size = "md", asLink = true, className, onDark = false, invertIcon = false }: BrandProps) {
+export function Brand({ city = "", size = "md", asLink = true, className, onDark = false, invertIcon = false }: BrandProps) {
   const iconSize = size === "sm" ? "h-7 w-7" : "h-8 w-8";
   const textSize = size === "sm" ? "text-base" : "text-lg";
   const accentClass = onDark ? "text-[oklch(0.82_0.09_235)]" : "text-accent";

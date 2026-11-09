@@ -1,6 +1,10 @@
 import type { CityService } from "@/lib/services";
 import { formatPrice } from "@/lib/price";
-import { KOELN_PRICE_CENTS } from "@/lib/cities";
+import { CITIES, KOELN_PRICE_CENTS } from "@/lib/cities";
+
+const K = CITIES.koeln;
+const H = K.customerConfirmationHours;
+const SH = K.searchHours;
 
 const PRICE = formatPrice(KOELN_PRICE_CENTS);
 import type { FaqItem } from "@/components/landing/Faq";
@@ -23,6 +27,13 @@ export type CityContent = {
     servicesSubtitle?: string;
     /** Häkchen-Liste der Service-Karte je Anliegen. */
     pricingFeatures?: (service: CityService) => string[];
+  };
+  /** Texte der Einzelstandort-Seite (Ablauf, Formularhinweise). */
+  single?: {
+    stepsIntro: string;
+    steps: { title: string; text: string }[];
+    holderNotice: string;
+    emailHint: string;
   };
   faq: FaqItem[];
   /** Zusätzliche Felder für das Service-JSON-LD. */
@@ -119,6 +130,18 @@ export const koelnContent: CityContent = {
     ],
     note:
       "Manche Anliegen kannst du komplett online ohne Termin erledigen. Unser Service lohnt sich, wenn du einen konkreten Wunschtermin brauchst oder keine Zeit hast, täglich selbst nachzuschauen.",
+  },
+  single: {
+    stepsIntro: `In fünf einfachen Schritten zu deinem Termin bei der ${K.adjective} Zulassungsstelle.`,
+    steps: [
+      { title: "Daten eingeben", text: "Formular in rund 2 Minuten ausfüllen und Wunschtage auswählen." },
+      { title: "Sicher bezahlen", text: "Sichere Zahlung per Kreditkarte oder PayPal über Stripe." },
+      { title: "Wir suchen für dich", text: `Unser System prüft täglich von ${SH.from}–${SH.to} Uhr auf einen freien Slot an einem deiner Wunschtage – du musst nichts tun.` },
+      { title: "Bestätigungs-E-Mail erhalten", text: `Sobald ein Termin reserviert ist, bekommst du eine E-Mail von uns und eine von der ${K.pages.authorityShort} mit dem Bestätigungslink.` },
+      { title: "Termin bestätigen", text: `Bitte bestätige den Termin innerhalb von ${H} Stunden per Klick in der E-Mail – andernfalls verfällt die Reservierung.` },
+    ],
+    holderNotice: "Diese Angaben werden bei der Zulassungsstelle für die Terminbuchung verwendet. Mehrfachbuchungen über dieselbe Email-Adresse sind nicht möglich.",
+    emailHint: `Sobald wir einen Termin gefunden haben, schickt dir die ${K.adjective} Zulassungsstelle eine Bestätigungsmail – bitte klicke den Link darin innerhalb von ${H} Stunden an.`,
   },
   faq: koelnFaq,
   serviceJsonLd: {
