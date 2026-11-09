@@ -134,7 +134,7 @@ function SuccessPage() {
         ) : (
         <p className="mt-4 text-muted-foreground">
           Wir haben deine Zahlung erhalten und beginnen sofort mit der Suche
-          nach einem freien Termin bei der Kölner Zulassungsstelle. Du
+          nach einem freien Termin {cityConfig.mail.atAuthority}. Du
           erhältst in Kürze eine Bestätigungsmail.
         </p>
         )}
@@ -149,8 +149,8 @@ function SuccessPage() {
           <p>
             <strong>Wichtig:</strong> Sobald wir einen Termin gefunden haben,
             bekommst du zwei E-Mails: eine von uns mit Datum und Uhrzeit und
-            eine von der Zulassungsstelle Köln mit einem Bestätigungslink.
-            Diesen Link musst du <strong>innerhalb von 3 Stunden</strong>{" "}
+            eine von der {cityConfig.pages.authorityShort} mit einem Bestätigungslink.
+            Diesen Link musst du <strong>innerhalb von {cityConfig.customerConfirmationHours} Stunden</strong>{" "}
             anklicken – sonst verfällt der Termin unwiderruflich. Bitte schau
             dann auch in deinen Ordnern <strong>Spam</strong> und{" "}
             <strong>Werbung</strong> nach, automatische E-Mails landen dort
