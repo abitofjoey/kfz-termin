@@ -1,30 +1,55 @@
-# Mehrstädte-Check und Aufräumen
+# Kalender-Links in der Mail „Termin gefunden/gebucht“ (Köln und Bonn)
 
-Ziel: Weitere Städte brauchen nur noch Einstellungen und Inhalte. Köln und Bonn bleiben inhaltlich gleich. Es wird erst veröffentlicht, wenn du die Ergebnisliste gesehen hast.
+Nichts wird veröffentlicht. Am Ende gibt es eine Vorschau der Mails und der Kalenderdatei.
 
-## Vorher-Aufnahme (Grundlage für den Vergleich)
-- Vor jeder Änderung wird das fertige HTML aller Seiten gespeichert (/, /koeln, /bonn, Rechtstexte, Kundenseiten mit Köln- und Bonn-Buchung). Dazu kommen alle 25 Kundenmails und die internen Mails mit Beispieldaten (Köln, Bonn Kfz, Bonn Führerschein).
-- Nach dem Umbau wird alles erneut erzeugt und verglichen. Erwartet ist „identisch“. Ausnahmen: die bewusst neue Rechtstexte-Quelle mit gleichem Wortlaut und /llms.txt.
+## Was der Kunde sieht
+Unter den Termindaten (Kasten „Dein Termin“) stehen zwei neue Links, in beiden Mail-Varianten:
+- Button **„In Google Kalender eintragen“**: Er öffnet Google Kalender mit einem vorausgefüllten Termin.
+- Link **„Für Apple-Kalender/Outlook (.ics)“**: Er lädt die Datei `kfz-termin.ics` herunter.
 
-## A. Fest eingebaute Stadttexte in die Konfiguration
-1. **Steps, BookingForm, Pricing:** Texte mit Stadt, Behörde oder Frist kommen nach `content/cities/koeln.ts` bzw. aus `cities.ts` (name, adjective, authorityName, customerConfirmationHours). Die Komponenten enthalten danach keinen Stadtnamen mehr. Für Köln bleibt jedes Zeichen gleich.
-2. **Mails:** Jede feste Angabe „3 Stunden“ in den sechs genannten Vorlagen nutzt künftig `customerConfirmationHours`. Fehlt dieser Wert (Bonn), wird der Satz weggelassen bzw. die bestehende Bonn-Variante verwendet. „Zulassungsstelle“ in Kundenmails wird durch die Behördenbezeichnung der Stadt ersetzt. Ist für Bonn-Führerscheinanliegen eine eigene Bezeichnung nötig, kommt sie als neues Feld je Kategorie dazu. Für Köln bleibt die Ausgabe gleich.
-3. **checkout-amount.ts:** Die Sonderregel für Köln wird durch das neue Feld `checkoutDescription` in `cities.ts` ersetzt. Der Köln-Text bleibt gleich.
-4. **Brand.tsx:** Es gibt keinen Standardwert „Köln“ mehr. Ohne Stadt steht dort nur „KFZ-Termin“. Alle Aufrufer werden geprüft, damit Köln-Seiten weiter „Köln“ zeigen.
-5. **Rechtstexte:** Eine neue Konstante in `src/content/legal/cities.ts` enthält die Liste der Behörden und das eigene Stand-Datum. Sie wird in AGB, Datenschutz und Widerrufsbelehrung (Seite und Mail) verwendet. Sie wird bewusst nicht aus `launchedCities()` erzeugt.
-6. **/llms.txt:** Eine erzeugte Route ersetzt `public/llms.txt`. Sie enthält einen festen allgemeinen Teil und je gestarteter Stadt: Behörde, Suchzeiten, Bestätigungsregel, Anliegen und Preis aus der Konfiguration. Die statische Datei wird gelöscht.
-7. **og-image:** Die Startseite nutzt `/og-image.jpg`. Ich sehe mir das Bild an und melde dir, ob darauf Köln zu sehen ist. Am Bild selbst ändere ich nichts.
+Beide Wege tragen dasselbe ein:
+- **Titel:** „Kfz-Termin: <Anliegen> (Stadt <Name>)“. Bei Führerschein-Anliegen heißt es „Führerschein-Termin: …“.
+- **Zeit:** der gebuchte Termin mit 30 Minuten Dauer.
+- **Ort:** In Köln die Adresse der Zulassungsstelle, in Bonn die Adresse des gebuchten Standorts. Fehlt der Standort, wird die Hauptadresse der Stadt genommen.
+- **Beschreibung:**
+  - Bonn: „Aufrufnummer: <Nr>. Check-in am Terminal 15 Min. vorher bis 5 Min. nach Beginn. Stornieren: <Stornolink>“
+  - Köln: „Bitte den Bestätigungslink der Stadt innerhalb von <Stunden> Stunden anklicken, sonst verfällt der Termin.“
+  - Bei beiden zusätzlich „Unterlagen: <Link>“. Das ist der Unterlagen-Link des Anliegens, sonst der allgemeine Link der Stadt, so wie heute in der Mail.
+- **Erinnerung:** 1 Tag vorher, nur in der .ics-Datei. Google übernimmt eine Erinnerung über den Link nicht, dort gilt die Standard-Erinnerung des Kunden.
 
-## B. Prüfung (Ergebnisliste für dich, ohne Codeänderung)
-8. Alle 25 Kundenmails werden für Köln, Bonn Kfz und Bonn Führerschein erzeugt. Für jede Mail zeige ich den Betreff und die Stellen mit Stadt, Behörde oder Frist. Alles, was für Bonn falsch oder kölnspezifisch ist, wird markiert.
-9. Interne Mails (neue Buchung, Fehler, Health-Check, Tagesstatus, Notbetrieb): Ich prüfe, ob [Köln]/[Bonn] im Betreff steht und ob Standort, Aufrufnummer und „finanziert“ enthalten sind.
-10. Admin-Bereich: Im Projekt habe ich keine eigene Admin-Seite gefunden. Ich prüfe, wo Buchungen verwaltet werden, und melde den Befund: Stadt-Spalte und Filter, Bonn-Felder, ob die Erstattung für Bonn genauso abläuft. Fehlt etwas, kommt es auf die Liste, wird aber nicht gebaut.
-11. /buchung-erfolgreich, /buchung-abgebrochen, /termine-aendern, /email-aendern und /widerruf werden mit einer Bonn-Testbuchung bzw. ?city=bonn aufgerufen. Ich prüfe die Texte auf Screenshots.
+## Sicherheit
+- Jede Buchung bekommt einen eigenen neuen, zufälligen Kalender-Schlüssel. Ich nehme bewusst nicht den Schlüssel von „Termine ändern“ oder „Widerruf“: Wer die Kalenderdatei weiterleitet, soll damit keine Buchung ändern oder widerrufen können.
+- Der Kalender-Link liefert die Datei nur, wenn ein gefundener Termin vorliegt. Bei unbekanntem Schlüssel, ohne Termin, bei widerrufener oder anonymisierter Buchung kommt „nicht gefunden“.
+- Die Datei enthält keine E-Mail-Adresse, keine Telefonnummer und keine FIN.
 
-Gefundene Fehler aus B werden nur aufgelistet und nicht automatisch behoben, außer sie gehören direkt zu den Punkten unter A.
+## Ablauf der Umsetzung
+1. **Datenbank:** neues Feld für den Kalender-Schlüssel. Bestehende Buchungen bekommen ihn automatisch, neue ebenfalls.
+2. **Gemeinsamer Baustein für den Termininhalt:** Titel, Zeit, Ort und Beschreibung werden an einer Stelle aus der Stadt-Konfiguration erzeugt. Daraus entstehen der Google-Link und die .ics-Datei.
+3. **Neue Adresse `/kalender/<schlüssel>.ics`:** Antwort als Kalenderdatei zum Herunterladen.
+4. **Mail:** Die Meldung „Termin gefunden“ gibt den Schlüssel an die Mail weiter. Die Mail zeigt Button und Link. Ältere Mails sind nicht betroffen, Köln bleibt sonst Wort für Wort gleich.
+5. **Tests und Vorschau.**
 
-## C. Dokumentation
-12. Neue Datei `docs/neue-stadt.md` mit einer Checkliste in 6 Schritten (wie von dir beschrieben). Jedes Feld in `cities.ts` wird mit seiner Bedeutung erklärt. `AGENTS.md` bekommt einen Verweis darauf und eine Regel für die Rechtstexte-Konstante.
+## Tests
+- Termin im Sommer (z. B. 06.10.2026, 08:20 Uhr) wird zu 06:20 UTC, im Winter (z. B. 12.01.2027, 08:20 Uhr) zu 07:20 UTC.
+- Umlaute (Köln, Führerschein) bleiben in der .ics-Datei korrekt.
+- Komma, Semikolon, Backslash und Zeilenumbruch im Text werden richtig maskiert.
+- Lange Zeilen werden nach 75 Zeichen umbrochen, auch bei Umlauten.
+- Die Datei enthält UID (Buchungs-ID@kfz-termin.online), DTSTAMP und eine Erinnerung 1 Tag vorher.
+- Google-Link: Zeiten im Format `YYYYMMDDTHHMMSSZ`, alle Teile korrekt kodiert.
+- Titel „Führerschein-Termin“ bei Bonner Führerschein-Anliegen.
+- Kalender-Link ohne Termin oder mit falschem Schlüssel: „nicht gefunden“.
 
-## Abschluss
-Typprüfung, alle Tests und neue Tests: keine Stadtnamen in den Komponenten, Köln-Frist aus der Konfiguration, /llms.txt enthält nur gestartete Städte. Danach kommen der Vorher/Nachher-Vergleich und die Ergebnisliste zu B. Dann warte ich auf dich, nichts wird veröffentlicht.
+## Vorschau für dich
+- Bilder der Mail für Köln, Bonn Kfz und Bonn Führerschein.
+- Eine echte .ics-Datei je Stadt zum Ausprobieren.
+- Die Datei prüfe ich mit einem Kalender-Prüfwerkzeug. Apple Kalender, Outlook und den Google-Import kann ich hier nicht öffnen. Das bitte einmal selbst testen, die Dateien bekommst du dafür.
+
+## Technische Details
+- Migration: `bookings.calendar_token uuid not null default gen_random_uuid()` plus Unique-Index. Bestehende Zeilen werden über den Default befüllt. Die Anonymisierung lässt das Feld unverändert, die Route prüft aber `anonymized_at`.
+- `src/lib/calendar.ts`: `buildCalendarEvent(booking)` → `{title, start, end, location, description}`; `googleCalendarUrl(ev)`, `buildIcs(ev, uid, now)`.
+  - Der Termin ist als UTC-ISO-Zeitpunkt gespeichert. Die Mail zeigt ihn in Europe/Berlin, die .ics-Datei nutzt UTC mit `Z` und kommt ohne VTIMEZONE aus.
+  - CRLF-Zeilenenden; RFC-5545-Escaping für `\ ; , \n`; Zeilen nach 75 Oktetten UTF-8 falten, ohne Mehrbyte-Zeichen zu teilen.
+  - VALARM mit `TRIGGER:-P1D` und `ACTION:DISPLAY`; PRODID, METHOD:PUBLISH.
+- Route `src/routes/kalender/{$token}[.]ics.ts`: Token mit zod als uuid prüfen. Lesen über den Admin-Client, Ladung erst im Handler. Bedingungen: `search_result='found'`, `appointment_at not null`, `withdrawn_at is null`, `anonymized_at is null`. Header: `Content-Type: text/calendar; charset=utf-8`, `Content-Disposition: attachment; filename="kfz-termin.ics"`, `Cache-Control: private, no-store`.
+- `result.ts` (found-Zweig): `calendarToken` und `category` in `templateData` ergänzen, sonst nichts ändern. `appointment-found.tsx`: neuer Abschnitt in beiden Zweigen nach dem Terminkasten.
+- Tests in `src/lib/__tests__/calendar.test.ts`. Danach Typecheck, alle Tests, Vorher/Nachher-Vergleich der übrigen Mails.
