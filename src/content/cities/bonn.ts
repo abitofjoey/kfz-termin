@@ -97,6 +97,18 @@ export const bonnContent: CityContent = {
     servicesSubtitle: "Wähle dein Anliegen – einheitlicher Preis, keine versteckten Kosten.",
     pricingFeatures: bonnPricingFeatures,
   },
+  info: {
+    title: "Wissenswertes zu den Bonner Standorten",
+    locations: CITIES.bonn.locations.map((l) => ({ name: l.name, address: l.address })),
+    phone: "0228 77 66 77",
+    phoneLabel: "Bürgerdienste der Stadt Bonn",
+    links: [
+      { label: "Termin selbst buchen", href: "https://termine.bonn.de/m/dlz/extern/calendar/?uid=b91bb67b-15cf-44df-ab0b-96ebe25c1ae3&lang=de" },
+      { label: "Öffnungszeiten und Kontakt", href: "https://www.bonn.de/vv/oe/_/Dez._I/33/33-4/Dienstleistungszentrum.php" },
+    ],
+    note:
+      "Viele Anliegen bearbeitet Bonn nur im Dienstleistungszentrum im Stadthaus – im Formular siehst du, welche Standorte möglich sind. Manche Kfz-Anliegen kannst du auch online ohne Termin erledigen (i-Kfz). Unser Service lohnt sich, wenn du einen konkreten Wunschtermin brauchst oder keine Zeit hast, selbst ständig nachzuschauen.",
+  },
   faq: bonnFaq,
   serviceJsonLd: {
     name: "KFZ-Termin – Stadt Bonn",

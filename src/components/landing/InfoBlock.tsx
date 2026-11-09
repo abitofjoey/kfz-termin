@@ -2,9 +2,14 @@ import { MapPin, Clock, Phone, ExternalLink } from "lucide-react";
 
 export type InfoContent = {
   title: string;
-  address: string;
-  openingHours: string;
+  /** Eine Adresse (Köln) … */
+  address?: string;
+  /** … oder mehrere Standorte (Bonn). */
+  locations?: { name: string; address: string }[];
+  openingHours?: string;
   phone: string;
+  /** Zusatz zum Telefon, z.B. "Bürgerdienste der Stadt Bonn". */
+  phoneLabel?: string;
   links: { label: string; href: string }[];
   note: string;
 };
@@ -18,6 +23,7 @@ export function InfoBlock({ content }: { content: InfoContent }) {
             {content.title}
           </h2>
           <dl className="mt-6 space-y-3 text-sm">
+            {content.address ? (
             <div>
               <dt className="flex gap-3 font-semibold">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
@@ -25,6 +31,17 @@ export function InfoBlock({ content }: { content: InfoContent }) {
               </dt>
               <dd className="pl-7 text-muted-foreground">{content.address}</dd>
             </div>
+            ) : null}
+            {content.locations?.map((l) => (
+            <div key={l.name}>
+              <dt className="flex gap-3 font-semibold">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                <span>{l.name}</span>
+              </dt>
+              <dd className="pl-7 text-muted-foreground">{l.address}</dd>
+            </div>
+            ))}
+            {content.openingHours ? (
             <div>
               <dt className="flex gap-3 font-semibold">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
@@ -32,10 +49,11 @@ export function InfoBlock({ content }: { content: InfoContent }) {
               </dt>
               <dd className="pl-7 text-muted-foreground">{content.openingHours}</dd>
             </div>
+            ) : null}
             <div>
               <dt className="flex gap-3 font-semibold">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
-                <span>Telefon</span>
+                <span>Telefon{content.phoneLabel ? ` (${content.phoneLabel})` : ""}</span>
               </dt>
               <dd className="pl-7 text-muted-foreground">{content.phone}</dd>
             </div>
