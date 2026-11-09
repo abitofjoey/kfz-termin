@@ -191,45 +191,6 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
               <Link href="https://kfz-termin.online/widerruf" style={emailLink}>https://kfz-termin.online/widerruf</Link>{' '}
               erklären.
             </Text>
-            <Text style={legalTitle}>Widerrufsbelehrung</Text>
-            <Text style={text}>{WITHDRAWAL_SCOPE}</Text>
-            <Text style={text}><strong>{WITHDRAWAL_STAND}</strong></Text>
-            <Text style={legalHeading}>Widerrufsrecht</Text>
-            <Text style={text}>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</Text>
-            <Text style={text}>Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsschlusses.</Text>
-            <Text style={text}>Um Ihr Widerrufsrecht auszuüben, müssen Sie uns</Text>
-            <Text style={text}>Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />Telefon: 0151 53461798<br />E-Mail: <Link href={`mailto:${CONTACT_EMAIL}`} style={emailLink}>{CONTACT_EMAIL}</Link></Text>
-            <Text style={text}>mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder eine E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</Text>
-            <Text style={text}>Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.</Text>
-            <Text style={legalHeading}>Folgen des Widerrufs</Text>
-            <Text style={text}>Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist. Für diese Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.</Text>
-            <Text style={text}>Haben Sie verlangt, dass die Dienstleistung während der Widerrufsfrist beginnen soll, so haben Sie uns einen angemessenen Betrag zu zahlen, der dem Anteil der bis zu dem Zeitpunkt, zu dem Sie uns von der Ausübung des Widerrufsrechts hinsichtlich dieses Vertrags unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.</Text>
-            <Text style={legalHeading}>Besondere Hinweise</Text>
-            <Text style={text}>Ihr Widerrufsrecht erlischt vorzeitig, wenn wir die Dienstleistung vollständig erbracht haben und mit der Ausführung der Dienstleistung erst begonnen haben, nachdem Sie dazu Ihre ausdrückliche Zustimmung gegeben und gleichzeitig Ihre Kenntnis davon bestätigt haben, dass Sie Ihr Widerrufsrecht bei vollständiger Vertragserfüllung durch uns verlieren (§ 356 Abs. 4 BGB).</Text>
-            <Text style={text}>{WITHDRAWAL_COMPLETED}</Text>
-
-            <Section style={withdrawalForm}>
-              <Text style={legalHeading}>Muster-Widerrufsformular</Text>
-              <Text style={formText}>(Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.)</Text>
-              <Text style={formText}>An:<br />Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />E-Mail: {CONTACT_EMAIL}</Text>
-              <Text style={formText}>Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über die Erbringung der folgenden Dienstleistung:</Text>
-              <Text style={formLine}>________________________________________</Text>
-              <Text style={formText}>Bestellt am (*) / erhalten am (*):</Text>
-              <Text style={formLine}>________________________________________</Text>
-              <Text style={formText}>Name des/der Verbraucher(s):</Text>
-              <Text style={formLine}>________________________________________</Text>
-              <Text style={formText}>Anschrift des/der Verbraucher(s):</Text>
-              <Text style={formLine}>________________________________________</Text>
-              <Text style={formText}>Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier):</Text>
-              <Text style={formLine}>________________________________________</Text>
-              <Text style={formText}>Datum:</Text>
-              <Text style={formLine}>________________________________________</Text>
-              <Text style={formText}>(*) Unzutreffendes streichen.</Text>
-            </Section>
-
-            <Text style={contactLine}>
-              Unsere AGB: <Link href="https://kfz-termin.online/agb" style={emailLink}>kfz-termin.online/agb</Link>
-            </Text>
           </Section>
 
           <WithdrawLinkLine withdrawToken={withdrawToken} />
@@ -242,6 +203,50 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
           <Text style={footer}>
             Herzliche Grüße<br />Dein Team von {SITE_NAME}
           </Text>
+
+          <Hr style={legalRule} />
+          <Section>
+            <Text style={legalSectionTitle}>Rechtliche Pflichtangaben</Text>
+            <Text style={legalSmallHeading}>Widerrufsbelehrung</Text>
+            <Text style={legalText}>{WITHDRAWAL_SCOPE}</Text>
+            <Text style={legalText}><strong>{WITHDRAWAL_STAND}</strong></Text>
+            <Text style={legalSmallHeading}>Widerrufsrecht</Text>
+            <Text style={legalText}>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</Text>
+            <Text style={legalText}>Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsschlusses.</Text>
+            <Text style={legalText}>Um Ihr Widerrufsrecht auszuüben, müssen Sie uns</Text>
+            <Text style={legalText}>Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />Telefon: 0151 53461798<br />E-Mail: <Link href={`mailto:${CONTACT_EMAIL}`} style={legalLink}>{CONTACT_EMAIL}</Link></Text>
+            <Text style={legalText}>mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder eine E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</Text>
+            <Text style={legalText}>Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.</Text>
+            <Text style={legalSmallHeading}>Folgen des Widerrufs</Text>
+            <Text style={legalText}>Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist. Für diese Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.</Text>
+            <Text style={legalText}>Haben Sie verlangt, dass die Dienstleistung während der Widerrufsfrist beginnen soll, so haben Sie uns einen angemessenen Betrag zu zahlen, der dem Anteil der bis zu dem Zeitpunkt, zu dem Sie uns von der Ausübung des Widerrufsrechts hinsichtlich dieses Vertrags unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.</Text>
+            <Text style={legalSmallHeading}>Besondere Hinweise</Text>
+            <Text style={legalText}>Ihr Widerrufsrecht erlischt vorzeitig, wenn wir die Dienstleistung vollständig erbracht haben und mit der Ausführung der Dienstleistung erst begonnen haben, nachdem Sie dazu Ihre ausdrückliche Zustimmung gegeben und gleichzeitig Ihre Kenntnis davon bestätigt haben, dass Sie Ihr Widerrufsrecht bei vollständiger Vertragserfüllung durch uns verlieren (§ 356 Abs. 4 BGB).</Text>
+            <Text style={legalText}>{WITHDRAWAL_COMPLETED}</Text>
+
+            <Section>
+              <Text style={legalSmallHeading}>Muster-Widerrufsformular</Text>
+              <Text style={legalText}>(Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.)</Text>
+              <Text style={legalText}>An:<br />Eike Hoffmann<br />KFZ-Termin<br />Longericher Str. 31<br />50739 Köln<br />E-Mail: {CONTACT_EMAIL}</Text>
+              <Text style={legalText}>Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über die Erbringung der folgenden Dienstleistung:</Text>
+              <Text style={legalText}>________________________________________</Text>
+              <Text style={legalText}>Bestellt am (*) / erhalten am (*):</Text>
+              <Text style={legalText}>________________________________________</Text>
+              <Text style={legalText}>Name des/der Verbraucher(s):</Text>
+              <Text style={legalText}>________________________________________</Text>
+              <Text style={legalText}>Anschrift des/der Verbraucher(s):</Text>
+              <Text style={legalText}>________________________________________</Text>
+              <Text style={legalText}>Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier):</Text>
+              <Text style={legalText}>________________________________________</Text>
+              <Text style={legalText}>Datum:</Text>
+              <Text style={legalText}>________________________________________</Text>
+              <Text style={legalText}>(*) Unzutreffendes streichen.</Text>
+            </Section>
+
+            <Text style={legalText}>
+              Unsere AGB: <Link href="https://kfz-termin.online/agb" style={legalLink}>kfz-termin.online/agb</Link>
+            </Text>
+          </Section>
         </Container>
       </Body>
     </Html>
@@ -340,3 +345,9 @@ const emailLink = { color: '#1a4fa3', textDecoration: 'underline' }
 const footerHint = { fontSize: '14px', color: '#374151', margin: '24px 0 4px' }
 const footerEmail = { fontSize: '14px', color: '#1a2540', margin: '0 0 24px', fontWeight: 500 as const }
 const footer = { fontSize: '14px', color: '#6b7280', margin: '24px 0 0' }
+
+const legalText = { fontSize: '12px', lineHeight: '1.5', color: '#6b7280', margin: '0 0 8px' }
+const legalSmallHeading = { fontSize: '12px', fontWeight: 700 as const, color: '#6b7280', margin: '12px 0 6px' }
+const legalSectionTitle = { fontSize: '12px', fontWeight: 700 as const, color: '#6b7280', margin: '0 0 8px', textTransform: 'uppercase' as const, letterSpacing: '0.5px' }
+const legalLink = { color: '#6b7280', textDecoration: 'underline' }
+const legalRule = { borderColor: '#e5e7eb', margin: '32px 0 16px' }
