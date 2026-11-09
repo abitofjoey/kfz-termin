@@ -35,16 +35,6 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "KFZ-Termin",
-          url: SITE,
-          email: "info@kfz-termin.online",
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
           "@type": "Service",
           name: "KFZ-Termin",
           url: SITE,
