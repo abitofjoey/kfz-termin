@@ -91,8 +91,7 @@ export const bonnContent: CityContent = {
     locationsTitle: "Die vier Bonner Standorte",
     locationsNote:
       "Viele Anliegen bearbeitet Bonn nur im Dienstleistungszentrum im Stadthaus. Im Formular siehst du für jedes Anliegen, welche Standorte möglich sind.",
-    honestNote:
-      "Reguläre Termine gibt es in Bonn oft erst mehrere Wochen im Voraus. Unser Service lohnt sich, wenn du früher einen Termin brauchst – wir buchen Termine, die durch Absagen frei werden.",
+    honestNote: "",
     bookingNotice:
       "Wir suchen rund um die Uhr nach freien Terminen. Sobald wir einen gefunden haben, buchen wir ihn für dich – alle Infos bekommst du per E-Mail von uns und von der Stadt Bonn.",
     servicesSubtitle: "Wähle dein Anliegen – einheitlicher Preis, keine versteckten Kosten.",
