@@ -43,7 +43,7 @@ const SearchEmailChangedEmail = ({ bookingId, withdrawToken, firstName, serviceT
           ) : (
           <Text style={s.infoText}>
             Sobald wir einen Termin gefunden haben, bekommst du wie gewohnt eine E-Mail von uns und
-            eine von der {s.authority(city)} an diese Adresse. Den Bestätigungslink der {s.authority(city)}
+            eine von der {s.authority(city)} an diese Adresse. Den Bestätigungslink der {s.authority(city)}{' '}
             musst du dann innerhalb von {s.confirmHours(city)} Stunden anklicken. Bitte schau dann auch in deine Ordner Spam und Werbung.
           </Text>
           )}
