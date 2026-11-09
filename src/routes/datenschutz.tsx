@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { LEGAL_AUTHORITIES_AGB, LEGAL_CITIES_WITH_ARTICLES, LEGAL_STAND } from "@/content/legal/cities";
+import { LEGAL_CITIES_WITH_ARTICLES, LEGAL_STAND } from "@/content/legal/cities";
 import { LegalPage } from "@/components/landing/LegalPage";
 
 export const Route = createFileRoute("/datenschutz")({

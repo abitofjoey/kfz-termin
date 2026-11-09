@@ -1,5 +1,5 @@
 import { formatPrice, vatAgbSentence } from "@/lib/price";
-import { LEGAL_AUTHORITIES_AGB, LEGAL_CITIES_WITH_ARTICLES, LEGAL_STAND } from "@/content/legal/cities";
+import { LEGAL_AUTHORITIES_AGB, LEGAL_STAND } from "@/content/legal/cities";
 import { cityOrDefault } from "@/lib/cities";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LegalPage } from "@/components/landing/LegalPage";
