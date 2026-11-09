@@ -300,7 +300,7 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
               {(id, aria) => <Input id={id} {...aria} type="email" {...register("email")} autoComplete="email" />}
             </Field>
             <p className="text-xs text-muted-foreground">
-              Wichtig: Die Zulassungsstelle lässt pro E-Mail-Adresse nur eine begrenzte Anzahl an Terminen zu. Hast du mit dieser Adresse bereits einen Termin bei der Zulassungsstelle Köln, nutze bitte eine andere. Buchst du mehrere Termine, verwende bitte jeweils eine eigene Adresse.
+              {"\n"}
             </p>
           </div>
 
