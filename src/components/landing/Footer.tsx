@@ -10,7 +10,7 @@ export function Footer({ city }: { city?: string } = {}) {
   const linkCls = "hover:text-white";
   return (
     <footer className="border-t border-border bg-primary text-primary-foreground">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 sm:flex-row sm:items-start sm:justify-between">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 pt-10 pb-28 sm:flex-row sm:items-start sm:justify-between md:pb-32 lg:gap-8">
         <div>
           <Brand city={city ?? ""} size="sm" asLink={false} onDark invertIcon />
           <nav aria-label="Städte" className="mt-3 text-sm text-white/90">
@@ -27,14 +27,20 @@ export function Footer({ city }: { city?: string } = {}) {
           <p className="mt-2 text-sm text-white/90">© 2026 KFZ-Termin</p>
         </div>
 
-        <nav aria-label="Rechtliches und Kontakt" className="flex flex-col items-start gap-2 text-sm text-white/90">
-          <Link to="/impressum" className={linkCls}>Impressum</Link>
-          <Link to="/datenschutz" className={linkCls}>Datenschutz</Link>
-          <Link to="/agb" className={linkCls}>AGB</Link>
-          <Link to="/widerrufsbelehrung" className={linkCls}>Widerrufsbelehrung</Link>
-          <button type="button" onClick={openSettings} className={`text-left ${linkCls}`}>
-            Cookie-Einstellungen
-          </button>
+        <nav aria-label="Rechtliches und Kontakt" className="flex min-w-0 flex-col items-start gap-2 text-sm text-white/90">
+          <div className="flex flex-col items-start gap-2 md:flex-row md:flex-wrap md:items-center md:gap-x-2 md:gap-y-1">
+            <Link to="/impressum" className={linkCls}>Impressum</Link>
+            <span aria-hidden="true" className="hidden text-white/60 md:inline">·</span>
+            <Link to="/datenschutz" className={linkCls}>Datenschutz</Link>
+            <span aria-hidden="true" className="hidden text-white/60 md:inline">·</span>
+            <Link to="/agb" className={linkCls}>AGB</Link>
+            <span aria-hidden="true" className="hidden text-white/60 md:inline">·</span>
+            <Link to="/widerrufsbelehrung" className={linkCls}>Widerrufsbelehrung</Link>
+            <span aria-hidden="true" className="hidden text-white/60 md:inline">·</span>
+            <button type="button" onClick={openSettings} className={`text-left ${linkCls}`}>
+              Cookie-Einstellungen
+            </button>
+          </div>
           <a href="mailto:info@kfz-termin.online" className={linkCls}>
             Kontakt: info@kfz-termin.online
           </a>
