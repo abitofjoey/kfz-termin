@@ -71,6 +71,26 @@ export const Route = createFileRoute("/api/internal/daily-status")({
             }
           }
         }
+        // Portal-Check: interne Übersicht nur bei Abweichung oder >48 h ohne Meldung.
+        try {
+          const { portalDailyLine, portalDailyNeedsMail } = await import("@/lib/portal-check");
+          const { data: pcRows, error: pcErr } = await supabaseAdmin
+            .from("portal_checks").select("city, ok, findings, changed_at, last_check_at");
+          if (pcErr) console.error("daily status: portal read error", pcErr.code);
+          else {
+            const lines = monitoredCities().map((c) =>
+              portalDailyLine(c, pcRows?.find((r) => r.city === c.slug) ?? null, Date.now()));
+            if (!dryRun && portalDailyNeedsMail(lines)) {
+              await sendTemplateEmail("portal-check-daily", "info@kfz-termin.online", {
+                idempotencyKey: `portal-check-daily-${today}`,
+                templateData: { lines },
+              });
+            }
+          }
+        } catch (e) {
+          console.error("daily status: portal mail failed", e instanceof Error ? e.message : "unknown");
+        }
+
         const activeSlugs = monitoredCities().map((c) => c.slug).filter((s) => !downCities.includes(s));
         if (activeSlugs.length === 0) {
           return Response.json({ ok: true, date: today, candidates: 0, sent: 0, piDown: true });
