@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getCity, DEFAULT_CITY } from "@/lib/cities";
+import { normalizeScriptVersion } from "@/lib/script-release";
 import { mapBookingForScript, type ScriptBookingRow } from "@/lib/script-mapping";
 
 export const Route = createFileRoute("/api/internal/pending-bookings")({
@@ -29,6 +30,8 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
         const apiParam = new URL(request.url).searchParams.get("schnittstelle");
         const apiStatus = apiParam === "ok" || apiParam === "notbetrieb" ? apiParam : null;
 
+        const scriptVersion = normalizeScriptVersion(request.headers.get("x-script-version"));
+
         try {
           let prevStatus: string | null = null;
           if (apiStatus) {
@@ -43,7 +46,12 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
           const { error: hbError } = await supabaseAdmin
             .from("script_heartbeat")
             .upsert(
-              apiStatus ? { city, last_poll_at: nowIso, api_status: apiStatus } : { city, last_poll_at: nowIso },
+              {
+                city,
+                last_poll_at: nowIso,
+                ...(apiStatus ? { api_status: apiStatus } : {}),
+                ...(scriptVersion ? { script_version: scriptVersion } : {}),
+              },
               { onConflict: "city" },
             );
           if (hbError) console.error("pending-bookings: heartbeat error", hbError.code);
