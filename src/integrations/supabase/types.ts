@@ -257,18 +257,21 @@ export type Database = {
           api_status: string | null
           city: string
           last_poll_at: string
+          script_version: string | null
         }
         Insert: {
           alert_sent_at?: string | null
           api_status?: string | null
           city: string
           last_poll_at: string
+          script_version?: string | null
         }
         Update: {
           alert_sent_at?: string | null
           api_status?: string | null
           city?: string
           last_poll_at?: string
+          script_version?: string | null
         }
         Relationships: []
       }
