@@ -18,11 +18,11 @@ describe("Formular-Hinweis über den Kontaktdaten", () => {
     expect(koeln).not.toContain("(Anrede");
   });
 
-  it("Bonn Kfz: Halter-Hinweis mit Vollmacht, ohne E-Mail-Regel", () => {
+  it("Bonn Kfz: Halter-Hinweis mit Vollmacht und E-Mail-Regel", () => {
     expect(boldPart(bonnKfz)).toBe("Wichtig:");
     expect(bonnKfz).toContain("**künftigen Halterin / des künftigen Halters**");
     expect(bonnKfz).toContain("Jemand anderes kann mit Vollmacht hingehen.");
-    expect(bonnKfz).not.toContain("Pro E-Mail-Adresse");
+    expect(bonnKfz).toContain("Pro E-Mail-Adresse ist nur eine Buchung möglich.");
     expect(bonnKfz).not.toContain("Führerschein");
   });
 
@@ -30,6 +30,7 @@ describe("Formular-Hinweis über den Kontaktdaten", () => {
     expect(boldPart(bonnFuehrerschein)).toBe("Wichtig:");
     expect(bonnFuehrerschein).toContain("**um deren Führerschein es geht**");
     expect(bonnFuehrerschein).toContain("darauf wird der Termin gebucht.");
+    expect(bonnFuehrerschein).toContain("Pro E-Mail-Adresse ist nur eine Buchung möglich.");
     expect(bonnFuehrerschein).not.toContain("Vollmacht");
     expect(bonnFuehrerschein).not.toContain("Halterin");
   });

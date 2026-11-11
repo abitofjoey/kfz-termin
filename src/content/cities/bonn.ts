@@ -84,9 +84,9 @@ export const bonnContent: CityContent = {
   },
   multi: {
     formNotice: {
-      kfz: "**Wichtig:** Bitte die Daten der **künftigen Halterin / des künftigen Halters** angeben – darauf wird der Termin gebucht. Jemand anderes kann mit Vollmacht hingehen.",
+      kfz: "**Wichtig:** Bitte die Daten der **künftigen Halterin / des künftigen Halters** angeben – darauf wird der Termin gebucht. Jemand anderes kann mit Vollmacht hingehen. Pro E-Mail-Adresse ist nur eine Buchung möglich.",
       fuehrerschein:
-        "**Wichtig:** Bitte die Daten der Person angeben, **um deren Führerschein es geht** – darauf wird der Termin gebucht.",
+        "**Wichtig:** Bitte die Daten der Person angeben, **um deren Führerschein es geht** – darauf wird der Termin gebucht. Pro E-Mail-Adresse ist nur eine Buchung möglich.",
     },
     steps: [
       { title: "Anliegen wählen", text: "Wähle Kfz-Zulassung oder Führerschein und dann dein Anliegen." },
