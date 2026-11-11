@@ -15,6 +15,7 @@ import { createCheckoutSession } from "@/lib/stripe.functions";
 import { getCity, BONN_MAIN_LOCATION, type ServiceCategory } from "@/lib/cities";
 import { getServices, possibleLocations } from "@/lib/services";
 import { formatPrice, vatShortNote } from "@/lib/price";
+import { CITY_CONTENT } from "@/content/cities";
 
 const Calendar = lazy(() => import("@/components/ui/calendar").then((m) => ({ default: m.Calendar })));
 
@@ -172,6 +173,15 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
           <div role="status" className="mx-auto mt-6 flex max-w-2xl items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground">
             <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
             <p><strong>Buchungen für {city.name} starten in Kürze.</strong></p>
+          </div>
+        ) : null}
+
+        {CITY_CONTENT[city.slug]?.multi?.personNotice ? (
+          <div className="mx-auto mt-6 flex max-w-2xl items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground">
+            <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
+            <p>
+              <strong>Wichtig:</strong> Bitte gib die Daten der <strong>Person an, die den Termin wahrnimmt</strong> (Anrede, Vor- und Nachname, E-Mail, Telefonnummer). {CITY_CONTENT[city.slug]?.multi?.personNotice}
+            </p>
           </div>
         ) : null}
 
