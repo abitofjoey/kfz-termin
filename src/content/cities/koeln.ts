@@ -23,6 +23,8 @@ export type CityContent = {
     locationsNote: string;
     honestNote: string;
     bookingNotice: string;
+    /** Hinweis über dem Formular: wessen Daten eingetragen werden. */
+    personNotice?: string;
     /** Untertitel des Abschnitts "Unsere Services". */
     servicesSubtitle?: string;
     /** Häkchen-Liste der Service-Karte je Anliegen. */
