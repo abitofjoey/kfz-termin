@@ -21,7 +21,7 @@ export const Route = createFileRoute("/api/internal/heartbeat")({
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { data, error } = await supabaseAdmin
           .from("script_heartbeat")
-          .select("last_poll_at")
+          .select("last_poll_at, script_version")
           .eq("city", city)
           .maybeSingle();
 
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/api/internal/heartbeat")({
 
         const lastPollAt = new Date(data.last_poll_at);
         const ageSeconds = Math.floor((Date.now() - lastPollAt.getTime()) / 1000);
-        return Response.json({ lastPollAt: lastPollAt.toISOString(), ageSeconds });
+        return Response.json({ lastPollAt: lastPollAt.toISOString(), ageSeconds, scriptVersion: data.script_version ?? null });
       },
     },
   },
