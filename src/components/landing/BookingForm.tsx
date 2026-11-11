@@ -1,6 +1,7 @@
 import { formatPrice, vatShortNote } from "@/lib/price";
 import { cityOrDefault } from "@/lib/cities";
 import { CITY_CONTENT } from "@/content/cities";
+import { InlineBold } from "@/components/landing/InlineBold";
 import { useState, useMemo, useEffect, useId, lazy, Suspense } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -232,7 +233,7 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
         <div className="mx-auto mt-6 flex max-w-2xl items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground">
           <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
           <p>
-            <strong>Wichtig:</strong> Bitte gib die Daten der <strong>künftigen Halterin / des künftigen Halters</strong> des Fahrzeugs an (Anrede, Vor- und Nachname, E-Mail, Telefonnummer). {CITY_CONTENT[city]?.single?.holderNotice}&nbsp;
+            <InlineBold text={CITY_CONTENT[city]?.single?.formNotice ?? ""} />
           </p>
         </div>
 
