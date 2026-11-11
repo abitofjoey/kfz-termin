@@ -16,6 +16,7 @@ import { getCity, BONN_MAIN_LOCATION, type ServiceCategory } from "@/lib/cities"
 import { getServices, possibleLocations } from "@/lib/services";
 import { formatPrice, vatShortNote } from "@/lib/price";
 import { CITY_CONTENT } from "@/content/cities";
+import { InlineBold } from "@/components/landing/InlineBold";
 
 const Calendar = lazy(() => import("@/components/ui/calendar").then((m) => ({ default: m.Calendar })));
 
@@ -160,6 +161,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
   };
 
   const price = formatPrice(city.priceCents);
+  const formNotice = CITY_CONTENT[city.slug]?.multi?.formNotice?.[category];
 
   return (
     <section id="buchung" aria-labelledby="buchung-heading" className="bg-background py-20">
@@ -176,11 +178,11 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
           </div>
         ) : null}
 
-        {CITY_CONTENT[city.slug]?.multi?.personNotice ? (
+        {formNotice ? (
           <div className="mx-auto mt-6 flex max-w-2xl items-start gap-2 rounded-md border border-warning-border bg-warning p-3 text-sm text-warning-foreground">
             <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
             <p>
-              <strong>Wichtig:</strong> Bitte gib die Daten der <strong>Person an, die den Termin wahrnimmt</strong> (Anrede, Vor- und Nachname, E-Mail, Telefonnummer). {CITY_CONTENT[city.slug]?.multi?.personNotice}
+              <InlineBold text={formNotice} />
             </p>
           </div>
         ) : null}

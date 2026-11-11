@@ -1,6 +1,7 @@
 import type { CityService } from "@/lib/services";
 import { formatPrice } from "@/lib/price";
 import { CITIES, KOELN_PRICE_CENTS } from "@/lib/cities";
+import type { ServiceCategory } from "@/lib/cities";
 
 const K = CITIES.koeln;
 const H = K.customerConfirmationHours;
@@ -23,8 +24,8 @@ export type CityContent = {
     locationsNote: string;
     honestNote: string;
     bookingNotice: string;
-    /** Hinweis über dem Formular: wessen Daten eingetragen werden. */
-    personNotice?: string;
+    /** Hinweis über dem Formular: wessen Daten eingetragen werden, je Bereich. **fett** wird fett dargestellt. */
+    formNotice?: Record<ServiceCategory, string>;
     /** Untertitel des Abschnitts "Unsere Services". */
     servicesSubtitle?: string;
     /** Häkchen-Liste der Service-Karte je Anliegen. */
@@ -34,7 +35,8 @@ export type CityContent = {
   single?: {
     stepsIntro: string;
     steps: { title: string; text: string }[];
-    holderNotice: string;
+    /** Hinweis über dem Formular: wessen Daten eingetragen werden. **fett** wird fett dargestellt. */
+    formNotice: string;
     emailHint: string;
   };
   faq: FaqItem[];
@@ -142,7 +144,8 @@ export const koelnContent: CityContent = {
       { title: "Bestätigungs-E-Mail erhalten", text: `Sobald ein Termin reserviert ist, bekommst du eine E-Mail von uns und eine von der ${K.pages.authorityShort} mit dem Bestätigungslink.` },
       { title: "Termin bestätigen", text: `Bitte bestätige den Termin innerhalb von ${H} Stunden per Klick in der E-Mail – andernfalls verfällt die Reservierung.` },
     ],
-    holderNotice: "Diese Angaben werden bei der Zulassungsstelle für die Terminbuchung verwendet. Mehrfachbuchungen über dieselbe Email-Adresse sind nicht möglich.",
+    formNotice:
+      "**Wichtig:** Bitte die Daten der **künftigen Halterin / des künftigen Halters** angeben – darauf wird der Termin gebucht. Jemand anderes kann mit Vollmacht hingehen. Pro E-Mail-Adresse ist nur eine Buchung möglich.",
     emailHint: `Sobald wir einen Termin gefunden haben, schickt dir die ${K.adjective} Zulassungsstelle eine Bestätigungsmail – bitte klicke den Link darin innerhalb von ${H} Stunden an.`,
   },
   faq: koelnFaq,
