@@ -83,7 +83,11 @@ export const bonnContent: CityContent = {
     scopeLabel: "Vier Standorte in Bonn",
   },
   multi: {
-    personNotice: "Diese Angaben werden bei der Stadt Bonn für die Terminbuchung verwendet. Mehrfachbuchungen über dieselbe E-Mail-Adresse sind nicht möglich.",
+    formNotice: {
+      kfz: "**Wichtig:** Bitte die Daten der **künftigen Halterin / des künftigen Halters** angeben – darauf wird der Termin gebucht. Jemand anderes kann mit Vollmacht hingehen.",
+      fuehrerschein:
+        "**Wichtig:** Bitte die Daten der Person angeben, **um deren Führerschein es geht** – darauf wird der Termin gebucht.",
+    },
     steps: [
       { title: "Anliegen wählen", text: "Wähle Kfz-Zulassung oder Führerschein und dann dein Anliegen." },
       { title: "Wunschtage und Standort", text: "Wähle die Tage, an denen du kannst, und den Standort, der für dich passt." },
