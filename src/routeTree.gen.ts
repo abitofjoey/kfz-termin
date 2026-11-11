@@ -27,6 +27,7 @@ import { Route as KalenderChar123tokenChar125DoticsRouteImport } from './routes/
 import { Route as ApiInternalDailyStatusRouteImport } from './routes/api/internal/daily-status'
 import { Route as ApiInternalHeartbeatRouteImport } from './routes/api/internal/heartbeat'
 import { Route as ApiInternalPendingBookingsRouteImport } from './routes/api/internal/pending-bookings'
+import { Route as ApiInternalPortalCheckRouteImport } from './routes/api/internal/portal-check'
 import { Route as LovableEmailEventsRouteImport } from './routes/lovable/email/events'
 import { Route as ApiInternalHealthCheckRouteImport } from './routes/api/internal/health/check'
 import { Route as ApiInternalRefundsDueRouteImport } from './routes/api/internal/refunds/due'
@@ -129,6 +130,11 @@ const ApiInternalPendingBookingsRoute =
     path: '/api/internal/pending-bookings',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiInternalPortalCheckRoute = ApiInternalPortalCheckRouteImport.update({
+  id: '/api/internal/portal-check',
+  path: '/api/internal/portal-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailEventsRoute = LovableEmailEventsRouteImport.update({
   id: '/lovable/email/events',
   path: '/lovable/email/events',
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/api/internal/daily-status': typeof ApiInternalDailyStatusRoute
   '/api/internal/heartbeat': typeof ApiInternalHeartbeatRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
+  '/api/internal/portal-check': typeof ApiInternalPortalCheckRoute
   '/lovable/email/events': typeof LovableEmailEventsRoute
   '/api/internal/health/check': typeof ApiInternalHealthCheckRoute
   '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/api/internal/daily-status': typeof ApiInternalDailyStatusRoute
   '/api/internal/heartbeat': typeof ApiInternalHeartbeatRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
+  '/api/internal/portal-check': typeof ApiInternalPortalCheckRoute
   '/lovable/email/events': typeof LovableEmailEventsRoute
   '/api/internal/health/check': typeof ApiInternalHealthCheckRoute
   '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
@@ -257,6 +265,7 @@ export interface FileRoutesById {
   '/api/internal/daily-status': typeof ApiInternalDailyStatusRoute
   '/api/internal/heartbeat': typeof ApiInternalHeartbeatRoute
   '/api/internal/pending-bookings': typeof ApiInternalPendingBookingsRouteWithChildren
+  '/api/internal/portal-check': typeof ApiInternalPortalCheckRoute
   '/lovable/email/events': typeof LovableEmailEventsRoute
   '/api/internal/health/check': typeof ApiInternalHealthCheckRoute
   '/api/internal/refunds/due': typeof ApiInternalRefundsDueRoute
@@ -288,6 +297,7 @@ export interface FileRouteTypes {
     | '/api/internal/daily-status'
     | '/api/internal/heartbeat'
     | '/api/internal/pending-bookings'
+    | '/api/internal/portal-check'
     | '/lovable/email/events'
     | '/api/internal/health/check'
     | '/api/internal/refunds/due'
@@ -317,6 +327,7 @@ export interface FileRouteTypes {
     | '/api/internal/daily-status'
     | '/api/internal/heartbeat'
     | '/api/internal/pending-bookings'
+    | '/api/internal/portal-check'
     | '/lovable/email/events'
     | '/api/internal/health/check'
     | '/api/internal/refunds/due'
@@ -346,6 +357,7 @@ export interface FileRouteTypes {
     | '/api/internal/daily-status'
     | '/api/internal/heartbeat'
     | '/api/internal/pending-bookings'
+    | '/api/internal/portal-check'
     | '/lovable/email/events'
     | '/api/internal/health/check'
     | '/api/internal/refunds/due'
@@ -376,6 +388,7 @@ export interface RootRouteChildren {
   ApiInternalDailyStatusRoute: typeof ApiInternalDailyStatusRoute
   ApiInternalHeartbeatRoute: typeof ApiInternalHeartbeatRoute
   ApiInternalPendingBookingsRoute: typeof ApiInternalPendingBookingsRouteWithChildren
+  ApiInternalPortalCheckRoute: typeof ApiInternalPortalCheckRoute
   LovableEmailEventsRoute: typeof LovableEmailEventsRoute
   ApiInternalHealthCheckRoute: typeof ApiInternalHealthCheckRoute
   ApiInternalRefundsDueRoute: typeof ApiInternalRefundsDueRoute
@@ -514,6 +527,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiInternalPendingBookingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/internal/portal-check': {
+      id: '/api/internal/portal-check'
+      path: '/api/internal/portal-check'
+      fullPath: '/api/internal/portal-check'
+      preLoaderRoute: typeof ApiInternalPortalCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/events': {
       id: '/lovable/email/events'
       path: '/lovable/email/events'
@@ -614,6 +634,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiInternalDailyStatusRoute: ApiInternalDailyStatusRoute,
   ApiInternalHeartbeatRoute: ApiInternalHeartbeatRoute,
   ApiInternalPendingBookingsRoute: ApiInternalPendingBookingsRouteWithChildren,
+  ApiInternalPortalCheckRoute: ApiInternalPortalCheckRoute,
   LovableEmailEventsRoute: LovableEmailEventsRoute,
   ApiInternalHealthCheckRoute: ApiInternalHealthCheckRoute,
   ApiInternalRefundsDueRoute: ApiInternalRefundsDueRoute,
