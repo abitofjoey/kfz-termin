@@ -251,6 +251,36 @@ export type Database = {
         }
         Relationships: []
       }
+      portal_checks: {
+        Row: {
+          changed_at: string
+          city: string
+          findings: Json
+          last_check_at: string
+          ok: boolean
+          script_version: string | null
+          signature: string
+        }
+        Insert: {
+          changed_at?: string
+          city: string
+          findings?: Json
+          last_check_at?: string
+          ok: boolean
+          script_version?: string | null
+          signature: string
+        }
+        Update: {
+          changed_at?: string
+          city?: string
+          findings?: Json
+          last_check_at?: string
+          ok?: boolean
+          script_version?: string | null
+          signature?: string
+        }
+        Relationships: []
+      }
       script_heartbeat: {
         Row: {
           alert_sent_at: string | null
