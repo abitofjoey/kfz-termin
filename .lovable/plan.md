@@ -1,32 +1,40 @@
-# Automatische Script-Updates für den Pi
+# Portal-Check
 
-## 1. Privater Speicherordner „script-releases"
-- Ich lege den Ordner privat an (nicht öffentlich).
-- Hochladen machst du selbst: **Cloud → Storage → script-releases → Upload**, Dateiname exakt `kfz-termin.user.js`; zum Ersetzen alte Datei löschen bzw. gleichnamig neu hochladen.
-- Ob der Upload-Knopf in deiner Ansicht wirklich da ist, kann ich vorab nicht sicher prüfen. Ich lege zuerst nur den Ordner an und du probierst es. Klappt es nicht, sage ich dir das und baue nichts weiter, bis du entscheidest (Ersatz wäre: du lädst die Datei hier im Chat hoch und ich lege sie ab).
+## Wichtiger Hinweis vorab (bitte bestätigen)
+Die heutige "tägliche Status-Mail" (19:20 Uhr) geht **an die Kunden**. An info@ geht abends nur dann eine Mail, wenn der Pi einer Stadt nicht erreichbar ist. Eine tägliche interne Übersicht gibt es noch nicht.
 
-## 2. Secret SCRIPT_UPDATE_TOKEN
-- Sicheres Eingabeformular; du gibst den Wert selbst ein. SCRIPT_API_KEY bleibt unberührt.
+Vorschlag: Im selben Abendlauf geht **zusätzlich eine neue interne Mail "Portal-Check täglich" an info@** (eine Mail, je Stadt eine Zeile). Kundenmails und die bestehende Pi-Mail bleiben unverändert. Portal-Zeilen kommen **nicht** in Kundenmails.
 
-## 3. Zwei Abruf-Adressen ohne Login
-- `/api/script/$token/kfz-termin.user.js` – ganze Datei
-- `/api/script/$token/kfz-termin.meta.js` – nur Block `// ==UserScript==` bis `// ==/UserScript==` (fehlt der Block → 404)
-- Token zeitkonstant gegen SCRIPT_UPDATE_TOKEN; falsch/Secret fehlt/Datei fehlt → 404 „Not found".
-- Jedes `{{UPDATE_TOKEN}}` wird durch den echten Token ersetzt.
-- Header: `Content-Type: text/javascript; charset=utf-8`, `Cache-Control: no-store`, `X-Robots-Tag: noindex` (auch bei 404).
-- Log nur „script ausgeliefert (user/meta)", nie der Token.
+## 1. Neue Tabelle portal_checks
+Spalten wie vorgegeben: city (Primärschlüssel), ok, signature, findings (Liste von Texten), script_version (optional), changed_at, last_check_at. Nur der Server hat Zugriff, kein öffentlicher Zugriff.
 
-## 4. Versionsanzeige
-- Migration: `script_heartbeat.script_version text NULL`.
-- `pending-bookings`: Header `x-script-version` (gekürzt auf max. 32 Zeichen) wird beim bestehenden Heartbeat-Speichern mitgeschrieben; ohne Header exakt wie bisher.
-- `/api/internal/heartbeat`: zusätzlich `scriptVersion` (oder `null`).
+## 2. POST /api/internal/portal-check
+- Anmeldung wie bei den anderen internen Routen (x-script-key gegen SCRIPT_API_KEY), vor jedem Datenbankzugriff.
+- Prüfung: city muss eine bekannte Stadt aus der Stadtkonfiguration sein, ok ist ja/nein, findings höchstens 50 Texte mit je max. 300 Zeichen, bereiche ist eine Liste von Texten. Bei Fehlern 400.
+- `bereiche` wird angenommen und geprüft, aber nicht gespeichert (keine Spalte vorgesehen).
+- x-script-version (falls vorhanden, gekürzt auf 50 Zeichen) wird mitgespeichert.
+- signature = findings sortiert, mit Zeilenumbruch verbunden; leer = "ok".
+- Kein Eintrag vorhanden: speichern (changed_at = last_check_at = jetzt); Mail nur bei ok=false (Abweichungs-Mail).
+- signature geändert: speichern, changed_at = jetzt, interne Mail an info@:
+  - ok=false: Betreff "[Stadt] Terminseite geändert – N Abweichung(en)", alle findings als Liste, darunter "Bitte Script/Website prüfen lassen (Claude Bescheid geben). Suchen und Buchen laufen unverändert weiter."
+  - ok=true: Betreff "[Stadt] Terminseite wieder wie erwartet".
+- Unverändert: nur last_check_at (und script_version) aktualisieren, keine Mail.
+- Antwort { ok: true }. Mailfehler verhindern das Speichern nicht.
+- Mail-Wiederholschutz über einen Schlüssel aus Stadt + changed_at.
 
-## 5. robots.txt
-- `Disallow: /api/` ergänzen.
+## 3. Tägliche Übersicht (siehe Hinweis oben)
+Je Stadt mit Pi-Überwachung eine Zeile:
+- "Portal-Check: ok"
+- "Portal-Check: N Abweichung(en) seit <changed_at, Berliner Zeit>"
+- last_check_at älter als 48 Stunden oder kein Eintrag: "Portal-Check: seit <Datum> keine Meldung" bzw. "noch keine Meldung".
+Einmal pro Tag (Wiederholschutz über das Datum). Im Testlauf (dryRun) wird nichts verschickt.
 
-## Prüfung
-- Tests für Token-Prüfung, Kopfblock-Ausschnitt und Platzhalter-Ersetzung; Typecheck/Build; 404 mit falschem Token per Abruf. Nicht veröffentlichen.
+## Nicht geändert
+Bestehende interne Routen, SCRIPT_API_KEY, Kundenmails, Cron-Jobs, Buchungsablauf.
 
-## Technisch
-- Neue Datei `src/routes/api/script/$token/$file.ts` (ein Handler, `$file` nur die zwei erlaubten Namen, sonst 404), Download per Admin-Client im Handler nach Token-Prüfung; Hilfsfunktionen in `src/lib/script-release.ts`.
-- Bestehende interne Routen ändern sich nur um die Versions-Spalte, Auth bleibt gleich.
+## Technische Details
+- Migration: CREATE TABLE public.portal_checks, GRANT ALL an service_role, RLS an, Policy nur service_role.
+- Neue Route `src/routes/api/internal/portal-check.ts` (Zod), Logik zu signature/Entscheidung als reine Funktion in `src/lib/portal-check.ts` mit Tests (neu/unverändert/geändert/wieder ok, Grenzen 50/300).
+- Neue Templates `portal-check-changed-internal.tsx`, `portal-check-recovered-internal.tsx`, `portal-check-daily-internal.tsx` + Registry.
+- `daily-status.ts`: Portal-Abschnitt ergänzen, sonstiger Ablauf unverändert.
+- Typecheck, Tests, 401-Test; nicht veröffentlichen, bis du es sagst.
