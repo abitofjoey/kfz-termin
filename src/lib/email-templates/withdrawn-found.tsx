@@ -1,7 +1,7 @@
 import { Body, Container, Head, Heading, Html, Hr, Link, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
-import { cityOrDefault } from '../cities'
+import { cityOrDefault, authorityOf } from '../cities'
 import { formatBerlinLong } from './format-berlin'
 
 interface Props {
@@ -27,7 +27,7 @@ const WithdrawnFoundEmail = ({ bookingId, firstName, appointmentAt, city, cancel
           <Text style={s.text}>
             Wir hatten kurz vor deinem Widerruf noch einen Termin gebucht. Bitte storniere ihn über diesen
             Link, damit der Termin wieder frei wird:{' '}
-            {cancelUrl ? <Link href={cancelUrl} style={s.link}>Termin stornieren</Link> : 'Den Stornolink findest du in der Bestätigung der Stadt.'}
+            {cancelUrl ? <Link href={cancelUrl} style={s.link}>Termin stornieren</Link> : `Den Stornolink findest du in der Bestätigung ${authorityOf(cityOrDefault(city))}.`}
           </Text>
         ) : (
         <Text style={s.text}>

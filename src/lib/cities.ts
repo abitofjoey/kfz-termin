@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import { KoelnLandmark } from "@/assets/landmarks/koeln";
 import { BonnLandmark } from "@/assets/landmarks/bonn";
+import { RecklinghausenLandmark } from "@/assets/landmarks/recklinghausen";
 
 /** Firmenname – für alle Städte gleich. */
 export const BRAND_NAME = "KFZ-Termin";
@@ -51,6 +52,8 @@ export type CityConfig = CategorySettings & {
   siteName: string;
   /** Produktbeschreibung im Stripe-Checkout. */
   checkoutDescription: string;
+  /** Ablauf: "single" = Kölner Ablauf (Kunde bestätigt), "multi" = Bonner Ablauf (Script-Format, Standort-/Nummernzeilen). */
+  flow: "single" | "multi";
   form: {
     finRequired: boolean;
     salutationRequired: boolean;
@@ -67,6 +70,18 @@ export type CityConfig = CategorySettings & {
     /** Pflicht, Aufrufnummer und Stornolink in Mails anzeigen. */
     showBookingReference: boolean;
     showCancelUrl: boolean;
+    /** Ablauf "multi": Bezeichnung der Nummer, z.B. "Aufrufnummer". */
+    referenceLabel?: string;
+    /** Ablauf "multi": "So läuft dein Termin ab" – {nummer} = " <Nummer>" oder leer, **fett**. */
+    onSiteSteps?: string[];
+    /** Ablauf "multi": Hinweis auf die eigene Bestätigung der Behörde (**fett**). */
+    cityConfirmationNote?: string;
+    /** Ablauf "multi": Linktext zur Infoseite, z.B. "Seite der Stadt Bonn". */
+    infoLinkLabel?: string;
+    /** Ablauf "multi": Check-in-Hinweis im Kalendereintrag. */
+    calendarCheckIn?: string;
+    /** Genitiv der Behörde in Fließtexten, z.B. "der Stadt" (Standard). */
+    authorityOf?: string;
   };
   /** Texte der Kundenseiten nach der Buchung. */
   pages: {
@@ -76,6 +91,10 @@ export type CityConfig = CategorySettings & {
     successIntro: string | null;
     /** Hinweisbox auf /buchung-erfolgreich; null = Standard-Box mit Bestätigungsfrist. */
     successNotice: string | null;
+    /** Infolink der Service-Karte, z.B. "beim Kreis Recklinghausen" (Standard "bei der Stadt <Name>"). */
+    infoAt?: string;
+    /** Kurzlabel des Infolinks, z.B. "Kreis Recklinghausen" (Standard "Stadt <Name>"). */
+    infoShort?: string;
   };
   launched: boolean;
   bookable: boolean;
@@ -124,6 +143,7 @@ export const CITIES: Record<string, CityConfig> = {
     searchHours: { from: 6, to: 20 },
     priceCents: KOELN_PRICE_CENTS,
     customerConfirmationHours: 3,
+    flow: "single",
     form: { finRequired: true, salutationRequired: true, locationChoice: false, financedCheckbox: false },
     mail: { atAuthority: "bei der Kölner Zulassungsstelle", authority: "Zulassungsstelle", showBookingReference: false, showCancelUrl: false },
     pages: { authorityShort: "Zulassungsstelle Köln", successIntro: null, successNotice: null },
@@ -155,6 +175,7 @@ export const CITIES: Record<string, CityConfig> = {
     searchHours: { from: 0, to: 24 },
     priceCents: CITY_PRICE_CENTS,
     customerConfirmationHours: null,
+    flow: "multi",
     form: { finRequired: false, salutationRequired: false, locationChoice: true, financedCheckbox: true },
     categories: {
       fuehrerschein: {
@@ -168,7 +189,24 @@ export const CITIES: Record<string, CityConfig> = {
         },
       },
     },
-    mail: { atAuthority: "bei der Stadt Bonn", authority: "Stadt Bonn", showBookingReference: true, showCancelUrl: true },
+    mail: {
+      atAuthority: "bei der Stadt Bonn",
+      authority: "Stadt Bonn",
+      showBookingReference: true,
+      showCancelUrl: true,
+      referenceLabel: "Aufrufnummer",
+      onSiteSteps: [
+        "**Sei pünktlich:** Der Termin verfällt, wenn du nicht rechtzeitig da bist.",
+        "Melde dich vor Ort am Check-in-Terminal an: frühestens 15 Minuten vor und spätestens 5 Minuten nach Beginn. Dafür scannst du den QR-Code aus der Mail der Stadt oder gibst deine Aufrufnummer{nummer} ein. Ohne Anmeldung am Terminal wirst du nicht aufgerufen.",
+        "Danach im Wartebereich warten, bis deine Nummer auf der Anzeigetafel erscheint, und zum angezeigten Schalter gehen.",
+        "Es wird nur das gebuchte Anliegen bearbeitet.",
+        "Gebühren kannst du mit EC- oder Kreditkarte zahlen, auch Apple Pay und Google Pay.",
+      ],
+      cityConfirmationNote:
+        "**Hinweis:** Die Stadt Bonn schickt dir zusätzlich eine eigene Bestätigung mit QR-Code. Sie kann sich etwas verzögern – deine Aufrufnummer aus dieser Mail reicht für den Check-in.",
+      infoLinkLabel: "Seite der Stadt Bonn",
+      calendarCheckIn: "Check-in am Terminal 15 Min. vorher bis 5 Min. nach Beginn.",
+    },
     pages: {
       authorityShort: "Stadt Bonn",
       successIntro:
@@ -178,6 +216,63 @@ export const CITIES: Record<string, CityConfig> = {
     },
     launched: true,
     bookable: true,
+  },
+  recklinghausen: {
+    slug: "recklinghausen",
+    name: "Recklinghausen",
+    landmarkIcon: RecklinghausenLandmark,
+    adjective: "Recklinghäuser",
+    authorityName: "Kreis Recklinghausen – Straßenverkehrsamt, Zulassungsstelle Marl",
+    appointmentLocation: "Zulassung Marl, Stettiner Str. 10, 45770 Marl",
+    locations: [{ id: "marl", name: "Zulassung Marl", address: "Stettiner Str. 10, 45770 Marl" }],
+    portalUrl:
+      "https://terminvergabe.kreis-re.de/m/zulassung/extern/calendar/?uid=2dceea2a-91a4-49c7-8c4b-48ba42b167a8",
+    infoUrl: "https://www.kreis-re.de/strassenverkehrsamt",
+    siteName: BRAND_NAME,
+    checkoutDescription: `${BRAND_NAME} – Terminservice bei der Zulassungsstelle Marl (Kreis Recklinghausen)`,
+    calendar: {
+      minOffsetDays: 1,
+      afterCutoffOffsetDays: 1,
+      cutoffHour: 24,
+      windowDays: 28,
+      allowWeekends: false,
+      blockedDates: [],
+    },
+    searchHours: { from: 0, to: 24 },
+    priceCents: CITY_PRICE_CENTS,
+    customerConfirmationHours: null,
+    flow: "multi",
+    form: { finRequired: false, salutationRequired: true, locationChoice: false, financedCheckbox: false },
+    mail: {
+      atAuthority: "bei der Zulassungsstelle Marl (Kreis Recklinghausen)",
+      authority: "Zulassungsstelle",
+      showBookingReference: true,
+      showCancelUrl: true,
+      referenceLabel: "Terminnummer",
+      onSiteSteps: [
+        "Sei pünktlich – plane etwas Puffer für Anfahrt und Parken ein.",
+        "Melde dich vor Ort am Check-in-Terminal an, frühestens 10 Minuten vor Beginn. Dafür scannst du den QR-Code aus der Mail des Kreises oder gibst deine Terminnummer{nummer} ein. Ohne Anmeldung am Terminal wirst du nicht aufgerufen.",
+        "Danach im Warteraum warten, bis deine Terminnummer aufgerufen wird, und zum angezeigten Schalter gehen.",
+        "Es wird nur das gebuchte Anliegen für die angegebene Person bearbeitet.",
+        "Gebühren zahlst du nur bargeldlos – mit EC-/Debitkarte oder Kreditkarte. Barzahlung ist nicht möglich.",
+      ],
+      cityConfirmationNote:
+        "**Hinweis:** Der Kreis Recklinghausen schickt dir zusätzlich eine eigene Bestätigung mit QR-Code. Bitte bring sie zum Termin mit (ausgedruckt oder auf dem Handy). Deine Terminnummer aus dieser Mail reicht für den Check-in.",
+      infoLinkLabel: "Seite des Kreises Recklinghausen",
+      calendarCheckIn: "Check-in am Terminal frühestens 10 Min. vor Beginn.",
+      authorityOf: "des Kreises",
+    },
+    pages: {
+      authorityShort: "Zulassungsstelle Marl",
+      infoAt: "beim Kreis Recklinghausen",
+      infoShort: "Kreis Recklinghausen",
+      successIntro:
+        "Wir haben deine Zahlung erhalten und suchen ab sofort rund um die Uhr nach einem freien Termin bei der Zulassungsstelle Marl. Du erhältst in Kürze eine Bestätigungsmail.",
+      successNotice:
+        "Sobald wir einen Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum, Uhrzeit und deiner Terminnummer. Du musst nichts mehr bestätigen. Zusätzlich schickt dir der Kreis Recklinghausen eine eigene Bestätigung mit QR-Code – bitte bring sie zum Termin mit. Schau auch in deinen Ordnern Spam und Werbung nach.",
+    },
+    launched: false,
+    bookable: false,
   },
 };
 
@@ -209,4 +304,11 @@ export function settingsFor(city: CityConfig, category: ServiceCategory = "kfz")
 }
 
 /** Präfix für interne Mails, z.B. "[Köln] ". */
+/** Behörde im Fließtext nach "die"/"zur" (Ablauf "multi": aus pages.authorityShort, z.B. "Stadt Bonn"). */
+export const authorityShortOf = (c: CityConfig) => c.pages.authorityShort;
+/** Genitiv der Behörde, z.B. "der Stadt" / "des Kreises". */
+export const authorityOf = (c: CityConfig) => c.mail.authorityOf ?? "der Stadt";
+/** Nummern-Bezeichnung in Mails/Kalender (Standard "Aufrufnummer"). */
+export const referenceLabelOf = (c: CityConfig) => c.mail.referenceLabel ?? "Aufrufnummer";
+
 export const internalPrefix = (slug: string | null | undefined) => `[${cityOrDefault(slug).name}] `;

@@ -42,6 +42,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
 
   const [category, setCategory] = useState<ServiceCategory>("kfz");
   const [serviceId, setServiceId] = useState<string>("");
+  const [salutation, setSalutation] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -63,7 +64,13 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
   const maxVehicles = service?.maxVehicles ?? 1;
   const allIds = city.locations.map((l) => l.id);
   const possible = service ? possibleLocations(service, allIds) : allIds;
-  const onlyMain = possible.length === 1 && possible[0] === BONN_MAIN_LOCATION;
+  const onlyMain = city.slug === "bonn" && possible.length === 1 && possible[0] === BONN_MAIN_LOCATION;
+  /** Stadt mit nur einem Standort: keine Auswahl, Infokasten. */
+  const singleLocation = city.locations.length === 1 ? city.locations[0] : null;
+  const categories = useMemo(
+    () => (["kfz", "fuehrerschein"] as const).filter((k) => getServices(city.slug).some((s) => s.category === k)),
+    [city.slug],
+  );
   const financedActive = isKfz && city.form.financedCheckbox && financed;
 
   useEffect(() => {
@@ -111,11 +118,12 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
   const validate = () => {
     const e: Record<string, string> = {};
     if (!service) e.service = "Bitte Dienstleistung wählen";
+    if (city.form.salutationRequired && !salutation) e.salutation = "Bitte Anrede wählen";
     if (!firstName.trim()) e.firstName = "Pflichtfeld";
     if (!lastName.trim()) e.lastName = "Pflichtfeld";
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) e.email = "Ungültige E-Mail-Adresse";
     if (phone.trim().length < 4) e.phone = "Pflichtfeld";
-    if (!financedActive && !onlyMain && mode === "specific" && chosen.length === 0)
+    if (!singleLocation && !financedActive && !onlyMain && mode === "specific" && chosen.length === 0)
       e.locations = "Bitte mindestens einen Standort wählen";
     if (dates.length < 1) e.dates = "Bitte wähle mindestens 1 Wunschtag aus.";
     if (!agreeTerms) e.terms = "Bitte zustimmen";
@@ -133,12 +141,13 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
         data: {
           city: city.slug,
           service_id: service.id,
+          ...(city.form.salutationRequired ? { salutation } : {}),
           first_name: firstName,
           last_name: lastName,
           email,
           phone,
           vehicle_count: isKfz ? vehicles : undefined,
-          locations: financedActive || onlyMain || mode === "any" ? null : chosen,
+          locations: singleLocation || financedActive || onlyMain || mode === "any" ? null : chosen,
           financed: financedActive,
           selected_dates: dates.map((d) => format(d, "yyyy-MM-dd")),
         },
@@ -188,6 +197,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
         ) : null}
 
         <form onSubmit={onSubmit} noValidate aria-labelledby="buchung-heading" className="mt-10 space-y-6 rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
+          {categories.length > 1 ? (
           <fieldset className="space-y-2">
             <legend className="text-sm font-medium">Bereich *</legend>
             <div className="grid grid-cols-2 gap-3" role="radiogroup">
@@ -205,6 +215,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
               ))}
             </div>
           </fieldset>
+          ) : null}
 
           <Field label="Dienstleistung" error={errors.service}>
             {(id) => (
@@ -220,6 +231,23 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
               </Select>
             )}
           </Field>
+
+          {city.form.salutationRequired ? (
+            <Field label="Anrede" error={errors.salutation}>
+              {(id) => (
+                <Select value={salutation} onValueChange={setSalutation}>
+                  <SelectTrigger id={id} aria-invalid={!!errors.salutation}>
+                    <SelectValue placeholder="Bitte auswählen" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {(["Herr", "Frau", "Divers"] as const).map((v) => (
+                      <SelectItem key={v} value={v}>{v}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </Field>
+          ) : null}
 
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Vorname" error={errors.firstName}>
@@ -263,6 +291,11 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
             </div>
           ) : null}
 
+          {singleLocation ? (
+            <p className="rounded-md bg-muted p-3 text-sm text-muted-foreground">
+              <strong>Standort:</strong> {singleLocation.name}, {singleLocation.address}
+            </p>
+          ) : (
           <fieldset className="space-y-2">
             <legend className="text-sm font-medium">Standort *</legend>
             {financedActive || onlyMain ? (
@@ -304,6 +337,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
               </div>
             )}
           </fieldset>
+          )}
 
           <Field label="Wunschtag(e)" error={errors.dates}>
             {() => (

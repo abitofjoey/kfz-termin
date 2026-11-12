@@ -12,12 +12,17 @@ export const CityBookingInput = z.object({
   last_name: z.string().trim().min(1).max(100),
   email: z.string().trim().email().max(255),
   phone: z.string().trim().min(4).max(40),
+  /** Nur bei Städten mit form.salutationRequired. */
+  salutation: z.string().max(20).optional(),
   vehicle_count: z.number().int().min(1).max(10).optional(),
   /** null = "Egal wo". */
   locations: z.array(z.string().max(40)).max(10).nullable(),
   financed: z.boolean().optional(),
   selected_dates: z.array(z.string()).min(1).max(60),
 });
+
+/** Erlaubte Anreden (serverseitig geprüft). */
+export const SALUTATIONS = ["Herr", "Frau", "Divers"] as const;
 
 export type CityBookingData = z.infer<typeof CityBookingInput>;
 
@@ -32,6 +37,13 @@ export function prepareCityBooking(data: CityBookingData, now: Date = new Date()
   if (!areDatesAllowed(data.selected_dates, now, city.slug, service.category)) {
     return { ok: false as const, error: "Bitte wähle nur Tage aus, die im Kalender freigegeben sind." };
   }
+  let salutation = "";
+  if (city.form.salutationRequired) {
+    if (!data.salutation || !SALUTATIONS.includes(data.salutation as (typeof SALUTATIONS)[number])) {
+      return { ok: false as const, error: "Bitte Anrede wählen." };
+    }
+    salutation = data.salutation;
+  }
   const isKfz = service.category === "kfz";
   const max = service.maxVehicles ?? 1;
   const vehicles = isKfz ? data.vehicle_count ?? 1 : 1;
@@ -44,14 +56,14 @@ export function prepareCityBooking(data: CityBookingData, now: Date = new Date()
     possible,
     chosen: data.locations,
     financed,
-    mainLocation: BONN_MAIN_LOCATION,
+    mainLocation: city.slug === "bonn" ? BONN_MAIN_LOCATION : city.locations[0].id,
   });
   if (!locations) return { ok: false as const, error: "Bitte wähle mindestens einen möglichen Standort." };
   return {
     ok: true as const,
     row: {
       service_type: service.label,
-      salutation: "",
+      salutation,
       first_name: data.first_name,
       last_name: data.last_name,
       email: data.email,

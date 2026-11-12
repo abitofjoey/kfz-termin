@@ -1,3 +1,4 @@
+import { CITY_CONTENT } from "@/content/cities";
 import { formatPrice } from "@/lib/price";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -42,7 +43,7 @@ export const Route = createFileRoute("/")({
           url: SITE,
           description: "Automatisierte Terminsuche und -buchung bei der Kfz-Zulassungsstelle.",
           provider: { "@type": "Organization", name: "KFZ-Termin", url: SITE },
-          areaServed: launchedCities().map((c) => ({ "@type": "City", name: c.name })),
+          areaServed: launchedCities().map((c) => CITY_CONTENT[c.slug]?.serviceJsonLd.areaServed ?? { "@type": "City", name: c.name }),
           offers: { "@type": "Offer", price: (cityOrDefault(undefined).priceCents / 100).toFixed(2), priceCurrency: "EUR" },
         }),
       },

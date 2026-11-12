@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import { CITY_CONTENT } from "@/content/cities";
 
 const koeln = CITY_CONTENT.koeln.single!.formNotice;
-const bonnKfz = CITY_CONTENT.bonn.multi!.formNotice!.kfz;
-const bonnFuehrerschein = CITY_CONTENT.bonn.multi!.formNotice!.fuehrerschein;
+const bonnKfz = CITY_CONTENT.bonn.multi!.formNotice!.kfz!;
+const bonnFuehrerschein = CITY_CONTENT.bonn.multi!.formNotice!.fuehrerschein!;
 
 /** Fettet Textabschnitt zwischen zwei ** -Markierungen. */
 const boldPart = (text: string) => text.split("**")[1];

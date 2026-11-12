@@ -6,7 +6,7 @@ import type { TemplateEntry } from './registry'
 import { BookingNumberLine, WithdrawLinkLine } from './customer-email-parts'
 import { formatDayLong, locationsText } from './customer-email-parts'
 
-import { cityOrDefault } from '../cities'
+import { cityOrDefault, referenceLabelOf, authorityOf } from '../cities'
 import { WITHDRAWAL_SCOPE, WITHDRAWAL_STAND, WITHDRAWAL_COMPLETED } from '../../content/legal/withdrawal'
 import { formatPrice, vatMailValue } from '../price'
 const CONTACT_EMAIL = 'info@kfz-termin.online'
@@ -84,8 +84,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
           <Section style={infoBox}>
             <Text style={infoTitle}>🕐 So läuft es ab</Text>
             <Text style={infoText}>
-              Sobald wir einen passenden Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum,
-              Uhrzeit, Standort und Aufrufnummer. Du musst den Termin nicht mehr bestätigen.
+              {`Sobald wir einen passenden Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum, Uhrzeit, Standort und ${referenceLabelOf(c)}. Du musst den Termin nicht mehr bestätigen.`}
             </Text>
             <Text style={infoText}>
               Wir suchen rund um die Uhr. Behalte an deinen Wunschtagen dein E-Mail-Postfach im Blick.
@@ -176,7 +175,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
               Bestätigung der {c.mail.authority} dich nicht erreichen. Antworte
               in diesem Fall einfach auf diese E-Mail.</>) : (<>
               Sollten Name oder E-Mail nicht korrekt sein, erreicht dich die
-              Bestätigung der Stadt nicht. Antworte in diesem Fall einfach auf
+              Bestätigung {authorityOf(c)} nicht. Antworte in diesem Fall einfach auf
               diese E-Mail.</>)}
             </Text>
           </Section>

@@ -307,6 +307,19 @@ const BONN_TEXTS: Record<string, [string, string, string, string]> = {
 const BONN_POPULAR = ["1", "3", "13", "7", "8", "15", "11", "12", "9", "22", "23", "24", "25", "28", "27", "30", "26", "29"];
 export const BONN_DEFAULT_MAX_VEHICLES = 5;
 
+/** Recklinghausen (Zulassung Marl): Script-Nummern 1–8 (Pi-Script v40.8), alle Kfz. */
+const RE_INFO_ZULASSUNG = "https://www.kreis-re.de/Inhalte/Buergerservice/Auto_und_Verkehr/Strassenverkehrsamt/_Zuklassungsstelle.asp?seite=oe&id=1363";
+const RECKLINGHAUSEN_SERVICES: (CityService & { script: string })[] = [
+  { script: "1", id: "anmelden", label: "Anmelden von Fahrzeugen", shortLabel: "Anmeldung / Umschreibung", cardTitle: "Fahrzeug anmelden", subtitle: "Neuzulassung, Umschreibung (mit oder ohne Halterwechsel) oder Wiederzulassung eines in Deutschland registrierten Fahrzeugs", note: "Für Fahrzeuge aus dem Ausland bitte „Importfahrzeug“ wählen.", maxVehicles: 3, popularRank: 1, infoUrl: RE_INFO_ZULASSUNG },
+  { script: "2", id: "sonstige-aenderungen", label: "Sonstige Änderungen", shortLabel: "Änderungen & Kennzeichen", cardTitle: "Sonstige Änderungen", subtitle: "Saison- oder H-Kennzeichen, Umkennzeichnung, technische Änderungen oder Ersatz des Fahrzeugscheins (ZB I)", maxVehicles: 4, popularRank: 2, infoUrl: RE_INFO_ZULASSUNG },
+  { script: "3", id: "kurzzeitkennzeichen", label: "Kurzzeitkennzeichen", shortLabel: "Kurzzeitkennzeichen", cardTitle: "Kurzzeitkennzeichen", subtitle: "Für Probe- und Überführungsfahrten", maxVehicles: 2, popularRank: 4, infoUrl: "https://www.kreis-re.de/Inhalte/Buergerservice/_index2.asp?seite=angebot&id=17774" },
+  { script: "4", id: "unbedenklichkeitsbescheinigung", label: "Unbedenklichkeitsbescheinigung", shortLabel: "Unbedenklichkeitsbescheinigung", cardTitle: "Unbedenklichkeitsbescheinigung", subtitle: "Bei Verlust der Betriebserlaubnis, z. B. für ein Mofa", note: "Diese Termine gibt es nur bis 15 Uhr.", maxVehicles: 3, popularRank: 7, infoUrl: "https://www.kreis-re.de/Inhalte/Buergerservice/_index2.asp?seite=angebot&id=17294" },
+  { script: "5", id: "importfahrzeug", label: "Importfahrzeuge", shortLabel: "Importfahrzeug", cardTitle: "Zulassung eines Importfahrzeugs", subtitle: "Fabrikneuer oder gebrauchter Import aus dem Ausland", maxVehicles: 2, popularRank: 3, infoUrl: "https://www.kreis-re.de/Inhalte/Buergerservice/_index2.asp?seite=angebot&id=17438" },
+  { script: "6", id: "ersatz-zb2", label: "Ersatz Zulassungsbescheinigung Teil II", shortLabel: "Ersatz Fahrzeugbrief", cardTitle: "Ersatz Zulassungsbescheinigung Teil II", subtitle: "Neuer Fahrzeugbrief bei Verlust oder Diebstahl", maxVehicles: 2, popularRank: 5, infoUrl: "https://www.kreis-re.de/Inhalte/Buergerservice/_index2.asp?seite=angebot&id=18860" },
+  { script: "7", id: "fahrzeugscheinheft-rot", label: "Fahrzeugscheinheft rotes Kennzeichen", shortLabel: "Rotes Kennzeichen", cardTitle: "Fahrzeugscheinheft für rotes Kennzeichen", subtitle: "Neues Fahrzeugscheinheft für ein rotes Händlerkennzeichen", maxVehicles: 4, popularRank: 8, infoUrl: "https://www.kreis-re.de/Inhalte/Buergerservice/_index2.asp?seite=angebot&id=18066" },
+  { script: "8", id: "aushaendigung-zb2", label: "Aushändigung ZB II nach Aufbietung", shortLabel: "Abholung Fahrzeugbrief", cardTitle: "Aushändigung des Fahrzeugbriefs", subtitle: "Abholung der neuen Zulassungsbescheinigung Teil II nach dem Aufgebotsverfahren", maxVehicles: 4, popularRank: 6 },
+].map((s) => ({ ...s, category: "kfz" as const, popular: true }));
+
 export const SERVICES_BY_CITY: Record<string, CityService[]> = {
   koeln: SERVICES.map((s) => ({ ...s, category: "kfz" as const })),
   bonn: BONN_ROWS.map((r) => {
@@ -326,6 +339,7 @@ export const SERVICES_BY_CITY: Record<string, CityService[]> = {
     ...(r.infoUrl ? { infoUrl: r.infoUrl } : {}),
     };
   }),
+  recklinghausen: RECKLINGHAUSEN_SERVICES.map(({ script: _script, ...s }) => s),
 };
 
 export const getServices = (city: string): CityService[] => SERVICES_BY_CITY[city] ?? [];
@@ -377,4 +391,5 @@ export const SCRIPT_SERVICE_MAP_BY_CITY: Record<string, Record<string, string>> 
     "Zulassung eines technisch veränderten Neufahrzeugs (§ 13 EG-FGV)": "19",
   },
   bonn: Object.fromEntries(BONN_ROWS.map((r) => [r.label, r.script])),
+  recklinghausen: Object.fromEntries(RECKLINGHAUSEN_SERVICES.map((s) => [s.label, s.script])),
 };

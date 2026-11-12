@@ -1,7 +1,7 @@
 import type { TemplateEntry } from './registry'
 import { HealthLayout, Row } from './health-internal-parts'
 import { formatBerlinShort } from './format-berlin'
-import { cityOrDefault } from '../cities'
+import { cityOrDefault, referenceLabelOf } from '../cities'
 import { locationText } from './customer-email-parts'
 
 interface Props {
@@ -31,10 +31,10 @@ const WithdrawnFoundInternalEmail = (p: Props) => (
     <Row label="Gebuchter Termin" value={formatBerlinShort(p.appointmentAt)} />
     <Row label="Gebucht um" value={formatBerlinShort(p.foundAt)} />
     <Row label="Widerrufen am" value={formatBerlinShort(p.withdrawnAt ?? undefined)} />
-    {cityOrDefault(p.city).form.locationChoice ? (
+    {cityOrDefault(p.city).flow === 'multi' ? (
       <>
         <Row label="Standort" value={locationText(cityOrDefault(p.city), p.bookedLocation)} />
-        <Row label="Aufrufnummer" value={p.bookingReference ?? undefined} />
+        <Row label={referenceLabelOf(cityOrDefault(p.city))} value={p.bookingReference ?? undefined} />
         <Row label="Stornolink" value={p.cancelUrl ?? undefined} />
       </>
     ) : null}
