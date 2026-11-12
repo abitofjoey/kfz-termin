@@ -1,40 +1,34 @@
-# Portal-Check
+# Neue Stadt: Recklinghausen (Zulassung Marl)
 
-## Wichtiger Hinweis vorab (bitte bestätigen)
-Die heutige "tägliche Status-Mail" (19:20 Uhr) geht **an die Kunden**. An info@ geht abends nur dann eine Mail, wenn der Pi einer Stadt nicht erreichbar ist. Eine tägliche interne Übersicht gibt es noch nicht.
+Recklinghausen wird nach der Anleitung für neue Städte angelegt, erst **verborgen und nicht buchbar** (launched/bookable = false). Köln und Bonn sollen sich danach genau wie heute verhalten: gleiche Seiten, gleiche Mails, gleiches Format fürs Script.
 
-Vorschlag: Im selben Abendlauf geht **zusätzlich eine neue interne Mail "Portal-Check täglich" an info@** (eine Mail, je Stadt eine Zeile). Kundenmails und die bestehende Pi-Mail bleiben unverändert. Portal-Zeilen kommen **nicht** in Kundenmails.
+## 1. Stadt-Konfiguration
+- Ein neuer Eintrag `recklinghausen` mit allen Werten aus deiner Datei. Den Preis übernimmt er gemeinsam mit Köln und Bonn (12,99 €). Die Suche läuft rund um die Uhr, der Kalender beginnt morgen, gilt 28 Tage und hat keine Wochenenden. Die Buchung ist sofort verbindlich.
+- Das Feld `landmarkIcon` zeigt auf das Rathaus-Wahrzeichen (SVG unverändert, dazu eine React-Variante wie bei Bonn).
 
-## 1. Neue Tabelle portal_checks
-Spalten wie vorgegeben: city (Primärschlüssel), ok, signature, findings (Liste von Texten), script_version (optional), changed_at, last_check_at. Nur der Server hat Zugriff, kein öffentlicher Zugriff.
+## 2. Kleine Verallgemeinerungen
+- **a) Neues Feld `flow: "single" | "multi"`.** Köln bekommt "single", Bonn und Recklinghausen "multi". Diese Stellen werden von `locationChoice` auf `flow === "multi"` umgestellt: die Script-Zuordnung (Bonner Format) und die Standort-/Nummern-Zeilen in den drei internen Mails (neue Buchung, Termin gefunden, Widerruf nach Fund). Danach steuert `locationChoice` nur noch die Standortauswahl im Formular. Bonn hat bei beiden Feldern den Wert true bzw. "multi", deshalb ändert sich dort nichts.
+- **b) Buchungsformular (gemeinsames Formular für Städte mit mehreren Standorten)**
+  - Den Kfz/Führerschein-Schalter gibt es nur noch, wenn die Stadt Anliegen in mehr als einer Kategorie hat.
+  - Hat die Stadt nur einen Standort, erscheint statt der Auswahl ein ruhiger Kasten „Standort: Zulassung Marl, Stettiner Str. 10, 45770 Marl“. Es wird `locations: null` gesendet, der Server macht daraus `["marl"]`.
+  - Verlangt die Stadt eine Anrede, gibt es das Pflichtfeld Anrede (Herr/Frau/Divers) vor dem Vornamen. Sie wird in `bookings.salutation` gespeichert; der Server übernimmt sie nur bei solchen Städten, sonst bleibt sie "" wie heute. Das Script bekommt sie über die vorhandene Zuordnung m/w/d.
+  - „Dienstleistungszentrum (Berliner Platz 2)“ und der Bonner Hauptstandort greifen nur noch für Bonn.
+- **c) Stadtseite:** Es werden nur Kategorien mit mindestens einem Anliegen angezeigt. Gibt es nur eine Gruppe, entfallen die Umschalter.
+- **d) Mails:** Diese Texte kommen neu in die Stadt-Konfiguration: `mail.referenceLabel`, `mail.onSiteSteps` (mit Platzhalter {nummer}), `mail.cityConfirmationNote` und `mail.infoLinkLabel`. Bonn bekommt exakt die heutigen Sätze („Aufrufnummer“, 15 Min., Apple Pay, „Die Stadt Bonn …“, „Seite der Stadt Bonn“). Verwendet werden sie in der Mail „Termin gefunden“ (Zweig sofort verbindlich), in der Buchungsbestätigung, in den internen Mails und im Kalendereintrag (.ics). Für Recklinghausen gelten deine Texte mit „Terminnummer“ und „Seite des Kreises Recklinghausen“. Die Führerschein-Fotozeile bleibt, wie sie ist.
 
-## 2. POST /api/internal/portal-check
-- Anmeldung wie bei den anderen internen Routen (x-script-key gegen SCRIPT_API_KEY), vor jedem Datenbankzugriff.
-- Prüfung: city muss eine bekannte Stadt aus der Stadtkonfiguration sein, ok ist ja/nein, findings höchstens 50 Texte mit je max. 300 Zeichen, bereiche ist eine Liste von Texten. Bei Fehlern 400.
-- `bereiche` wird angenommen und geprüft, aber nicht gespeichert (keine Spalte vorgesehen).
-- x-script-version (falls vorhanden, gekürzt auf 50 Zeichen) wird mitgespeichert.
-- signature = findings sortiert, mit Zeilenumbruch verbunden; leer = "ok".
-- Kein Eintrag vorhanden: speichern (changed_at = last_check_at = jetzt); Mail nur bei ok=false (Abweichungs-Mail).
-- signature geändert: speichern, changed_at = jetzt, interne Mail an info@:
-  - ok=false: Betreff "[Stadt] Terminseite geändert – N Abweichung(en)", alle findings als Liste, darunter "Bitte Script/Website prüfen lassen (Claude Bescheid geben). Suchen und Buchen laufen unverändert weiter."
-  - ok=true: Betreff "[Stadt] Terminseite wieder wie erwartet".
-- Unverändert: nur last_check_at (und script_version) aktualisieren, keine Mail.
-- Antwort { ok: true }. Mailfehler verhindern das Speichern nicht.
-- Mail-Wiederholschutz über einen Schlüssel aus Stadt + changed_at.
+## 3. Anliegen
+Eine eigene Liste mit 8 Kfz-Anliegen genau nach deiner Tabelle (ID, Bezeichnung, Kachel, Titel, Untertitel, Hinweis, Höchstzahl, Rang, Info-Link). Die Script-Nummern 1–8 kommen in die Script-Zuordnung für Recklinghausen. Eine Abmeldung gibt es nicht.
 
-## 3. Tägliche Übersicht (siehe Hinweis oben)
-Je Stadt mit Pi-Überwachung eine Zeile:
-- "Portal-Check: ok"
-- "Portal-Check: N Abweichung(en) seit <changed_at, Berliner Zeit>"
-- last_check_at älter als 48 Stunden oder kein Eintrag: "Portal-Check: seit <Datum> keine Meldung" bzw. "noch keine Meldung".
-Einmal pro Tag (Wiederholschutz über das Datum). Im Testlauf (dryRun) wird nichts verschickt.
+## 4. Inhalte der Stadtseite
+Meta-Daten, Startbereich, die Abschnitte für Städte mit mehreren Standorten (Formularhinweis Kfz, Schritte, Standort, Preis-Merkmale), Wissenswertes, FAQ (die letzte Frage wörtlich wie bei Bonn) und Service-Daten für Suchmaschinen mit `areaServed` = AdministrativeArea „Kreis Recklinghausen“. Alles wörtlich aus deiner Datei. Die Seite wird bei den Stadtinhalten eingetragen.
+- **Vorschaubild:** `/og-image-recklinghausen.jpg` im Stil des Bonner Bildes, mit dem Rathaus unten. Ich zeige es dir vor dem Einbau. Gefällt es dir nicht, lasse ich es weg.
+
+## 5. Rechtstexte
+Städte- und Behördenlisten so, wie in deiner Datei angegeben. „Stand: November 2026“ bleibt.
+
+## 6. Tests
+- Alle bestehenden Köln-/Bonn-Tests bleiben unverändert grün.
+- Neue Tests: 8 Anliegen mit Script-Nummern 1–8 und Höchstzahlen; die Script-Zuordnung im Bonner Format (Anrede Frau → „w“, Anzahl = Fahrzeuge, standorte ["marl"], kategorie "kfz"); Kalender ab morgen, 28 Tage, ohne Wochenenden; eine Buchung ohne Anrede wird abgelehnt; keine Umschalter und keine Standortwahl im Formular. Dazu kommt ein Test, dass die Bonner Mailtexte wörtlich gleich bleiben.
 
 ## Nicht geändert
-Bestehende interne Routen, SCRIPT_API_KEY, Kundenmails, Cron-Jobs, Buchungsablauf.
-
-## Technische Details
-- Migration: CREATE TABLE public.portal_checks, GRANT ALL an service_role, RLS an, Policy nur service_role.
-- Neue Route `src/routes/api/internal/portal-check.ts` (Zod), Logik zu signature/Entscheidung als reine Funktion in `src/lib/portal-check.ts` mit Tests (neu/unverändert/geändert/wieder ok, Grenzen 50/300).
-- Neue Templates `portal-check-changed-internal.tsx`, `portal-check-recovered-internal.tsx`, `portal-check-daily-internal.tsx` + Registry.
-- `daily-status.ts`: Portal-Abschnitt ergänzen, sonstiger Ablauf unverändert.
-- Typecheck, Tests, 401-Test; nicht veröffentlichen, bis du es sagst.
+Die Pi-Schnittstellen (pending-bookings, result, portal-check), die Köln- und Bonn-Texte und die Preise. Nicht veröffentlicht, die Stadt bleibt verborgen. Live geht sie erst nach deiner Freigabe.
