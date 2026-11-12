@@ -123,7 +123,7 @@ describe("Recklinghausen Texte", () => {
     const html = await render(React.createElement(TEMPLATES["appointment-found"].component, props));
     expect(html).toContain("Terminnummer");
     expect(html).toContain("Seite des Kreises Recklinghausen");
-    expect(html).toContain("Terminnummer T1001 eingeben");
+    expect(html).toContain("gibst deine Terminnummer T1001 ein.");
     expect(html).not.toContain("Aufrufnummer");
     expect(html).not.toContain("Stadt Recklinghausen");
   });
