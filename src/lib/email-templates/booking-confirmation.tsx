@@ -84,8 +84,7 @@ const BookingConfirmationEmail = ({ bookingId, withdrawToken,
           <Section style={infoBox}>
             <Text style={infoTitle}>🕐 So läuft es ab</Text>
             <Text style={infoText}>
-              Sobald wir einen passenden Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum,
-              Uhrzeit, Standort und {referenceLabelOf(c)}. Du musst den Termin nicht mehr bestätigen.
+              {`Sobald wir einen passenden Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum, Uhrzeit, Standort und ${referenceLabelOf(c)}. Du musst den Termin nicht mehr bestätigen.`}
             </Text>
             <Text style={infoText}>
               Wir suchen rund um die Uhr. Behalte an deinen Wunschtagen dein E-Mail-Postfach im Blick.
