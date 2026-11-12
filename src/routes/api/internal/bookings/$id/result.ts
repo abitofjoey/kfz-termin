@@ -319,12 +319,12 @@ export const Route = createFileRoute("/api/internal/bookings/$id/result")({
             sendTransactionalEmailServer({
               templateName: "appointment-found",
               recipientEmail: booking.email,
-              idempotencyKey: `booking-found-${booking.id}`,
+              idempotencyKey: `booking-found-${booking.id}-${appointmentAt}`,
               templateData,
             }),
             sendTransactionalEmailServer({
               templateName: "appointment-found-internal",
-              idempotencyKey: `booking-found-internal-${booking.id}`,
+              idempotencyKey: `booking-found-internal-${booking.id}-${appointmentAt}`,
               templateData,
             }),
           ]);
