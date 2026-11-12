@@ -183,6 +183,7 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
   
 
   const onSubmit = async (values: FormValues) => {
+    if (shortOnly) return;
     setSubmitting(true);
     try {
       const dateStrings = values.selected_dates.map((d) =>
