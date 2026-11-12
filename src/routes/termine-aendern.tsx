@@ -10,6 +10,7 @@ import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { Button } from "@/components/ui/button";
 import { getCalendarBounds } from "@/lib/booking.functions";
+import { SHORT_NOTICE_ONLY_ERROR } from "@/lib/calendar-rules";
 import { getRebookState, requestRebookRefund, submitRebookDates } from "@/lib/rebook.functions";
 
 const Calendar = lazy(() =>
@@ -51,7 +52,7 @@ function RebookPage() {
   const requestRefund = useServerFn(requestRebookRefund);
 
   const [state, setState] = useState<State | null>(null);
-  const [bounds, setBounds] = useState<{ today: Date; min: Date; max: Date; blocked: Date[] } | null>(null);
+  const [bounds, setBounds] = useState<{ today: Date; min: Date; max: Date; blocked: Date[]; short: Date | null } | null>(null);
   const [selected, setSelected] = useState<Date[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -76,9 +77,13 @@ function RebookPage() {
         min: parseISO(b.minDateISO),
         max: parseISO(b.maxDateISO),
         blocked: (b.blockedDatesISO ?? []).map(parseISO),
+        short: b.shortNoticeDateISO ? parseISO(b.shortNoticeDateISO) : null,
       });
       });
   }, [t, loadState, fetchBounds]);
+
+  const shortSelected = !!bounds?.short && selected.some((d) => d.getTime() === bounds.short!.getTime());
+  const shortOnly = shortSelected && selected.length === 1;
 
   const onConfirmDates = async () => {
     if (selected.length < 1 || !t) return;
@@ -155,8 +160,10 @@ function RebookPage() {
                       weekStartsOn={1}
                       selected={selected}
                       onSelect={(d) => setSelected(d ?? [])}
+                      modifiers={bounds.short ? { kurzfristig: bounds.short } : undefined}
+                      modifiersClassNames={{ kurzfristig: "outline-dashed outline-1 outline-primary/60 -outline-offset-2 rounded-md" }}
                       disabled={(date) =>
-                        date < bounds.min ||
+                        (date < bounds.min && !(bounds.short && date.getTime() === bounds.short.getTime())) ||
                         date > bounds.max ||
                         date.getDay() === 0 ||
                         date.getDay() === 6 ||
@@ -170,9 +177,23 @@ function RebookPage() {
                 ) : (
                   <div className="h-[320px]" aria-hidden="true" />
                 )}
+                {bounds?.short ? (
+                  <p className="mt-1 px-2 text-xs text-muted-foreground">
+                    <span className="mr-1 inline-block h-3 w-3 rounded-sm outline-dashed outline-1 outline-primary/60 align-[-2px]" aria-hidden="true" />
+                    kurzfristig (morgen, nur zusammen mit weiteren Tagen)
+                  </p>
+                ) : null}
+                {shortOnly ? (
+                  <p className="mt-2 px-2 text-xs text-destructive" role="alert">{SHORT_NOTICE_ONLY_ERROR}</p>
+                ) : null}
+                {shortSelected ? (
+                  <p className="mt-2 px-2 text-xs text-muted-foreground">
+                    <strong className="text-foreground">Kurzfristig für morgen:</strong> Die Chance ist gering, bitte wähle mindestens einen weiteren Tag. Wird ein Termin für morgen früh gefunden, musst du ihn schnell bestätigen – behalte morgens dein Postfach im Blick.
+                  </p>
+                ) : null}
               </div>
               {error ? <p className="text-destructive" role="alert">{error}</p> : null}
-              <Button size="lg" className="w-full" disabled={busy || selected.length < 1} onClick={onConfirmDates}>
+              <Button size="lg" className="w-full" disabled={busy || selected.length < 1 || shortOnly} onClick={onConfirmDates}>
                 {busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                 Neue Termine bestätigen
               </Button>
