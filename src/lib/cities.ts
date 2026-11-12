@@ -91,6 +91,10 @@ export type CityConfig = CategorySettings & {
     successIntro: string | null;
     /** Hinweisbox auf /buchung-erfolgreich; null = Standard-Box mit Bestätigungsfrist. */
     successNotice: string | null;
+    /** Infolink der Service-Karte, z.B. "beim Kreis Recklinghausen" (Standard "bei der Stadt <Name>"). */
+    infoAt?: string;
+    /** Kurzlabel des Infolinks, z.B. "Kreis Recklinghausen" (Standard "Stadt <Name>"). */
+    infoShort?: string;
   };
   launched: boolean;
   bookable: boolean;
@@ -260,6 +264,8 @@ export const CITIES: Record<string, CityConfig> = {
     },
     pages: {
       authorityShort: "Zulassungsstelle Marl",
+      infoAt: "beim Kreis Recklinghausen",
+      infoShort: "Kreis Recklinghausen",
       successIntro:
         "Wir haben deine Zahlung erhalten und suchen ab sofort rund um die Uhr nach einem freien Termin bei der Zulassungsstelle Marl. Du erhältst in Kürze eine Bestätigungsmail.",
       successNotice:

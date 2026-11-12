@@ -35,8 +35,9 @@ type CityProps = {
   /** Bereiche mit Umschalter (z. B. Kfz-Zulassung | Führerschein). */
   groups: PricingGroup[];
   cityName: string;
-  /** Behörde für den Infolink, z.B. "Stadt Bonn" (Standard "Stadt <Name>"). */
-  infoAuthority?: string;
+  /** Infolink: "bei der Stadt Bonn" (Standard) bzw. Kurzlabel "Stadt Bonn". */
+  infoAt?: string;
+  infoShort?: string;
   price: string;
   subtitle: string;
   features: (item: PricingItem, groupKey: string) => string[];
@@ -74,7 +75,8 @@ export function Pricing({ onSelect, city }: KoelnProps & { city?: string }) {
 export function ServicePricing({
   groups,
   cityName,
-  infoAuthority,
+  infoAt,
+  infoShort,
   price,
   subtitle,
   features: featuresFor,
@@ -214,11 +216,11 @@ export function ServicePricing({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary"
-                  aria-label={`Mehr Infos zu ${active.cardTitle ?? active.label} bei der ${infoAuthority ?? `Stadt ${cityName}`}`}
-                  title={`Mehr Infos bei der ${infoAuthority ?? `Stadt ${cityName}`}`}
+                  aria-label={`Mehr Infos zu ${active.cardTitle ?? active.label} ${infoAt ?? `bei der Stadt ${cityName}`}`}
+                  title={`Mehr Infos ${infoAt ?? `bei der Stadt ${cityName}`}`}
                 >
                   <ExternalLink className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">{`Infos ${infoAuthority ?? `Stadt ${cityName}`}`}</span>
+                  <span className="hidden sm:inline">{`Infos ${infoShort ?? `Stadt ${cityName}`}`}</span>
                 </a>
               ) : null}
             </div>

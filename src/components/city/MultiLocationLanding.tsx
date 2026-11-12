@@ -73,7 +73,8 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
         <ServicePricing
           groups={groups}
           cityName={city.name}
-          {...(city.flow === "multi" && city.slug !== "bonn" ? { infoAuthority: "Kreis Recklinghausen" === city.authorityName ? undefined : "Kreisverwaltung" } : {})}
+          infoAt={city.pages.infoAt}
+          infoShort={city.pages.infoShort}
           price={formatPrice(city.priceCents)}
           subtitle={multi.servicesSubtitle ?? ""}
           features={(item) => multi.pricingFeatures?.(byId.get(item.id) as CityService) ?? []}
