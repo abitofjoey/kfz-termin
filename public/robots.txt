@@ -5,7 +5,6 @@ Disallow: /buchung-abgebrochen
 Disallow: /unsubscribe
 Disallow: /lovable/
 Disallow: /email/
-Disallow: /ads-grafiken
 Disallow: /api/
 
 Sitemap: https://kfz-termin.online/sitemap.xml

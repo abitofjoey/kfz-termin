@@ -61,6 +61,8 @@ export const recklinghausenContent: CityContent = {
     description: `Wunschtermin bei der Kfz-Zulassungsstelle Marl für den ganzen Kreis Recklinghausen: Wir suchen rund um die Uhr und buchen automatisch. ${PRICE} mit Geld-zurück-Garantie.`,
     ogTitle: "Termin Zulassungsstelle Marl (Kreis Recklinghausen) – automatisch gebucht",
     ogDescription: `Wir suchen rund um die Uhr nach freien Terminen beim Straßenverkehrsamt Marl und buchen automatisch. ${PRICE} mit Geld-zurück-Garantie.`,
+    ogImage: "https://kfz-termin.online/og-image-recklinghausen.jpg",
+    ogImageAlt: "KFZ-Termin Kreis Recklinghausen – Logo",
   },
   hero: {
     badge: "Kreis Recklinghausen · Zulassung Marl",
