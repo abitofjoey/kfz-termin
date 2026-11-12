@@ -272,7 +272,7 @@ export const CITIES: Record<string, CityConfig> = {
         "Sobald wir einen Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum, Uhrzeit und deiner Terminnummer. Du musst nichts mehr bestätigen. Zusätzlich schickt dir der Kreis Recklinghausen eine eigene Bestätigung mit QR-Code – bitte bring sie zum Termin mit. Schau auch in deinen Ordnern Spam und Werbung nach.",
     },
     launched: false,
-    bookable: false,
+    bookable: true,
   },
 };
 
