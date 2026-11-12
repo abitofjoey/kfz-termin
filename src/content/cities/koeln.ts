@@ -111,8 +111,8 @@ export const koelnContent: CityContent = {
     ogTitle: "Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht",
     ogDescription:
       `Dein Wunschtermin bei der Kölner Zulassungsstelle – automatisch gebucht. Für KFZ-Zulassung, Auto anmelden, Ummeldung & Abmeldung. ${PRICE} mit Geld-zurück-Garantie.`,
-    ogImage: "https://kfz-termin.online/og-image.jpg",
-    ogImageAlt: "KFZ-Termin – Logo",
+    ogImage: "https://kfz-termin.online/og-image-koeln.jpg",
+    ogImageAlt: "KFZ-Termin Köln – Logo",
   },
   hero: {
     badge: "Zulassungsstelle Köln",
