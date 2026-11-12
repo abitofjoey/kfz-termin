@@ -337,6 +337,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
               </div>
             )}
           </fieldset>
+          )}
 
           <Field label="Wunschtag(e)" error={errors.dates}>
             {() => (
