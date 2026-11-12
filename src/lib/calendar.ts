@@ -1,4 +1,4 @@
-import { cityOrDefault } from "@/lib/cities";
+import { cityOrDefault, referenceLabelOf } from "@/lib/cities";
 import { getServices } from "@/lib/services";
 
 export const SITE_URL = "https://kfz-termin.online";

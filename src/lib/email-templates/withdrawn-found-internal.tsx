@@ -1,7 +1,7 @@
 import type { TemplateEntry } from './registry'
 import { HealthLayout, Row } from './health-internal-parts'
 import { formatBerlinShort } from './format-berlin'
-import { cityOrDefault } from '../cities'
+import { cityOrDefault, referenceLabelOf } from '../cities'
 import { locationText } from './customer-email-parts'
 
 interface Props {

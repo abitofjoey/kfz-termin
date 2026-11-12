@@ -41,7 +41,7 @@ export function mapBookingForScript(row: ScriptBookingRow) {
   const map = SCRIPT_SERVICE_MAP_BY_CITY[city.slug] ?? {};
   const number = map[row.service_type];
   const service = number ? { service: number } : { serviceUnklar: true as const };
-  if (city.form.locationChoice) {
+  if (city.flow === "multi") {
     // Städte mit Standortwahl (z.B. Bonn): keine Anrede/FIN, Zusatzfelder.
     const kategorie = categoryForLabel(city.slug, row.service_type);
     return {

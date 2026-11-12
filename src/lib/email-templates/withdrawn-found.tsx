@@ -1,7 +1,7 @@
 import { Body, Container, Head, Heading, Html, Hr, Link, Preview, Section, Text } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import * as s from './customer-email-parts'
-import { cityOrDefault } from '../cities'
+import { cityOrDefault, authorityOf } from '../cities'
 import { formatBerlinLong } from './format-berlin'
 
 interface Props {
