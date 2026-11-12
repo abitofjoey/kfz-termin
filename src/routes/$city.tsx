@@ -64,7 +64,7 @@ export const Route = createFileRoute("/$city")({
                 addressCountry: "DE",
               },
             },
-            areaServed: { "@type": "City", name: city.name },
+            areaServed: content.serviceJsonLd.areaServed ?? { "@type": "City", name: city.name },
             offers: { "@type": "Offer", price: (city.priceCents / 100).toFixed(2), priceCurrency: "EUR" },
           }),
         },

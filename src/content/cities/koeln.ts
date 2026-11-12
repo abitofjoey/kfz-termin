@@ -25,7 +25,7 @@ export type CityContent = {
     honestNote: string;
     bookingNotice: string;
     /** Hinweis über dem Formular: wessen Daten eingetragen werden, je Bereich. **fett** wird fett dargestellt. */
-    formNotice?: Record<ServiceCategory, string>;
+    formNotice?: Partial<Record<ServiceCategory, string>>;
     /** Untertitel des Abschnitts "Unsere Services". */
     servicesSubtitle?: string;
     /** Häkchen-Liste der Service-Karte je Anliegen. */
@@ -41,7 +41,7 @@ export type CityContent = {
   };
   faq: FaqItem[];
   /** Zusätzliche Felder für das Service-JSON-LD. */
-  serviceJsonLd: { name: string; description: string };
+  serviceJsonLd: { name: string; description: string; areaServed?: { "@type": "City" | "AdministrativeArea"; name: string } };
 };
 
 export const koelnFaq: FaqItem[] = [
