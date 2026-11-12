@@ -139,8 +139,8 @@ describe("pending-bookings?city=bonn", () => {
 
 describe("Sichtbarkeit und Ergänzungen", () => {
   it("Bonn sichtbar und überwacht", () => {
-    expect(launchedCities().map((c) => c.slug)).toEqual(["koeln", "bonn"]);
-    expect(monitoredCities().map((c) => c.slug)).toEqual(["koeln", "bonn"]);
+    expect(launchedCities().map((c) => c.slug)).toEqual(["koeln", "bonn", "recklinghausen"]);
+    expect(monitoredCities().map((c) => c.slug)).toEqual(["koeln", "bonn", "recklinghausen"]);
   });
   it("Stripe-Beschreibung je Stadt", () => {
     expect(checkoutDescription("koeln")).toBe("KFZ-Termin – Terminservice bei der Zulassungsstelle Köln");
