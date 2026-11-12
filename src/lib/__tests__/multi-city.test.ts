@@ -49,7 +49,7 @@ describe("Schalter", () => {
     expect(CITIES.koeln.launched && CITIES.koeln.bookable).toBe(true);
     expect(CITIES.bonn.launched).toBe(true);
     expect(CITIES.bonn.bookable).toBe(true);
-    expect(launchedCities().map((c) => c.slug)).toEqual(["koeln", "bonn"]);
+    expect(launchedCities().map((c) => c.slug)).toEqual(["koeln", "bonn", "recklinghausen"]);
     expect(isBookableCity("bonn")).toBe(true);
   });
   it("interne Mails mit [Köln], Kundenmails ohne", () => {

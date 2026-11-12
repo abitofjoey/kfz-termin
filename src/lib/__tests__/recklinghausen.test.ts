@@ -19,11 +19,11 @@ const prev = R.bookable;
 afterEach(() => { R.bookable = prev; });
 
 describe("Recklinghausen Konfiguration", () => {
-  it("startet verborgen und nicht buchbar", () => {
-    expect(R.launched).toBe(false);
-    expect(R.bookable).toBe(false);
-    expect(launchedCities().map((c) => c.slug)).not.toContain("recklinghausen");
-    expect(monitoredCities().map((c) => c.slug)).not.toContain("recklinghausen");
+  it("ist sichtbar und buchbar", () => {
+    expect(R.launched).toBe(true);
+    expect(R.bookable).toBe(true);
+    expect(launchedCities().map((c) => c.slug)).toContain("recklinghausen");
+    expect(monitoredCities().map((c) => c.slug)).toContain("recklinghausen");
   });
   it("Bonner Ablauf, ein Standort, keine Standortwahl, Preis 12,99 €", () => {
     expect(R.flow).toBe("multi");
