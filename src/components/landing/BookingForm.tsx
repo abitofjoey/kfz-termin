@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createBooking, getCalendarBounds } from "@/lib/booking.functions";
+import { SHORT_NOTICE_ONLY_ERROR } from "@/lib/calendar-rules";
 import { createCheckoutSession } from "@/lib/stripe.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
@@ -135,6 +136,7 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
     minDate: Date;
     maxDate: Date;
     blockedDates: Date[];
+    shortNotice: Date | null;
   } | null>(null);
   useEffect(() => {
     let cancelled = false;
@@ -150,12 +152,13 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
           minDate: parse(b.minDateISO),
           maxDate: parse(b.maxDateISO),
           blockedDates: (b.blockedDatesISO ?? []).map(parse),
+          shortNotice: b.shortNoticeDateISO ? parse(b.shortNoticeDateISO) : null,
         });
       })
       .catch(() => {
         // Fallback: bisherige Client-Logik (heute + 1 … heute + 14).
         const t = startOfDay(new Date());
-        setBounds({ today: t, minDate: addDays(t, 1), maxDate: addDays(t, 14), blockedDates: [] });
+        setBounds({ today: t, minDate: addDays(t, 1), maxDate: addDays(t, 14), blockedDates: [], shortNotice: null });
       });
     return () => {
       cancelled = true;
@@ -165,6 +168,9 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
   const minDate = bounds?.minDate ?? null;
   const maxDate = bounds?.maxDate ?? null;
   const blockedDates = bounds?.blockedDates ?? [];
+  const shortNotice = bounds?.shortNotice ?? null;
+  const shortSelected = !!shortNotice && selectedDates.some((d) => d.getTime() === shortNotice.getTime());
+  const shortOnly = shortSelected && selectedDates.length === 1;
   const threeDayThreshold = useMemo(
     () => (today ? addDays(today, 3) : null),
     [today],
@@ -413,8 +419,10 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
                       onSelect={(dates) => {
                         field.onChange(dates ?? []);
                       }}
+                      modifiers={shortNotice ? { kurzfristig: shortNotice } : undefined}
+                      modifiersClassNames={{ kurzfristig: "outline-dashed outline-1 outline-primary/60 -outline-offset-2 rounded-md" }}
                       disabled={(date) =>
-                        date < minDate ||
+                        (date < minDate && !(shortNotice && date.getTime() === shortNotice.getTime())) ||
                         date > maxDate ||
                         date.getDay() === 0 ||
                         date.getDay() === 6 ||
@@ -430,7 +438,18 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
                   ) : (
                     <div className="h-[320px]" aria-hidden="true" />
                   )}
-                  {selectedDates.length < 1 ? (
+                  {shortNotice ? (
+                    <p className="mt-1 px-2 text-xs text-muted-foreground">
+                      <span className="mr-1 inline-block h-3 w-3 rounded-sm outline-dashed outline-1 outline-primary/60 align-[-2px]" aria-hidden="true" />
+                      kurzfristig (morgen, nur zusammen mit weiteren Tagen)
+                    </p>
+                  ) : null}
+                  {shortOnly ? (
+                    <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-destructive sm:flex-row sm:items-center" role="alert">
+                      <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                      <span>{SHORT_NOTICE_ONLY_ERROR}</span>
+                    </p>
+                  ) : selectedDates.length < 1 ? (
                     <p className="mt-2 px-2 flex flex-col items-start gap-1 text-xs text-destructive sm:flex-row sm:items-center">
                       <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
                       <span>Bitte wähle mindestens 1 Wunschtag aus.</span>
@@ -446,6 +465,11 @@ export function BookingForm({ preselected, city = "koeln" }: Props) {
                       <span>Ausgewählt: <strong>{selectedDates.length}</strong> Tage. Je mehr Tage, desto höher die Chance.</span>
                     </p>
                   )}
+                  {shortSelected ? (
+                    <p className="mt-2 px-2 text-xs text-muted-foreground">
+                      <strong className="text-foreground">Kurzfristig für morgen:</strong> Die Chance ist gering, bitte wähle mindestens einen weiteren Tag. Wird ein Termin für morgen früh gefunden, musst du ihn schnell bestätigen – behalte morgens dein Postfach im Blick.
+                    </p>
+                  ) : null}
                 </div>
               )}
             />

@@ -52,10 +52,13 @@ export const submitRebookDates = createServerFn({ method: "POST" })
     TokenInput.extend({ dates: z.array(z.string()).min(1).max(60) }).parse(d),
   )
   .handler(async ({ data }) => {
-    const { areDatesAllowed } = await import("@/lib/calendar-rules");
+    const { areDatesAllowed, isShortNoticeOnly, SHORT_NOTICE_ONLY_ERROR } = await import("@/lib/calendar-rules");
     const b = await loadByToken(data.token);
     if (!b) return { ok: false as const, error: "Dieser Link ist ungültig." };
     const scope = rebookScope(b);
+    if (isShortNoticeOnly(data.dates, new Date(), scope.city, scope.category)) {
+      return { ok: false as const, error: SHORT_NOTICE_ONLY_ERROR };
+    }
     if (!areDatesAllowed(data.dates, new Date(), scope.city, scope.category)) {
       return { ok: false as const, error: "Bitte wähle nur Tage aus, die im Kalender freigegeben sind." };
     }

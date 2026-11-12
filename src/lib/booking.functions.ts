@@ -3,7 +3,7 @@ import { CityBookingInput, prepareCityBooking } from "@/lib/city-booking";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { SERVICE_IDS, getServiceLabel, getMaxVehicles } from "@/lib/services";
-import { computeCalendarBounds } from "@/lib/calendar-rules";
+import { computeCalendarBounds, isShortNoticeOnly, SHORT_NOTICE_ONLY_ERROR } from "@/lib/calendar-rules";
 import { DEFAULT_CITY, getCity, isBookableCity } from "@/lib/cities";
 
 export const getCalendarBounds = createServerFn({ method: "GET" })
@@ -61,6 +61,10 @@ export const createBooking = createServerFn({ method: "POST" })
         error:
           "An einem der gewählten Tage ist die Zulassungsstelle geschlossen. Bitte entferne diesen Tag aus deiner Auswahl.",
       };
+    }
+
+    if (isShortNoticeOnly(data.selected_dates, new Date(), city)) {
+      return { ok: false as const, error: SHORT_NOTICE_ONLY_ERROR };
     }
 
     if (data.fin_3 && getMaxVehicles(data.service_type) < 3) {

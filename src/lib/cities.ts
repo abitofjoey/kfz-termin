@@ -23,6 +23,8 @@ export type CalendarRules = {
   allowWeekends: boolean;
   /** Einmalig gesperrte Tage (YYYY-MM-DD). */
   blockedDates: string[];
+  /** Nach cutoffHour bleibt heute + minOffsetDays als „kurzfristiger Tag“ wählbar, aber nur zusammen mit einem weiteren Tag. */
+  shortNoticeAfterCutoff?: boolean;
 };
 
 export type CategorySettings = {
@@ -138,6 +140,7 @@ export const CITIES: Record<string, CityConfig> = {
       cutoffHour: 14,
       windowDays: 14,
       allowWeekends: false,
+      shortNoticeAfterCutoff: true,
       blockedDates: [],
     },
     searchHours: { from: 6, to: 20 },
