@@ -3,7 +3,7 @@ import {
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
 import { formatBerlinShort } from './format-berlin'
-import { cityOrDefault } from '../cities'
+import { referenceLabelOf, cityOrDefault } from '../cities'
 import { locationText } from './customer-email-parts'
 
 interface Props {
@@ -42,10 +42,10 @@ const AppointmentFoundInternalEmail = ({
             <Hr style={hr} />
             <Row label="Gebuchter Termin" value={formatBerlinShort(appointmentAt)} />
             <Row label="Gebucht um" value={formatBerlinShort(foundAt)} />
-            {cityOrDefault(city).form.locationChoice ? (
+            {cityOrDefault(city).flow === 'multi' ? (
               <>
                 <Row label="Standort" value={locationText(cityOrDefault(city), bookedLocation)} />
-                <Row label="Aufrufnummer" value={bookingReference ?? undefined} />
+                <Row label={referenceLabelOf(cityOrDefault(city))} value={bookingReference ?? undefined} />
                 <Row label="Stornolink" value={cancelUrl ?? undefined} />
               </>
             ) : null}

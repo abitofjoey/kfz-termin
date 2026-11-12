@@ -47,7 +47,7 @@ const SearchNotFoundEmail = ({ bookingId,
           <s.BookingNumberLine bookingId={bookingId} />
 
           <Text style={s.text}>
-            {firstName ? `Hallo ${firstName},` : 'Hallo,'} {s.isInstant(city) && searchError === 'email_limit' && anlass !== 'frist' && anlass !== 'widerruf' && anlass !== 'gewaehlt' ? `leider konnten wir im Zeitraum deiner Wunschtermine keinen Termin für dich buchen, da die Stadt ${cityOrDefault(city).name} für deine E-Mail-Adresse keine weitere Buchung zugelassen hat. Das tut uns leid.` : intro(anlass, searchError)}
+            {firstName ? `Hallo ${firstName},` : 'Hallo,'} {s.isInstant(city) && searchError === 'email_limit' && anlass !== 'frist' && anlass !== 'widerruf' && anlass !== 'gewaehlt' ? `leider konnten wir im Zeitraum deiner Wunschtermine keinen Termin für dich buchen, da die ${cityOrDefault(city).pages.authorityShort} für deine E-Mail-Adresse keine weitere Buchung zugelassen hat. Das tut uns leid.` : intro(anlass, searchError)}
           </Text>
 
           <Section style={s.card}>
@@ -72,7 +72,7 @@ const SearchNotFoundEmail = ({ bookingId,
             <Text style={s.contactLine}>
               {s.isInstant(city) ? (
                 <>
-                  {`Du kannst auch an anderen Tagen zur Stadt ${cityOrDefault(city).name}? Dann buche einfach erneut auf `}
+                  {`Du kannst auch an anderen Tagen zur ${cityOrDefault(city).pages.authorityShort}? Dann buche einfach erneut auf `}
                   <Link href={`${s.SITE_URL}/${cityOrDefault(city).slug}`} style={s.link}>kfz-termin.online</Link>.
                 </>
               ) : (

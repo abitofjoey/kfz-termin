@@ -5,7 +5,8 @@ import {
 import type { TemplateEntry } from './registry'
 import { BookingNumberLine, locationText } from './customer-email-parts'
 import { formatBerlinLong, formatBerlinTime } from './format-berlin'
-import { cityOrDefault } from '../cities'
+import { cityOrDefault, referenceLabelOf } from '../cities'
+import { InlineBold } from '../../components/landing/InlineBold'
 import { getServices } from '../services'
 import { buildCalendarEvent, calendarIcsUrl, googleCalendarUrl } from '../calendar'
 
@@ -67,7 +68,7 @@ const AppointmentFoundEmail = ({ bookingId,
               <DataRow label="Datum und Uhrzeit" value={formatBerlinLong(appointmentAt)} />
               <DataRow label="Service" value={serviceType || '—'} />
               <DataRow label="Standort" value={locationText(c, bookedLocation)} last={!bookingReference} />
-              {bookingReference ? <DataRow label="Aufrufnummer" value={bookingReference} last /> : null}
+              {bookingReference ? <DataRow label={referenceLabelOf(c)} value={bookingReference} last /> : null}
             </Section>
 
             {bookingReference ? (
@@ -80,26 +81,26 @@ const AppointmentFoundEmail = ({ bookingId,
 
             <Section style={card}>
               <Text style={cardTitle}>So läuft dein Termin ab</Text>
-              <Text style={text}>• <strong>Sei pünktlich:</strong> Der Termin verfällt, wenn du nicht rechtzeitig da bist.</Text>
-              <Text style={text}>
-                {`• Melde dich vor Ort am Check-in-Terminal an: frühestens 15 Minuten vor und spätestens 5 Minuten nach Beginn. Dafür scannst du den QR-Code aus der Mail der Stadt oder gibst deine Aufrufnummer${bookingReference ? ` ${bookingReference}` : ''} ein. Ohne Anmeldung am Terminal wirst du nicht aufgerufen.`}
-              </Text>
-              <Text style={text}>• Danach im Wartebereich warten, bis deine Nummer auf der Anzeigetafel erscheint, und zum angezeigten Schalter gehen.</Text>
-              <Text style={text}>• Es wird nur das gebuchte Anliegen bearbeitet.</Text>
-              <Text style={text}>• Gebühren kannst du mit EC- oder Kreditkarte zahlen, auch Apple Pay und Google Pay.</Text>
+              {(c.mail.onSiteSteps ?? []).map((step, i) => (
+                <Text key={i} style={text}>
+                  <InlineBold text={`• ${step.replace('{nummer}', bookingReference ? ` ${bookingReference}` : '')}`} />
+                </Text>
+              ))}
               {getServices(c.slug).find((s) => s.label === serviceType)?.category === 'fuehrerschein' ? (
                 <Text style={text}>• Fotos kannst du vor Ort an den Selbsterfassungsgeräten machen oder ein ausgedrucktes Foto von einem zertifizierten Fotografen mitbringen. Für den internationalen Führerschein und die Fahrerkarte werden nur ausgedruckte Fotos angenommen.</Text>
               ) : null}
-              <Text style={text}>
-                <strong>Hinweis:</strong> Die Stadt {c.name} schickt dir zusätzlich eine eigene Bestätigung mit QR-Code. Sie kann sich etwas verzögern – deine Aufrufnummer aus dieser Mail reicht für den Check-in.
-              </Text>
+              {c.mail.cityConfirmationNote ? (
+                <Text style={text}>
+                  <InlineBold text={c.mail.cityConfirmationNote} />
+                </Text>
+              ) : null}
             </Section>
 
             <Section style={infoBox}>
               <Text style={infoText}>
                 <strong>Du musst nichts mehr bestätigen.</strong>{' '}
                 Welche Unterlagen du für dein Anliegen mitbringen musst, findest du auf der{' '}
-                <Link href={getServices(c.slug).find((s) => s.label === serviceType)?.infoUrl || CITY_URL} style={infoLink}>{`Seite der Stadt ${c.name}`}</Link>.
+                <Link href={getServices(c.slug).find((s) => s.label === serviceType)?.infoUrl || CITY_URL} style={infoLink}>{c.mail.infoLinkLabel ?? `Seite der Stadt ${c.name}`}</Link>.
               </Text>
             </Section>
 
@@ -149,7 +150,7 @@ const AppointmentFoundEmail = ({ bookingId,
             <DataRow label="Service" value={serviceType || '—'} />
             <DataRow label="Ort" value={LOCATION} last={!(c.mail.showBookingReference && bookingReference)} />
             {c.mail.showBookingReference && bookingReference ? (
-              <DataRow label="Aufrufnummer" value={bookingReference} last />
+              <DataRow label={referenceLabelOf(c)} value={bookingReference} last />
             ) : null}
           </Section>
 

@@ -62,7 +62,7 @@ const BookingInternalNotificationEmail = ({
             <Row label="E-Mail" value={email} />
             <Row label="Telefon" value={phone} />
             <Hr style={hr} />
-            {cityOrDefault(city).form.locationChoice ? (
+            {cityOrDefault(city).flow === 'multi' ? (
               <>
                 <Row label="Standorte" value={locationsText(cityOrDefault(city), locations)} />
                 <Row label="Finanziert/geleast" value={financed ? 'ja' : 'nein'} />

@@ -34,8 +34,8 @@ export function buildCalendarEvent(b: CalendarBooking): CalendarEvent {
   const hours = c.customerConfirmationHours;
   const parts: string[] = [];
   if (hours == null) {
-    if (b.bookingReference) parts.push(`Aufrufnummer: ${b.bookingReference}.`);
-    parts.push("Check-in am Terminal 15 Min. vorher bis 5 Min. nach Beginn.");
+    if (b.bookingReference) parts.push(`${referenceLabelOf(c)}: ${b.bookingReference}.`);
+    if (c.mail.calendarCheckIn) parts.push(c.mail.calendarCheckIn);
     if (b.cancelUrl) parts.push(`Stornieren: ${b.cancelUrl}`);
   } else {
     parts.push(`Bitte den Bestätigungslink der Stadt innerhalb von ${hours} Stunden anklicken, sonst verfällt der Termin.`);
@@ -43,7 +43,7 @@ export function buildCalendarEvent(b: CalendarBooking): CalendarEvent {
   const start = new Date(b.appointmentAt);
   return {
     uid: `${b.id}@kfz-termin.online`,
-    title: `${kind}: ${b.serviceType || "Termin"} (Stadt ${c.name})`,
+    title: `${kind}: ${b.serviceType || "Termin"} (${c.flow === "multi" ? c.pages.authorityShort : `Stadt ${c.name}`})`,
     start,
     end: new Date(start.getTime() + DURATION_MIN * 60_000),
     location,
