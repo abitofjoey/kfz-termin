@@ -27,7 +27,7 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
   const [preselect, setPreselect] = useState<FormPreselect | null>(null);
 
   const all = getServices(slug);
-  const groups: PricingGroup[] = (["kfz", "fuehrerschein"] as const).map((k) => {
+  const groups: PricingGroup[] = (["kfz", "fuehrerschein"] as const).filter((k) => all.some((s) => s.category === k)).map((k) => {
     const list = all.filter((s) => s.category === k);
     return {
       key: k,
@@ -66,7 +66,7 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
                 </li>
               ))}
             </ol>
-            <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-muted-foreground">{multi.honestNote}</p>
+            {multi.honestNote ? <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-muted-foreground">{multi.honestNote}</p> : null}
           </div>
         </section>
 
