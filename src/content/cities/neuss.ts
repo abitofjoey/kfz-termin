@@ -21,7 +21,7 @@ export const neussFaq: FaqItem[] = [
   },
   {
     q: "Warum fragt ihr nach meinem Geburtsdatum?",
-    a: "Der Rhein-Kreis Neuss verlangt es bei jeder Online-Terminbuchung. Wir geben es nur an den Kreis weiter und löschen es nach Abschluss automatisch.",
+    a: "Der Rhein-Kreis Neuss verlangt es bei jeder Online-Terminbuchung. Vor Ort kannst du deinen Termin damit auch am Terminal aktivieren, falls du den QR-Code nicht dabei hast. Wir geben es nur an den Kreis weiter und löschen es nach Abschluss automatisch.",
   },
   {
     q: "Welchen Standort soll ich wählen?",
@@ -58,7 +58,7 @@ export const neussContent: CityContent = {
   },
   hero: {
     badge: "Rhein-Kreis Neuss · 4 Standorte",
-    headline: "Dein Termin beim Straßenverkehrsamt Neuss –",
+    headline: "Dein Termin beim Straßenverkehrsamt Rhein-Kreis Neuss –",
     headlineAccent: "automatisch gebucht",
     intro:
       "Neuss, Grevenbroich, Dormagen oder Meerbusch: Du wählst Anliegen, Standort und Wunschtage, wir suchen rund um die Uhr nach frei werdenden Terminen und buchen automatisch für dich.",
