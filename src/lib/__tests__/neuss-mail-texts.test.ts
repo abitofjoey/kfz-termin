@@ -3,6 +3,9 @@ import { render } from "@react-email/components";
 import { createElement } from "react";
 import { CITIES, bookedTown } from "@/lib/cities";
 import { template } from "@/lib/email-templates/appointment-found";
+import { template as emailLimit } from "@/lib/email-templates/search-email-limit";
+import { template as notFound } from "@/lib/email-templates/search-not-found";
+import { template as internalNotification } from "@/lib/email-templates/booking-internal-notification";
 import { neussFaq } from "@/content/cities/neuss";
 
 const OLD = "Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.";
@@ -44,5 +47,34 @@ describe("Neuss-Texte", () => {
   });
   it("FAQ 2", () => {
     expect(neussFaq[1].a).toBe("Der Rhein-Kreis Neuss verlangt es bei jeder Online-Terminbuchung. Vor Ort kannst du deinen Termin damit auch am Terminal aktivieren, falls du den QR-Code nicht dabei hast. Wir geben es nur an den Kreis weiter und löschen es nach Abschluss automatisch.");
+  });
+});
+
+describe("Neuss-Grammatik: Zulassungsstelle statt Straßenverkehrsamt", () => {
+  const BAD = ["der Straßenverkehrsamt", "Die Straßenverkehrsamt", "zur Straßenverkehrsamt"];
+  it("Konfiguration", () => {
+    expect(CITIES.neuss.mail.authority).toBe("Zulassungsstelle");
+    expect(CITIES.neuss.pages.authorityShort).toBe("Zulassungsstelle Rhein-Kreis Neuss");
+    expect(CITIES.neuss.mail.atAuthority).toBe("beim Straßenverkehrsamt des Rhein-Kreises Neuss");
+  });
+  it("search-email-limit ohne falsche Grammatik", async () => {
+    const t = await render(createElement(emailLimit.component as any, { city: "neuss", firstName: "Max", email: "m@example.com" }), { plainText: true });
+    for (const b of BAD) expect(t).not.toContain(b);
+    expect(t).toContain("Zulassungsstelle Rhein-Kreis Neuss");
+  });
+  it("search-not-found (email_limit) ohne falsche Grammatik", async () => {
+    const t = await render(createElement(notFound.component as any, { city: "neuss", firstName: "Max", searchError: "email_limit" }), { plainText: true });
+    for (const b of BAD) expect(t).not.toContain(b);
+  });
+});
+
+describe("Interne Buchungsmail: Finanziert-Zeile nur mit Feld", () => {
+  const renderInternal = (city: string) =>
+    render(createElement(internalNotification.component as any, { city, firstName: "Max", lastName: "Muster", serviceType: "Umschreibung", financed: true, vehicleCount: 1, locations: null }), { plainText: true });
+  it("Bonn zeigt die Zeile", async () => {
+    expect(await renderInternal("bonn")).toContain("Finanziert/geleast");
+  });
+  it.each(["recklinghausen", "neuss"])("%s zeigt die Zeile nicht", async (city) => {
+    expect(await renderInternal(city)).not.toContain("Finanziert");
   });
 });
