@@ -5,7 +5,7 @@ import {
 import type { TemplateEntry } from './registry'
 import { BookingNumberLine, locationText } from './customer-email-parts'
 import { formatBerlinLong, formatBerlinTime } from './format-berlin'
-import { cityOrDefault, referenceLabelOf } from '../cities'
+import { cityOrDefault, referenceLabelOf, bookedTown } from '../cities'
 import { InlineBold } from '../../components/landing/InlineBold'
 import { getServices } from '../services'
 import { buildCalendarEvent, calendarIcsUrl, googleCalendarUrl } from '../calendar'
@@ -50,7 +50,7 @@ const AppointmentFoundEmail = ({ bookingId,
     return (
       <Html lang="de" dir="ltr">
         <Head />
-        <Preview>{`Dein Termin in ${c.name} ist gebucht`}</Preview>
+        <Preview>{`Dein Termin in ${bookedTown(c, bookedLocation)} ist gebucht`}</Preview>
         <Body style={main}>
           <Container style={container}>
             <Text style={eyebrow}>{SITE_NAME}</Text>
@@ -71,9 +71,9 @@ const AppointmentFoundEmail = ({ bookingId,
               {bookingReference ? <DataRow label={referenceLabelOf(c)} value={bookingReference} last /> : null}
             </Section>
 
-            {bookingReference ? (
+            {bookingReference && c.mail.referenceHint ? (
               <Text style={text}>
-                Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.
+                {c.mail.referenceHint}
               </Text>
             ) : null}
 
@@ -264,7 +264,7 @@ export const template = {
   subject: (d: Record<string, any>) => {
     const c = cityOrDefault(d.city)
     const h = c.customerConfirmationHours
-    return h != null ? `Termin gefunden – bitte innerhalb von ${h} Stunden bestätigen` : `Dein Termin in ${c.name} ist gebucht`
+    return h != null ? `Termin gefunden – bitte innerhalb von ${h} Stunden bestätigen` : `Dein Termin in ${bookedTown(c, d.bookedLocation)} ist gebucht`
   },
   displayName: 'Termin gefunden (Kunde)',
   previewData: {

@@ -40,6 +40,8 @@ export type CityLocation = {
   id: string;
   name: string;
   address: string;
+  /** Ort des Standorts, z.B. "Grevenbroich" (Betreff der Terminmail). */
+  town: string;
   /** Kleiner Anzeige-Hinweis unter der Adresse (z. B. Zahlungsart). */
   note?: string;
 };
@@ -47,6 +49,8 @@ export type CityLocation = {
 export type CityConfig = CategorySettings & {
   slug: string;
   name: string;
+  /** Gebiet der Behörde für Texte vor der Buchung, z.B. "Rhein-Kreis Neuss". */
+  regionName: string;
   /** Optional SVG component for currentColor rendering. */
   landmarkIcon?: ComponentType;
   adjective: string;
@@ -83,6 +87,8 @@ export type CityConfig = CategorySettings & {
     showCancelUrl: boolean;
     /** Ablauf "multi": Bezeichnung der Nummer, z.B. "Aufrufnummer". */
     referenceLabel?: string;
+    /** Ablauf "multi": Satz unter der Nummer in der Terminmail. */
+    referenceHint?: string;
     /** Ablauf "multi": "So läuft dein Termin ab" – {nummer} = " <Nummer>" oder leer, **fett**. */
     onSiteSteps?: string[];
     /** Ablauf "multi": Hinweis auf die eigene Bestätigung der Behörde (**fett**). */
@@ -121,22 +127,23 @@ export const CITY_PRICE_CENTS = KOELN_PRICE_CENTS;
 /** Hauptstandort Bonn: einziger Standort für finanzierte/geleaste Fahrzeuge. */
 export const BONN_MAIN_LOCATION = "dlz";
 const BONN_LOCATIONS: CityLocation[] = [
-  { id: "dlz", name: "Dienstleistungszentrum im Stadthaus", address: "Berliner Platz 2, 53111 Bonn" },
-  { id: "hardtberg", name: "Bürgeramt Hardtberg", address: "Villemombler Str. 1, 53123 Bonn" },
-  { id: "beuel", name: "Bürgeramt Beuel", address: "Friedrich-Breuer-Str. 65, 53225 Bonn" },
-  { id: "godesberg", name: "Bürgeramt Bad Godesberg", address: "Kurfürstenallee 2-3, 53177 Bonn" },
+  { id: "dlz", name: "Dienstleistungszentrum im Stadthaus", address: "Berliner Platz 2, 53111 Bonn", town: "Bonn" },
+  { id: "hardtberg", name: "Bürgeramt Hardtberg", address: "Villemombler Str. 1, 53123 Bonn", town: "Bonn" },
+  { id: "beuel", name: "Bürgeramt Beuel", address: "Friedrich-Breuer-Str. 65, 53225 Bonn", town: "Bonn" },
+  { id: "godesberg", name: "Bürgeramt Bad Godesberg", address: "Kurfürstenallee 2-3, 53177 Bonn", town: "Bonn" },
 ];
 
 export const CITIES: Record<string, CityConfig> = {
   koeln: {
     slug: "koeln",
     name: "Köln",
+    regionName: "Köln",
     landmarkIcon: KoelnLandmark,
     adjective: "Kölner",
     authorityName: "Kfz-Zulassungsstelle Köln",
     appointmentLocation: "Kfz-Zulassungsstelle, Max-Glomsda-Str. 4, 51105 Köln",
     locations: [
-      { id: "max-glomsda", name: "Kfz-Zulassungsstelle Köln", address: "Max-Glomsda-Straße 4, 51105 Köln" },
+      { id: "max-glomsda", name: "Kfz-Zulassungsstelle Köln", address: "Max-Glomsda-Straße 4, 51105 Köln", town: "Köln" },
     ],
     portalUrl:
       "https://termine.stadt-koeln.de/m/kfz-zulassung/extern/calendar/?uid=67523a04-37af-4131-9495-0a3566e0eb8b",
@@ -165,6 +172,7 @@ export const CITIES: Record<string, CityConfig> = {
   bonn: {
     slug: "bonn",
     name: "Bonn",
+    regionName: "Bonn",
     landmarkIcon: BonnLandmark,
     adjective: "Bonner",
     authorityName: "Stadt Bonn – Kfz-Zulassung und Führerscheinstelle",
@@ -207,6 +215,7 @@ export const CITIES: Record<string, CityConfig> = {
       showBookingReference: true,
       showCancelUrl: true,
       referenceLabel: "Aufrufnummer",
+      referenceHint: "Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.",
       onSiteSteps: [
         "**Sei pünktlich:** Der Termin verfällt, wenn du nicht rechtzeitig da bist.",
         "Melde dich vor Ort am Check-in-Terminal an: frühestens 15 Minuten vor und spätestens 5 Minuten nach Beginn. Dafür scannst du den QR-Code aus der Mail der Stadt oder gibst deine Aufrufnummer{nummer} ein. Ohne Anmeldung am Terminal wirst du nicht aufgerufen.",
@@ -232,11 +241,12 @@ export const CITIES: Record<string, CityConfig> = {
   recklinghausen: {
     slug: "recklinghausen",
     name: "Recklinghausen",
+    regionName: "Kreis Recklinghausen",
     landmarkIcon: RecklinghausenLandmark,
     adjective: "Recklinghäuser",
     authorityName: "Kreis Recklinghausen – Straßenverkehrsamt, Zulassungsstelle Marl",
     appointmentLocation: "Zulassung Marl, Stettiner Str. 10, 45770 Marl",
-    locations: [{ id: "marl", name: "Zulassung Marl", address: "Stettiner Str. 10, 45770 Marl" }],
+    locations: [{ id: "marl", name: "Zulassung Marl", address: "Stettiner Str. 10, 45770 Marl", town: "Marl" }],
     portalUrl:
       "https://terminvergabe.kreis-re.de/m/zulassung/extern/calendar/?uid=2dceea2a-91a4-49c7-8c4b-48ba42b167a8",
     infoUrl: "https://www.kreis-re.de/strassenverkehrsamt",
@@ -261,6 +271,7 @@ export const CITIES: Record<string, CityConfig> = {
       showBookingReference: true,
       showCancelUrl: true,
       referenceLabel: "Terminnummer",
+      referenceHint: "Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.",
       onSiteSteps: [
         "Sei pünktlich – plane etwas Puffer für Anfahrt und Parken ein.",
         "Melde dich vor Ort am Check-in-Terminal an, frühestens 10 Minuten vor Beginn. Dafür scannst du den QR-Code aus der Mail des Kreises oder gibst deine Terminnummer{nummer} ein. Ohne Anmeldung am Terminal wirst du nicht aufgerufen.",
@@ -289,15 +300,16 @@ export const CITIES: Record<string, CityConfig> = {
   neuss: {
     slug: "neuss",
     name: "Neuss",
+    regionName: "Rhein-Kreis Neuss",
     landmarkIcon: NeussLandmark,
     adjective: "Neusser",
     authorityName: "Rhein-Kreis Neuss – Straßenverkehrsamt (Zulassungsstellen Neuss, Grevenbroich, Dormagen und Meerbusch)",
     appointmentLocation: "Straßenverkehrsamt Neuss, Oberstraße 91, 41460 Neuss",
     locations: [
-      { id: "neuss", name: "Straßenverkehrsamt Neuss", address: "Oberstraße 91, 41460 Neuss" },
-      { id: "grevenbroich", name: "Straßenverkehrsamt Grevenbroich", address: "Lindenstraße 10, 41515 Grevenbroich" },
-      { id: "dormagen", name: "Straßenverkehrsamt Dormagen", address: "Kieler Straße 26, 41540 Dormagen" },
-      { id: "meerbusch", name: "Straßenverkehrsamt Meerbusch", address: "Dr.-Franz-Schütz-Platz 1, 40667 Meerbusch", note: "Nur Kartenzahlung (EC)" },
+      { id: "neuss", name: "Straßenverkehrsamt Neuss", address: "Oberstraße 91, 41460 Neuss", town: "Neuss" },
+      { id: "grevenbroich", name: "Straßenverkehrsamt Grevenbroich", address: "Lindenstraße 10, 41515 Grevenbroich", town: "Grevenbroich" },
+      { id: "dormagen", name: "Straßenverkehrsamt Dormagen", address: "Kieler Straße 26, 41540 Dormagen", town: "Dormagen" },
+      { id: "meerbusch", name: "Straßenverkehrsamt Meerbusch", address: "Dr.-Franz-Schütz-Platz 1, 40667 Meerbusch", town: "Meerbusch", note: "Nur Kartenzahlung (EC)" },
     ],
     portalUrl:
       "https://termine.rhein-kreis-neuss.de/m/rhein-kreis-neuss/extern/calendar/?uid=c9ad0501-0e20-4aa2-bd10-52dedb8dcb3d&lang=de",
@@ -323,16 +335,18 @@ export const CITIES: Record<string, CityConfig> = {
       showBookingReference: true,
       showCancelUrl: true,
       referenceLabel: "Terminnummer",
+      referenceHint: "Mit dem QR-Code aus der Mail des Kreises oder deinem Geburtsdatum meldest du dich vor Ort am Check-in-Terminal an.",
       onSiteSteps: [
         "**Sei pünktlich** – plane etwas Puffer für Anfahrt und Parken ein.",
-        "Bring die Terminbestätigung des Kreises mit (ausgedruckt oder auf dem Handy) und nenne vor Ort deine Terminnummer{nummer}.",
+        "**Aktiviere deinen Termin** am Touchscreen-Terminal im Wartebereich (Funktion „Termin-Checkin“): QR-Code aus der Mail des Kreises an das Lesegerät halten oder dein Geburtsdatum eingeben. Das geht frühestens 30 Minuten vor Beginn. Ohne Aktivierung wirst du nicht aufgerufen.",
+        "Danach wirst du zur gebuchten Uhrzeit aufgerufen. Bist du verspätet, kannst du den Termin noch bis 30 Minuten nach Beginn aktivieren.",
         "Der Termin gilt nur für die Person, auf die er gebucht ist, nur für das gebuchte Anliegen und nur am gebuchten Standort.",
         "Bring alle nötigen Unterlagen vollständig mit – die Liste findest du auf der Seite des Kreises.",
       ],
       cityConfirmationNote:
-        "**Hinweis:** Der Rhein-Kreis Neuss schickt dir zusätzlich eine eigene Terminbestätigung per E-Mail. Bitte bring sie zum Termin mit.",
+        "**Hinweis:** Der Rhein-Kreis Neuss schickt dir zusätzlich eine eigene Bestätigung mit QR-Code. Bring sie zum Termin mit (ausgedruckt oder auf dem Handy) – damit aktivierst du deinen Termin am Terminal.",
       infoLinkLabel: "Seite des Rhein-Kreises Neuss",
-      calendarCheckIn: "Bitte pünktlich sein und die Terminbestätigung des Kreises mitbringen.",
+      calendarCheckIn: "Termin am Terminal aktivieren (QR-Code oder Geburtsdatum), frühestens 30 Min. vorher.",
       authorityOf: "des Kreises",
     },
     pages: {
@@ -382,6 +396,10 @@ export const authorityShortOf = (c: CityConfig) => c.pages.authorityShort;
 /** Genitiv der Behörde, z.B. "der Stadt" / "des Kreises". */
 export const authorityOf = (c: CityConfig) => c.mail.authorityOf ?? "der Stadt";
 /** Nummern-Bezeichnung in Mails/Kalender (Standard "Aufrufnummer"). */
+/** Ort des gebuchten Standorts (id oder Name), sonst Ort des ersten Standorts. */
+export const bookedTown = (c: CityConfig, location?: string | null): string =>
+  (c.locations.find((l) => l.id === location || l.name === location) ?? c.locations[0]).town;
+
 export const referenceLabelOf = (c: CityConfig) => c.mail.referenceLabel ?? "Aufrufnummer";
 
 export const internalPrefix = (slug: string | null | undefined) => `[${cityOrDefault(slug).name}] `;
