@@ -51,10 +51,10 @@ function BookingFormPlaceholder() {
   );
 }
 
-export function CityLanding({ city, content }: { city: string; content: CityContent }) {
+export function CityLanding({ city, content, standort }: { city: string; content: CityContent; standort?: string }) {
   // Städte mit mehreren Standorten (z.B. Bonn) nutzen eine eigene Vorlage,
   // damit die Kölner Seite unverändert bleibt.
-  if (content.multi) return <MultiLocationLanding city={city} content={content} />;
+  if (content.multi) return <MultiLocationLanding city={city} content={content} standort={standort} />;
   return <SingleLocationLanding city={city} content={content} />;
 }
 

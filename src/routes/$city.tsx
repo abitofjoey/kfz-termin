@@ -6,6 +6,8 @@ import { CITY_CONTENT } from "@/content/cities";
 const SITE = "https://kfz-termin.online";
 
 export const Route = createFileRoute("/$city")({
+  validateSearch: (search: Record<string, unknown>): { standort?: string } =>
+    typeof search.standort === "string" && search.standort ? { standort: search.standort } : {},
   loader: ({ params }) => {
     const city = getCity(params.city);
     const content = CITY_CONTENT[params.city];
@@ -108,5 +110,6 @@ export const Route = createFileRoute("/$city")({
 
 function CityPage() {
   const { slug } = Route.useLoaderData();
-  return <CityLanding city={slug} content={CITY_CONTENT[slug]} />;
+  const { standort } = Route.useSearch();
+  return <CityLanding city={slug} content={CITY_CONTENT[slug]} standort={standort} />;
 }

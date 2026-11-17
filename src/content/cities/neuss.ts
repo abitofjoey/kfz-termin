@@ -60,6 +60,7 @@ export const neussContent: CityContent = {
     badge: "Rhein-Kreis Neuss · 4 Standorte",
     headline: "Dein Termin beim Straßenverkehrsamt Rhein-Kreis Neuss –",
     headlineAccent: "automatisch gebucht",
+    locationHeadline: "Dein Termin beim Straßenverkehrsamt {town} –",
     intro:
       "Neuss, Grevenbroich, Dormagen oder Meerbusch: Du wählst Anliegen, Standort und Wunschtage, wir suchen rund um die Uhr nach frei werdenden Terminen und buchen automatisch für dich.",
     searchHoursLabel: "Suche rund um die Uhr",
