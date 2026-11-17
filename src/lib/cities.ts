@@ -246,7 +246,7 @@ export const CITIES: Record<string, CityConfig> = {
     adjective: "Recklinghäuser",
     authorityName: "Kreis Recklinghausen – Straßenverkehrsamt, Zulassungsstelle Marl",
     appointmentLocation: "Zulassung Marl, Stettiner Str. 10, 45770 Marl",
-    locations: [{ id: "marl", name: "Zulassung Marl", address: "Stettiner Str. 10, 45770 Marl"", town: "Marl" }],
+    locations: [{ id: "marl", name: "Zulassung Marl", address: "Stettiner Str. 10, 45770 Marl", town: "Marl" }],
     portalUrl:
       "https://terminvergabe.kreis-re.de/m/zulassung/extern/calendar/?uid=2dceea2a-91a4-49c7-8c4b-48ba42b167a8",
     infoUrl: "https://www.kreis-re.de/strassenverkehrsamt",
