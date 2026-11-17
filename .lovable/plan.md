@@ -1,36 +1,19 @@
-# Neuss → „Rhein-Kreis Neuss" (Name und Adresse)
+# Neuss: Standort per Link vorwählen (?standort=…)
 
-## Wo der Name „Neuss" heute überall erscheint
-Der Stadtname kommt aus einer einzigen Einstellung und taucht dadurch automatisch auf in:
-- Stadtauswahl oben, Fußzeile, Stadt-Karten und „Derzeit für: …" auf der Startseite
-- Seitentitel, Brotkrümel-Pfad, Angaben für Suchmaschinen, Sitemap, /llms.txt
-- Kundenmails, die den Stadtnamen nennen, und der Betreff-Präfix interner Mails („[Neuss] …"), tägliche Statusmail, Portal-Check-Mails
-- Bezahlseite (Beschreibung bei Stripe)
+Gilt vorerst nur für Neuss. Köln, Bonn und Recklinghausen ignorieren den Parameter und bleiben genau wie heute.
 
-Nicht betroffen: die Standortnamen („Straßenverkehrsamt Neuss", Ort „Neuss" im Betreff „Dein Termin in Neuss ist gebucht") – das ist der echte Ort und bleibt. Rechtstexte (Datenschutz, AGB-Städteliste) werden bewusst von Hand gepflegt; dort ändere ich „Neuss" ebenfalls in „Rhein-Kreis Neuss".
-
-## Auswirkung der Adressänderung – wichtig
-Das Kürzel „neuss" ist nicht nur die Adresse, sondern auch der interne Schlüssel:
-- in jeder gespeicherten Neuss-Buchung,
-- beim Pi-Script (fragt mit `?city=neuss` ab, meldet Herzschlag und Portal-Check mit „neuss"),
-- in Überwachung und Statusmail.
-
-Würde ich das Kürzel einfach umbenennen, fände das Script keine Buchungen mehr, bis es angepasst ist, und vorhandene Buchungen müssten umgeschrieben werden.
-
-**Deshalb mein Vorschlag:** Intern bleibt „neuss" (Datenbank, Script, Mails-Logik unverändert). Nur die öffentliche Adresse wird `/rhein-kreis-neuss`. Die alte Adresse `/neuss` leitet dauerhaft weiter, damit geteilte Links und Google nicht ins Leere laufen.
-
-## Umsetzung
-1. Stadt-Einstellung: neues optionales Feld für die öffentliche Adresse; bei Neuss `rhein-kreis-neuss`, bei allen anderen fehlt es (Adresse = Kürzel wie heute).
-2. Name bei Neuss auf „Rhein-Kreis Neuss"; Eigenschaftswort („Neusser") und Gebiet bleiben.
-3. Alle Links, Sitemap, Canonical, /llms.txt, Brotkrümel nutzen die öffentliche Adresse.
-4. Stadtseite findet die Stadt über die öffentliche Adresse; `/neuss` → dauerhafte Weiterleitung auf `/rhein-kreis-neuss`.
-5. Texte prüfen, in denen „Neuss" mit dem Namen zusammengesetzt würde (z. B. „in Rhein-Kreis Neuss" → wo nötig „im Rhein-Kreis Neuss"), Neuss-Texte entsprechend glätten.
-6. Rechtstexte: Städteliste von Hand anpassen.
-7. Tests: Köln/Bonn/Recklinghausen-Adressen unverändert; Neuss-Link zeigt auf /rhein-kreis-neuss; /neuss leitet weiter; Script-Abfrage mit `city=neuss` funktioniert weiter.
-
-Köln, Bonn, Recklinghausen bleiben Wort für Wort gleich. Nicht veröffentlichen ohne Freigabe.
+## Verhalten
+- Gültige Werte: `neuss`, `grevenbroich`, `dormagen`, `meerbusch`. Jeder andere Wert (z. B. `xyz`) wird ignoriert, die Seite sieht dann aus wie ohne Parameter.
+- **Überschrift:** Mit gültigem Standort lautet sie „Dein Termin beim Straßenverkehrsamt Grevenbroich –" / „automatisch gebucht". Der Ortsname kommt aus dem Standort. Badge, Einleitung und alles andere bleiben gleich.
+- **Formular:** „Nur bestimmte Standorte" ist vorgewählt und genau dieser Standort angehakt. Darunter steht klein: „Tipp: Weitere Standorte dazunehmen erhöht deine Chance auf einen frühen Termin." Der Kunde kann jederzeit auf „Egal wo" wechseln oder weitere Standorte anhaken.
+- **Anliegen gibt es dort nicht** (z. B. Ausfuhr in Meerbusch): Dann gilt die bisherige Logik, also wird Meerbusch nicht angezeigt und der Haken fällt weg. Es gibt keinen neuen Fehler. Wer so abschickt, sieht wie bisher den Hinweis „Bitte mindestens einen Standort wählen".
+- **Google:** Die Canonical-Adresse bleibt https://kfz-termin.online/neuss ohne Parameter. Seitentitel, Beschreibung, Vorschaubild und strukturierte Daten bleiben gleich.
 
 ## Technische Details
-- `CityConfig.urlSlug?: string`; Helfer `cityPath(city)` und `getCityByUrlSlug()`; `$city`-Route löst über urlSlug auf, `beforeLoad` wirft `redirect` (301) für Kürzel mit abweichendem urlSlug.
-- `slug` bleibt Schlüssel für `bookings.city`, `script_heartbeat`, `portal_checks`, `?city=`; keine Migration, Pi-Script unverändert.
-- Rückfrage-Option: Wenn du lieber das Kürzel komplett umbenennst, braucht es eine Datenmigration der Buchungen und ein Script-Update auf dem Pi gleichzeitig.
+- `$city`-Route: `validateSearch` mit `standort: fallback(z.string(), "")`, ohne Enum. Prüfung gegen `city.locations` erst in der Komponente. Den Canonical-/og:url-Code aus `params` lasse ich unverändert, er enthält ohnehin keine Query.
+- Neue optionale Einstellung `hero.locationHeadline` im Stadt-Content, nur bei Neuss gesetzt: `"Dein Termin beim Straßenverkehrsamt {town} –"`. Der Parameter wirkt nur, wenn diese Einstellung vorhanden ist und die Stadt `flow: "multi"` mit `form.locationChoice` hat. So bleibt Bonn trotz `?standort=beuel` unverändert.
+- Helfer `resolveStandort(city, content, raw)` gibt die Location oder `null` zurück. Er wird in `MultiLocationLanding` → `Hero` (optional überschriebene Überschrift) und `CityBookingForm` (Prop `initialLocation`) verwendet.
+- `CityBookingForm`: Ist `initialLocation` gesetzt, starten die Werte mit `mode = "specific"` und `chosen = [id]`. Der Tipp erscheint, solange `mode === "specific"` und eine Vorwahl besteht. Der bestehende Filter `possible` bleibt unverändert.
+- Tests: Helfer und Render. `grevenbroich` ergibt Überschrift mit Grevenbroich und Grevenbroich angehakt. `xyz` ergibt die Standard-Überschrift und „Egal wo". Bonn mit `beuel` ergibt die unveränderte Bonn-Überschrift und „Egal wo". Die bestehenden Tests bleiben grün.
+
+Nicht veröffentlichen ohne Freigabe.
