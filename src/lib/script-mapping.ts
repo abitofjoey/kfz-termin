@@ -19,7 +19,13 @@ export type ScriptBookingRow = {
   locations?: string[] | null;
   financed?: boolean | null;
   vehicle_count?: number | null;
+  /** JJJJ-MM-TT, nur bei Städten mit form.birthDateRequired gesetzt. */
+  birth_date?: string | null;
 };
+
+/** Spalten für /api/internal/pending-bookings (alles, was mapBookingForScript liest). */
+export const PENDING_BOOKING_COLUMNS =
+  "id, service_type, salutation, first_name, last_name, email, phone, fin_1, fin_2, fin_3, selected_dates, city, locations, financed, vehicle_count, birth_date";
 
 const SALUTATION_MAP: Record<string, string> = { Herr: "m", Frau: "w", Divers: "d" };
 
@@ -60,6 +66,7 @@ export function mapBookingForScript(row: ScriptBookingRow) {
         standorte: row.locations ?? [],
         finanziert: !!row.financed,
         kategorie,
+        geburtsdatum: row.birth_date ?? "",
       },
       wunschDaten: row.selected_dates.map(formatDate),
     };

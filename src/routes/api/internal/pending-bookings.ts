@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getCity, DEFAULT_CITY } from "@/lib/cities";
 import { normalizeScriptVersion } from "@/lib/script-release";
-import { mapBookingForScript, type ScriptBookingRow } from "@/lib/script-mapping";
+import { mapBookingForScript, PENDING_BOOKING_COLUMNS, type ScriptBookingRow } from "@/lib/script-mapping";
 
 export const Route = createFileRoute("/api/internal/pending-bookings")({
   server: {
@@ -72,7 +72,7 @@ export const Route = createFileRoute("/api/internal/pending-bookings")({
 
         const { data, error } = await supabaseAdmin
           .from("bookings")
-          .select("*")
+          .select(PENDING_BOOKING_COLUMNS)
           .eq("city", city)
           .eq("paid", true)
           .eq("assigned_to_script", false)
