@@ -17,6 +17,7 @@ import { getServices, possibleLocations } from "@/lib/services";
 import { formatPrice, vatShortNote } from "@/lib/price";
 import { CITY_CONTENT } from "@/content/cities";
 import { InlineBold } from "@/components/landing/InlineBold";
+import { isValidBirthDate, BIRTH_DATE_ERROR } from "@/lib/city-booking";
 
 const Calendar = lazy(() => import("@/components/ui/calendar").then((m) => ({ default: m.Calendar })));
 
