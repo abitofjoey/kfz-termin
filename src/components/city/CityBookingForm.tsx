@@ -1,3 +1,5 @@
+import { initialLocationState } from "@/lib/standort";
+import type { CityLocation } from "@/lib/cities";
 import { useEffect, useId, useMemo, useState, lazy, Suspense } from "react";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
@@ -34,7 +36,7 @@ const parseISO = (iso: string) => {
 /** Buchungsformular für Städte mit Standortwahl (z.B. Bonn). */
 export type FormPreselect = { category: ServiceCategory; serviceId: string; nonce: number };
 
-export function CityBookingForm({ city: slug, preselect, submitNotice }: { city: string; preselect?: FormPreselect | null; submitNotice?: string }) {
+export function CityBookingForm({ city: slug, preselect, submitNotice, initialLocation = null }: { city: string; preselect?: FormPreselect | null; submitNotice?: string; initialLocation?: CityLocation | null }) {
   const city = getCity(slug)!;
   const bookable = city.bookable;
   const submitBooking = useServerFn(createCityBooking);
@@ -50,8 +52,8 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
   const [phone, setPhone] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [vehicles, setVehicles] = useState(1);
-  const [mode, setMode] = useState<"any" | "specific">("any");
-  const [chosen, setChosen] = useState<string[]>([]);
+  const [mode, setMode] = useState<"any" | "specific">(() => initialLocationState(initialLocation).mode);
+  const [chosen, setChosen] = useState<string[]>(() => initialLocationState(initialLocation).chosen);
   const [financed, setFinanced] = useState(false);
   const [dates, setDates] = useState<Date[]>([]);
   const [agreeTerms, setAgreeTerms] = useState(false);
@@ -356,6 +358,9 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
                         </span>
                       </label>
                     ))}
+                    {initialLocation ? (
+                      <p className="text-xs text-muted-foreground">Tipp: Weitere Standorte dazunehmen erhöht deine Chance auf einen frühen Termin.</p>
+                    ) : null}
                   </div>
                 ) : null}
                 {errors.locations ? <p role="alert" className="text-xs text-destructive">{errors.locations}</p> : null}

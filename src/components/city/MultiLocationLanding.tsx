@@ -12,6 +12,7 @@ import { Footer } from "@/components/landing/Footer";
 import { getCity } from "@/lib/cities";
 import { formatPrice } from "@/lib/price";
 import type { CityContent } from "@/content/cities";
+import { resolveStandort, heroForStandort } from "@/lib/standort";
 
 const CityBookingForm = lazy(() =>
   import("@/components/city/CityBookingForm").then((m) => ({ default: m.CityBookingForm })),
@@ -19,8 +20,9 @@ const CityBookingForm = lazy(() =>
 const Toaster = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
 
 /** Stadtseite für Städte mit mehreren Standorten (z.B. Bonn). Ohne Kundenstimmen. */
-export function MultiLocationLanding({ city: slug, content }: { city: string; content: CityContent }) {
+export function MultiLocationLanding({ city: slug, content, standort }: { city: string; content: CityContent; standort?: string }) {
   const city = getCity(slug)!;
+  const initialLocation = resolveStandort(city, content.hero, standort);
   const multi = content.multi!;
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
@@ -52,7 +54,7 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
       </a>
       <Header city={slug} />
       <main id="inhalt">
-        <Hero content={content.hero} city={city} />
+        <Hero content={heroForStandort(content.hero, initialLocation)} city={city} />
 
         <section id="ablauf" aria-labelledby="ablauf-heading" className="py-20">
           <div className="mx-auto max-w-5xl px-4">
@@ -85,7 +87,7 @@ export function MultiLocationLanding({ city: slug, content }: { city: string; co
 
         {ready ? (
           <Suspense fallback={<div className="h-[900px]" aria-hidden="true" />}>
-            <CityBookingForm city={slug} preselect={preselect} submitNotice={multi.bookingNotice} />
+            <CityBookingForm key={initialLocation?.id ?? "any"} city={slug} preselect={preselect} initialLocation={initialLocation} submitNotice={multi.bookingNotice} />
           </Suspense>
         ) : (
           <section id="buchung" className="py-20"><div className="mx-auto h-[900px] max-w-3xl" aria-hidden="true" /></section>

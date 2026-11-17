@@ -9,6 +9,8 @@ export type HeroContent = {
   intro: string;
   searchHoursLabel: string;
   scopeLabel: string;
+  /** Optional: Überschrift bei ?standort=, {town} = Ort des Standorts. */
+  locationHeadline?: string;
 };
 
 export function Hero({ content, city }: { content: HeroContent; city?: CityConfig }) {
