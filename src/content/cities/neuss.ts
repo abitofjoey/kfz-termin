@@ -58,11 +58,11 @@ export const neussContent: CityContent = {
   },
   hero: {
     badge: "Rhein-Kreis Neuss · 4 Standorte",
-    headline: "Dein Termin beim Straßenverkehrsamt Rhein-Kreis Neuss –",
-    headlineAccent: "automatisch gebucht",
-    locationHeadline: "Dein Termin beim Straßenverkehrsamt {town} –",
+    headline: "Dein Wunschtermin beim Straßenverkehrsamt Rhein-Kreis Neuss –",
+    headlineAccent: "automatisch gebucht.",
+    locationHeadline: "Dein Wunschtermin beim Straßenverkehrsamt {town} –",
     intro:
-      "Neuss, Grevenbroich, Dormagen oder Meerbusch: Du wählst Anliegen, Standort und Wunschtage, wir suchen rund um die Uhr nach frei werdenden Terminen und buchen automatisch für dich.",
+      "Kein freier Termin, keiner der zeitlich passt – oder du brauchst ihn einfach kurzfristig? Wir suchen rund um die Uhr in Neuss, Grevenbroich, Dormagen und Meerbusch und buchen automatisch, sobald ein Termin frei wird.",
     searchHoursLabel: "Suche rund um die Uhr",
     scopeLabel: "Neuss, Grevenbroich, Dormagen, Meerbusch",
   },

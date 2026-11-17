@@ -75,10 +75,10 @@ export const bonnContent: CityContent = {
   },
   hero: {
     badge: "Stadt Bonn",
-    headline: "Dein Wunschtermin in Bonn –",
-    headlineAccent: "Kfz-Zulassung und Führerschein, automatisch gebucht",
+    headline: "Dein Wunschtermin bei der Bonner Zulassungsstelle –",
+    headlineAccent: "automatisch gebucht.",
     intro:
-      "Du wählst Anliegen, Wunschtage und Standorte. Wir suchen rund um die Uhr nach frei werdenden Terminen und buchen automatisch für dich.",
+      "Kein freier Termin, keiner der zeitlich passt – oder du brauchst ihn einfach kurzfristig? Wir suchen rund um die Uhr an allen Bonner Standorten und buchen automatisch, sobald ein Termin frei wird – für Kfz-Zulassung und Führerschein.",
     searchHoursLabel: "Suche rund um die Uhr",
     scopeLabel: "Vier Standorte in Bonn",
   },

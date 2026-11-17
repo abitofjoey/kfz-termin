@@ -110,7 +110,88 @@ export const Route = createFileRoute("/api/internal/health/check")({
           if (ok) stuck++;
         }
 
-        return Response.json({ ok: true, piAlert, piAlerts, notPickedUp, stuck });
+        const { sendTransactionalEmailServer } = await import("@/lib/email/send.server");
+        const { retryFoundMail, failureReason } = await import("@/lib/mail-retry");
+        const windowStart = new Date(now - 3 * 24 * 60 * MIN).toISOString();
+        const windowEnd = new Date(now - 15 * MIN).toISOString();
+
+        // e) Bezahlt, aber Bestätigung nie als versendet markiert
+        let confirmRetried = 0;
+        let confirmFailed = 0;
+        const { data: unconfirmed, error: uErr } = await supabaseAdmin
+          .from("bookings")
+          .select("id, city, first_name, last_name, service_type, search_result")
+          .eq("paid", true).is("confirmation_sent_at", null)
+          .gte("created_at", windowStart).lte("created_at", windowEnd).limit(50);
+        if (uErr) console.error("health check: unconfirmed read error", uErr.code);
+        for (const b of unconfirmed ?? []) {
+          const base = { bookingId: b.id, firstName: b.first_name, lastName: b.last_name, serviceType: b.service_type, city: b.city };
+          if (b.search_result) {
+            // Schon ein Ergebnis → keine Bestätigung mehr an den Kunden.
+            if (await send("confirmation-failed-internal", `health-confirm-failed-${b.id}`, { ...base, customerSkipped: true })) confirmFailed++;
+            continue;
+          }
+          const { finalizePaidBooking } = await import("@/lib/booking-finalize.server");
+          const r = await finalizePaidBooking(b.id, { retry: true });
+          confirmRetried++;
+          if (r && !r.ok) {
+            const reason = failureReason(r.customer) ?? failureReason(r.internal) ?? "Unbekannter Fehler";
+            if (await send("confirmation-failed-internal", `health-confirm-failed-${b.id}`, { ...base, reason })) confirmFailed++;
+          }
+        }
+
+        // f) Termin gefunden, Kundenmail nie als versendet markiert
+        let foundRetried = 0;
+        let foundFailed = 0;
+        const { data: unnotified, error: nErr } = await supabaseAdmin
+          .from("bookings")
+          .select("id, city, salutation, first_name, last_name, email, phone, service_type, appointment_at, found_at, booked_location, booking_reference, cancel_url, calendar_token")
+          .eq("search_result", "found").is("result_notified_at", null)
+          .not("appointment_at", "is", null).not("found_at", "is", null)
+          .gte("found_at", windowStart).lte("found_at", windowEnd).limit(50);
+        if (nErr) console.error("health check: unnotified read error", nErr.code);
+        for (const b of unnotified ?? []) {
+          const r = await retryFoundMail(sendTransactionalEmailServer, b);
+          foundRetried++;
+          if (r.success) {
+            await supabaseAdmin.from("bookings").update({ result_notified_at: new Date().toISOString() }).eq("id", b.id);
+          } else {
+            const appointmentAt = new Date(b.appointment_at as string).toISOString();
+            const ok = await send("found-mail-failed-internal", `health-found-failed-${b.id}-${appointmentAt}`, {
+              bookingId: b.id, firstName: b.first_name, lastName: b.last_name, serviceType: b.service_type, city: b.city,
+              appointmentAt, reason: failureReason(r),
+            });
+            if (ok) foundFailed++;
+          }
+        }
+
+        // g) Script-Version je Stadt
+        let versionAlerts = 0;
+        try {
+          const { parseUserScriptVersion, versionLagAction } = await import("@/lib/mail-retry");
+          let currentVersion: string | null = null;
+          const { data: file } = await supabaseAdmin.storage.from("script-releases").download("kfz-termin.user.js");
+          if (file) currentVersion = parseUserScriptVersion(await file.text());
+          const { data: beats } = await supabaseAdmin.from("script_heartbeat").select("city, last_poll_at, script_version");
+          const { data: lags } = await supabaseAdmin.from("script_version_lag").select("*");
+          for (const hb of beats ?? []) {
+            const existing = (lags ?? []).find((l) => l.city === hb.city) ?? null;
+            const a = versionLagAction({ now, lastPollAt: hb.last_poll_at, cityVersion: hb.script_version, currentVersion, existing });
+            if (a.kind === "delete") await supabaseAdmin.from("script_version_lag").delete().eq("city", hb.city);
+            else if (a.kind === "upsert") await supabaseAdmin.from("script_version_lag").upsert({ city: hb.city, ...a.row });
+            else if (a.kind === "alert") {
+              const ok = await send("script-version-lag-internal", `health-version-lag-${hb.city}-${a.row.script_version}-${a.row.current_version}`, {
+                city: hb.city, scriptVersion: a.row.script_version, currentVersion: a.row.current_version, firstSeenAt: a.row.first_seen_at,
+              });
+              await supabaseAdmin.from("script_version_lag").upsert({ city: hb.city, ...a.row, alert_sent_at: ok ? new Date().toISOString() : null });
+              if (ok) versionAlerts++;
+            }
+          }
+        } catch {
+          console.error("health check: version check failed");
+        }
+
+        return Response.json({ ok: true, piAlert, piAlerts, notPickedUp, stuck, confirmRetried, confirmFailed, foundRetried, foundFailed, versionAlerts });
       },
     },
   },

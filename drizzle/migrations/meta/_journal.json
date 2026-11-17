@@ -113,6 +113,13 @@
       "when": 1794909425482,
       "tag": "0015_bookings_birth_date",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1794947303537,
+      "tag": "0016_abandoned_bookings_and_version_lag",
+      "breakpoints": true
     }
   ]
 }

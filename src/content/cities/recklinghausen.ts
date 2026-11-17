@@ -67,9 +67,9 @@ export const recklinghausenContent: CityContent = {
   hero: {
     badge: "Kreis Recklinghausen · Zulassung Marl",
     headline: "Dein Wunschtermin bei der Zulassungsstelle Marl –",
-    headlineAccent: "automatisch gebucht",
+    headlineAccent: "automatisch gebucht.",
     intro:
-      "Für alle Städte im Kreis Recklinghausen: Du wählst Anliegen und Wunschtage, wir suchen rund um die Uhr nach frei werdenden Terminen und buchen automatisch für dich.",
+      "Kein freier Termin, keiner der zeitlich passt – oder du brauchst ihn einfach kurzfristig? Wir suchen rund um die Uhr und buchen automatisch, sobald ein Termin frei wird – für alle Städte im Kreis Recklinghausen.",
     searchHoursLabel: "Suche rund um die Uhr",
     scopeLabel: "Zulassung Marl",
   },

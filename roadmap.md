@@ -4,3 +4,4 @@
 - [x] Kundentexte auf festes „Stadt {Name}“ prüfen, für Recklinghausen Behörde aus Konfig
 - [ ] OG-Bild Recklinghausen einbauen (wartet auf Freigabe des Entwurfs)
 - [x] Neuss onboarden (Geburtsdatum, Konfig, 18 Anliegen, Inhalte, Wahrzeichen, Rechtstexte, Tests; birth_date in pending-bookings-Abfrage mit Test)
+- [x] Mail-Nachversuche, Versions-Warnung, Löschen unbezahlter Buchungen, Hero-Texte

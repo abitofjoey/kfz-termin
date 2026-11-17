@@ -9,8 +9,8 @@ const nh = CITY_CONTENT.neuss.hero;
 describe("?standort= (Neuss)", () => {
   it("grevenbroich → Überschrift und Vorwahl", () => {
     const loc = resolveStandort(N, nh, "grevenbroich");
-    expect(heroForStandort(nh, loc).headline).toBe("Dein Termin beim Straßenverkehrsamt Grevenbroich –");
-    expect(heroForStandort(nh, loc).headlineAccent).toBe("automatisch gebucht");
+    expect(heroForStandort(nh, loc).headline).toBe("Dein Wunschtermin beim Straßenverkehrsamt Grevenbroich –");
+    expect(heroForStandort(nh, loc).headlineAccent).toBe("automatisch gebucht.");
     expect(heroForStandort(nh, loc).badge).toBe(nh.badge);
     expect(initialLocationState(loc)).toEqual({ mode: "specific", chosen: ["grevenbroich"] });
   });

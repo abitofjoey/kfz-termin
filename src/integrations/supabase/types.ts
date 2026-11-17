@@ -308,6 +308,30 @@ export type Database = {
         }
         Relationships: []
       }
+      script_version_lag: {
+        Row: {
+          alert_sent_at: string | null
+          city: string
+          current_version: string
+          first_seen_at: string
+          script_version: string
+        }
+        Insert: {
+          alert_sent_at?: string | null
+          city: string
+          current_version: string
+          first_seen_at?: string
+          script_version: string
+        }
+        Update: {
+          alert_sent_at?: string | null
+          city?: string
+          current_version?: string
+          first_seen_at?: string
+          script_version?: string
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
@@ -377,6 +401,7 @@ export type Database = {
     }
     Functions: {
       anonymize_old_bookings: { Args: never; Returns: number }
+      delete_abandoned_bookings: { Args: never; Returns: number }
       delete_ancient_bookings: { Args: never; Returns: number }
     }
     Enums: {

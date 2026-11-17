@@ -113,6 +113,7 @@ export const Route = createFileRoute("/datenschutz")({
         <h2 className="text-lg font-semibold">17. Speicherdauer</h2>
         <ul className="mt-2 list-disc space-y-1 pl-6">
           <li><strong>FIN, Telefonnummer, Geburtsdatum, Wunschtermine und Notizen:</strong> Anonymisierung 90 Tage nach dem spätesten Wunschtermin.</li>
+          <li><strong>Nicht abgeschlossene Buchungen:</strong> Nicht abgeschlossene Buchungen (ohne Zahlung) löschen wir nach 30 Tagen.</li>
           <li><strong>Rechnungs- und Zahlungsdaten:</strong> Aufbewahrung für 10 Jahre gemäß § 147 AO / § 257 HGB.</li>
           <li><strong>Widerrufserklärungen:</strong> zusammen mit den Buchungsdaten bis zum Ablauf der Verjährungsfristen.</li>
           <li><strong>Kleinanzeigen-Nachrichten:</strong> Löschung nach Abschluss der Anfrage bzw. Vertragsabwicklung, sofern keine gesetzlichen Pflichten entgegenstehen.</li>

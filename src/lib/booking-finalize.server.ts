@@ -1,5 +1,6 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { sendTransactionalEmailServer } from "@/lib/email/send.server";
+import { sendConfirmationMails, type ConfirmationResult } from "@/lib/mail-retry";
 
 /**
  * Marks a booking as paid and sends both confirmation emails (customer + internal).
@@ -17,7 +18,10 @@ export class BookingPaidUpdateError extends Error {
   }
 }
 
-export async function finalizePaidBooking(bookingId: string): Promise<void> {
+export async function finalizePaidBooking(
+  bookingId: string,
+  opts: { retry?: boolean } = {},
+): Promise<ConfirmationResult | null> {
   // Mark as paid (no-op if already paid)
   const { error: updateError } = await supabaseAdmin
     .from("bookings")
@@ -36,15 +40,38 @@ export async function finalizePaidBooking(bookingId: string): Promise<void> {
 
   if (error || !booking) {
     console.error("finalizePaidBooking: booking not found", { bookingId, error });
-    return;
+    return null;
   }
 
   if (booking.confirmation_sent_at) {
     // Already sent — nothing to do.
-    return;
+    return null;
   }
 
-  const templateData = {
+  const templateData = buildConfirmationData(booking);
+
+  try {
+    const result = await sendConfirmationMails(sendTransactionalEmailServer, booking, templateData, {
+      retry: opts.retry,
+    });
+    if (result.ok) {
+      await supabaseAdmin
+        .from("bookings")
+        .update({ confirmation_sent_at: new Date().toISOString() })
+        .eq("id", booking.id);
+    } else {
+      console.error("finalizePaidBooking: confirmation emails not fully sent");
+    }
+    return result;
+  } catch (e) {
+    console.error("finalizePaidBooking: failed to send confirmation emails", e instanceof Error ? e.message : "unknown");
+    // Don't rethrow — Stripe webhook should still ack so it doesn't retry forever.
+    return { ok: false, customer: null, internal: { success: false, error: "exception" } };
+  }
+}
+
+export function buildConfirmationData(booking: any) {
+  return {
     bookingId: booking.id,
     city: booking.city,
     withdrawToken: booking.withdraw_token,
@@ -55,7 +82,7 @@ export async function finalizePaidBooking(bookingId: string): Promise<void> {
     phone: booking.phone,
     serviceType: booking.service_type,
     finEndings: [booking.fin_1, booking.fin_2, booking.fin_3].filter(
-      (v): v is string => !!v,
+      (v: unknown): v is string => !!v,
     ),
     notes: booking.notes ?? undefined,
     selectedDates: booking.selected_dates ?? [],
@@ -66,28 +93,4 @@ export async function finalizePaidBooking(bookingId: string): Promise<void> {
     financed: booking.financed,
     vehicleCount: booking.vehicle_count ?? null,
   };
-
-  try {
-    await Promise.all([
-      sendTransactionalEmailServer({
-        templateName: "booking-confirmation",
-        recipientEmail: booking.email,
-        idempotencyKey: `booking-confirm-${booking.id}`,
-        templateData,
-      }),
-      sendTransactionalEmailServer({
-        templateName: "booking-internal-notification",
-        idempotencyKey: `booking-internal-${booking.id}`,
-        templateData,
-      }),
-    ]);
-
-    await supabaseAdmin
-      .from("bookings")
-      .update({ confirmation_sent_at: new Date().toISOString() })
-      .eq("id", booking.id);
-  } catch (e) {
-    console.error("finalizePaidBooking: failed to send confirmation emails", e);
-    // Don't rethrow — Stripe webhook should still ack so it doesn't retry forever.
-  }
 }

@@ -27,6 +27,9 @@ import { template as piRecoveredInternal } from './pi-recovered-internal'
 import { template as apiStatusInternal } from './api-status-internal'
 import { template as bookingNotPickedUpInternal } from './booking-not-picked-up-internal'
 import { template as bookingStuckInternal } from './booking-stuck-internal'
+import { template as confirmationFailedInternal } from './confirmation-failed-internal'
+import { template as foundMailFailedInternal } from './found-mail-failed-internal'
+import { template as scriptVersionLagInternal } from './script-version-lag-internal'
 import { template as withdrawalReceived } from './withdrawal-received'
 import { template as withdrawalInternal } from './withdrawal-internal'
 import { template as withdrawnFound } from './withdrawn-found'
@@ -69,4 +72,7 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'portal-check-changed-internal': portalCheckChangedInternal,
   'portal-check-recovered-internal': portalCheckRecoveredInternal,
   'portal-check-daily': portalCheckDaily,
+  'confirmation-failed-internal': confirmationFailedInternal,
+  'found-mail-failed-internal': foundMailFailedInternal,
+  'script-version-lag-internal': scriptVersionLagInternal,
 }

@@ -119,7 +119,7 @@ export const koelnContent: CityContent = {
     headline: "Dein Wunschtermin bei der Kölner Zulassungsstelle –",
     headlineAccent: "automatisch gebucht.",
     intro:
-      "Kein freier Termin, keiner der zeitlich passt – oder du brauchst ihn einfach kurzfristig? Wir übernehmen die Suche und buchen automatisch sobald ein Slot frei wird.",
+      "Kein freier Termin, keiner der zeitlich passt – oder du brauchst ihn einfach kurzfristig? Wir übernehmen die Suche und buchen automatisch, sobald ein Slot frei wird.",
     searchHoursLabel: "Suche täglich von 6 bis 20 Uhr",
     scopeLabel: "Nur Zulassungsstelle Köln",
   },
