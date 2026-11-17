@@ -49,8 +49,9 @@ export const Route = createFileRoute("/datenschutz")({
 
       <section>
         <h2 className="text-lg font-semibold">6. Buchung eines Termins</h2>
-        <p className="mt-2">Im Rahmen der Buchung erheben wir die zur Vertragsdurchführung erforderlichen Daten (z. B. Name, E-Mail-Adresse, ggf. Telefonnummer, gewünschter Zeitraum, Anliegen, Fahrzeugdaten). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung). Die Daten werden gelöscht, sobald sie für die Erreichung des Zwecks ihrer Erhebung nicht mehr erforderlich sind, vorbehaltlich gesetzlicher Aufbewahrungspflichten (insb. § 147 AO, § 257 HGB).</p>
+        <p className="mt-2">Im Rahmen der Buchung erheben wir die zur Vertragsdurchführung erforderlichen Daten (z. B. Name, E-Mail-Adresse, ggf. Telefonnummer, ggf. Geburtsdatum (nur Rhein-Kreis Neuss), gewünschter Zeitraum, Anliegen, Fahrzeugdaten). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung). Die Daten werden gelöscht, sobald sie für die Erreichung des Zwecks ihrer Erhebung nicht mehr erforderlich sind, vorbehaltlich gesetzlicher Aufbewahrungspflichten (insb. § 147 AO, § 257 HGB).</p>
         <p className="mt-2">Die Telefonnummer übermitteln wir an die jeweilige Zulassungsbehörde, derzeit {LEGAL_CITIES_WITH_ARTICLES} (Abschnitt 7), weil das Buchungsportal sie verlangt, und nutzen sie für Rückfragen zu deinem Auftrag. Eine Weitergabe an sonstige Dritte erfolgt nicht. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Zur Speicherdauer siehe Abschnitt 17.</p>
+        <p className="mt-2">Für Buchungen beim Rhein-Kreis Neuss erheben wir zusätzlich dein Geburtsdatum und übermitteln es an den Rhein-Kreis Neuss, weil sein Buchungsportal es verlangt. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO.</p>
       </section>
 
       <section>
@@ -111,7 +112,7 @@ export const Route = createFileRoute("/datenschutz")({
       <section>
         <h2 className="text-lg font-semibold">17. Speicherdauer</h2>
         <ul className="mt-2 list-disc space-y-1 pl-6">
-          <li><strong>FIN, Telefonnummer, Wunschtermine und Notizen:</strong> Anonymisierung 90 Tage nach dem spätesten Wunschtermin.</li>
+          <li><strong>FIN, Telefonnummer, Geburtsdatum, Wunschtermine und Notizen:</strong> Anonymisierung 90 Tage nach dem spätesten Wunschtermin.</li>
           <li><strong>Rechnungs- und Zahlungsdaten:</strong> Aufbewahrung für 10 Jahre gemäß § 147 AO / § 257 HGB.</li>
           <li><strong>Widerrufserklärungen:</strong> zusammen mit den Buchungsdaten bis zum Ablauf der Verjährungsfristen.</li>
           <li><strong>Kleinanzeigen-Nachrichten:</strong> Löschung nach Abschluss der Anfrage bzw. Vertragsabwicklung, sofern keine gesetzlichen Pflichten entgegenstehen.</li>

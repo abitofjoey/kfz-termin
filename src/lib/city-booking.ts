@@ -18,11 +18,28 @@ export const CityBookingInput = z.object({
   /** null = "Egal wo". */
   locations: z.array(z.string().max(40)).max(10).nullable(),
   financed: z.boolean().optional(),
+  /** JJJJ-MM-TT, nur bei Städten mit form.birthDateRequired. */
+  birth_date: z.string().max(10).optional(),
   selected_dates: z.array(z.string()).min(1).max(60),
 });
 
 /** Erlaubte Anreden (serverseitig geprüft). */
 export const SALUTATIONS = ["Herr", "Frau", "Divers"] as const;
+
+export const BIRTH_DATE_ERROR = "Bitte ein gültiges Geburtsdatum angeben.";
+
+/** Gültiges Geburtsdatum JJJJ-MM-TT, Alter 16 bis 110 Jahre (Europe/Berlin-Kalendertag reicht). */
+export function isValidBirthDate(value: string | undefined, now: Date = new Date()): boolean {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value ?? "");
+  if (!m) return false;
+  const [y, mo, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
+  const dt = new Date(Date.UTC(y, mo - 1, d));
+  if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== mo - 1 || dt.getUTCDate() !== d) return false;
+  const today = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Berlin" }));
+  let age = today.getFullYear() - y;
+  if (today.getMonth() + 1 < mo || (today.getMonth() + 1 === mo && today.getDate() < d)) age--;
+  return age >= 16 && age <= 110;
+}
 
 export type CityBookingData = z.infer<typeof CityBookingInput>;
 
@@ -43,6 +60,11 @@ export function prepareCityBooking(data: CityBookingData, now: Date = new Date()
       return { ok: false as const, error: "Bitte Anrede wählen." };
     }
     salutation = data.salutation;
+  }
+  let birthDate: string | null = null;
+  if (city.form.birthDateRequired) {
+    if (!isValidBirthDate(data.birth_date, now)) return { ok: false as const, error: BIRTH_DATE_ERROR };
+    birthDate = data.birth_date!;
   }
   const isKfz = service.category === "kfz";
   const max = service.maxVehicles ?? 1;
@@ -78,6 +100,7 @@ export function prepareCityBooking(data: CityBookingData, now: Date = new Date()
       locations,
       financed,
       vehicle_count: vehicles,
+      ...(birthDate ? { birth_date: birthDate } : {}),
       amount_cents: city.priceCents,
     },
   };

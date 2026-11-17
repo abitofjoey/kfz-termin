@@ -21,6 +21,7 @@ export type Database = {
           appointment_at: string | null
           assigned_to_script: boolean
           assigned_to_script_at: string | null
+          birth_date: string | null
           booked_location: string | null
           booking_reference: string | null
           calendar_token: string
@@ -70,6 +71,7 @@ export type Database = {
           appointment_at?: string | null
           assigned_to_script?: boolean
           assigned_to_script_at?: string | null
+          birth_date?: string | null
           booked_location?: string | null
           booking_reference?: string | null
           calendar_token?: string
@@ -119,6 +121,7 @@ export type Database = {
           appointment_at?: string | null
           assigned_to_script?: boolean
           assigned_to_script_at?: string | null
+          birth_date?: string | null
           booked_location?: string | null
           booking_reference?: string | null
           calendar_token?: string

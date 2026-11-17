@@ -21,7 +21,7 @@ Köln (eine Stelle, Kunde bestätigt selbst) und Bonn (mehrere Standorte, sofort
 | `priceCents` | Preis in Cent – einzige Preisquelle. |
 | `customerConfirmationHours` | Frist, in der der Kunde den Behörden-Link klicken muss; `null` = keine Bestätigung nötig (sofort gebucht). Steuert viele Mail- und Seitentexte. |
 | `flow` | `"single"` (Kölner Ablauf) oder `"multi"` (Bonner Ablauf: Script-Format, Standort-/Nummernzeilen in internen Mails). |
-| `form` | `finRequired`, `salutationRequired` (Pflicht-Anrede Herr/Frau/Divers), `locationChoice` (nur Standortauswahl im Formular), `financedCheckbox`. |
+| `form` | `finRequired`, `salutationRequired` (Pflicht-Anrede Herr/Frau/Divers), `locationChoice` (nur Standortauswahl im Formular), `financedCheckbox`, `birthDateRequired` (Pflichtfeld Geburtsdatum, gespeichert in `bookings.birth_date`, ans Script als `geburtsdatum`). Standorte können `note` haben (kleiner Hinweis unter der Adresse). |
 | `categories` | Abweichende Regeln je Kategorie (`kfz`, `fuehrerschein`), z. B. längeres Kalenderfenster. |
 | `mail` | `atAuthority` („bei der Stadt Bonn“), `authority` (Behörde im Fließtext nach „der/die“), `showBookingReference`, `showCancelUrl`; bei `multi`: `referenceLabel`, `onSiteSteps` ({nummer}, **fett**), `cityConfirmationNote`, `infoLinkLabel`, `calendarCheckIn`, optional `authorityOf` („des Kreises“). |
 | `pages` | `authorityShort` (auch in „Kein Termin“-Mail), optional `infoAt`/`infoShort` (Infolink der Service-Karte), `successIntro`, `successNotice` (null = Standardtext mit Bestätigungsfrist). |

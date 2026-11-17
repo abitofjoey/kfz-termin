@@ -17,6 +17,7 @@ import { getServices, possibleLocations } from "@/lib/services";
 import { formatPrice, vatShortNote } from "@/lib/price";
 import { CITY_CONTENT } from "@/content/cities";
 import { InlineBold } from "@/components/landing/InlineBold";
+import { isValidBirthDate, BIRTH_DATE_ERROR } from "@/lib/city-booking";
 
 const Calendar = lazy(() => import("@/components/ui/calendar").then((m) => ({ default: m.Calendar })));
 
@@ -47,6 +48,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [vehicles, setVehicles] = useState(1);
   const [mode, setMode] = useState<"any" | "specific">("any");
   const [chosen, setChosen] = useState<string[]>([]);
@@ -123,6 +125,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
     if (!lastName.trim()) e.lastName = "Pflichtfeld";
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) e.email = "Ungültige E-Mail-Adresse";
     if (phone.trim().length < 4) e.phone = "Pflichtfeld";
+    if (city.form.birthDateRequired && !isValidBirthDate(birthDate)) e.birthDate = BIRTH_DATE_ERROR;
     if (!singleLocation && !financedActive && !onlyMain && mode === "specific" && chosen.length === 0)
       e.locations = "Bitte mindestens einen Standort wählen";
     if (dates.length < 1) e.dates = "Bitte wähle mindestens 1 Wunschtag aus.";
@@ -146,6 +149,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
           last_name: lastName,
           email,
           phone,
+          ...(city.form.birthDateRequired ? { birth_date: birthDate } : {}),
           vehicle_count: isKfz ? vehicles : undefined,
           locations: singleLocation || financedActive || onlyMain || mode === "any" ? null : chosen,
           financed: financedActive,
@@ -264,6 +268,26 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
             </Field>
           </div>
 
+          {city.form.birthDateRequired ? (
+            <Field label="Geburtsdatum" error={errors.birthDate}>
+              {(id) => (
+                <>
+                  <Input
+                    id={id}
+                    type="date"
+                    value={birthDate}
+                    onChange={(e) => setBirthDate(e.target.value)}
+                    autoComplete="bday"
+                    aria-invalid={!!errors.birthDate}
+                  />
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Verlangt der Kreis für die Terminbuchung. Bitte das Geburtsdatum der Person, auf die der Termin gebucht wird.
+                  </p>
+                </>
+              )}
+            </Field>
+          ) : null}
+
           {isKfz ? (
             <Field label="Anzahl Fahrzeuge">
               {(id) => (
@@ -328,6 +352,7 @@ export function CityBookingForm({ city: slug, preselect, submitNotice }: { city:
                         <span>
                           {l.name}
                           <span className="block text-xs text-muted-foreground">{l.address}</span>
+                          {l.note ? <span className="block text-xs text-muted-foreground">{l.note}</span> : null}
                         </span>
                       </label>
                     ))}

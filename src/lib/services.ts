@@ -320,6 +320,29 @@ const RECKLINGHAUSEN_SERVICES: (CityService & { script: string })[] = [
   { script: "8", id: "aushaendigung-zb2", label: "Aushändigung ZB II nach Aufbietung", shortLabel: "Abholung Fahrzeugbrief", cardTitle: "Aushändigung des Fahrzeugbriefs", subtitle: "Abholung der neuen Zulassungsbescheinigung Teil II nach dem Aufgebotsverfahren", maxVehicles: 4, popularRank: 6 },
 ].map((s) => ({ ...s, category: "kfz" as const, popular: true }));
 
+/** Rhein-Kreis Neuss: Script-Nummern 1–18 (Pi-Script v41.1), alle Kfz, alle Kacheln sichtbar. */
+const NEUSS_INFO = "https://www.rhein-kreis-neuss.de/de/verwaltung-politik/aemterliste/strassenverkehrsamt/terminvergabe/";
+const NEUSS_SERVICES: (CityService & { script: string })[] = [
+  { script: "1", id: "umschreibung-innerhalb", label: "Umschreibung innerhalb des Rhein-Kreises Neuss", shortLabel: "Halterwechsel", cardTitle: "Gebrauchtfahrzeug umschreiben", subtitle: "Halterwechsel, Fahrzeug war schon im Rhein-Kreis Neuss (NE/GV) zugelassen", popularRank: 1 },
+  { script: "2", id: "umschreibung-anderer-bezirk", label: "Umschreibung aus anderem Zulassungsbezirk", shortLabel: "Aus anderem Kreis", cardTitle: "Fahrzeug aus anderem Kreis", subtitle: "Ummeldung in den Rhein-Kreis Neuss – mit oder ohne Halterwechsel", popularRank: 2 },
+  { script: "3", id: "neufahrzeug", label: "Neufahrzeug zulassen", shortLabel: "Neufahrzeug", cardTitle: "Neufahrzeug zulassen", subtitle: "Erstzulassung eines fabrikneuen Fahrzeugs mit deutschen Papieren", popularRank: 3 },
+  { script: "4", id: "wiederzulassung", label: "Wiederzulassung (außer Betrieb gesetztes Kfz)", shortLabel: "Wiederzulassung", cardTitle: "Wiederzulassung", subtitle: "Ein abgemeldetes Fahrzeug wieder anmelden", popularRank: 4 },
+  { script: "5", id: "gebraucht-ewr", label: "Gebrauchtes Kfz aus dem EWR (Einfuhr)", shortLabel: "Import EU gebraucht", cardTitle: "Gebrauchtwagen aus dem EU-Ausland", subtitle: "Einfuhr aus dem Europäischen Wirtschaftsraum", popularRank: 6 },
+  { script: "6", id: "gebraucht-nicht-ewr", label: "Gebrauchtes Kfz von außerhalb des EWR (Einfuhr)", shortLabel: "Import gebraucht (Nicht-EU)", cardTitle: "Gebrauchtwagen von außerhalb der EU", subtitle: "Einfuhr z. B. aus der Schweiz, den USA oder Großbritannien", popularRank: 10 },
+  { script: "7", id: "neu-ewr", label: "Neufahrzeug aus dem EWR (Einfuhr)", shortLabel: "Import EU neu", cardTitle: "Neuwagen aus dem EU-Ausland", subtitle: "Fabrikneues Fahrzeug aus dem Europäischen Wirtschaftsraum", popularRank: 9 },
+  { script: "8", id: "neu-nicht-ewr", label: "Neufahrzeug von außerhalb des EWR (Einfuhr)", shortLabel: "Import neu (Nicht-EU)", cardTitle: "Neuwagen von außerhalb der EU", subtitle: "Fabrikneues Fahrzeug von außerhalb des EWR", popularRank: 14 },
+  { script: "9", id: "halterdaten", label: "Änderung der Halterdaten (Anschrift/Name)", shortLabel: "Adresse/Name ändern", cardTitle: "Halterdaten ändern", subtitle: "Neue Anschrift oder neuer Name in den Fahrzeugpapieren", popularRank: 7 },
+  { script: "10", id: "fahrzeugtechnik", label: "Änderung der Fahrzeugtechnik", shortLabel: "Technik", cardTitle: "Technische Änderung eintragen", subtitle: "Änderungen am Fahrzeug in die Papiere eintragen lassen", popularRank: 11 },
+  { script: "11", id: "umkennzeichnung-verlust", label: "Umkennzeichnung wegen Verlust oder Diebstahl", shortLabel: "Kennzeichen weg", cardTitle: "Neues Kennzeichen nach Verlust", subtitle: "Kennzeichen verloren oder gestohlen", popularRank: 12 },
+  { script: "12", id: "saison", label: "Saisonkennzeichen (Vergabe/Löschung)", shortLabel: "Saisonkennzeichen", cardTitle: "Saisonkennzeichen", subtitle: "Saisonkennzeichen beantragen oder löschen", popularRank: 13 },
+  { script: "13", id: "kurzzeit", label: "Kurzzeitkennzeichen", shortLabel: "Kurzzeitkennzeichen", cardTitle: "Kurzzeitkennzeichen", subtitle: "Für Überführungs- und Probefahrten", popularRank: 5 },
+  { script: "14", id: "ausfuhr", label: "Ausfuhrkennzeichen", shortLabel: "Ausfuhrkennzeichen", cardTitle: "Ausfuhrkennzeichen", subtitle: "Für die Ausfuhr eines Fahrzeugs ins Ausland", popularRank: 15, locations: ["neuss", "grevenbroich", "dormagen"] },
+  { script: "15", id: "ersatz-zb1", label: "Ersatz Zulassungsbescheinigung Teil I (Fahrzeugschein)", shortLabel: "Fahrzeugschein weg", cardTitle: "Ersatz-Fahrzeugschein", subtitle: "Zulassungsbescheinigung Teil I verloren, gestohlen oder beschädigt", popularRank: 8 },
+  { script: "16", id: "ersatz-zb2", label: "Ersatz Zulassungsbescheinigung Teil II (Fahrzeugbrief)", shortLabel: "Fahrzeugbrief weg", cardTitle: "Ersatz-Fahrzeugbrief", subtitle: "Zulassungsbescheinigung Teil II verloren oder gestohlen", popularRank: 16 },
+  { script: "17", id: "abmeldung", label: "Abmeldung (Außerbetriebsetzung)", shortLabel: "Abmeldung", cardTitle: "Fahrzeug abmelden", subtitle: "Außerbetriebsetzung – geht oft auch online über i-Kfz ohne Termin", popularRank: 17 },
+  { script: "18", id: "rote-kennzeichen", label: "Rote Dauerkennzeichen (Fahrzeugscheinhefte)", shortLabel: "Rote Kennzeichen", cardTitle: "Rote Dauerkennzeichen", subtitle: "Rote Fahrzeugscheinhefte (06er) für Händler und Werkstätten", popularRank: 18, locations: ["neuss", "grevenbroich", "dormagen"] },
+].map((s) => ({ ...s, category: "kfz" as const, popular: true, maxVehicles: 3, infoUrl: NEUSS_INFO }));
+
 export const SERVICES_BY_CITY: Record<string, CityService[]> = {
   koeln: SERVICES.map((s) => ({ ...s, category: "kfz" as const })),
   bonn: BONN_ROWS.map((r) => {
@@ -340,6 +363,7 @@ export const SERVICES_BY_CITY: Record<string, CityService[]> = {
     };
   }),
   recklinghausen: RECKLINGHAUSEN_SERVICES.map(({ script: _script, ...s }) => s),
+  neuss: NEUSS_SERVICES.map(({ script: _script, ...s }) => s),
 };
 
 export const getServices = (city: string): CityService[] => SERVICES_BY_CITY[city] ?? [];
@@ -392,4 +416,5 @@ export const SCRIPT_SERVICE_MAP_BY_CITY: Record<string, Record<string, string>> 
   },
   bonn: Object.fromEntries(BONN_ROWS.map((r) => [r.label, r.script])),
   recklinghausen: Object.fromEntries(RECKLINGHAUSEN_SERVICES.map((s) => [s.label, s.script])),
+  neuss: Object.fromEntries(NEUSS_SERVICES.map((s) => [s.label, s.script])),
 };

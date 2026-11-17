@@ -127,6 +127,7 @@ describe("pending-bookings?city=bonn", () => {
         anrede: "", vorname: "A", nachname: "B", email: "a@b.de", telefon: "0151",
         fin: "", fin2: "", fin3: "", anzahl: "2", service: "1",
         standorte: ["dlz"], finanziert: true, kategorie: "kfz",
+        geburtsdatum: "",
       },
       wunschDaten: ["20.11.2026"],
     });

@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import { KoelnLandmark } from "@/assets/landmarks/koeln";
 import { BonnLandmark } from "@/assets/landmarks/bonn";
 import { RecklinghausenLandmark } from "@/assets/landmarks/recklinghausen";
+import { NeussLandmark } from "@/assets/landmarks/neuss";
 
 /** Firmenname – für alle Städte gleich. */
 export const BRAND_NAME = "KFZ-Termin";
@@ -35,7 +36,13 @@ export type CategorySettings = {
   customerConfirmationHours: number | null;
 };
 
-export type CityLocation = { id: string; name: string; address: string };
+export type CityLocation = {
+  id: string;
+  name: string;
+  address: string;
+  /** Kleiner Anzeige-Hinweis unter der Adresse (z. B. Zahlungsart). */
+  note?: string;
+};
 
 export type CityConfig = CategorySettings & {
   slug: string;
@@ -61,6 +68,8 @@ export type CityConfig = CategorySettings & {
     salutationRequired: boolean;
     locationChoice: boolean;
     financedCheckbox: boolean;
+    /** Pflichtfeld Geburtsdatum (wird gespeichert und ans Script gegeben). */
+    birthDateRequired: boolean;
   };
   /** Überschreibungen pro Kategorie (später z.B. Führerschein). */
   categories?: Partial<Record<ServiceCategory, Partial<CategorySettings>>>;
@@ -147,7 +156,7 @@ export const CITIES: Record<string, CityConfig> = {
     priceCents: KOELN_PRICE_CENTS,
     customerConfirmationHours: 3,
     flow: "single",
-    form: { finRequired: true, salutationRequired: true, locationChoice: false, financedCheckbox: false },
+    form: { finRequired: true, salutationRequired: true, locationChoice: false, financedCheckbox: false, birthDateRequired: false },
     mail: { atAuthority: "bei der Kölner Zulassungsstelle", authority: "Zulassungsstelle", showBookingReference: false, showCancelUrl: false },
     pages: { authorityShort: "Zulassungsstelle Köln", successIntro: null, successNotice: null },
     launched: true,
@@ -179,7 +188,7 @@ export const CITIES: Record<string, CityConfig> = {
     priceCents: CITY_PRICE_CENTS,
     customerConfirmationHours: null,
     flow: "multi",
-    form: { finRequired: false, salutationRequired: false, locationChoice: true, financedCheckbox: true },
+    form: { finRequired: false, salutationRequired: false, locationChoice: true, financedCheckbox: true, birthDateRequired: false },
     categories: {
       fuehrerschein: {
         calendar: {
@@ -245,7 +254,7 @@ export const CITIES: Record<string, CityConfig> = {
     priceCents: CITY_PRICE_CENTS,
     customerConfirmationHours: null,
     flow: "multi",
-    form: { finRequired: false, salutationRequired: true, locationChoice: false, financedCheckbox: false },
+    form: { finRequired: false, salutationRequired: true, locationChoice: false, financedCheckbox: false, birthDateRequired: false },
     mail: {
       atAuthority: "bei der Zulassungsstelle Marl (Kreis Recklinghausen)",
       authority: "Zulassungsstelle",
@@ -276,6 +285,67 @@ export const CITIES: Record<string, CityConfig> = {
     },
     launched: true,
     bookable: true,
+  },
+  neuss: {
+    slug: "neuss",
+    name: "Neuss",
+    landmarkIcon: NeussLandmark,
+    adjective: "Neusser",
+    authorityName: "Rhein-Kreis Neuss – Straßenverkehrsamt (Zulassungsstellen Neuss, Grevenbroich, Dormagen und Meerbusch)",
+    appointmentLocation: "Straßenverkehrsamt Neuss, Oberstraße 91, 41460 Neuss",
+    locations: [
+      { id: "neuss", name: "Straßenverkehrsamt Neuss", address: "Oberstraße 91, 41460 Neuss" },
+      { id: "grevenbroich", name: "Straßenverkehrsamt Grevenbroich", address: "Lindenstraße 10, 41515 Grevenbroich" },
+      { id: "dormagen", name: "Straßenverkehrsamt Dormagen", address: "Kieler Straße 26, 41540 Dormagen" },
+      { id: "meerbusch", name: "Straßenverkehrsamt Meerbusch", address: "Dr.-Franz-Schütz-Platz 1, 40667 Meerbusch", note: "Nur Kartenzahlung (EC)" },
+    ],
+    portalUrl:
+      "https://termine.rhein-kreis-neuss.de/m/rhein-kreis-neuss/extern/calendar/?uid=c9ad0501-0e20-4aa2-bd10-52dedb8dcb3d&lang=de",
+    infoUrl: "https://www.rhein-kreis-neuss.de/de/verwaltung-politik/aemterliste/strassenverkehrsamt/terminvergabe/",
+    siteName: BRAND_NAME,
+    checkoutDescription: `${BRAND_NAME} – Terminservice beim Straßenverkehrsamt des Rhein-Kreises Neuss`,
+    calendar: {
+      minOffsetDays: 1,
+      afterCutoffOffsetDays: 1,
+      cutoffHour: 24,
+      windowDays: 28,
+      allowWeekends: false,
+      blockedDates: [],
+    },
+    searchHours: { from: 0, to: 24 },
+    priceCents: CITY_PRICE_CENTS,
+    customerConfirmationHours: null,
+    flow: "multi",
+    form: { finRequired: false, salutationRequired: true, locationChoice: true, financedCheckbox: false, birthDateRequired: true },
+    mail: {
+      atAuthority: "beim Straßenverkehrsamt des Rhein-Kreises Neuss",
+      authority: "Straßenverkehrsamt",
+      showBookingReference: true,
+      showCancelUrl: true,
+      referenceLabel: "Terminnummer",
+      onSiteSteps: [
+        "**Sei pünktlich** – plane etwas Puffer für Anfahrt und Parken ein.",
+        "Bring die Terminbestätigung des Kreises mit (ausgedruckt oder auf dem Handy) und nenne vor Ort deine Terminnummer{nummer}.",
+        "Der Termin gilt nur für die Person, auf die er gebucht ist, nur für das gebuchte Anliegen und nur am gebuchten Standort.",
+        "Bring alle nötigen Unterlagen vollständig mit – die Liste findest du auf der Seite des Kreises.",
+      ],
+      cityConfirmationNote:
+        "**Hinweis:** Der Rhein-Kreis Neuss schickt dir zusätzlich eine eigene Terminbestätigung per E-Mail. Bitte bring sie zum Termin mit.",
+      infoLinkLabel: "Seite des Rhein-Kreises Neuss",
+      calendarCheckIn: "Bitte pünktlich sein und die Terminbestätigung des Kreises mitbringen.",
+      authorityOf: "des Kreises",
+    },
+    pages: {
+      authorityShort: "Straßenverkehrsamt Rhein-Kreis Neuss",
+      infoAt: "beim Rhein-Kreis Neuss",
+      infoShort: "Rhein-Kreis Neuss",
+      successIntro:
+        "Wir haben deine Zahlung erhalten und suchen ab sofort rund um die Uhr nach einem freien Termin beim Straßenverkehrsamt des Rhein-Kreises Neuss. Du erhältst in Kürze eine Bestätigungsmail.",
+      successNotice:
+        "Sobald wir einen Termin gebucht haben, bekommst du eine E-Mail von uns mit Datum, Uhrzeit, Standort und deiner Terminnummer. Du musst nichts mehr bestätigen. Zusätzlich schickt dir der Rhein-Kreis Neuss eine eigene Bestätigung – bitte bring sie zum Termin mit. Schau auch in deinen Ordnern Spam und Werbung nach.",
+    },
+    launched: false,
+    bookable: false,
   },
 };
 
