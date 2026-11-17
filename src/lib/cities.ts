@@ -331,7 +331,7 @@ export const CITIES: Record<string, CityConfig> = {
     form: { finRequired: false, salutationRequired: true, locationChoice: true, financedCheckbox: false, birthDateRequired: true },
     mail: {
       atAuthority: "beim Straßenverkehrsamt des Rhein-Kreises Neuss",
-      authority: "Straßenverkehrsamt",
+      authority: "Zulassungsstelle",
       showBookingReference: true,
       showCancelUrl: true,
       referenceLabel: "Terminnummer",
@@ -350,7 +350,7 @@ export const CITIES: Record<string, CityConfig> = {
       authorityOf: "des Kreises",
     },
     pages: {
-      authorityShort: "Straßenverkehrsamt Rhein-Kreis Neuss",
+      authorityShort: "Zulassungsstelle Rhein-Kreis Neuss",
       infoAt: "beim Rhein-Kreis Neuss",
       infoShort: "Rhein-Kreis Neuss",
       successIntro:

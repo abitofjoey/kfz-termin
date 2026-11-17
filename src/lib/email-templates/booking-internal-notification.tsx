@@ -65,7 +65,9 @@ const BookingInternalNotificationEmail = ({
             {cityOrDefault(city).flow === 'multi' ? (
               <>
                 <Row label="Standorte" value={locationsText(cityOrDefault(city), locations)} />
-                <Row label="Finanziert/geleast" value={financed ? 'ja' : 'nein'} />
+                {cityOrDefault(city).form.financedCheckbox ? (
+                  <Row label="Finanziert/geleast" value={financed ? 'ja' : 'nein'} />
+                ) : null}
                 <Row label="Anzahl" value={String(vehicleCount ?? 1)} />
               </>
             ) : (
