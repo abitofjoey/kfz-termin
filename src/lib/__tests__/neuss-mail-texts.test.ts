@@ -3,7 +3,7 @@ import { render } from "@react-email/components";
 import { createElement } from "react";
 import { CITIES, bookedTown } from "@/lib/cities";
 import { template } from "@/lib/email-templates/appointment-found";
-import { NEUSS_CONTENT } from "@/content/cities/neuss";
+import { neussFaq } from "@/content/cities/neuss";
 
 const OLD = "Mit dieser Nummer meldest du dich vor Ort am Check-in-Terminal an.";
 const NEW = "Mit dem QR-Code aus der Mail des Kreises oder deinem Geburtsdatum meldest du dich vor Ort am Check-in-Terminal an.";
@@ -43,6 +43,6 @@ describe("Neuss-Texte", () => {
     expect(m.calendarCheckIn).toBe("Termin am Terminal aktivieren (QR-Code oder Geburtsdatum), frühestens 30 Min. vorher.");
   });
   it("FAQ 2", () => {
-    expect(NEUSS_CONTENT.faqs[1].a).toBe("Der Rhein-Kreis Neuss verlangt es bei jeder Online-Terminbuchung. Vor Ort kannst du deinen Termin damit auch am Terminal aktivieren, falls du den QR-Code nicht dabei hast. Wir geben es nur an den Kreis weiter und löschen es nach Abschluss automatisch.");
+    expect(neussFaq[1].a).toBe("Der Rhein-Kreis Neuss verlangt es bei jeder Online-Terminbuchung. Vor Ort kannst du deinen Termin damit auch am Terminal aktivieren, falls du den QR-Code nicht dabei hast. Wir geben es nur an den Kreis weiter und löschen es nach Abschluss automatisch.");
   });
 });
