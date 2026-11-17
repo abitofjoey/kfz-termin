@@ -140,7 +140,7 @@ describe("pending-bookings?city=bonn", () => {
 
 describe("Sichtbarkeit und Ergänzungen", () => {
   it("Bonn sichtbar und überwacht", () => {
-    expect(launchedCities().map((c) => c.slug)).toEqual(["koeln", "bonn", "recklinghausen"]);
+    expect(launchedCities().map((c) => c.slug)).toEqual(["koeln", "bonn", "recklinghausen", "neuss"]);
     expect(monitoredCities().map((c) => c.slug)).toEqual(["koeln", "bonn", "recklinghausen", "neuss"]);
   });
   it("Stripe-Beschreibung je Stadt", () => {

@@ -16,8 +16,8 @@ const prev = { n: N.bookable, b: CITIES.bonn.bookable };
 afterEach(() => { N.bookable = prev.n; CITIES.bonn.bookable = prev.b; });
 
 describe("Neuss Konfiguration", () => {
-  it("verborgen, buchbar, Standortwahl mit vier Standorten, Geburtsdatum Pflicht", () => {
-    expect(N.launched).toBe(false);
+  it("sichtbar, buchbar, Standortwahl mit vier Standorten, Geburtsdatum Pflicht", () => {
+    expect(N.launched).toBe(true);
     expect(N.bookable).toBe(true);
     expect(N.flow).toBe("multi");
     expect(N.form).toEqual({ finRequired: false, salutationRequired: true, locationChoice: true, financedCheckbox: false, birthDateRequired: true });
