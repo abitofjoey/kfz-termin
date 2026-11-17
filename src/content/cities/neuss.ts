@@ -53,8 +53,8 @@ export const neussContent: CityContent = {
     description: `Wunschtermin beim Straßenverkehrsamt Rhein-Kreis Neuss (Neuss, Grevenbroich, Dormagen, Meerbusch): Wir suchen rund um die Uhr und buchen automatisch. ${PRICE} mit Geld-zurück-Garantie.`,
     ogTitle: "Termin Straßenverkehrsamt Neuss – automatisch gebucht",
     ogDescription: `Wir suchen rund um die Uhr nach freien Terminen bei der Kfz-Zulassung im Rhein-Kreis Neuss und buchen automatisch. ${PRICE} mit Geld-zurück-Garantie.`,
-    ogImage: "https://kfz-termin.online/og-image.jpg",
-    ogImageAlt: "KFZ-Termin – Logo",
+    ogImage: "https://kfz-termin.online/og-image-neuss.jpg",
+    ogImageAlt: "KFZ-Termin Neuss – Logo",
   },
   hero: {
     badge: "Rhein-Kreis Neuss · 4 Standorte",
