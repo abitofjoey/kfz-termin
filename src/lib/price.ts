@@ -3,7 +3,7 @@
 /** Ab diesem Berliner Kalendertag gelten Preise inkl. 19 % USt. */
 export const VAT_FROM = "2027-01-01";
 
-/** 1299 → "12,99 €" */
+/** 999 → "9,99 €" */
 export function formatPrice(cents: number): string {
   return `${(cents / 100).toFixed(2).replace(".", ",")} €`;
 }

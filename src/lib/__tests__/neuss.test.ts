@@ -23,7 +23,7 @@ describe("Neuss Konfiguration", () => {
     expect(N.form).toEqual({ finRequired: false, salutationRequired: true, locationChoice: true, financedCheckbox: false, birthDateRequired: true });
     expect(N.locations.map((l) => l.id)).toEqual(["neuss", "grevenbroich", "dormagen", "meerbusch"]);
     expect(N.locations[3].note).toBe("Nur Kartenzahlung (EC)");
-    expect(N.priceCents).toBe(1299);
+    expect(N.priceCents).toBe(999);
   });
   it("andere Städte fragen kein Geburtsdatum ab", () => {
     for (const s of ["koeln", "bonn", "recklinghausen"]) expect(CITIES[s].form.birthDateRequired).toBe(false);

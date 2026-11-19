@@ -25,11 +25,11 @@ describe("Recklinghausen Konfiguration", () => {
     expect(launchedCities().map((c) => c.slug)).toContain("recklinghausen");
     expect(monitoredCities().map((c) => c.slug)).toContain("recklinghausen");
   });
-  it("Bonner Ablauf, ein Standort, keine Standortwahl, Preis 12,99 €", () => {
+  it("Bonner Ablauf, ein Standort, keine Standortwahl, Preis 9,99 €", () => {
     expect(R.flow).toBe("multi");
     expect(R.form.locationChoice).toBe(false);
     expect(R.locations.map((l) => l.id)).toEqual(["marl"]);
-    expect(R.priceCents).toBe(1299);
+    expect(R.priceCents).toBe(999);
     expect(CITIES.bonn.flow).toBe("multi");
     expect(CITIES.koeln.flow).toBe("single");
   });

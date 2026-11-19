@@ -120,7 +120,7 @@ export type CityConfig = CategorySettings & {
 export const DEFAULT_CITY = "koeln";
 
 /** Aktueller Preis in Köln (Cent). Einzige Stelle für den Kölner Preis. */
-export const KOELN_PRICE_CENTS = 1299;
+export const KOELN_PRICE_CENTS = 999;
 /** Zentraler Standardpreis für weitere Städte (Cent). */
 export const CITY_PRICE_CENTS = KOELN_PRICE_CENTS;
 

@@ -7,18 +7,21 @@ import { cityOrDefault } from "@/lib/cities";
 import { template as confirmation } from "@/lib/email-templates/booking-confirmation";
 
 describe("Preis", () => {
-  it("Köln kostet 12,99 €", () => {
-    expect(cityOrDefault("koeln").priceCents).toBe(1299);
-    expect(formatPrice(1299)).toBe("12,99 €");
+  it("alle Städte kosten 9,99 €", () => {
+    for (const c of ["koeln", "bonn", "recklinghausen", "neuss"]) expect(cityOrDefault(c).priceCents).toBe(999);
+    expect(formatPrice(999)).toBe("9,99 €");
   });
-  it("neue Köln-Buchung ohne Betrag → Checkout 1299 und Nachtrag", () => {
-    expect(resolveCheckoutAmount({ amount_cents: null, city: "koeln" })).toEqual({ amountCents: 1299, needsBackfill: true });
+  it("Buchung ohne Betrag → Checkout 999 und Nachtrag", () => {
+    expect(resolveCheckoutAmount({ amount_cents: null, city: "koeln" })).toEqual({ amountCents: 999, needsBackfill: true });
   });
-  it("Köln-Buchung mit 1299 → Checkout 1299", () => {
-    expect(resolveCheckoutAmount({ amount_cents: 1299, city: "koeln" }).amountCents).toBe(1299);
+  it("unbezahlte Buchung mit 1299 → Checkout 999 und Nachtrag", () => {
+    expect(resolveCheckoutAmount({ amount_cents: 1299, city: "bonn", paid: false })).toEqual({ amountCents: 999, needsBackfill: true });
   });
-  it("bestehende unbezahlte Buchung mit 999 → Checkout 999", () => {
-    expect(resolveCheckoutAmount({ amount_cents: 999, city: "koeln" })).toEqual({ amountCents: 999, needsBackfill: false });
+  it("Buchung mit 999 → Checkout 999 ohne Nachtrag", () => {
+    expect(resolveCheckoutAmount({ amount_cents: 999, city: "koeln", paid: false })).toEqual({ amountCents: 999, needsBackfill: false });
+  });
+  it("bezahlte Buchung mit 1299 bleibt unverändert", () => {
+    expect(resolveCheckoutAmount({ amount_cents: 1299, city: "koeln", paid: true })).toEqual({ amountCents: 1299, needsBackfill: false });
   });
   it("Bestätigungsmail mit amount_cents 999 zeigt 9,99 €", async () => {
     const html = await render(React.createElement(confirmation.component, { ...confirmation.previewData, amountCents: 999 }));
